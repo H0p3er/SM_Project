@@ -1,5 +1,7 @@
 package service.workplaceService;
 
+import java.util.Scanner;
+
 import jakarta.jws.WebMethod;
 import jakarta.jws.soap.SOAPBinding;
 
@@ -23,4 +25,8 @@ public interface WorkplaceService {
 	
 	@WebMethod
 	public String viewWorkplacesList(String inforsJson, byte isOpenModal , String url);
+	
+	Scanner a = new Scanner(System.in);
+	
+
 }
