@@ -10,15 +10,12 @@ public class total {
         private String user_images;
         private String user_email;
         private String user_notes;
-        private byte user_permission;
-        private int user_last_modified_id;
-        private String user_last_modified_date;
+        private byte user_permission;     
         private byte user_gender;
         private String user_address;
         private String user_created_date;
         private boolean user_deleted;
-        private String user_mobile_phone;
-        private String user_office_phone;
+        private String user_phone;
         private String user_social_links;
         private int user_logined;
     }
@@ -31,8 +28,6 @@ public class total {
         private String shop_created_date;
         private String shop_website_link;
         private String shop_map_link;
-        private int shop_last_modified_id;
-        private String shop_last_modified_date;
         private boolean shop_deleted;
         private String shop_images;
         private String shop_notes;
@@ -45,11 +40,10 @@ public class total {
         private int product_id;
         private String product_name;
         private byte product_status;
-        private short product_visited;
-        private String product_intro;
+        private int product_visited;
         private int product_price;
         private String product_images;
-        private short product_sale_id;
+        private int product_sale_id;
         private String product_notes;
         private String product_last_modified;
         private short product_quantity;
@@ -62,7 +56,6 @@ public class total {
         private String pc_name;
         private int pc_manager_id;
         private String pc_notes;
-        private String pc_modified_date;
         private String pc_created_date;
         private String pc_image;
         private boolean pc_enable;
@@ -77,6 +70,13 @@ public class total {
         private int bill_delivery_id;
     }
 
+    public class bill_details{
+        private int bd_id;
+        private int bd_bill_id;
+        private String bd_product_id;
+        private String bd_sale_id;
+        private int bd_product_quantity;
+    }
 
     public class comment {
         private int comment_id;
@@ -112,3 +112,4 @@ public class total {
         private String sale_end_date;
     }
 }
+
