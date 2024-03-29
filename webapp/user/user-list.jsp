@@ -140,6 +140,7 @@
                      <tbody>
                        	<% 
                        		out.append(view.get(0));
+                       		
                        	%>
                      </tbody>
                   </table>
