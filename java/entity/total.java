@@ -17,7 +17,7 @@ public class total {
         private boolean user_deleted;
         private String user_phone;
         private String user_social_links;
-        private int user_logined;
+        private long user_logined;
     }
 
     public class shop {
@@ -43,7 +43,6 @@ public class total {
         private int product_visited;
         private int product_price;
         private String product_images;
-        private int product_sale_id;
         private String product_notes;
         private String product_last_modified;
         private short product_quantity;
@@ -54,13 +53,12 @@ public class total {
     public class pc {
         private int pc_id;
         private String pc_name;
-        private int pc_manager_id;
         private String pc_notes;
         private String pc_created_date;
         private String pc_image;
         private boolean pc_enable;
         private int pc_parent_id;
-        private int pc_created_author_id;
+        private int pc_creator_id;
     }
 
     public class bill {
@@ -74,7 +72,6 @@ public class total {
         private int bd_id;
         private int bd_bill_id;
         private String bd_product_id;
-        private String bd_sale_id;
         private int bd_product_quantity;
     }
 
@@ -83,6 +80,7 @@ public class total {
         private String comment_content;
         private int comment_created_date;
         private int comment_creator_id;
+        private int comment_product_id;
     }
 
     public class log {
@@ -106,10 +104,10 @@ public class total {
     public class sale {
         private int sale_id;
         private String sale_name;
-        private float off_price;
-        private float off_price_percent;
+        private int sale_product_id;
+        private float sale_off_price;
+        private float sale_off_price_percent;
         private String sale_start_date;
         private String sale_end_date;
     }
 }
-
