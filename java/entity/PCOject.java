@@ -1,6 +1,6 @@
 package entity;
 
-public class PCOject extends PgObject {
+public class PCOject {
 	private int pc_id; 
 	private String pc_name; 
 	private short pc_pg_id; 
