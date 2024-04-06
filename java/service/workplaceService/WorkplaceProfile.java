@@ -13,11 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.javatuples.Sextet;
 
 import connection.ConnectionPool;
-import constant.WORKPLACE_SORT_TYPE;
+import constant.SHOP_SORT_TYPE;
 import controller.WorkplaceControl;
 import entity.EmployeeObject;
 import entity.UserObject;
-import entity.WorkplaceObject;
+import entity.ShopObject;
 import utility.Utilities;
 
 /**
@@ -66,7 +66,7 @@ public class WorkplaceProfile extends HttpServlet {
 		}
 		
 	/* 	EmployeeObject similar = new EmployeeObject(); */
-		WorkplaceObject similar = new WorkplaceObject();
+		ShopObject similar = new ShopObject();
 		
 		ConnectionPool cp = (ConnectionPool) getServletContext().getAttribute("CPool");
 		
@@ -77,10 +77,10 @@ public class WorkplaceProfile extends HttpServlet {
 		}
 		
 		Sextet<EmployeeObject, 
-		WorkplaceObject, 
+		ShopObject, 
 		Short, 
 		Byte ,
-		WORKPLACE_SORT_TYPE, Boolean> infors = new Sextet<>(null, similar ,(short) wpPage, (byte) wpPerPage, WORKPLACE_SORT_TYPE.NAME, false);
+		SHOP_SORT_TYPE, Boolean> infors = new Sextet<>(null, similar ,(short) wpPage, (byte) wpPerPage, SHOP_SORT_TYPE.NAME, false);
 		
 		ArrayList<String> view = wpc.viewWorkplacesList(infors, request.getRequestURI());
 		

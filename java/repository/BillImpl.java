@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.javatuples.Quartet;
 import org.javatuples.Quintet;
@@ -260,7 +261,7 @@ public class BillImpl extends BasicImpl implements Bill {
 	}
 
 	@Override
-	public ResultSet getBill(int id) {
+	public ResultSet getBillById(int id) {
 		// TODO Auto-generated method stub
 		String sql = "SELECT * FROM tblbill WHERE (bill_id=?) AND (bill_deleted=0); ";
 		return this.get(sql, id);
@@ -310,8 +311,8 @@ public class BillImpl extends BasicImpl implements Bill {
 	}
 	
 	@Override
-	public ArrayList<ResultSet> getBills(Sextet<EmployeeObject, BillObject, Integer, Byte, BILL_SORT_TYPE, Boolean> infors) {
-		EmployeeObject currentUser = infors.getValue0();
+	public ArrayList<ResultSet> getBillList(Sextet<UserObject, BillObject, Integer, Byte, BILL_SORT_TYPE, Boolean> infors) {
+		UserObject currentUser = infors.getValue0();
 		BillObject similar = infors.getValue1();
 		int at = infors.getValue2();
 		byte bPerPage = infors.getValue3(); 
@@ -374,6 +375,7 @@ public class BillImpl extends BasicImpl implements Bill {
 		return this.getReList(sql.toString());
 	}
 
+	
 	public static void main(String[] args) {
 		//Khoi tao bo quan li ket noi
 		ConnectionPool cp = new ConnectionPoolImpl();
@@ -434,6 +436,18 @@ public class BillImpl extends BasicImpl implements Bill {
 			}
 		}
 		
+	}
+
+	@Override
+	public ResultSet getBillByCreator(UserObject user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ResultSet getBillByCreatedDate(Date start, Date end) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

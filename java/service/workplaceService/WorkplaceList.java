@@ -14,11 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.javatuples.Sextet;
 
 import connection.ConnectionPool;
-import constant.WORKPLACE_SORT_TYPE;
+import constant.SHOP_SORT_TYPE;
 import controller.WorkplaceControl;
 import entity.EmployeeObject;
 import entity.UserObject;
-import entity.WorkplaceObject;
+import entity.ShopObject;
 import entity.WorkplaceStorageDetail;
 import objects.*;
 import utility.Utilities;
@@ -76,7 +76,7 @@ public class WorkplaceList extends HttpServlet {
 		System.out.println("Id:"+id);
 		System.out.println("page:"+wpPage);
 	/* 	EmployeeObject similar = new EmployeeObject(); */
-		WorkplaceObject similar = new WorkplaceObject();
+		ShopObject similar = new ShopObject();
 		if (id>0) {
 			similar.setWorkplace_id(id);
 		}
@@ -91,10 +91,10 @@ public class WorkplaceList extends HttpServlet {
 		}
 		
 		Sextet<EmployeeObject, 
-		WorkplaceObject, 
+		ShopObject, 
 		Short, 
 		Byte ,
-		WORKPLACE_SORT_TYPE, Boolean> infors = new Sextet<>(null, similar ,(short) wpPage, (byte) wpPerPage, WORKPLACE_SORT_TYPE.NAME, false);
+		SHOP_SORT_TYPE, Boolean> infors = new Sextet<>(null, similar ,(short) wpPage, (byte) wpPerPage, SHOP_SORT_TYPE.NAME, false);
 		
 
 		ArrayList<String> view = wpc.viewWorkplacesList(infors, isOpenModal , request.getRequestURI());
@@ -210,7 +210,7 @@ public class WorkplaceList extends HttpServlet {
 				request.setAttribute("CPool", wpc.getCP());
 			}
 			
-			WorkplaceObject similar = new WorkplaceObject();
+			ShopObject similar = new ShopObject();
 			
 			similar.setWorkplace_name(workplaceName);
 			similar.setWorkplace_type(workplaceType);
@@ -223,7 +223,7 @@ public class WorkplaceList extends HttpServlet {
 			similar.setWorkplace_created_date(utility.Utilities_date.getCurrentDate());
 			
 			
-			ArrayList<WorkplaceObject> similarList = new ArrayList<WorkplaceObject>();
+			ArrayList<ShopObject> similarList = new ArrayList<ShopObject>();
 			similarList.add(similar);
 			ArrayList<WorkplaceStorageDetail> storage = new ArrayList<WorkplaceStorageDetail>();
 			

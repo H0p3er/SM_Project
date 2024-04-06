@@ -217,7 +217,7 @@ public class BasicImpl implements Basic {
 	}
 
 	@Override
-	public void releaseConnection() {
+	public void releaseCP() {
 		// TODO Auto-generated method stub
 		try {
 			this.cp.releaseConnection(this.con, this.objectName);

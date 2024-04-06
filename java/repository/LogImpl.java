@@ -13,7 +13,7 @@ import connection.ConnectionPool;
 import constant.LOG_SORT_TYPE;
 import entity.EmployeeObject;
 import entity.LogObject;
-import entity.WorkplaceObject;
+import entity.ShopObject;
 import utility.Utilities_date;
 
 

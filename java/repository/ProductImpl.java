@@ -1,4 +1,4 @@
-package repository;
+3package repository;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -29,13 +29,13 @@ public class ProductImpl extends BasicImpl implements Product {
 		try {
 			PreparedStatement pre = this.con.prepareStatement(sql);
 			pre.setString(1, item.getProduct_name());
-			pre.setShort(2, item.getProduct_category_id());
-			pre.setShort(3, item.getProduct_status());
-			pre.setBoolean(4, item.isProduct_deleted());
-			pre.setInt(5, item.getProduct_price());
+			pre.setInt(2, item.getProduct_pc_id());
+			pre.setByte(3, item.getProduct_status());
+			pre.setByte(4, item.getProduct_deleted());
+			pre.setDouble(5, item.getProduct_price());
 			pre.setString(6, item.getProduct_images());
-			pre.setShort(7, item.getProduct_provider_id());
-			pre.setInt(8, item.getProduct_guarantee_id());
+			pre.setInt(7, item.getProduct_shop_id());
+			pre.setInt(8, item.getProduct_quantity());
 			pre.setString(9, item.getProduct_notes());
 			pre.setString(10, item.getProduct_last_modified());
 

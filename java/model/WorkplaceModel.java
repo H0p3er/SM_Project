@@ -8,24 +8,24 @@ import java.util.HashMap;
 
 import org.javatuples.*;
 import connection.*;
-import constant.WORKPLACE_EDIT_TYPE;
-import constant.WORKPLACE_SORT_TYPE;
+import constant.SHOP_EDIT_TYPE;
+import constant.SHOP_SORT_TYPE;
 import entity.EmployeeObject;
 import entity.ProductObject;
-import entity.WorkplaceObject;
+import entity.ShopObject;
 import entity.WpsdObject;
 import objects.*;
 import repository.Log;
-import repository.Workplace;
-import repository.WorkplaceImpl;
+import repository.Shop;
+import repository.ShopImpl;
 import utility.Utilities;
 
 public class WorkplaceModel {
 	
-	private Workplace w;
+	private Shop w;
 	
 	public WorkplaceModel(ConnectionPool cp) {
-		this.w= new WorkplaceImpl(cp);
+		this.w= new ShopImpl(cp);
 	}
 	
 	protected void finalize() throws Throwable{
@@ -41,24 +41,24 @@ public class WorkplaceModel {
 	}
 
 	//***********************Chuyen huong dieu khien tu Workplace Impl*****************************************
-	public boolean addWorkplace(ArrayList<WorkplaceObject> wItem, ArrayList<WpsdObject> pItem, EmployeeObject currentUser) {
+	public boolean addWorkplace(ArrayList<ShopObject> wItem, ArrayList<WpsdObject> pItem, EmployeeObject currentUser) {
 		return this.w.addWorkplace(wItem, pItem, currentUser);
 	}
 	
-	public boolean editWorkplace(ArrayList<WorkplaceObject> wItem, ArrayList<WpsdObject> pItem, WORKPLACE_EDIT_TYPE et, EmployeeObject currentUser) {
+	public boolean editWorkplace(ArrayList<ShopObject> wItem, ArrayList<WpsdObject> pItem, SHOP_EDIT_TYPE et, EmployeeObject currentUser) {
 		return this.w.editWorkplace(wItem, pItem, et, currentUser);
 	}
 	
-	public boolean delWorkplace(ArrayList<WorkplaceObject> item, EmployeeObject currentUser) {
+	public boolean delWorkplace(ArrayList<ShopObject> item, EmployeeObject currentUser) {
 		return this.w.delWorkplace(item, currentUser);
 	}
 	
 	
 	//****************************************************************
 	
-	public WorkplaceObject getWorkplaceObject(int id) {
+	public ShopObject getWorkplaceObject(int id) {
 		//Gan gia tri khoi tao cho doi tuong WorkplaceObject
-		WorkplaceObject item = null ;
+		ShopObject item = null ;
 		
 		//Lay ban ghi 
 		ResultSet rs = this.w.getWorkplace(id);
@@ -68,7 +68,7 @@ public class WorkplaceModel {
 		if (rs!=null) {
 			try {
 				if (rs.next()) {
-					item = new WorkplaceObject();
+					item = new ShopObject();
 					item.setWorkplace_id(rs.getInt("workplace_id"));
 					item.setWorkplace_name(rs.getString("workplace_name"));
 
@@ -81,7 +81,7 @@ public class WorkplaceModel {
 		return item;
 	}
 		
-	public Octet<	ArrayList<WorkplaceObject>,
+	public Octet<	ArrayList<ShopObject>,
 					Integer, 
 					HashMap<Integer,Integer>, 
 					HashMap<Integer,Integer>, 
@@ -91,15 +91,15 @@ public class WorkplaceModel {
 							Triplet<ProductObject,Integer,Integer>>,
 					HashMap<Integer,EmployeeObject>>
 						getWorkplaceObjects(Sextet<	EmployeeObject, 
-													WorkplaceObject, 
+													ShopObject, 
 													Short, 
 													Byte ,
-													WORKPLACE_SORT_TYPE,
+													SHOP_SORT_TYPE,
 													Boolean> infors) {
 		
 		//Gán giá trị khởi tạo cho đối tượng WorkplaceObject
-		ArrayList<WorkplaceObject> items = new ArrayList<>();
-		WorkplaceObject item = null ;
+		ArrayList<ShopObject> items = new ArrayList<>();
+		ShopObject item = null ;
 		
 		short page = infors.getValue2();
 		byte wPerPage = infors.getValue3();
@@ -113,7 +113,7 @@ public class WorkplaceModel {
 		if (rs!=null) {
 			try {
 				while (rs.next()) {
-					item = new WorkplaceObject();
+					item = new ShopObject();
 					item.setWorkplace_id(rs.getInt("workplace_id"));
 					item.setWorkplace_name(Utilities.decode(rs.getString("workplace_name")));
 					item.setWorkplace_address(rs.getString("workplace_address"));
@@ -265,7 +265,7 @@ public class WorkplaceModel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return new Octet<	ArrayList<WorkplaceObject>,
+		return new Octet<	ArrayList<ShopObject>,
 							Integer, 
 							HashMap<Integer,Integer>, 
 							HashMap<Integer,Integer>, 
@@ -281,12 +281,12 @@ public class WorkplaceModel {
 		
 		WorkplaceModel wm = new WorkplaceModel(cp);
 		
-		WorkplaceObject similar = new WorkplaceObject();
+		ShopObject similar = new ShopObject();
 	
-		Sextet<EmployeeObject, WorkplaceObject, Short, Byte, WORKPLACE_SORT_TYPE, Boolean> infors = new 
-		Sextet<EmployeeObject, WorkplaceObject, Short, Byte, WORKPLACE_SORT_TYPE, Boolean>
-		(null, similar, (short) 1, (byte) 10, WORKPLACE_SORT_TYPE.NAME, false);
-		Octet<	ArrayList<WorkplaceObject>,
+		Sextet<EmployeeObject, ShopObject, Short, Byte, SHOP_SORT_TYPE, Boolean> infors = new 
+		Sextet<EmployeeObject, ShopObject, Short, Byte, SHOP_SORT_TYPE, Boolean>
+		(null, similar, (short) 1, (byte) 10, SHOP_SORT_TYPE.NAME, false);
+		Octet<	ArrayList<ShopObject>,
 				Integer, 
 				HashMap<Integer,Integer>, 
 				HashMap<Integer,Integer>, 

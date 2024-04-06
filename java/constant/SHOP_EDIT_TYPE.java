@@ -1,6 +1,6 @@
 package constant;
 
-public enum WORKPLACE_EDIT_TYPE {
+public enum SHOP_EDIT_TYPE {
 	//Tủy chỉnh theo mưc
 	//Chỉnh sửa thông tin tổng quát
 	GENERAL,

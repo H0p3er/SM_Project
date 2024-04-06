@@ -25,7 +25,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
 		this.driver = "com.mysql.jdbc.Driver";
 
 		// Xác định đường dẫn thực thi của MySQL
-		this.url = "jdbc:mysql://127.0.0.1:3306/test?allowMultiQueries=true";
+		this.url = "jdbc:mysql://127.0.0.1:3306/sm_project?allowMultiQueries=true";
 
 		// Xác định tài khoản làm việc
 		this.username = "root";

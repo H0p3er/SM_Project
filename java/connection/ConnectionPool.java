@@ -2,7 +2,7 @@ package connection;
 
 import java.sql.*;
 
-public interface ConnectionPool {
+public interface ConnectionPool{
 
 	// Phương thức cung ccaaps kết nối khi một đối tượng cần
 	public Connection getConnection(String objectName) throws SQLException;
