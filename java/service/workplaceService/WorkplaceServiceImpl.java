@@ -19,21 +19,21 @@ import connection.ConnectionPool;
 import connection.ConnectionPoolImpl;
 import constant.SHOP_EDIT_TYPE;
 import constant.SHOP_SORT_TYPE;
-import controller.WorkplaceControl;
+import controller.ShopControl;
 import entity.EmployeeObject;
 import entity.ProductObject;
 import entity.ShopObject;
 import entity.WpsdObject;
 import jakarta.jws.WebService;
 import library.WorkplaceLibrary;
-import model.WorkplaceModel;
+import model.ShopModel;
 
 @WebService(endpointInterface="service.workplaceService.WorkplaceService")
 public class WorkplaceServiceImpl implements WorkplaceService {
-	private WorkplaceControl wc;
+	private ShopControl wc;
 	private final ObjectMapper jsonMapper = new ObjectMapper();
 	public WorkplaceServiceImpl() {
-		this.wc = new WorkplaceControl(null);	
+		this.wc = new ShopControl(null);	
     }
 	
 	@Override

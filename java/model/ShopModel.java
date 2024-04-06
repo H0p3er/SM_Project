@@ -20,11 +20,11 @@ import repository.Shop;
 import repository.ShopImpl;
 import utility.Utilities;
 
-public class WorkplaceModel {
+public class ShopModel {
 	
 	private Shop w;
 	
-	public WorkplaceModel(ConnectionPool cp) {
+	public ShopModel(ConnectionPool cp) {
 		this.w= new ShopImpl(cp);
 	}
 	
@@ -36,32 +36,32 @@ public class WorkplaceModel {
 		return this.w.getCP();
 	}
 	
-	public void releaseConnection() {
-		this.w.releaseConnection();
+	public void releaseCP() {
+		this.w.releaseCP();
 	}
 
-	//***********************Chuyen huong dieu khien tu Workplace Impl*****************************************
-	public boolean addWorkplace(ArrayList<ShopObject> wItem, ArrayList<WpsdObject> pItem, EmployeeObject currentUser) {
-		return this.w.addWorkplace(wItem, pItem, currentUser);
+	//***********************Chuyen huong dieu khien tu Shop Impl*****************************************
+	public boolean addShop(ArrayList<ShopObject> wItem, ArrayList<WpsdObject> pItem, EmployeeObject currentUser) {
+		return this.w.addShop(wItem, pItem, currentUser);
 	}
 	
-	public boolean editWorkplace(ArrayList<ShopObject> wItem, ArrayList<WpsdObject> pItem, SHOP_EDIT_TYPE et, EmployeeObject currentUser) {
-		return this.w.editWorkplace(wItem, pItem, et, currentUser);
+	public boolean editShop(ArrayList<ShopObject> wItem, ArrayList<WpsdObject> pItem, SHOP_EDIT_TYPE et, EmployeeObject currentUser) {
+		return this.w.editShop(wItem, pItem, et, currentUser);
 	}
 	
-	public boolean delWorkplace(ArrayList<ShopObject> item, EmployeeObject currentUser) {
-		return this.w.delWorkplace(item, currentUser);
+	public boolean delShop(ArrayList<ShopObject> item, EmployeeObject currentUser) {
+		return this.w.delShop(item, currentUser);
 	}
 	
 	
 	//****************************************************************
 	
-	public ShopObject getWorkplaceObject(int id) {
-		//Gan gia tri khoi tao cho doi tuong WorkplaceObject
+	public ShopObject getShopObject(int id) {
+		//Gan gia tri khoi tao cho doi tuong ShopObject
 		ShopObject item = null ;
 		
 		//Lay ban ghi 
-		ResultSet rs = this.w.getWorkplace(id);
+		ResultSet rs = this.w.getShop(id);
 		
 		
 		//Chuyen doi ban ghi thanh doi tuong
@@ -69,8 +69,8 @@ public class WorkplaceModel {
 			try {
 				if (rs.next()) {
 					item = new ShopObject();
-					item.setWorkplace_id(rs.getInt("workplace_id"));
-					item.setWorkplace_name(rs.getString("workplace_name"));
+					item.setShop_id(rs.getInt("workplace_id"));
+					item.setShop_name(rs.getString("workplace_name"));
 
 				}
 			} catch (SQLException e) {
@@ -90,14 +90,14 @@ public class WorkplaceModel {
 					HashMap<Triplet<Integer,Integer,String>,
 							Triplet<ProductObject,Integer,Integer>>,
 					HashMap<Integer,EmployeeObject>>
-						getWorkplaceObjects(Sextet<	EmployeeObject, 
+						getShopObjects(Sextet<	EmployeeObject, 
 													ShopObject, 
 													Short, 
 													Byte ,
 													SHOP_SORT_TYPE,
 													Boolean> infors) {
 		
-		//Gán giá trị khởi tạo cho đối tượng WorkplaceObject
+		//Gán giá trị khởi tạo cho đối tượng ShopObject
 		ArrayList<ShopObject> items = new ArrayList<>();
 		ShopObject item = null ;
 		
@@ -105,7 +105,7 @@ public class WorkplaceModel {
 		byte wPerPage = infors.getValue3();
 		//Lấy bản ghi 
 		int at = (page-1)*wPerPage;
-		ArrayList<ResultSet> res = this.w.getWorkplaces(infors.setAt2(at));
+		ArrayList<ResultSet> res = this.w.getShops(infors.setAt2(at));
 		
 		ResultSet rs = res.get(0);
 		
@@ -114,19 +114,19 @@ public class WorkplaceModel {
 			try {
 				while (rs.next()) {
 					item = new ShopObject();
-					item.setWorkplace_id(rs.getInt("workplace_id"));
-					item.setWorkplace_name(Utilities.decode(rs.getString("workplace_name")));
-					item.setWorkplace_address(rs.getString("workplace_address"));
-					item.setWorkplace_created_date(rs.getString("workplace_created_date"));
-					item.setWorkplace_last_modified_date(rs.getString("workplace_last_modified_date"));
-					item.setWorkplace_last_modified_id(rs.getInt("workplace_last_modified_id"));
-					item.setWorkplace_deleted(rs.getBoolean("workplace_deleted"));
-					item.setWorkplace_images(rs.getString("workplace_images"));
-					item.setWorkplace_manager_id(rs.getInt("workplace_manager_id"));
-					item.setWorkplace_creator_id(rs.getInt("workplace_creator_id"));
-					item.setWorkplace_notes(rs.getString("workplace_notes"));
-					item.setWorkplace_email(rs.getString("workplace_email"));
-					item.setWorkplace_phone(rs.getString("workplace_phone"));
+					item.setShop_id(rs.getInt("workplace_id"));
+					item.setShop_name(Utilities.decode(rs.getString("workplace_name")));
+					item.setShop_address(rs.getString("workplace_address"));
+					item.setShop_created_date(rs.getString("workplace_created_date"));
+					item.setShop_last_modified_date(rs.getString("workplace_last_modified_date"));
+					item.setShop_last_modified_id(rs.getInt("workplace_last_modified_id"));
+					item.setShop_deleted(rs.getBoolean("workplace_deleted"));
+					item.setShop_images(rs.getString("workplace_images"));
+					item.setShop_manager_id(rs.getInt("workplace_manager_id"));
+					item.setShop_creator_id(rs.getInt("workplace_creator_id"));
+					item.setShop_notes(rs.getString("workplace_notes"));
+					item.setShop_email(rs.getString("workplace_email"));
+					item.setShop_phone(rs.getString("workplace_phone"));
 					// Dua doi tuong vao tap hop
 					items.add(item);
 				}
@@ -142,12 +142,12 @@ public class WorkplaceModel {
 		HashMap<Integer, Integer> importTotal = new HashMap<Integer, Integer>();
 		
 		//Lấy doanh số nhập của mỗi kho hàng
-		HashMap<Pair<String,Integer>,Integer> ieWorkplace = new HashMap<Pair<String,Integer>,Integer>();
+		HashMap<Pair<String,Integer>,Integer> ieShop = new HashMap<Pair<String,Integer>,Integer>();
 		
 		if (rs!=null) {
 			try {
 				while (rs.next()) {
-					ieWorkplace.put(new Pair<>(rs.getString("bill_created_date"), rs.getInt("bill_import_target_workplace_id")), rs.getInt("import_value") );
+					ieShop.put(new Pair<>(rs.getString("bill_created_date"), rs.getInt("bill_import_target_workplace_id")), rs.getInt("import_value") );
 					
 					if (importTotal.get(rs.getInt("bill_import_target_workplace_id")) != null) {
 						importTotal.put(rs.getInt("bill_import_target_workplace_id"), importTotal.get(rs.getInt("bill_import_target_workplace_id")) + rs.getInt("import_value"));
@@ -166,11 +166,11 @@ public class WorkplaceModel {
 		HashMap<Integer, Integer> exportTotal = new HashMap<Integer, Integer>();
 		
 		//Lấy doanh số xuất của mỗi kho hàng
-		HashMap<Pair<String,Integer>,Integer> eeWorkplace = new HashMap<Pair<String,Integer>,Integer>();
+		HashMap<Pair<String,Integer>,Integer> eeShop = new HashMap<Pair<String,Integer>,Integer>();
 		if (rs!=null) {
 			try {
 				while (rs.next()) {
-					eeWorkplace.put(new Pair<>(rs.getString("bill_created_date"), rs.getInt("bill_export_current_workplace_id")), rs.getInt("export_value"));
+					eeShop.put(new Pair<>(rs.getString("bill_created_date"), rs.getInt("bill_export_current_workplace_id")), rs.getInt("export_value"));
 					
 					if (exportTotal.get(rs.getInt("bill_export_current_workplace_id")) != null) {
 						exportTotal.put(rs.getInt("bill_export_current_workplace_id"), exportTotal.get(rs.getInt("bill_export_current_workplace_id")) + rs.getInt("export_value"));
@@ -273,13 +273,13 @@ public class WorkplaceModel {
 							HashMap<Pair<String,Integer>,Integer>,
 							HashMap<Triplet<Integer,Integer,String>,
 									Triplet<ProductObject,Integer,Integer>>,
-							HashMap<Integer,EmployeeObject>>(items, totalGlobal, importTotal,exportTotal, ieWorkplace, eeWorkplace, productList, eItems);
+							HashMap<Integer,EmployeeObject>>(items, totalGlobal, importTotal,exportTotal, ieShop, eeShop, productList, eItems);
 	}
 	
 	public static void main(String[] args) {
 		ConnectionPool cp = new ConnectionPoolImpl();
 		
-		WorkplaceModel wm = new WorkplaceModel(cp);
+		ShopModel wm = new ShopModel(cp);
 		
 		ShopObject similar = new ShopObject();
 	
@@ -294,7 +294,7 @@ public class WorkplaceModel {
 				HashMap<Pair<String,Integer>,Integer>,
 				HashMap<Triplet<Integer,Integer,String>,
 						Triplet<ProductObject,Integer,Integer>>,
-				HashMap<Integer,EmployeeObject>> items = wm.getWorkplaceObjects(infors);
+				HashMap<Integer,EmployeeObject>> items = wm.getShopObjects(infors);
 		System.out.println("Tổng sản phẩm nhập:");
 		items.getValue2().forEach((key,value) -> System.out.println(key+":"+value));
 		

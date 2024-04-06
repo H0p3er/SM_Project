@@ -10,8 +10,10 @@ import java.sql.*;
 import java.util.*;
 
 import org.javatuples.Sextet;
+import org.javatuples.Triplet;
 
 import connection.*;
+import constant.SHOP_EDIT_TYPE;
 import constant.SHOP_SORT_TYPE;
 import entity.*;
 import basic.*;
@@ -28,96 +30,6 @@ public class ShopImpl extends BasicImpl implements Shop {
 	public ShopImpl(ConnectionPool cp, String objecname) {
 		super(cp, objecname);
 	}
-
-	@Override
-	public synchronized boolean addShop(ArrayList<ShopObject> wItems, ArrayList<ProductObject> wsdItem, UserObject currentUser) {
-		ShopObject wItem = wItems.get(0);
-		if (this.isExisting(wItem)) {
-			return false;
-		}
-		
-		StringBuilder getIdSql = new StringBuilder();
-		getIdSql.append("SELECT AUTO_INCREMENT ");
-		getIdSql.append("FROM information_schema.TABLES ");
-		getIdSql.append("WHERE TABLE_SCHEMA=\"test\" ");
-		getIdSql.append("AND TABLE_NAME=\"tblShop\"; ");
-		System.out.println(getIdSql.toString());		
-		ResultSet ShopId = this.getReList(getIdSql.toString()).get(0);
-		
-		if (ShopId==null) {
-			return false;
-		}
-		
-		try {
-			if (ShopId.next()) {
-				int id = ShopId.getInt("AUTO_INCREMENT");
-				ShopId.close();
-				
-				StringBuilder sql = new StringBuilder();			
-				
-				sql.append("INSERT INTO tblShop(");
-				sql.append("Shop_name, Shop_type, Shop_address, ");
-				sql.append("Shop_manager_id, Shop_created_date, Shop_website_link, ");
-				sql.append("Shop_map_link, Shop_last_modified_id, ");
-				sql.append("Shop_last_modified_date, Shop_images, ");
-				sql.append("Shop_investment, Shop_expected_profit, Shop_notes, ");
-				sql.append("Shop_phone, Shop_email, Shop_creator_id");
-				sql.append(")");
-				sql.append("VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); ");
-			
-				
-				System.out.println(sql.toString());
-				
-				PreparedStatement pre1 = this.con.prepareStatement(sql.toString());
-				
-				pre1.setString(1,wItem.getShop_name());
-				pre1.setString(3, wItem.getShop_address());
-				pre1.setString(5, wItem.getShop_created_date());
-				pre1.setString(6, wItem.getShop_website_link());
-				pre1.setString(7, wItem.getShop_map_link());
-				pre1.setString(9, wItem.getShop_last_modified_date());
-				pre1.setString(10, wItem.getShop_images());
-				pre1.setString(13, wItem.getShop_notes());
-				pre1.setString(14, wItem.getShop_phone());
-				pre1.setString(15, wItem.getShop_email());
-				pre1.setInt(16, wItem.getShop_creator_id());
-				
-
-				
-				boolean result = this.add(pre1);
-				
-				if (result && wsdItem != null && wsdItem.size()>0) {								
-					
-					sql.setLength(0);
-					sql.append("INSERT INTO tblwpsd(");
-					sql.append("wpsd_Shop_id, wpsd_product_id, ");
-					sql.append("wpsd_product_quantity, wpsd_created_date ");
-					sql.append(")");
-					sql.append("VALUES");
-					sql.append("(?,?,?,?)");		
-					System.out.println(sql.toString());
-					PreparedStatement pre3 = this.con.prepareStatement(sql.toString());									
-					wsdItem.forEach(item->{
-						try {
-							pre3.setInt(1, id);
-							pre3.setInt(2, item.getWpsd_product_id());
-							pre3.setInt(3, item.getWpsd_product_quantity());
-							pre3.setString(4, item.getWpsd_created_date());
-							pre3.addBatch();
-						} catch (SQLException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}		
-					});	
-					return this.addList(pre3);							
-				}					
-				return result;
-			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-		}
-		return false;
-	}	
 
 	private boolean isExisting(ShopObject item) {
 		boolean flag = false;
@@ -546,5 +458,114 @@ public class ShopImpl extends BasicImpl implements Shop {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	@Override
+	public boolean addShop(ArrayList<ShopObject> shopObjects, UserObject currentUser) {
+		ShopObject wItem = wItems.get(0);
+		if (this.isExisting(wItem)) {
+			return false;
+		}
+		
+		StringBuilder getIdSql = new StringBuilder();
+		getIdSql.append("SELECT AUTO_INCREMENT ");
+		getIdSql.append("FROM information_schema.TABLES ");
+		getIdSql.append("WHERE TABLE_SCHEMA=\"test\" ");
+		getIdSql.append("AND TABLE_NAME=\"tblShop\"; ");
+		System.out.println(getIdSql.toString());		
+		ResultSet ShopId = this.getReList(getIdSql.toString()).get(0);
+		
+		if (ShopId==null) {
+			return false;
+		}
+		
+		try {
+			if (ShopId.next()) {
+				int id = ShopId.getInt("AUTO_INCREMENT");
+				ShopId.close();
+				
+				StringBuilder sql = new StringBuilder();			
+				
+				sql.append("INSERT INTO tblShop(");
+				sql.append("Shop_name, Shop_type, Shop_address, ");
+				sql.append("Shop_manager_id, Shop_created_date, Shop_website_link, ");
+				sql.append("Shop_map_link, Shop_last_modified_id, ");
+				sql.append("Shop_last_modified_date, Shop_images, ");
+				sql.append("Shop_investment, Shop_expected_profit, Shop_notes, ");
+				sql.append("Shop_phone, Shop_email, Shop_creator_id");
+				sql.append(")");
+				sql.append("VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); ");
+			
+				
+				System.out.println(sql.toString());
+				
+				PreparedStatement pre1 = this.con.prepareStatement(sql.toString());
+				
+				pre1.setString(1,wItem.getShop_name());
+				pre1.setString(3, wItem.getShop_address());
+				pre1.setString(5, wItem.getShop_created_date());
+				pre1.setString(6, wItem.getShop_website_link());
+				pre1.setString(7, wItem.getShop_map_link());
+				pre1.setString(9, wItem.getShop_last_modified_date());
+				pre1.setString(10, wItem.getShop_images());
+				pre1.setString(13, wItem.getShop_notes());
+				pre1.setString(14, wItem.getShop_phone());
+				pre1.setString(15, wItem.getShop_email());
+				pre1.setInt(16, wItem.getShop_creator_id());
+				
+
+				
+				boolean result = this.add(pre1);
+				
+				if (result && wsdItem != null && wsdItem.size()>0) {								
+					
+					sql.setLength(0);
+					sql.append("INSERT INTO tblwpsd(");
+					sql.append("wpsd_Shop_id, wpsd_product_id, ");
+					sql.append("wpsd_product_quantity, wpsd_created_date ");
+					sql.append(")");
+					sql.append("VALUES");
+					sql.append("(?,?,?,?)");		
+					System.out.println(sql.toString());
+					PreparedStatement pre3 = this.con.prepareStatement(sql.toString());									
+					wsdItem.forEach(item->{
+						try {
+							pre3.setInt(1, id);
+							pre3.setInt(2, item.getWpsd_product_id());
+							pre3.setInt(3, item.getWpsd_product_quantity());
+							pre3.setString(4, item.getWpsd_created_date());
+							pre3.addBatch();
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}		
+					});	
+					return this.addList(pre3);							
+				}					
+				return result;
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean editShop(ArrayList<ShopObject> shopObjects, SHOP_EDIT_TYPE et, UserObject currentUser) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean delShop(ArrayList<ShopObject> shopObjects, UserObject currentUser) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public ArrayList<ResultSet> getShops(Triplet<ShopObject, Integer, Byte> infors, SHOP_SORT_TYPE st,
+			UserObject currentUser) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

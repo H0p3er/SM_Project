@@ -10,15 +10,15 @@ import entity.ProductObject;
 import entity.ShopObject;
 import entity.WpsdObject;
 import library.*;
-import model.WorkplaceModel;
+import model.ShopModel;
 import objects.*;
 
 
-public class WorkplaceControl {
-	private WorkplaceModel wm;
+public class ShopControl {
+	private ShopModel wm;
 	
-	public WorkplaceControl(ConnectionPool cp) {
-		this.wm = new WorkplaceModel(cp);
+	public ShopControl(ConnectionPool cp) {
+		this.wm = new ShopModel(cp);
 		
 	}
 	

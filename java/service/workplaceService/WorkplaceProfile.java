@@ -14,7 +14,7 @@ import org.javatuples.Sextet;
 
 import connection.ConnectionPool;
 import constant.SHOP_SORT_TYPE;
-import controller.WorkplaceControl;
+import controller.ShopControl;
 import entity.EmployeeObject;
 import entity.UserObject;
 import entity.ShopObject;
@@ -70,7 +70,7 @@ public class WorkplaceProfile extends HttpServlet {
 		
 		ConnectionPool cp = (ConnectionPool) getServletContext().getAttribute("CPool");
 		
-		WorkplaceControl wpc = new WorkplaceControl(cp);
+		ShopControl wpc = new ShopControl(cp);
 		
 		if (cp==null) {
 			getServletContext().setAttribute("CPool", wpc.getCP());			

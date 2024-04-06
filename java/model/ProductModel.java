@@ -9,16 +9,15 @@ import org.javatuples.Pair;
 import connection.ConnectionPool;
 import constant.PRODUCT_EDIT_TYPE;
 import constant.PRODUCT_SORT_TYPE;
+import repository.*;
 import entity.ProductObject;
-import repository.ProductService;
-import repository.ProductServiceImpl;
 import utility.Utilities;
 
 public class ProductModel {
-	private ProductService p;
+	private Product p;
 
 	public ProductModel(ConnectionPool cp) {
-		this.p = new ProductServiceImpl(cp);
+		this.p = new ProductImpl(cp);
 	}
 
 	protected void finalize() throws Throwable {
@@ -30,7 +29,7 @@ public class ProductModel {
 	}
 
 	public void releaseConnection() {
-		this.p.releaseConnection();
+		this.p.releaseCP();
 	}
 
 	// ***********************Chuyen huong dieu khien tu Product

@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import connection.ConnectionPool;
 import constant.SHOP_EDIT_TYPE;
 import controller.LogControl;
-import controller.WorkplaceControl;
+import controller.ShopControl;
 import entity.EmployeeObject;
 import entity.LogObject;
 import entity.UserObject;
@@ -51,7 +51,7 @@ public class ShopDeleting extends HttpServlet {
 					
 					ConnectionPool cp = (ConnectionPool)getServletContext().getAttribute("CPool");
 					
-					WorkplaceControl wc = new WorkplaceControl(cp);
+					ShopControl wc = new ShopControl(cp);
 					ShopObject wpDel = new ShopObject();
 					wpDel.setWorkplace_id(wpid);
 					wpDel.setWorkplace_manager_id(wpmid);
