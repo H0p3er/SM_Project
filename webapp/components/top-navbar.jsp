@@ -1,8 +1,8 @@
 <%@ page language="Java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="connection.*, objects.*, log.*, org.javatuples.*, java.util.*" %>
+<%@ page import="connection.*, entity.*, controller.*, org.javatuples.*, java.util.*" %>
 
 <%	
-	EmployeeObject currentUser = (EmployeeObject) request.getSession().getAttribute("userLogined");
+	UserObject currentUser = (UserObject) request.getSession().getAttribute("userLogined");
 	
 	if (currentUser==null){
 		response.sendRedirect("/home/login");
@@ -16,14 +16,14 @@
 		getServletContext().setAttribute("CPool", lc.getCP());			
 	}
 
-	Sextet<EmployeeObject, 
+/* 	Sextet<UserObject, 
 	LogObject, 
 	Short, 
 	Byte ,
-	LOG_SORT_TYPE, Boolean> infors = new Sextet<>(currentUser, null ,(short) 1, (byte) 3, LOG_SORT_TYPE.CREATED, false);
+	LOG_SORT_TYPE, Boolean> infors = new Sextet<>(currentUser, null ,(short) 1, (byte) 3, LOG_SORT_TYPE.CREATED, false); */
 	
 	
-	String Notification = lc.viewLogs(infors, "").get(2);
+/* 	String Notification = lc.viewLogs(infors, "").get(2); */
 
 
 %>
@@ -162,7 +162,7 @@
                             <div class="iq-sub-dropdown dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <div class="card shadow-none m-0">
                                     <div class="card-body p-0 ">
-                                       <% out.append(Notification); %>
+                                    <%--    <% out.append(Notification); %> --%>
                                     </div>
                                 </div>
                             </div>

@@ -1,21 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<%@ page import="connection.*, objects.*" %>
+<%@ page import="connection.*, entity.*" %>
 <%@ page import="java.util.*, org.javatuples.*" %>
-<%@ page import="bill.*" %>
-<%@ page import="library.*" %>
+<%@ page import="controller.*" %>
+<%@ page import="constant.*" %>
 <%  
 	
 	
-	EmployeeObject currentUser = (EmployeeObject) request.getSession().getAttribute("userLogined");
+	UserObject currentUser = (UserObject) request.getSession().getAttribute("userLogined");
 	
 	if (currentUser==null){
-		response.sendRedirect("/home/login");
+		response.sendRedirect("/home/user/login");
 	}
 
 	response.setCharacterEncoding("utf-8");
 	
-	BillObject similar = new BillObject();
+/* 	BillObject similar = new BillObject();
 	
 	ConnectionPool cp = (ConnectionPool)getServletContext().getAttribute("CPool");
 	
@@ -26,16 +26,16 @@
 	}
 	
 	
-	Sextet<EmployeeObject, 
+	Sextet<UserObject, 
 	BillObject, 
 	Short, 
 	Byte ,
-	BILL_SORT_TYPE, Boolean> infors = new Sextet<>(currentUser, similar ,(short) 1, (byte) 10, BILL_SORT_TYPE.NAME, false);
+	BILL_SORT_TYPE, Boolean> infors = new Sextet<>(currentUser, similar ,(short) 1, (byte) 10, BILL_SORT_TYPE.NAME, false); */
 	
-	ArrayList<String> view = bc.viewMain(infors);
+	/* ArrayList<String> view = bc.viewMain(infors); */
 
 	
-	bc.releaseConnection();//Tra ve ket noi
+/* 	bc.releaseConnection();//Tra ve ket noi */
 %>
 
 <jsp:include page="components/header.jsp" flush="true"></jsp:include>
@@ -126,7 +126,7 @@
                             </div>
                             <div class="card-body">
                               	<div id="bill_statistic"></div>
-                              	<% out.append(view.get(0));  %>
+                              <%-- 	<% out.append(view.get(0));  %> --%>
                             </div>
                         </div>
                         <div class="row">
