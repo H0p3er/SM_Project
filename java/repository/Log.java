@@ -7,9 +7,8 @@ import org.javatuples.*;
 
 import connection.ShareControl;
 import constant.LOG_SORT_TYPE;
-import entity.EmployeeObject;
 import entity.LogObject;
-import objects.*;
+import entity.UserObject;
 
 public interface Log extends ShareControl{
 	//Các phương thức, chức năng cập nhật thông tin nơi làm việc
@@ -18,7 +17,7 @@ public interface Log extends ShareControl{
 	
 	//Các phương thức, chức năng lấy thông tin nơi làm việc
 	public ResultSet getLog(int id);
-	public ArrayList<ResultSet> getLogs(Sextet<EmployeeObject,
+	public ArrayList<ResultSet> getLogs(Sextet<UserObject,
 			LogObject,
 			Integer, 
 			Byte ,

@@ -4,17 +4,17 @@ import java.util.*;
 
 import org.javatuples.*;
 
-import constant.WORKPLACE_SORT_TYPE;
+import constant.SHOP_SORT_TYPE;
 import entity.EmployeeObject;
 import entity.ProductObject;
-import entity.WorkplaceObject;
+import entity.ShopObject;
 import objects.*;
 import utility.Utilities;
 import utility.Utilities_date;
 
 public class WorkplaceLibrary {
 	public static ArrayList<String> viewWorkplaceList(
-			Octet<	ArrayList<WorkplaceObject>,
+			Octet<	ArrayList<ShopObject>,
 			Integer, 
 			HashMap<Integer,Integer>, 
 			HashMap<Integer,Integer>, 
@@ -25,20 +25,20 @@ public class WorkplaceLibrary {
 			HashMap<Integer,EmployeeObject>> datas, 
 					
 			Sextet<	EmployeeObject, 
-					WorkplaceObject, 
+					ShopObject, 
 					Short, 
 					Byte ,
-					WORKPLACE_SORT_TYPE,
+					SHOP_SORT_TYPE,
 					Boolean> infors, byte isOpenModal , String url){
 		ArrayList<String> view = new ArrayList<String>();
 		StringBuilder tmp = new StringBuilder();
 		StringBuilder modal = new StringBuilder();
 		
-		ArrayList<WorkplaceObject> wpItems = datas.getValue0(); 
+		ArrayList<ShopObject> wpItems = datas.getValue0(); 
 		int wpTotal = datas.getValue1();
 		
 		EmployeeObject currentUser = infors.getValue0();
-		WorkplaceObject similar = infors.getValue1();
+		ShopObject similar = infors.getValue1();
 		short wpPage = infors.getValue2(); 
 		byte wpPerPage = infors.getValue3();
 		tmp.append("<form action=\"/home/workplace/list\" method=\"post\">");
@@ -509,7 +509,7 @@ public class WorkplaceLibrary {
 		return tmp;
 	}
 	
-	private static StringBuilder viewWorkplaceDeletingModal(WorkplaceObject item) {
+	private static StringBuilder viewWorkplaceDeletingModal(ShopObject item) {
 		StringBuilder tmp = new StringBuilder();
 		
 		String title;
@@ -556,8 +556,8 @@ public class WorkplaceLibrary {
 		return tmp;
 	}
 	
-	private static StringBuilder viewChartOverviewModal(WorkplaceObject detail,
-			Octet<	ArrayList<WorkplaceObject>,
+	private static StringBuilder viewChartOverviewModal(ShopObject detail,
+			Octet<	ArrayList<ShopObject>,
 			Integer, 
 			HashMap<Integer,Integer>, 
 			HashMap<Integer,Integer>, 
@@ -731,8 +731,8 @@ public class WorkplaceLibrary {
 	
 	
 	
-	private static StringBuilder viewWorkplaceOverviewModal(WorkplaceObject item,
-			Octet<	ArrayList<WorkplaceObject>,
+	private static StringBuilder viewWorkplaceOverviewModal(ShopObject item,
+			Octet<	ArrayList<ShopObject>,
 			Integer, 
 			HashMap<Integer,Integer>, 
 			HashMap<Integer,Integer>, 
@@ -973,23 +973,23 @@ public class WorkplaceLibrary {
 		return tmp;
 	}
 	
-	private static StringBuilder viewWorkplaceStatisticChart(Sextet<	ArrayList<WorkplaceObject>,
+	private static StringBuilder viewWorkplaceStatisticChart(Sextet<	ArrayList<ShopObject>,
 			Integer, 
 			HashMap<Integer,Integer>, 
 			HashMap<Integer,Integer>, 
 			HashMap<Pair<String,Integer>,Integer> ,
 			HashMap<Pair<String,Integer>,Integer>> datas, String chartName){	
 		
-		ArrayList<WorkplaceObject> workplaceList = datas.getValue0();
+		ArrayList<ShopObject> workplaceList = datas.getValue0();
 		HashMap<Integer,Integer> workplaceIncome = datas.getValue2();
 		StringBuilder tmp = new StringBuilder();			
 		StringBuilder NameString = new StringBuilder();
 		StringBuilder IncomeString = new StringBuilder();		
 
-		Iterator<WorkplaceObject> iterator = workplaceList.iterator();			
+		Iterator<ShopObject> iterator = workplaceList.iterator();			
 		while (iterator.hasNext()) {
 
-			WorkplaceObject item = iterator.next();
+			ShopObject item = iterator.next();
 			IncomeString.append(workplaceIncome.get(item.getWorkplace_id()));
 			NameString.append("'"+Utilities.decode(item.getWorkplace_name())).append(" (").append(item.getWorkplace_created_date()).append(")'");
 			
@@ -1023,7 +1023,7 @@ public class WorkplaceLibrary {
 	}
 	
 	public static ArrayList<String> viewWorkplaceEdit(
-			Octet<	ArrayList<WorkplaceObject>,
+			Octet<	ArrayList<ShopObject>,
 			Integer, 
 			HashMap<Integer,Integer>, 
 			HashMap<Integer,Integer>, 
@@ -1034,12 +1034,12 @@ public class WorkplaceLibrary {
 			HashMap<Integer,EmployeeObject>> datas, 
 					
 			Sextet<	EmployeeObject, 
-					WorkplaceObject, 
+					ShopObject, 
 					Short, 
 					Byte ,
-					WORKPLACE_SORT_TYPE,
+					SHOP_SORT_TYPE,
 					Boolean> infors, byte isOpenModal , String url){
-		WorkplaceObject eWorkplace = datas.getValue0().get(0);
+		ShopObject eWorkplace = datas.getValue0().get(0);
 		EmployeeObject eEmployee = datas.getValue7().get(eWorkplace.getWorkplace_manager_id());
 		ArrayList<String> view = new ArrayList<String>();
 		StringBuilder tmp = new StringBuilder();
@@ -1064,7 +1064,7 @@ public class WorkplaceLibrary {
 		return view;
 	}
 	
-	private static StringBuilder viewWorkplaceManagerProfile(WorkplaceObject eWorkplace, EmployeeObject eEmployee , String url){
+	private static StringBuilder viewWorkplaceManagerProfile(ShopObject eWorkplace, EmployeeObject eEmployee , String url){
 		StringBuilder tmp = new StringBuilder();
 
 		if (eEmployee!=null) {
@@ -1223,7 +1223,7 @@ public class WorkplaceLibrary {
 	}
 	
 	private static StringBuilder viewWorkplaceProfile(
-			Octet<	ArrayList<WorkplaceObject>,
+			Octet<	ArrayList<ShopObject>,
 			Integer, 
 			HashMap<Integer,Integer>, 
 			HashMap<Integer,Integer>, 
@@ -1231,7 +1231,7 @@ public class WorkplaceLibrary {
 			HashMap<Pair<String,Integer>,Integer>,
 			HashMap<Triplet<Integer,Integer,String>,
 					Triplet<ProductObject,Integer,Integer>>,
-			HashMap<Integer,EmployeeObject>> datas, WorkplaceObject eWorkplace, String url){
+			HashMap<Integer,EmployeeObject>> datas, ShopObject eWorkplace, String url){
 		StringBuilder tmp = new StringBuilder();		
 		tmp.append("<div class=\"container-fluid\">"); 
 		tmp.append("<div class=\"row\">");
@@ -1339,7 +1339,7 @@ public class WorkplaceLibrary {
 		return tmp;
 	}
 	
-	private static StringBuilder viewWorkplaceEditProfile(WorkplaceObject eWorkplace, HashMap<Integer,EmployeeObject> managers , String url){
+	private static StringBuilder viewWorkplaceEditProfile(ShopObject eWorkplace, HashMap<Integer,EmployeeObject> managers , String url){
 		StringBuilder tmp = new StringBuilder();		
 		//Input tên
 		
@@ -1418,7 +1418,7 @@ public class WorkplaceLibrary {
 	}
 	
 	private static StringBuilder viewWorkplaceStorage(
-			Octet<	ArrayList<WorkplaceObject>,
+			Octet<	ArrayList<ShopObject>,
 			Integer, 
 			HashMap<Integer,Integer>, 
 			HashMap<Integer,Integer>, 

@@ -3,11 +3,11 @@ package controller;
 import java.util.*;
 import org.javatuples.*;
 import connection.*;
-import constant.WORKPLACE_EDIT_TYPE;
-import constant.WORKPLACE_SORT_TYPE;
+import constant.SHOP_EDIT_TYPE;
+import constant.SHOP_SORT_TYPE;
 import entity.EmployeeObject;
 import entity.ProductObject;
-import entity.WorkplaceObject;
+import entity.ShopObject;
 import entity.WpsdObject;
 import library.*;
 import model.WorkplaceModel;
@@ -31,13 +31,13 @@ public class WorkplaceControl {
 	}
 
 	
-	public boolean addWorkplace(ArrayList<WorkplaceObject> wItem, ArrayList<WpsdObject> pItem, EmployeeObject currentUser) {
+	public boolean addWorkplace(ArrayList<ShopObject> wItem, ArrayList<WpsdObject> pItem, EmployeeObject currentUser) {
 //		LogObject log = null
 
 		return this.wm.addWorkplace(wItem, pItem, currentUser);		
 	}
 	
-	public boolean editWorkplace(ArrayList<WorkplaceObject> wItem, ArrayList<WpsdObject> pItem, WORKPLACE_EDIT_TYPE et, EmployeeObject currentUser) {
+	public boolean editWorkplace(ArrayList<ShopObject> wItem, ArrayList<WpsdObject> pItem, SHOP_EDIT_TYPE et, EmployeeObject currentUser) {
 //		wItem.forEach(item->{
 //			LogObject log = new LogObject();
 //			log.setLog_user_id(item.getWorkplace_creator_id());
@@ -54,7 +54,7 @@ public class WorkplaceControl {
 		return this.wm.editWorkplace(wItem, pItem, et, currentUser);
 	}
 	
-	public boolean delWorkplace(ArrayList<WorkplaceObject> wItem, EmployeeObject currentUser) {
+	public boolean delWorkplace(ArrayList<ShopObject> wItem, EmployeeObject currentUser) {
 //		wItem.forEach(item->{
 //			LogObject log = new LogObject();
 //			log.setLog_user_id(item.getWorkplace_creator_id());
@@ -73,11 +73,11 @@ public class WorkplaceControl {
 	}
 	
 
-	public WorkplaceObject getWorkplaceObject(int id) {
+	public ShopObject getWorkplaceObject(int id) {
 		return this.wm.getWorkplaceObject(id);
 	}
 	
-	public Octet<	ArrayList<WorkplaceObject>,
+	public Octet<	ArrayList<ShopObject>,
 					Integer, 
 					HashMap<Integer,Integer>, 
 					HashMap<Integer,Integer>, 
@@ -86,10 +86,10 @@ public class WorkplaceControl {
 					HashMap<Triplet<Integer,Integer,String>,
 							Triplet<ProductObject,Integer,Integer>>,
 					HashMap<Integer,EmployeeObject>> getWorkplaceObjects(Sextet<EmployeeObject, 
-			WorkplaceObject, 
+			ShopObject, 
 			Short, 
 			Byte , 
-			WORKPLACE_SORT_TYPE,
+			SHOP_SORT_TYPE,
 			Boolean> infors){
 				
 		return this.wm.getWorkplaceObjects(infors);
@@ -97,13 +97,13 @@ public class WorkplaceControl {
 	
 
 	public ArrayList<String> viewWorkplacesList(Sextet<EmployeeObject, 
-			WorkplaceObject, 
+			ShopObject, 
 			Short, 
 			Byte ,
-			WORKPLACE_SORT_TYPE,
+			SHOP_SORT_TYPE,
 			Boolean> infors, byte isOpenModal , String url){
 		
-		Octet<	ArrayList<WorkplaceObject>,
+		Octet<	ArrayList<ShopObject>,
 		Integer, 
 		HashMap<Integer,Integer>, 
 		HashMap<Integer,Integer>, 

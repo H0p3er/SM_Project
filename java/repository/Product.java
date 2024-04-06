@@ -14,7 +14,9 @@ public interface Product extends ShareControl {
 
 	boolean delProduct(ProductObject p);
 
-	ResultSet getProduct(int id);
+	public ResultSet getProductById(int id);
+	
+	public ResultSet getProductByCreatedDate(Date date, Date date2);
 
-	ArrayList<ResultSet> getProducts(ProductObject similar, int at, byte total, PRODUCT_SORT_TYPE type);
+	public ArrayList<ResultSet> getProducts(ProductObject similar, int at, byte total, PRODUCT_SORT_TYPE type);
 }

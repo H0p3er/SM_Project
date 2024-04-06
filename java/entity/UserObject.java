@@ -1,34 +1,29 @@
 package entity;
 
 public class UserObject {
-	private int user_id; 
-	private String user_name;
-	private String user_pass;
-	private String user_nickname; 
-	private String user_fullname; 
-	private String user_images; 
-	private String user_email; 
-	private String user_notes; 
-	private byte user_permission; 
-	private int user_last_modified_id; 
-	private String user_last_modified_date; 
-	private byte user_gender; 
-	private String user_address; 
-	private String user_created_date; 
-	private boolean user_deleted; 
-	private String user_mobile_phone; 
-	private String user_office_phone; 
-	private String user_social_links; 
-	private int user_parent_id;
-	private int user_logined;
-	
+    private int user_id;
+    private String user_name;
+    private String user_pass;
+    private String user_nickname;
+    private String user_fullname;
+    private String user_images;
+    private String user_email;
+    private String user_notes;
+    private byte user_permission;     
+    private byte user_gender;
+    private String user_address;
+    private String user_created_date;
+    private boolean user_deleted;
+    private String user_phone;
+    private String user_social_links;
+    private long user_logined;
+    
 	public int getUser_id() {
 		return user_id;
 	}
 	public void setUser_id(int user_id) {
 		this.user_id = user_id;
 	}
-	
 	public String getUser_name() {
 		return user_name;
 	}
@@ -41,7 +36,6 @@ public class UserObject {
 	public void setUser_pass(String user_pass) {
 		this.user_pass = user_pass;
 	}
-
 	public String getUser_nickname() {
 		return user_nickname;
 	}
@@ -78,18 +72,6 @@ public class UserObject {
 	public void setUser_permission(byte user_permission) {
 		this.user_permission = user_permission;
 	}
-	public int getUser_last_modified_id() {
-		return user_last_modified_id;
-	}
-	public void setUser_last_modified_id(int user_last_modified_id) {
-		this.user_last_modified_id = user_last_modified_id;
-	}
-	public String getUser_last_modified_date() {
-		return user_last_modified_date;
-	}
-	public void setUser_last_modified_date(String user_last_modified_date) {
-		this.user_last_modified_date = user_last_modified_date;
-	}
 	public byte getUser_gender() {
 		return user_gender;
 	}
@@ -114,17 +96,11 @@ public class UserObject {
 	public void setUser_deleted(boolean user_deleted) {
 		this.user_deleted = user_deleted;
 	}
-	public String getUser_mobile_phone() {
-		return user_mobile_phone;
+	public String getUser_phone() {
+		return user_phone;
 	}
-	public void setUser_mobile_phone(String user_mobile_phone) {
-		this.user_mobile_phone = user_mobile_phone;
-	}
-	public String getUser_office_phone() {
-		return user_office_phone;
-	}
-	public void setUser_office_phone(String user_office_phone) {
-		this.user_office_phone = user_office_phone;
+	public void setUser_phone(String user_phone) {
+		this.user_phone = user_phone;
 	}
 	public String getUser_social_links() {
 		return user_social_links;
@@ -132,17 +108,12 @@ public class UserObject {
 	public void setUser_social_links(String user_social_links) {
 		this.user_social_links = user_social_links;
 	}
-	public int getUser_parent_id() {
-		return user_parent_id;
-	}
-	public void setUser_parent_id(int user_parent_id) {
-		this.user_parent_id = user_parent_id;
-	}
-	public int getUser_logined() {
+	public long getUser_logined() {
 		return user_logined;
 	}
-	public void setUser_logined(int user_logined) {
+	public void setUser_logined(long user_logined) {
 		this.user_logined = user_logined;
 	}
 	
+    
 }

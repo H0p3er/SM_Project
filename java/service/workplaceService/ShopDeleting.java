@@ -10,13 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import connection.ConnectionPool;
-import constant.WORKPLACE_EDIT_TYPE;
+import constant.SHOP_EDIT_TYPE;
 import controller.LogControl;
 import controller.WorkplaceControl;
 import entity.EmployeeObject;
 import entity.LogObject;
 import entity.UserObject;
-import entity.WorkplaceObject;
+import entity.ShopObject;
 import library.*;
 import utility.Utilities;
 import utility.Utilities_date;
@@ -25,13 +25,13 @@ import utility.Utilities_date;
  * Servlet implementation class DelWorkplace
  */
 @WebServlet("/wpDel")
-public class WorkplaceDeleting extends HttpServlet {
+public class ShopDeleting extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public WorkplaceDeleting() {
+    public ShopDeleting() {
         super();
         // TODO Auto-generated constrwptor stub
     }
@@ -52,7 +52,7 @@ public class WorkplaceDeleting extends HttpServlet {
 					ConnectionPool cp = (ConnectionPool)getServletContext().getAttribute("CPool");
 					
 					WorkplaceControl wc = new WorkplaceControl(cp);
-					WorkplaceObject wpDel = new WorkplaceObject();
+					ShopObject wpDel = new ShopObject();
 					wpDel.setWorkplace_id(wpid);
 					wpDel.setWorkplace_manager_id(wpmid);
 					wpDel.setWorkplace_last_modified_date(Utilities_date.getCurrentDate());
@@ -62,13 +62,13 @@ public class WorkplaceDeleting extends HttpServlet {
 					String url = "/home/workplace/list";
 					boolean result;
 					
-					ArrayList<WorkplaceObject> wpDelList = new ArrayList<WorkplaceObject>();
+					ArrayList<ShopObject> wpDelList = new ArrayList<ShopObject>();
 					wpDelList.add(wpDel);
 					if (trash==null) {
 						result = wc.delWorkplace(wpDelList, currentUser);
 						url += "?trash"; 
 					} else {
-						result = wc.editWorkplace(wpDelList, null ,WORKPLACE_EDIT_TYPE.TRASH ,currentUser);				
+						result = wc.editWorkplace(wpDelList, null ,SHOP_EDIT_TYPE.TRASH ,currentUser);				
 					}
 					
 					wc.releaseConnection();

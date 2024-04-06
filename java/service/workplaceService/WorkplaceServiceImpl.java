@@ -17,12 +17,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import connection.ConnectionPool;
 import connection.ConnectionPoolImpl;
-import constant.WORKPLACE_EDIT_TYPE;
-import constant.WORKPLACE_SORT_TYPE;
+import constant.SHOP_EDIT_TYPE;
+import constant.SHOP_SORT_TYPE;
 import controller.WorkplaceControl;
 import entity.EmployeeObject;
 import entity.ProductObject;
-import entity.WorkplaceObject;
+import entity.ShopObject;
 import entity.WpsdObject;
 import jakarta.jws.WebService;
 import library.WorkplaceLibrary;
@@ -39,10 +39,10 @@ public class WorkplaceServiceImpl implements WorkplaceService {
 	@Override
 	public boolean addWorkplace(String wItemsJson, String pItemsJson) {
 
-		ArrayList<WorkplaceObject> wItems = new ArrayList<>();
+		ArrayList<ShopObject> wItems = new ArrayList<>();
 		ArrayList<WpsdObject> pItems = new ArrayList<>();
 		try {
-			wItems.addAll(jsonMapper.readValue(wItemsJson,new TypeReference<List<WorkplaceObject>>() {}));
+			wItems.addAll(jsonMapper.readValue(wItemsJson,new TypeReference<List<ShopObject>>() {}));
 			pItems.addAll(jsonMapper.readValue(pItemsJson,new TypeReference<List<WpsdObject>>() {}));
 		} catch (JsonMappingException e) {
 			// TODO Auto-generated catch block
@@ -58,10 +58,10 @@ public class WorkplaceServiceImpl implements WorkplaceService {
 	@Override
 	public boolean editWorkplace(String wItemsJson, String pItemsJson, String etJson) {
 		ObjectMapper jsonMapper = new ObjectMapper();
-		ArrayList<WorkplaceObject> wItem = new ArrayList<>();
+		ArrayList<ShopObject> wItem = new ArrayList<>();
 		ArrayList<WpsdObject> pItem = new ArrayList<>();
 		try {
-			wItem.addAll(jsonMapper.readValue(wItemsJson,new TypeReference<List<WorkplaceObject>>() {}));
+			wItem.addAll(jsonMapper.readValue(wItemsJson,new TypeReference<List<ShopObject>>() {}));
 			pItem.addAll(jsonMapper.readValue(pItemsJson,new TypeReference<List<WpsdObject>>() {}));
 		} catch (JsonMappingException e) {
 			// TODO Auto-generated catch block
@@ -72,15 +72,15 @@ public class WorkplaceServiceImpl implements WorkplaceService {
 		}
 		
 		
-		return this.wc.editWorkplace(wItem, pItem, WORKPLACE_EDIT_TYPE.valueOf(etJson));
+		return this.wc.editWorkplace(wItem, pItem, SHOP_EDIT_TYPE.valueOf(etJson));
 	}
 	
 	@Override
 	public boolean delWorkplace(String wItemsJson) {
-		ArrayList<WorkplaceObject> wItem = new ArrayList<>();
+		ArrayList<ShopObject> wItem = new ArrayList<>();
 		
 		try {
-			wItem.addAll(jsonMapper.readValue(wItemsJson,new TypeReference<List<WorkplaceObject>>() {}));
+			wItem.addAll(jsonMapper.readValue(wItemsJson,new TypeReference<List<ShopObject>>() {}));
 
 		} catch (JsonMappingException e) {
 			// TODO Auto-generated catch block
@@ -106,13 +106,13 @@ public class WorkplaceServiceImpl implements WorkplaceService {
 	@Override
 	public String getWorkplaceObjects(String inforsJson){
 		
-		Sextet<EmployeeObject, WorkplaceObject, Short, Byte, WORKPLACE_SORT_TYPE, Boolean> infors;
+		Sextet<EmployeeObject, ShopObject, Short, Byte, SHOP_SORT_TYPE, Boolean> infors;
 		try {
 			infors = jsonMapper.readValue(inforsJson,new TypeReference<Sextet<EmployeeObject, 
-					WorkplaceObject, 
+					ShopObject, 
 					Short, 
 					Byte ,
-					WORKPLACE_SORT_TYPE,
+					SHOP_SORT_TYPE,
 					Boolean>>() {});
 			return jsonMapper.writeValueAsString(this.wc.getWorkplaceObjects(infors));
 		} catch (JsonMappingException e1) {
@@ -128,16 +128,16 @@ public class WorkplaceServiceImpl implements WorkplaceService {
 	@Override
 	public String viewWorkplacesList(String inforsJson, byte isOpenModal , String url){
 		
-		Sextet<EmployeeObject, WorkplaceObject, Short, Byte, WORKPLACE_SORT_TYPE, Boolean> infors;
+		Sextet<EmployeeObject, ShopObject, Short, Byte, SHOP_SORT_TYPE, Boolean> infors;
 		try {
 			infors = jsonMapper.readValue(inforsJson,new TypeReference<Sextet<EmployeeObject, 
-					WorkplaceObject, 
+					ShopObject, 
 					Short, 
 					Byte ,
-					WORKPLACE_SORT_TYPE,
+					SHOP_SORT_TYPE,
 					Boolean>>() {});
 			
-			Septet<	ArrayList<WorkplaceObject>,
+			Septet<	ArrayList<ShopObject>,
 			Integer, 
 			HashMap<Integer,Integer>, 
 			HashMap<Integer,Integer>, 
@@ -167,7 +167,7 @@ public class WorkplaceServiceImpl implements WorkplaceService {
 		WorkplaceServiceImpl u = new WorkplaceServiceImpl();
 		
 		//Them mot nguoi su dung
-		WorkplaceObject new_Workplace = new WorkplaceObject();
+		ShopObject new_Workplace = new ShopObject();
 		new_Workplace.setWorkplace_name("Kho hàng Nguyên");
 		new_Workplace.setWorkplace_manager_id(19);
 		new_Workplace.setWorkplace_address("Lâm Đồng");
@@ -184,7 +184,7 @@ public class WorkplaceServiceImpl implements WorkplaceService {
 		sdl.add(wsd2);
 //		new_Workplace.setWorkplace_id(2);
 		
-		List<WorkplaceObject> new_WorkplaceList = new ArrayList<WorkplaceObject>();
+		List<ShopObject> new_WorkplaceList = new ArrayList<ShopObject>();
 		new_WorkplaceList.add(new_Workplace);
 		ObjectMapper mapper = new ObjectMapper();
 		

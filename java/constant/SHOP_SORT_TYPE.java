@@ -1,6 +1,6 @@
 package constant;
 
-public enum WORKPLACE_SORT_TYPE {
+public enum SHOP_SORT_TYPE {
 	NAME,
 	ADDRESS,
 	CREATED,
