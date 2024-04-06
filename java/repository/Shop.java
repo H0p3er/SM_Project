@@ -7,7 +7,6 @@ import org.javatuples.*;
 
 import connection.ShareControl;
 import constant.SHOP_EDIT_TYPE;
-import constant.SHOP_SORT_TYPE;
 import entity.ShopObject;
 import entity.UserObject;
 
@@ -20,5 +19,5 @@ public interface Shop extends ShareControl{
 	//Các phương thức, chức năng lấy thông tin nơi làm việc
 	public ResultSet getShopById(int id);
 	public ArrayList<ResultSet> getShops(
-			Triplet<ShopObject, Integer, Byte> infors, SHOP_SORT_TYPE st, UserObject currentUser );
+			Quartet<ShopObject, Integer, String, Byte> infors, UserObject currentUser);
 }

@@ -189,11 +189,11 @@ public class ShopImpl extends BasicImpl implements Shop {
 
 	@Override
 	public synchronized ArrayList<ResultSet> getShops(
-			Sextet<UserObject, 
+			Triplet<UserObject, 
 			ShopObject, 
 			Integer, 
 			Byte ,
-			SHOP_SORT_TYPE,
+		> String filter
 			Boolean> infors) {
 		// TODO Auto-generated method stub
 		UserObject currentUser = infors.getValue0();

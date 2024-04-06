@@ -8,10 +8,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
 import connection.ConnectionPool;
-import controller.EmployeeControl;
-import employee.*;
-import entity.EmployeeObject;
-import objects.*;
+import controller.UserControl;
+import entity.*;
 
 /**
  * Servlet implementation class UserLogin
@@ -196,7 +194,7 @@ public class UserLogin extends HttpServlet {
 				ConnectionPool cp = (ConnectionPool)application.getAttribute("CPool");
 				
 				//Tạo đối tượng thực thi chức năng
-				EmployeeControl uc = new EmployeeControl(cp);
+				UserControl uc = new UserControl(cp);
 				
 				if (cp==null) {
 					//
@@ -204,7 +202,7 @@ public class UserLogin extends HttpServlet {
 				}
 				
 				//Thực hiện đăng nhập
-				EmployeeObject user = uc.getEmployeeObject(username, userpass);
+				UserObject user = uc.getUserObject(username, userpass);
 				
 				//Trả về kêt nối
 				uc.releaseConnection();

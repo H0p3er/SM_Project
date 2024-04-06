@@ -19,7 +19,7 @@ public class ProductImpl extends BasicImpl implements Product {
 			return false;
 		}
 
-		String sql = "INSERT INTO tblProduct(";
+		String sql = "INSERT INTO tblproduct(";
 		sql += "product_name, product_category_id, product_status, product_deleted, ";
 		sql += "product_price, product_images, product_provider_id, product_guarantee_id, product_notes, product_last_modified) ";
 		sql += "product_discount, product_sold ";
