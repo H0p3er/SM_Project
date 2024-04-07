@@ -1,76 +1,120 @@
 package model;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashMap;
 
-import org.javatuples.*;
+import repository.*;
 import connection.*;
-import constant.SHOP_EDIT_TYPE;
-import constant.SHOP_SORT_TYPE;
-import entity.EmployeeObject;
-import entity.ProductObject;
-import entity.ShopObject;
-import entity.WpsdObject;
-import objects.*;
-import repository.Log;
-import repository.Shop;
-import repository.ShopImpl;
-import utility.Utilities;
+import entity.*;
+import constant.*;
+import dto.*;
 
 public class ShopModel {
 	
-	private Shop w;
+	private Shop shop;
 	
 	public ShopModel(ConnectionPool cp) {
-		this.w= new ShopImpl(cp);
+		this.shop= new ShopImpl(cp);
 	}
 	
 	protected void finalize() throws Throwable{
-		this.w=null;
+		this.shop=null;
 	}
 	
 	public ConnectionPool getCP() {
-		return this.w.getCP();
+		return this.shop.getCP();
 	}
 	
 	public void releaseCP() {
-		this.w.releaseCP();
+		this.shop.releaseCP();
 	}
 
 	//***********************Chuyen huong dieu khien tu Shop Impl*****************************************
-	public boolean addShop(ArrayList<ShopObject> wItem, ArrayList<WpsdObject> pItem, EmployeeObject currentUser) {
-		return this.w.addShop(wItem, pItem, currentUser);
+	public boolean addShop(ShopDTO shopDTO, UserObject currentUser) {
+		ShopObject shopObject = new ShopObject();
+		shopDTO.applyToEntity(shopObject);
+		return this.shop.addShop(shopObject, currentUser);
 	}
 	
-	public boolean editShop(ArrayList<ShopObject> wItem, ArrayList<WpsdObject> pItem, SHOP_EDIT_TYPE et, EmployeeObject currentUser) {
-		return this.w.editShop(wItem, pItem, et, currentUser);
+	public boolean editShop(ShopDTO shopDTO, SHOP_EDIT_TYPE et, UserObject currentUser) {
+		ShopObject shopObject = new ShopObject();
+		shopDTO.applyToEntity(shopObject);
+		return this.shop.editShop(shopObject, et, currentUser);
 	}
 	
-	public boolean delShop(ArrayList<ShopObject> item, EmployeeObject currentUser) {
-		return this.w.delShop(item, currentUser);
+	public boolean delShop(ShopDTO shopDTO, UserObject currentUser) {
+		ShopObject shopObject = new ShopObject();
+		shopDTO.applyToEntity(shopObject);
+		return this.shop.delShop(shopObject, currentUser);
 	}
 	
 	
 	//****************************************************************
 	
-	public ShopObject getShopObject(int id) {
+	public ShopDTO getShopDTOById(int id) {
+		//Khoi tao cac gia tri cua DTO
+		ShopDTO shopDTO = null ;
+		ShopSellerDTO shopUserDTO = null;
+		
+		ArrayList<ResultSet> resultSets = this.shop.getShopById(id);
+		
+		ResultSet rs = resultSets.get(0);
+		if (rs!=null) {
+			try {
+				if (rs.next()) {
+					shopDTO = new ShopDTO();
+					shopDTO.setId(rs.getInt("shop_id"));
+					shopDTO.setName(rs.getString("shop_name"));
+					shopDTO.setAddress(rs.getString("shop_address"));
+					shopDTO.setImages(rs.getString("shop_images"));
+					shopDTO.setNotes(rs.getString("shop_notes"));
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		ShopProductDTO shopProductDTO = null;
+		ArrayList<ShopProductDTO> shopProductDTOs = new ArrayList<ShopProductDTO>();
+		ShopPCDTO shopPCDTO = null;
+		rs = resultSets.get(1);
+		if (rs!=null) {
+			try {
+				if (rs.next()) {
+					shopDTO = new ShopDTO();
+					shopDTO.setId(rs.getInt("shop_id"));
+					shopDTO.setName(rs.getString("shop_name"));
+					shopDTO.setAddress(rs.getString("shop_address"));
+					shopDTO.setImages(rs.getString("shop_images"));
+					shopDTO.setNotes(rs.getString("shop_notes"));
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return shopDTO;
+		
+		
+	}
+	
+	public ShopDTO getShopDTOByUser(UserObject currentUser) {
 		//Gan gia tri khoi tao cho doi tuong ShopObject
-		ShopObject item = null ;
-		
+		ShopDTO shopDTO = null ;
+		ShopSellerDTO shopUserDTO = null;
+		ArrayList<ShopProductDTO> shopProductDTOs = new ArrayList<ShopProductDTO>();
 		//Lay ban ghi 
-		ResultSet rs = this.w.getShop(id);
+		ArrayList<ResultSet> resultSets = this.shop.getShopByUser(currentUser);
 		
-		
+		ResultSet rs = resultSets.get(0);
 		//Chuyen doi ban ghi thanh doi tuong
 		if (rs!=null) {
 			try {
 				if (rs.next()) {
-					item = new ShopObject();
-					item.setShop_id(rs.getInt("workplace_id"));
-					item.setShop_name(rs.getString("workplace_name"));
+					shopDTO = new ShopDTO();
+					shopDTO.setId(rs.getInt("shop_id"));
+					shopDTO.setName(rs.getString("shop_name"));
 
 				}
 			} catch (SQLException e) {
@@ -78,238 +122,7 @@ public class ShopModel {
 				e.printStackTrace();
 			}
 		}
-		return item;
+		return shopDTO;
 	}
 		
-	public Octet<	ArrayList<ShopObject>,
-					Integer, 
-					HashMap<Integer,Integer>, 
-					HashMap<Integer,Integer>, 
-					HashMap<Pair<String,Integer>,Integer> ,
-					HashMap<Pair<String,Integer>,Integer>,
-					HashMap<Triplet<Integer,Integer,String>,
-							Triplet<ProductObject,Integer,Integer>>,
-					HashMap<Integer,EmployeeObject>>
-						getShopObjects(Sextet<	EmployeeObject, 
-													ShopObject, 
-													Short, 
-													Byte ,
-													SHOP_SORT_TYPE,
-													Boolean> infors) {
-		
-		//Gán giá trị khởi tạo cho đối tượng ShopObject
-		ArrayList<ShopObject> items = new ArrayList<>();
-		ShopObject item = null ;
-		
-		short page = infors.getValue2();
-		byte wPerPage = infors.getValue3();
-		//Lấy bản ghi 
-		int at = (page-1)*wPerPage;
-		ArrayList<ResultSet> res = this.w.getShops(infors.setAt2(at));
-		
-		ResultSet rs = res.get(0);
-		
-		//Chuyen doi ban ghi thanh doi tuong
-		if (rs!=null) {
-			try {
-				while (rs.next()) {
-					item = new ShopObject();
-					item.setShop_id(rs.getInt("workplace_id"));
-					item.setShop_name(Utilities.decode(rs.getString("workplace_name")));
-					item.setShop_address(rs.getString("workplace_address"));
-					item.setShop_created_date(rs.getString("workplace_created_date"));
-					item.setShop_last_modified_date(rs.getString("workplace_last_modified_date"));
-					item.setShop_last_modified_id(rs.getInt("workplace_last_modified_id"));
-					item.setShop_deleted(rs.getBoolean("workplace_deleted"));
-					item.setShop_images(rs.getString("workplace_images"));
-					item.setShop_manager_id(rs.getInt("workplace_manager_id"));
-					item.setShop_creator_id(rs.getInt("workplace_creator_id"));
-					item.setShop_notes(rs.getString("workplace_notes"));
-					item.setShop_email(rs.getString("workplace_email"));
-					item.setShop_phone(rs.getString("workplace_phone"));
-					// Dua doi tuong vao tap hop
-					items.add(item);
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		
-		//Lấy tổng doanh số nhập
-		rs = res.get(1);
-		HashMap<Integer, Integer> importTotal = new HashMap<Integer, Integer>();
-		
-		//Lấy doanh số nhập của mỗi kho hàng
-		HashMap<Pair<String,Integer>,Integer> ieShop = new HashMap<Pair<String,Integer>,Integer>();
-		
-		if (rs!=null) {
-			try {
-				while (rs.next()) {
-					ieShop.put(new Pair<>(rs.getString("bill_created_date"), rs.getInt("bill_import_target_workplace_id")), rs.getInt("import_value") );
-					
-					if (importTotal.get(rs.getInt("bill_import_target_workplace_id")) != null) {
-						importTotal.put(rs.getInt("bill_import_target_workplace_id"), importTotal.get(rs.getInt("bill_import_target_workplace_id")) + rs.getInt("import_value"));
-					} else {
-						importTotal.put(rs.getInt("bill_import_target_workplace_id"), rs.getInt("import_value"));
-					}	
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		//Lấy tổng doanh số xuất
-		rs = res.get(2);
-		HashMap<Integer, Integer> exportTotal = new HashMap<Integer, Integer>();
-		
-		//Lấy doanh số xuất của mỗi kho hàng
-		HashMap<Pair<String,Integer>,Integer> eeShop = new HashMap<Pair<String,Integer>,Integer>();
-		if (rs!=null) {
-			try {
-				while (rs.next()) {
-					eeShop.put(new Pair<>(rs.getString("bill_created_date"), rs.getInt("bill_export_current_workplace_id")), rs.getInt("export_value"));
-					
-					if (exportTotal.get(rs.getInt("bill_export_current_workplace_id")) != null) {
-						exportTotal.put(rs.getInt("bill_export_current_workplace_id"), exportTotal.get(rs.getInt("bill_export_current_workplace_id")) + rs.getInt("export_value"));
-					} else {
-						exportTotal.put(rs.getInt("bill_export_current_workplace_id"), rs.getInt("export_value"));
-					}
-					
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		//Lấy danh sách sản phẩm bán chạy nhất
-		ProductObject pItem = null;
-		rs = res.get(3);
-		HashMap<Triplet<Integer,Integer,String>,
-				Triplet<ProductObject,Integer,Integer>> productList = 
-				new HashMap<Triplet<Integer,Integer,String>,
-							Triplet<ProductObject,Integer,Integer>>();
-		//Chuyen doi ban ghi thanh doi tuong
-		if (rs!=null) {
-			try {
-				while (rs.next()) {
-					pItem = new ProductObject();
-					pItem.setProduct_id(rs.getInt("product_id"));
-					pItem.setProduct_name(rs.getString("product_name"));
-					
-					productList.put(
-							new Triplet<Integer,Integer,String>
-							(rs.getInt("product_id"),rs.getInt("wpsd_workplace_id"),rs.getString("bill_created_date")), 
-							new Triplet<ProductObject,Integer,Integer>
-							(pItem, rs.getInt("AvgExport"), rs.getInt("TotalExport")));
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		//Lấy tổng số bản ghi
-		int totalGlobal = 0;
-		rs = res.get(4);
-		if (rs!=null) {
-			try {
-				if (rs.next()) {
-					totalGlobal = rs.getInt("total");
-				}
-				rs.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-			
-		//Lấy danh sách nguoi dung
-		EmployeeObject eItem = null;
-		HashMap<Integer,EmployeeObject> eItems = new HashMap<Integer,EmployeeObject>();
-		rs = res.get(5);		
-		//Chuyen doi ban ghi thanh doi tuong
-		if (rs!=null) {
-			try {
-				while (rs.next()) {
-					eItem = new EmployeeObject();
-					eItem.setEmployee_id(rs.getInt("user_id"));
-					eItem.setUser_fullname(rs.getString("user_fullname"));
-					eItem.setUser_email(rs.getString("user_email"));
-					eItem.setUser_address(rs.getString("user_address"));
-					eItem.setUser_office_phone(rs.getString("user_office_phone"));
-					eItem.setUser_mobile_phone(rs.getString("user_mobile_phone"));
-					eItem.setUser_permission(rs.getByte("user_permission"));
-					eItem.setUser_notes(rs.getString("user_notes"));
-					eItem.setUser_last_modified_date(rs.getString("user_last_modified_date"));
-					eItem.setUser_last_modified_date(rs.getString("user_last_modified_id"));
-					eItem.setUser_parent_id(rs.getInt("user_parent_id"));
-					eItem.setUser_deleted(rs.getBoolean("user_deleted"));
-					eItem.setUser_images(rs.getString("user_images"));
-					
-					// Dua doi tuong vao tap hop
-					eItems.put(rs.getInt("user_id"), eItem);
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		try {
-			rs.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return new Octet<	ArrayList<ShopObject>,
-							Integer, 
-							HashMap<Integer,Integer>, 
-							HashMap<Integer,Integer>, 
-							HashMap<Pair<String,Integer>,Integer> ,
-							HashMap<Pair<String,Integer>,Integer>,
-							HashMap<Triplet<Integer,Integer,String>,
-									Triplet<ProductObject,Integer,Integer>>,
-							HashMap<Integer,EmployeeObject>>(items, totalGlobal, importTotal,exportTotal, ieShop, eeShop, productList, eItems);
-	}
-	
-	public static void main(String[] args) {
-		ConnectionPool cp = new ConnectionPoolImpl();
-		
-		ShopModel wm = new ShopModel(cp);
-		
-		ShopObject similar = new ShopObject();
-	
-		Sextet<EmployeeObject, ShopObject, Short, Byte, SHOP_SORT_TYPE, Boolean> infors = new 
-		Sextet<EmployeeObject, ShopObject, Short, Byte, SHOP_SORT_TYPE, Boolean>
-		(null, similar, (short) 1, (byte) 10, SHOP_SORT_TYPE.NAME, false);
-		Octet<	ArrayList<ShopObject>,
-				Integer, 
-				HashMap<Integer,Integer>, 
-				HashMap<Integer,Integer>, 
-				HashMap<Pair<String,Integer>,Integer> ,
-				HashMap<Pair<String,Integer>,Integer>,
-				HashMap<Triplet<Integer,Integer,String>,
-						Triplet<ProductObject,Integer,Integer>>,
-				HashMap<Integer,EmployeeObject>> items = wm.getShopObjects(infors);
-		System.out.println("Tổng sản phẩm nhập:");
-		items.getValue2().forEach((key,value) -> System.out.println(key+":"+value));
-		
-		System.out.println("Tổng sản phẩm xuất:");
-		items.getValue3().forEach((key,value) -> System.out.println(key+":"+value));
-		
-		System.out.println("Sản phẩm xuất theo ngày:");
-		items.getValue4().forEach((key,value) -> System.out.println(key+":"+value));
-		System.out.println("Sản phẩm nhập theo ngày:");
-		items.getValue5().forEach((key,value) -> System.out.println(key+":"+value));
-		
-		System.out.println("Danh sách sản phẩm:");
-		items.getValue6().forEach((key,value) -> System.out.println(key+":"+value));
-		
-		System.out.println("Danh sách :");
-		items.getValue7().forEach((key,value) -> System.out.println(key+":"+value));
-	};
 }

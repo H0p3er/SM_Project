@@ -48,6 +48,7 @@ public class PCImpl extends BasicImpl implements PC {
 		
 		ConnectionPool cp = new ConnectionPoolImpl();
 		
+		
 		PC a = new PCImpl(cp);
 		
 		ResultSet rs = a.getPCById(id);

@@ -1,16 +1,15 @@
-package dto;
+package dto.user;
 
 import java.util.ArrayList;
 
-import dto.user.UserShopDTO;
+import dto.ShopProductDTO;
 import entity.ShopObject;
 
-public class ShopDTO {
-    private int id;
+public class UserShopDTO {
+	private int id;
     private String name;
     private String address;
     private byte status;
-    private UserShopDTO user;
     private String website_link;
     private String address_link;
     private String created_date;
@@ -50,14 +49,6 @@ public class ShopDTO {
 
 	public void setStatus(byte status) {
 		this.status = status;
-	}
-
-	public UserShopDTO getUser() {
-		return user;
-	}
-
-	public void setUser(UserShopDTO user) {
-		this.user = user;
 	}
 
 	public String getWebsite_link() {
@@ -132,3 +123,5 @@ public class ShopDTO {
 		shopObject.setShop_email(images);
 	}
 }
+    
+

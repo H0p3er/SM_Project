@@ -31,7 +31,7 @@ public class UserModel {
 	}
 	
 	public void releaseConnection() {
-		this.u.releaseConnection();
+		this.u.releaseCP();
 	}
 
 	//***********************Chuyen huong dieu khien tu User Impl*****************************************
@@ -67,13 +67,8 @@ public class UserModel {
 					item.setUser_fullname(Utilities.decode(rs.getString("user_fullname")));
 					item.setUser_email(rs.getString("user_email"));
 					item.setUser_address(rs.getString("user_address"));
-					item.setUser_office_phone(rs.getString("user_office_phone"));
-					item.setUser_mobile_phone(rs.getString("user_mobile_phone"));
 					item.setUser_permission(rs.getByte("user_permission"));
 					item.setUser_notes(rs.getString("user_notes"));
-					item.setUser_last_modified_date(rs.getString("user_last_modified"));
-					item.setUser_parent_id(rs.getInt("user_parent_id"));
-					
 					if (rs.getBlob("user_images")!=null) {
 						item.setUser_images(rs.getString("user_images"));
 					}
@@ -106,10 +101,7 @@ public class UserModel {
 					item.setUser_fullname(rs.getString("user_fullname"));
 					item.setUser_email(rs.getString("user_email"));
 					item.setUser_address(rs.getString("user_address"));
-					item.setUser_office_phone(rs.getString("user_office_phone"));
-					item.setUser_mobile_phone(rs.getString("user_mobile_phone"));
 					item.setUser_permission(rs.getByte("user_permission"));		
-					item.setUser_parent_id(rs.getInt("user_parent_id"));
 					
 				}
 			} catch (SQLException e) {
@@ -124,7 +116,6 @@ public class UserModel {
 			UserObject similar, 
 			short page, 
 			byte uPerPage, 
-			USER_SORT_TYPE type, 
 			boolean isExport) {
 		
 		//Gan gia tri khoi tao cho doi tuong UserObject
@@ -146,13 +137,8 @@ public class UserModel {
 					item.setUser_fullname(Utilities.decode(rs.getString("user_fullname")));
 					item.setUser_email(rs.getString("user_email"));
 					item.setUser_address(Utilities.decode(rs.getString("user_address")));
-					item.setUser_office_phone(rs.getString("user_office_phone"));
-					item.setUser_mobile_phone(rs.getString("user_mobile_phone"));
 					item.setUser_permission(rs.getByte("user_permission"));
 					item.setUser_notes(rs.getString("user_notes"));
-					item.setUser_last_modified_date(rs.getString("user_last_modified_date"));
-					item.setUser_last_modified_date(rs.getString("user_last_modified_id"));
-					item.setUser_parent_id(rs.getInt("user_parent_id"));
 					item.setUser_deleted(rs.getBoolean("user_deleted"));
 					
 					if (isExport) {
