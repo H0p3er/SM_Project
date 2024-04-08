@@ -7,6 +7,7 @@ import org.javatuples.*;
 import connection.*;
 import constant.SHOP_EDIT_TYPE;
 import constant.SHOP_SORT_TYPE;
+import dto.ShopDTO;
 import entity.UserObject;
 import entity.ProductObject;
 import entity.ShopObject;
@@ -45,12 +46,13 @@ public class ShopControl {
 
 	
 	public ArrayList<String> displayShopDetail(int id){
-		ShopObject shopObject = this.shopModel.getShopObjectById(id);
-		return ShopLibrary.viewShop();
+		ShopDTO shopDTO = this.shopModel.getShopDTOById(id);
+		return ShopLibrary.viewShop(shopDTO);
 	}
 	
 	public ArrayList<String> displayShopDetail(UserObject currentUser){
-		ShopObject shopObject = this.shopModel.getShopObjectByUser(currentUser);
+		ShopDTO shopObject = this.shopModel.getShopDTOByUser(currentUser);
+		return ShopLibrary.viewUserShop(shopObject);
 	}
 
 }
