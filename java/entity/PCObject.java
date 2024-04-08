@@ -1,6 +1,6 @@
 package entity;
 
-public class PCObject {
+public class PCObject{
     private int pc_id;
     private String pc_name;
     private String pc_notes;

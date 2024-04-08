@@ -1,137 +1,56 @@
 package controller;
 
 import java.util.*;
+
+import org.apache.tomcat.jni.Library;
 import org.javatuples.*;
 import connection.*;
 import constant.SHOP_EDIT_TYPE;
 import constant.SHOP_SORT_TYPE;
-import entity.EmployeeObject;
+import entity.UserObject;
 import entity.ProductObject;
 import entity.ShopObject;
-import entity.WpsdObject;
 import library.*;
 import model.ShopModel;
-import objects.*;
 
 
 public class ShopControl {
-	private ShopModel wm;
+	private ShopModel shopModel;
 	
 	public ShopControl(ConnectionPool cp) {
-		this.wm = new ShopModel(cp);
+		this.shopModel = new ShopModel(cp);
 		
 	}
 	
 	public ConnectionPool getCP() {
-		return this.wm.getCP();
+		return this.shopModel.getCP();
 	}
 	
 	public void releaseConnection() {
-		this.wm.releaseConnection();
+		this.shopModel.releaseCP();
 	}
 
 	
-	public boolean addWorkplace(ArrayList<ShopObject> wItem, ArrayList<WpsdObject> pItem, EmployeeObject currentUser) {
-//		LogObject log = null
+	public boolean addShop(ShopDTO wItem, UserObject currentUser) {
+		return this.shopModel.addShop(wItem, currentUser);		
+	}
+	
+	public boolean editShop(ShopObject wItem, SHOP_EDIT_TYPE et, UserObject currentUser) {
+		return this.shopModel.editShop(wItem, et, currentUser);
+	}
+	
+	public boolean delShop(ShopObject wItem, UserObject currentUser) {
+		return this.shopModel.delShop(wItem, currentUser);
+	}
 
-		return this.wm.addWorkplace(wItem, pItem, currentUser);		
+	
+	public ArrayList<String> displayShopDetail(int id){
+		ShopObject shopObject = this.shopModel.getShopObjectById(id);
+		return ShopLibrary.viewShop();
 	}
 	
-	public boolean editWorkplace(ArrayList<ShopObject> wItem, ArrayList<WpsdObject> pItem, SHOP_EDIT_TYPE et, EmployeeObject currentUser) {
-//		wItem.forEach(item->{
-//			LogObject log = new LogObject();
-//			log.setLog_user_id(item.getWorkplace_creator_id());
-//			log.setLog_username(currentUser.getUser_name());
-//			log.setLog_user_permission(currentUser.getUser_permission());
-//			log.setLog_action((byte)2);
-//			log.setLog_position((byte) 8);
-//			
-//			log.setLog_notes(Utilities.encode(""));
-//			log.setLog_created_date(Utilities_date.getCurrentDateTime());
-//			
-//			this.lm.addLog(log);
-//		});
-		return this.wm.editWorkplace(wItem, pItem, et, currentUser);
+	public ArrayList<String> displayShopDetail(UserObject currentUser){
+		ShopObject shopObject = this.shopModel.getShopObjectByUser(currentUser);
 	}
-	
-	public boolean delWorkplace(ArrayList<ShopObject> wItem, EmployeeObject currentUser) {
-//		wItem.forEach(item->{
-//			LogObject log = new LogObject();
-//			log.setLog_user_id(item.getWorkplace_creator_id());
-//			log.setLog_username(currentUser.getUser_name());
-//			log.setLog_user_permission(currentUser.getUser_permission());
-//			log.setLog_action((byte)3);
-//			log.setLog_position((byte) 8);
-//			
-//			log.setLog_notes(Utilities.encode(""));
-//			log.setLog_created_date(Utilities_date.getCurrentDateTime());
-//			
-//			this.lm.addLog(log);
-//		});
-		
-		return this.wm.delWorkplace(wItem, currentUser);
-	}
-	
 
-	public ShopObject getWorkplaceObject(int id) {
-		return this.wm.getWorkplaceObject(id);
-	}
-	
-	public Octet<	ArrayList<ShopObject>,
-					Integer, 
-					HashMap<Integer,Integer>, 
-					HashMap<Integer,Integer>, 
-					HashMap<Pair<String,Integer>,Integer> ,
-					HashMap<Pair<String,Integer>,Integer>,
-					HashMap<Triplet<Integer,Integer,String>,
-							Triplet<ProductObject,Integer,Integer>>,
-					HashMap<Integer,EmployeeObject>> getWorkplaceObjects(Sextet<EmployeeObject, 
-			ShopObject, 
-			Short, 
-			Byte , 
-			SHOP_SORT_TYPE,
-			Boolean> infors){
-				
-		return this.wm.getWorkplaceObjects(infors);
-	}
-	
-
-	public ArrayList<String> viewWorkplacesList(Sextet<EmployeeObject, 
-			ShopObject, 
-			Short, 
-			Byte ,
-			SHOP_SORT_TYPE,
-			Boolean> infors, byte isOpenModal , String url){
-		
-		Octet<	ArrayList<ShopObject>,
-		Integer, 
-		HashMap<Integer,Integer>, 
-		HashMap<Integer,Integer>, 
-		HashMap<Pair<String,Integer>,Integer> ,
-		HashMap<Pair<String,Integer>,Integer>,
-		HashMap<Triplet<Integer,Integer,String>,
-				Triplet<ProductObject,Integer,Integer>>,
-		HashMap<Integer,EmployeeObject>> datas = this.wm.getWorkplaceObjects(infors);
-		
-		if (infors.getValue5()) {
-			return WorkplaceLibrary.viewWorkplaceEdit(datas, infors, isOpenModal, url);
-		} else {
-			return WorkplaceLibrary.viewWorkplaceList(datas, infors, isOpenModal, url);
-		}
-		
-	}
-	
-	
-	
-//	public static void main(String[] args) {
-//		WorkplaceControl uc = new WorkplaceControl(null);
-//		
-//		Quartet<WorkplaceObject, Short, Byte, WORKPLACE_SORT_TYPE> infors = new Quartet<>(null, (short) 1, (byte) 10, WORKPLACE_SORT_TYPE.NAME);
-//		
-//		ArrayList<String> view = uc.viewWorkplacesList(infors);
-//		
-//		uc.releaseConnection();//Tra ve ket noi
-//		
-//		System.out.println(view);
-//	}
 }

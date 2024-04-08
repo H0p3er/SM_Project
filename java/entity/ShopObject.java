@@ -5,16 +5,18 @@ public class ShopObject {
     private String shop_name;
     private String shop_address;
     private byte shop_status;
-    private String shop_created_date;
+    private int shop_user_id;
     private String shop_website_link;
-    private String shop_map_link;
+    private String shop_address_link;
+    private String shop_created_date;
+    private String shop_modified_date;
     private boolean shop_deleted;
     private String shop_images;
     private String shop_notes;
-    private String shop_phone;
+	private String shop_phone;
     private String shop_email;
-    private int shop_creator_id;
-	public int getShop_id() {
+    
+    public int getShop_id() {
 		return shop_id;
 	}
 	public void setShop_id(int shop_id) {
@@ -38,11 +40,11 @@ public class ShopObject {
 	public void setShop_status(byte shop_status) {
 		this.shop_status = shop_status;
 	}
-	public String getShop_created_date() {
-		return shop_created_date;
+	public int getShop_user_id() {
+		return shop_user_id;
 	}
-	public void setShop_created_date(String shop_created_date) {
-		this.shop_created_date = shop_created_date;
+	public void setShop_user_id(int shop_user_id) {
+		this.shop_user_id = shop_user_id;
 	}
 	public String getShop_website_link() {
 		return shop_website_link;
@@ -50,11 +52,23 @@ public class ShopObject {
 	public void setShop_website_link(String shop_website_link) {
 		this.shop_website_link = shop_website_link;
 	}
-	public String getShop_map_link() {
-		return shop_map_link;
+	public String getShop_address_link() {
+		return shop_address_link;
 	}
-	public void setShop_map_link(String shop_map_link) {
-		this.shop_map_link = shop_map_link;
+	public void setShop_address_link(String shop_address_link) {
+		this.shop_address_link = shop_address_link;
+	}
+	public String getShop_created_date() {
+		return shop_created_date;
+	}
+	public void setShop_created_date(String shop_created_date) {
+		this.shop_created_date = shop_created_date;
+	}
+	public String getShop_modified_date() {
+		return shop_modified_date;
+	}
+	public void setShop_modified_date(String shop_modified_date) {
+		this.shop_modified_date = shop_modified_date;
 	}
 	public boolean isShop_deleted() {
 		return shop_deleted;
@@ -86,11 +100,5 @@ public class ShopObject {
 	public void setShop_email(String shop_email) {
 		this.shop_email = shop_email;
 	}
-	public int getShop_creator_id() {
-		return shop_creator_id;
-	}
-	public void setShop_creator_id(int shop_creator_id) {
-		this.shop_creator_id = shop_creator_id;
-	}
-
+ 
 }

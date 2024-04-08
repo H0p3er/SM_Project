@@ -29,19 +29,19 @@ public class UserImpl extends BasicImpl implements User {
 			return false;
 		}
 		
-		String sql ="INSERT INTO tbluser(";
-		sql += "user_name, user_pass, ";
-		sql += "user_nickname, user_fullname, user_images, ";
-		sql += "user_email, user_notes, user_permission, ";
-		sql += "user_last_modified_id, user_gender, ";
-		sql += "user_address,";
-		sql += "user_mobile_phone, user_office_phone, user_social_links, user_parent_id";
-		sql += ")";
-		sql += "VALUES(?,md5(?),?,?,?,?,?,?,?,?,?,?,?,?,?)";	
+		StringBuilder sql = new StringBuilder();
+		sql.append("INSERT INTO tbluser(");
+		sql.append("user_name, user_pass, ");
+		sql.append("user_nickname, user_fullname, user_images, ");
+		sql.append("user_email, user_notes, user_permission, ");
+		sql.append("user_gender, user_address, user_created_date, ");
+		sql.append("user_phone, user_social_links ");
+		sql.append(")");
+		sql.append("VALUES(?,md5(?),?,?,?,?,?,?,?,?,?,?,?);");
 		
 		//Bien dich
 		try {
-			PreparedStatement pre = this.con.prepareStatement(sql);
+			PreparedStatement pre = this.con.prepareStatement(sql.toString());
 			pre.setString(1, item.getUser_name());
 			pre.setString(2, item.getUser_pass());
 			pre.setString(3, item.getUser_nickname());
@@ -50,14 +50,11 @@ public class UserImpl extends BasicImpl implements User {
 			pre.setString(6, item.getUser_email());
 			pre.setString(7, item.getUser_notes());		
 			pre.setByte(8, item.getUser_permission());	
-			pre.setInt(9, item.getUser_last_modified_id());
-			pre.setByte(10, item.getUser_gender());
-			pre.setString(11, Utilities.encode(item.getUser_address()));
-			pre.setString(12, item.getUser_mobile_phone());	
-			pre.setString(13, item.getUser_office_phone());
-			pre.setString(14, item.getUser_social_links());
-		
-			pre.setInt(15, item.getUser_parent_id());
+			pre.setByte(9, item.getUser_gender());
+			pre.setString(10, Utilities.encode(item.getUser_address()));
+			pre.setString(11, item.getUser_created_date());
+			pre.setString(12, item.getUser_phone());
+			pre.setString(13, item.getUser_social_links());
 
 			
 			return this.add(pre);
