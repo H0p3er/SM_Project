@@ -9,6 +9,7 @@ public class ProductObject {
     private String product_images;
     private String product_notes;
     private String product_last_modified;
+    private String product_created_date;
     private int product_quantity;
     private int product_pc_id;
     private byte product_deleted;
@@ -84,6 +85,12 @@ public class ProductObject {
 	}
 	public void setProduct_deleted(byte product_deleted) {
 		this.product_deleted = product_deleted;
+	}
+	public String getProduct_created_date() {
+		return product_created_date;
+	}
+	public void setProduct_created_date(String product_created_date) {
+		this.product_created_date = product_created_date;
 	}
     
     

@@ -516,7 +516,7 @@ DROP TABLE IF EXISTS `tblproduct`;
 CREATE TABLE `tblproduct` (
   `product_id` int(11) NOT NULL AUTO_INCREMENT,
   `product_name` varchar(100) NOT NULL,
-  `product_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0 - chưa  đư?c bán\n1 - đang bán\n2 - ng?ng kinh doanh',
+  `product_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'n0  - đang bán\n2 - ng?ng kinh doanh',
   `product_deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0 - không b? đưa vào thùng rác\n1 - b? đưa vào thùng rác',
   `product_images` text,
   `product_guarantee_id` int(11) DEFAULT NULL COMMENT 'M? b?o hành',
@@ -526,6 +526,7 @@ CREATE TABLE `tblproduct` (
   `product_pc_id` smallint(5) unsigned NOT NULL COMMENT 'Loai san pham',
   `product_shop_id` int(10) unsigned DEFAULT '0',
   `product_quantity` int(10) unsigned DEFAULT '0',
+  `product_price` double DEFAULT NULL,
   PRIMARY KEY (`product_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=latin1 COMMENT='Bảng sản phẩm';
 

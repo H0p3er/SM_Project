@@ -1,14 +1,52 @@
-3package repository;
+package repository;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
+
 import connection.*;
+import constant.PRODUCT_EDIT_TYPE;
 import constant.PRODUCT_SORT_TYPE;
 import entity.ProductObject;
 import basic.BasicImpl;
 
 public class ProductImpl extends BasicImpl implements Product {
 
+	public static void main(String[] args) {
+		int id = 1;
+		ConnectionPool cp = new ConnectionPoolImpl();
+		ArrayList<ResultSet> list = new ArrayList<ResultSet>();
+		Product a = new ProductImpl(cp);
+		ProductObject b = new ProductObject();
+		list = a.getProducts(b, id, (byte) 5, PRODUCT_SORT_TYPE.NAME);
+		ResultSet rs = list.get(0);
+		if (rs!=null) {
+			try {
+				while (rs.next()) {
+					System.out.println(rs.getString("product_name"));
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		ProductObject c = new ProductObject();
+		c.setProduct_name("Dell XPS 15 9530 i7 13700H (71015716)");
+		c.setProduct_images(null);
+		c.setProduct_notes(null);
+		c.setProduct_created_date(utility.Utilities_date.getCurrentDateTime());
+		c.setProduct_pc_id(3);
+		c.setProduct_shop_id(1);
+		c.setProduct_quantity(100);
+		c.setProduct_price(20000);
+		c.setProduct_id(46);
+		if (a.editProduct(c,PRODUCT_EDIT_TYPE.GENERAL))
+			System.out.print("true");
+		else {
+			System.out.print("false");
+			}
+		
+	}
 	public ProductImpl(ConnectionPool cp) {
 		super(cp, "Product");
 	}
@@ -18,27 +56,22 @@ public class ProductImpl extends BasicImpl implements Product {
 		if (this.isExisting(item)) {
 			return false;
 		}
-
 		String sql = "INSERT INTO tblproduct(";
-		sql += "product_name, product_category_id, product_status, product_deleted, ";
-		sql += "product_price, product_images, product_provider_id, product_guarantee_id, product_notes, product_last_modified) ";
-		sql += "product_discount, product_sold ";
-		sql	+= "VALUE(?,?,?,?,?,?,?,?)";
+		sql += "product_name, product_images, product_notes, product_created_date, ";
+		sql += "product_pc_id, product_shop_id, product_quantity, product_price)";
+		sql	+= "VALUE (?,?,?,?,?,?,?,?)";
 
 		// Biên dịch
 		try {
 			PreparedStatement pre = this.con.prepareStatement(sql);
-			pre.setString(1, item.getProduct_name());
-			pre.setInt(2, item.getProduct_pc_id());
-			pre.setByte(3, item.getProduct_status());
-			pre.setByte(4, item.getProduct_deleted());
-			pre.setDouble(5, item.getProduct_price());
-			pre.setString(6, item.getProduct_images());
-			pre.setInt(7, item.getProduct_shop_id());
-			pre.setInt(8, item.getProduct_quantity());
-			pre.setString(9, item.getProduct_notes());
-			pre.setString(10, item.getProduct_last_modified());
-
+			pre.setString(1, utility.Utilities.encode(item.getProduct_name()));
+			pre.setString(2, item.getProduct_images());
+			pre.setString(3, utility.Utilities.encode(item.getProduct_notes()));
+			pre.setString(4, item.getProduct_created_date());
+			pre.setInt(5, item.getProduct_pc_id());
+			pre.setInt(6, item.getProduct_shop_id());
+			pre.setInt(7, item.getProduct_quantity());
+			pre.setDouble(8, item.getProduct_price());
 
 			return this.add(pre);
 		} catch (SQLException e) {
@@ -56,10 +89,8 @@ public class ProductImpl extends BasicImpl implements Product {
 
 	// Phương thức ràng buộc sự duy nhất của Product_name
 	private boolean isExisting(ProductObject item) {
-		// Trường hợp giả định tài khoản chưa tồn tại
 		boolean flag = false;
-
-		String sql = "SELECT product_id FROM tblProduct WHERE product_name='" + item.getProduct_name() + "' AND product_provider_id='"+item.getProduct_provider_id()+"'; ";
+		String sql = "SELECT product_id FROM tblProduct WHERE product_name='" + item.getProduct_name() + "' AND product_shop_id='"+item.getProduct_shop_id()+"'; ";
 		ResultSet rs = this.gets(sql);
 		if (rs != null) {
 			try {
@@ -77,38 +108,47 @@ public class ProductImpl extends BasicImpl implements Product {
 	}
 
 	@Override
-	public boolean editProduct(ProductObject item) {
+	public boolean editProduct(ProductObject item, PRODUCT_EDIT_TYPE et) {
 		String sql = "UPDATE tblProduct SET ";
-		sql += "product_name=?, product_category_id=?, product_status=?, product_deleted=?, ";
-		sql += "product_price=?, product_images=?, product_provider_id=?, product_guarantee_id=?, product_notes=?, product_last_modified=? ";
-		sql += "product_discount=?, product_sold=? ";
+		switch (et) {
+			case GENERAL:
+				sql += "product_name=?, product_images=?, product_notes=?, ";
+				sql += "product_pc_id=?, product_quantity=?, product_price=?";
+			break;
+			case TRASH:
+				sql += "product_deleted=1";
+			break;
+			case RESTORE:
+				sql += "product_deleted=0";
+			break;
+		}
+		
 		sql += "WHERE product_id=?; ";
-
 		// Biên dịch
 		try {
 			PreparedStatement pre = this.con.prepareStatement(sql);
-			pre.setString(1, item.getProduct_name());
-			pre.setShort(2, item.getProduct_category_id());
-			pre.setShort(3, item.getProduct_status());
-			pre.setBoolean(4, item.isProduct_deleted());
-			pre.setInt(5, item.getProduct_price());
-			pre.setString(6, item.getProduct_images());
-			pre.setShort(7, item.getProduct_provider_id());
-			pre.setInt(8, item.getProduct_guarantee_id());
-			pre.setString(9, item.getProduct_notes());
-			pre.setString(10, item.getProduct_last_modified());
-
-
+			if (et == PRODUCT_EDIT_TYPE.GENERAL) {
+			pre.setString(1, utility.Utilities.encode(item.getProduct_name()));
+			pre.setString(2, item.getProduct_images());
+			pre.setString(3, utility.Utilities.encode(item.getProduct_notes()));
+			pre.setInt(4, item.getProduct_pc_id());
+			pre.setInt(5, item.getProduct_quantity());
+			pre.setDouble(6, item.getProduct_price());
+			pre.setInt(7, item.getProduct_id());
+			} else {
+				pre.setInt(1, item.getProduct_id());
+			}
 			return this.edit(pre);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 			try {
 				this.con.rollback();
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+			e.printStackTrace();
 		}
 		return false;
 	}
@@ -123,7 +163,7 @@ public class ProductImpl extends BasicImpl implements Product {
 
 		try {
 			PreparedStatement pre = this.con.prepareStatement(sql);
-			pre.setShort((short)1, item.getProduct_id());
+			pre.setInt(1, item.getProduct_id());
 
 			return this.del(pre);
 		} catch (SQLException e) {
@@ -144,9 +184,8 @@ public class ProductImpl extends BasicImpl implements Product {
 		boolean flag = true;
 		
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT article_id FROM tblarticle WHERE article_author_name=" + item.getProduct_name() + "; ");
-		sql.append("SELECT product_id FROM tblproduct WHERE product_manager_id=" + item.getProduct_id() + "; ");
-		sql.append("SELECT Product_id FROM tblProduct WHERE Product_parent_id=" + item.getProduct_id() + ";");
+		sql.append("SELECT bd_id FROM tblbd WHERE bd_product_id=" + item.getProduct_id() + "; ");
+		
 		
 		ArrayList<ResultSet> res = this.getReList(sql.toString());
 		
@@ -166,7 +205,7 @@ public class ProductImpl extends BasicImpl implements Product {
 	}
 
 	@Override
-	public ResultSet getProduct(int id) {
+	public ResultSet getProductById(int id) {
 		String sql = "SELECT * FROM tblProduct WHERE (product_id=?) AND (product_deleted=0)";
 
 		return this.get(sql, id);
@@ -203,32 +242,49 @@ public class ProductImpl extends BasicImpl implements Product {
 		StringBuilder multiSelect = new StringBuilder();
 		multiSelect.append(sql);
 		multiSelect.append(sql2);
-		
+		System.out.println(sql);
 		return this.getReList(multiSelect.toString());
 	}
 	
 	private String createConditions(ProductObject similar) {
 		StringBuilder conds = new StringBuilder();
-		if(similar !=  null) {
-			
-			// Từ khóa tìm kiếm
-			String key = similar.getProduct_name();
-			if(key != null && !key.equalsIgnoreCase("")) {
-				conds.append(" AND ");
-				conds.append("(product_name LIKE '%"+key+"%')");
-			}
-			
-			if(similar.isProduct_deleted()) {
-				conds.append(" AND (product_deleted=1) ");
+//		if(similar !=  null) {
+//			
+//			// Từ khóa tìm kiếm
+//			String key = similar.getProduct_name();
+//			if(similar.getProduct_deleted()==1) {
+//				conds.append("(product_deleted=1) ");
+//			} else {
+//				conds.append("(product_deleted=0) ");
+//			}
+//			if(key != null && !key.equalsIgnoreCase("")) {
+//				conds.append(" AND ");
+//				conds.append("(product_name LIKE '%"+key+"%')");
+//			}
+//		}
+//		
+//		if(!conds.toString().equalsIgnoreCase("")) {
+//			conds.insert(0, "WHERE ");
+//		}
+//		
+		if (similar != null)
+		{
+			if(similar.getProduct_deleted()==1) {
+				conds.append("(product_deleted=1) ");
 			} else {
-				conds.append(" AND (product_deleted=0) ");
+				conds.append("(product_deleted=0) ");
 			}
 		}
-		
 		if(!conds.toString().equalsIgnoreCase("")) {
-			conds.insert(0, " WHERE ");
+		conds.insert(0, "WHERE ");
 		}
-		
 		return conds.toString();
 	}
+
+	@Override
+	public ResultSet getProductByCreatedDate(Date date, Date date2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 }

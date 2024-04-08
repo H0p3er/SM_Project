@@ -53,7 +53,7 @@ public class ProductModel {
 		ProductObject item = null;
 
 		// Lay ban ghi
-		ResultSet rs = this.p.getProduct(id);
+		ResultSet rs = this.p.getProductById(id);
 
 		// Chuyen doi ban ghi thanh doi tuong
 		if (rs != null) {
@@ -63,21 +63,13 @@ public class ProductModel {
 					item.setProduct_id(rs.getInt("product_id"));
 					item.setProduct_name(Utilities.decode(rs.getString("product_name")));
 					item.setProduct_status(rs.getByte("product_status"));
-					item.setProduct_deleted(rs.getBoolean("product_deleted"));
-					item.setProduct_import_price(rs.getInt("product_import_price"));
-					item.setProduct_sell_price(rs.getInt("product_sell_price"));
+					item.setProduct_price(rs.getDouble("product_price"));
 					item.setProduct_images(rs.getString("product_images"));
-					item.setProduct_guarantee_id(rs.getShort("product_guarantee_id"));
 					item.setProduct_notes(rs.getString("product_notes"));
 					item.setProduct_last_modified(rs.getString("product_last_modified"));
-					item.setProduct_desc(rs.getString("product_desc"));
-					item.setMinInventory(rs.getShort("product_min_inven"));
-					item.setMaxInventory(rs.getShort("product_max_inven"));
-					item.setStoped_sell(rs.getBoolean("product_stoped_cell"));
-					item.setUser_modified_id(rs.getInt("product_user_modified_id"));
-					item.setProduct_bar_code(rs.getString("product_bar_code"));
-					item.setPc_id(rs.getInt("pc_id"));
-					item.setPc_name(rs.getString("pc_name"));
+					item.setProduct_pc_id(rs.getInt("product_pc_id"));
+					item.setProduct_shop_id(rs.getInt("product_shop_id"));
+					item.setProduct_quantity(rs.getInt("product_quantity"));
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -119,21 +111,13 @@ public class ProductModel {
 					item.setProduct_id(rs.getInt("product_id"));
 					item.setProduct_name(Utilities.decode(rs.getString("product_name")));
 					item.setProduct_status(rs.getByte("product_status"));
-					item.setProduct_deleted(rs.getBoolean("product_deleted"));
-					item.setProduct_import_price(rs.getInt("product_import_price"));
-					item.setProduct_sell_price(rs.getInt("product_sell_price"));
+					item.setProduct_price(rs.getDouble("product_price"));
 					item.setProduct_images(rs.getString("product_images"));
-					item.setProduct_guarantee_id(rs.getShort("product_guarantee_id"));
 					item.setProduct_notes(rs.getString("product_notes"));
 					item.setProduct_last_modified(rs.getString("product_last_modified"));
-					item.setProduct_desc(rs.getString("product_desc"));
-					item.setMinInventory(rs.getShort("product_min_inven"));
-					item.setMaxInventory(rs.getShort("product_max_inven"));
-					item.setStoped_sell(rs.getBoolean("product_stoped_cell"));
-					item.setUser_modified_id(rs.getInt("product_user_modified_id"));
-					item.setProduct_bar_code(rs.getString("product_bar_code"));
-					item.setPc_id(rs.getInt("pc_id"));
-					item.setPc_name(rs.getString("pc_name"));
+					item.setProduct_pc_id(rs.getInt("product_pc_id"));
+					item.setProduct_shop_id(rs.getInt("product_shop_id"));
+					item.setProduct_quantity(rs.getInt("product_quantity"));
 
 					// Dua doi tuong vao tap hop
 					items.add(item);
