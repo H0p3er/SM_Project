@@ -12,7 +12,7 @@
     <title>SM Project</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/home/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 
     <!-- Additional CSS Files -->
@@ -22,4 +22,12 @@
     <link rel="stylesheet" href="/home/assets/css/animate.css">
     <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
 
+
+	<!-- Main CSS Files -->
+	<link rel="stylesheet" href="/home/assets/css/main.css">
   </head>
+  
+  <body>
+  
+<jsp:include page="loading-screen.jsp" flush="true"></jsp:include>
+<jsp:include page="navigation-bar.jsp" flush="true"></jsp:include>

@@ -18,7 +18,6 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 
-	<display-name>Eclipse BIRT Report Viewer</display-name>
 
 	<!-- Default locale setting.
 	-->
@@ -266,4 +265,14 @@
 			<taglib-location>/WEB-INF/tlds/birt.tld</taglib-location>
 		</taglib>
 	</jsp-config>
+	
+<!-- 	<servlet>
+	<servlet-name>shop</servlet-name>
+	<jsp-file>/main/user/user_shop.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+	<servlet-name>shop</servlet-name>
+	<url-pattern>/user/shop</url-pattern>
+	</servlet-mapping> -->
+	
 </web-app>
