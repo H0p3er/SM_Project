@@ -2,7 +2,7 @@ package dto;
 
 import java.util.ArrayList;
 
-import dto.user.UserShopDTO;
+import dto.seller.SellerShopDTO;
 import entity.ShopObject;
 
 public class ShopDTO {
@@ -10,7 +10,7 @@ public class ShopDTO {
     private String name;
     private String address;
     private byte status;
-    private UserShopDTO user;
+    private SellerShopDTO user;
     private String website_link;
     private String address_link;
     private String created_date;
@@ -52,11 +52,11 @@ public class ShopDTO {
 		this.status = status;
 	}
 
-	public UserShopDTO getUser() {
+	public SellerShopDTO getUser() {
 		return user;
 	}
 
-	public void setUser(UserShopDTO user) {
+	public void setUser(SellerShopDTO user) {
 		this.user = user;
 	}
 

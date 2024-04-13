@@ -2,21 +2,43 @@
     pageEncoding="UTF-8"%>
  <div class="tab-pane fade" id="shop_statistic" role="tabpanel" aria-labelledby="appartment-tab">
    <div class="row">
+     <div class="col-lg-4">
+       <div class="card">
+         <div class="card-body">
+           <h5 class="card-title">Tỉ lệ sản phẩm bán ra</h5>
+		   <div id="barChart"></div>
+           <script>
+
+           </script>
+
+         </div>
+       </div>
+     </div>
+     <div class="col-lg-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Tỉ lệ sản phẩm bán ra</h5>
+				<!-- chart -->
+				<div id="donutChart"></div>
+            </div>
+          </div>
+     </div>
+
+     <div class="col-lg-4">
+       <div class="info-table" id="shop_statistic_overview">
+       
+       </div>
+     </div>
+   </div>
+   <div class="row">
      <div class="col-lg-3">
 
      </div>
-     <div class="col-lg-6">
+	 <div class="col-lg-3">
+
      </div>
      <div class="col-lg-3">
-       <div class="info-table">
-         <ul>
-           <li>Total Flat Space <span>185 m2</span></li>
-           <li>Số loại sản phẩm <span>26th</span></li>
-           <li>Số lượng sản phẩm <span>4</span></li>
-           <li>Tổng sản phẩm bán ra <span>Yes</span></li>
-           <li>Lợi nhuận<span>Bank</span></li>
-         </ul>
-       </div>
+
      </div>
    </div>
  </div>

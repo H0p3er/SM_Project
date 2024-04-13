@@ -217,7 +217,7 @@ public class ShopImpl extends BasicImpl implements Shop {
 	}
 
 	@Override
-	public ArrayList<ResultSet> getShopById(int id) {
+	public ArrayList<ResultSet> getShopById(String filter,int recordPos, byte pageLength, int id) {
 		// TODO Auto-generated method stub
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT shop.*, u.user_fullname, u.user_images FROM tblshop s LEFT JOIN tbluser u ");
@@ -232,31 +232,37 @@ public class ShopImpl extends BasicImpl implements Shop {
 	}
 	
 	@Override
-	public ArrayList<ResultSet> getShopByUser(UserObject user) {
+	public ArrayList<ResultSet> getShopByUser(String filter, int recordPos, byte pageLength, UserObject user) {
 		// TODO Auto-generated method stub
 		StringBuilder sql = new StringBuilder();
 		
-		sql.append("SELECT * FROM tblshop WHERE (shop_id="+user.getUser_id()+") AND (shop_deleted=0); ");
+		sql.append("SELECT * FROM tblshop s WHERE (s.shop_id="+user.getUser_id()+") AND (s.shop_deleted=0); ");
 		
-		sql.append("SELECT p.*,pc.pc_name FROM tblproduct p LEFT JOIN tblpc pc ");	
-		sql.append("ON p.product_pc_id = pc.pc_id ");
+		sql.append("SELECT COUNT(p.product_id) as TotalProduct FROM tblproduct p ");	
+		sql.append("INNER JOIN tblshop s ON p.product_shop_id = s.shop_id ");
 		sql.append("WHERE (p.product_shop_id="+user.getUser_id()+") AND (p.product_deleted=0); ");
 		
-//		sql.append("SELECT p.* FROM tblbd b LEFT JOIN tblproduct p ");
-//		sql.append("ON p.product_pc_id = b.pc_id ");
-//		sql.append("WHERE (p.product_shop_id="+user.getUser_id()+") AND (p.product_deleted=0); ");
+		sql.append("SELECT p.*, pc.pc_name FROM tblproduct p ");	
+		sql.append("LEFT JOIN tblpc pc ON p.product_pc_id = pc.pc_id ");
+		sql.append("INNER JOIN tblshop s ON p.product_shop_id = s.shop_id ");
+		sql.append("WHERE (p.product_shop_id="+user.getUser_id()+") AND (p.product_deleted=0) ");
+		sql.append("GROUP BY p.product_id, pc.pc_name; ");
+
+		// Lấy sản phẩm bán được 
+		sql.append("SELECT p.*, SUM(bd_product_quantity) as TotalSellingQuantityPerProduct, SUM(bd_product_price*bd_product_quantity) as TotalSellingPricePerProduct FROM tblproduct p ");
+		sql.append("INNER JOIN tblbd bd ON p.product_id = bd.bd_product_id ");
+		sql.append("WHERE (p.product_shop_id="+user.getUser_id()+") AND (p.product_deleted=0)");
+		sql.append("GROUP BY p.product_id; ");
+		
+	
 		return this.getReList(sql.toString());
 	}
 
 
 	@Override
 	public synchronized ArrayList<ResultSet> getShops(
-			Quartet< ShopObject, Integer, Byte, String> infors, UserObject currentUser) {
+			String filter, int pagePos, byte pageLength, UserObject currentUser) {
 		// TODO Auto-generated method stub
-		ShopObject similar = infors.getValue0();
-		int at = infors.getValue1();
-		byte wpPerPage = infors.getValue2(); 
-		
 		StringBuilder sql = new StringBuilder();			
 		return this.getReList(sql.toString());
 	}
@@ -326,28 +332,17 @@ public class ShopImpl extends BasicImpl implements Shop {
 		currentUser.setUser_name("Tran The Hưởng");
 		currentUser.setUser_id((byte)2);
 
-		Quartet< 
-		ShopObject, 
-		Integer, 
-		Byte ,
-		String> infors = new Quartet<>(new_Shop, 0,(byte)25, null);
 		//Lay tap ban ghi nguoi su dung
-		ResultSet rs = u.getShopByUser(currentUser).get(0);
+		ResultSet rs = u.getShopByUser("null",0,(byte)0,currentUser).get(3);
 		
 		String row = null;
 		//Duyen va hien thi danh sach nguoi su dung
 		if (rs!=null) {
 			try {
 				while (rs.next()) {
-//					row = "ID: "+rs.getInt("Shop_id");
-//					row += "\tNAME: "+rs.getString("Shop_name");
-//					row += "\tNICKNAME: "+rs.getString("Shop_manager_id");
-//					row += "\tADDRESS: "+rs.getString("Shop_address");
-					row = "\tDATE: "+rs.getString("bill_created_date");
-					row += "\tEXPORT:"+rs.getInt("TotalExport");
-					row += "\tTOTAL: "+rs.getInt("AvgExport");
-					row += "\tWP: "+rs.getInt("wpsd_Shop_id");
-					row += "\tPRODUCT: "+rs.getInt("product_id");
+
+					row = "\tPRODUCT: "+rs.getInt("product_id");
+					row += "\tSelling: "+rs.getInt("TotalSellingQuantityPerProduct");
 					System.out.println(row);
 				}			
 				rs.close();

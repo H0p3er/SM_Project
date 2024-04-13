@@ -1,11 +1,10 @@
-package dto.user;
+package dto.seller;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import dto.ShopProductDTO;
 import entity.ShopObject;
 
-public class UserShopDTO {
+public class SellerShopDTO {
 	private int id;
     private String name;
     private String address;
@@ -17,10 +16,11 @@ public class UserShopDTO {
     private String notes;
 	private String phone;
     private String email;
-	private ArrayList<UserShopProductDTO> storage;
-	
+	private List<SellerShopProductDTO> storage;
+	private SellerShopStatisticDTO statistic;
+
 	public int getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(int id) {
@@ -28,7 +28,7 @@ public class UserShopDTO {
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public void setName(String name) {
@@ -36,7 +36,7 @@ public class UserShopDTO {
 	}
 
 	public String getAddress() {
-		return address;
+		return this.address;
 	}
 
 	public void setAddress(String address) {
@@ -44,7 +44,7 @@ public class UserShopDTO {
 	}
 
 	public byte getStatus() {
-		return status;
+		return this.status;
 	}
 
 	public void setStatus(byte status) {
@@ -52,7 +52,7 @@ public class UserShopDTO {
 	}
 
 	public String getWebsite_link() {
-		return website_link;
+		return this.website_link;
 	}
 
 	public void setWebsite_link(String website_link) {
@@ -60,7 +60,7 @@ public class UserShopDTO {
 	}
 
 	public String getAddress_link() {
-		return address_link;
+		return this.address_link;
 	}
 
 	public void setAddress_link(String address_link) {
@@ -76,7 +76,7 @@ public class UserShopDTO {
 	}
 
 	public String getImages() {
-		return images;
+		return this.images;
 	}
 
 	public void setImages(String images) {
@@ -84,7 +84,7 @@ public class UserShopDTO {
 	}
 
 	public String getNotes() {
-		return notes;
+		return this.notes;
 	}
 
 	public void setNotes(String notes) {
@@ -92,7 +92,7 @@ public class UserShopDTO {
 	}
 
 	public String getPhone() {
-		return phone;
+		return this.phone;
 	}
 
 	public void setPhone(String phone) {
@@ -100,21 +100,29 @@ public class UserShopDTO {
 	}
 
 	public String getEmail() {
-		return email;
+		return this.email;
 	}
 
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
-	public ArrayList<UserShopProductDTO> getStorage() {
-		return storage;
+	public List<SellerShopProductDTO> getStorage() {
+		return this.storage;
 	}
 
-	public void setStorage(ArrayList<UserShopProductDTO> storage) {
+	public void setStorage(List<SellerShopProductDTO> storage) {
 		this.storage = storage;
 	}
 
+	public SellerShopStatisticDTO getStatistic() {
+		return this.statistic;
+	}
+
+	public void setStatistic(SellerShopStatisticDTO statistic) {
+		this.statistic = statistic;
+	}
+	
 	public void applyToEntity(ShopObject shopObject) {
 		shopObject.setShop_name(this.name);
 		shopObject.setShop_address(address);

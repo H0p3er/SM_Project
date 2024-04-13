@@ -14,6 +14,7 @@
   <script src="/home/vendor/jquery/jquery.min.js"></script>
   <script src="/home/vendor/bootstrap/js/bootstrap.min.js"></script>
   <script src="/home/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/home/vendor/apexcharts/apexcharts.min.js"></script>
   <script src="/home/assets/js/isotope.min.js"></script>
   <script src="/home/assets/js/owl-carousel.js"></script>
   <script src="/home/assets/js/counter.js"></script>

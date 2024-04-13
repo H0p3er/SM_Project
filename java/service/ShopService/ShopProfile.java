@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +12,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.javatuples.Triplet;
+
+import com.google.gson.Gson;
 
 import connection.ConnectionPool;
 import controller.ShopControl;
@@ -20,10 +25,10 @@ import entity.ShopObject;
 /**
  * Servlet implementation class WorkplaceProfile
  */
-@WebServlet("/shop/product")
+@WebServlet("/shop/profile")
 public class ShopProfile extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final String CONTENT_TYPE = "text/html; charset=utf-8";
+	private static final String CONTENT_TYPE = "application/json; charset=utf-8";
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -42,7 +47,6 @@ public class ShopProfile extends HttpServlet {
 		// TODO Auto-generated method stub
 		// Tìm thông tin đăng nhập
 		UserObject user = (UserObject) request.getSession().getAttribute("userLogined");
-
 		
 		 if (user!=null) { 
 			 view(request, response, user); 
@@ -53,9 +57,6 @@ public class ShopProfile extends HttpServlet {
 			 view(request, response, user);
 //			 response.sendRedirect("/home/login"); 
 		 }
-
-
-		
 	}
 
 	protected void view(HttpServletRequest request, HttpServletResponse response, UserObject user)
@@ -78,10 +79,11 @@ public class ShopProfile extends HttpServlet {
 
 		PrintWriter out = response.getWriter();
 		// Xac dinh kieu noi dung xuat ve trinh khach
-
-		ArrayList<String> data = shopControl.displayShopProfile(user);
-
-		out.append(data.get(0));
+		Triplet<String, Short, Byte> infors = new Triplet<String, Short, Byte>("",(short) 0,(byte) 0);
+		List<String> data = shopControl.displaySellerShopProfile(infors,user);
+		Gson gson = new Gson();
+	    String jsonData = gson.toJson(data);
+		out.append(jsonData);
 		// Tạo đối tượng thực hiện xuất nội dung
 		out.flush();
 	}

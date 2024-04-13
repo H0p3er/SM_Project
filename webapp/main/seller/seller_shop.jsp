@@ -9,7 +9,7 @@
         <div class="col-lg-4">
           <div class="section-heading">
             <h6>| Gian hàng của bạn</h6>
-            <h2>Find Your Best Deal Right Now!</h2>
+            <h2 id="shop-name"></h2>
           </div>
         </div>
         <div class="col-lg-12">

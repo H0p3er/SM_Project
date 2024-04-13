@@ -12,11 +12,7 @@ const CONFIGURATION = {
 const SHORT_NAME_ADDRESS_COMPONENT_TYPES =
     new Set(['street_number', 'administrative_area_level_1', 'postal_code']);
 
-const ADDRESS_COMPONENT_TYPES_IN_FORM = [
-    'location',
-    'administrative_area_level_2',
-    'administrative_area_level_1'
-];
+const ADDRESS_COMPONENT_TYPES_IN_FORM = ['location','administrative_area_level_2','administrative_area_level_1'];
 
 async function importLibrary(){
     const {Place} = await google.maps.importLibrary("places");
