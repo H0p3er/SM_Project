@@ -30,4 +30,3 @@
   <body>
   
 <jsp:include page="loading-screen.jsp" flush="true"></jsp:include>
-<jsp:include page="navigation-bar.jsp" flush="true"></jsp:include>
