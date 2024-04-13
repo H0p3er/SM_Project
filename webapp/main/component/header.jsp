@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <title>SM Project</title>
-
+	<link rel="icon" href="/home/assets/icon/favicon.ico" type="image/x-icon">
     <!-- Bootstrap core CSS -->
     <link href="/home/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 

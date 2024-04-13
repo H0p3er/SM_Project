@@ -5,8 +5,7 @@
      <div class="row">
        <div class="col-lg-8 col-md-8">
          <ul class="info">
-           <li><i class="fa fa-envelope"></i> info@company.com</li>
-           <li><i class="fa fa-map"></i> Sunny Isles Beach, FL 33160</li>
+           <li><i class="fa fa-envelope"></i> info@sm.vn</li>
          </ul>
        </div>
        <div class="col-lg-4 col-md-4">
@@ -33,32 +32,29 @@
                    </a>
                    <!-- ***** Logo End ***** -->
                    <!-- ***** Menu Start ***** -->
-                   <ul class="nav">
-                     <li><a href="/home/main/home.jsp" class="active">Trang chủ</a></li>
-                     <li><a href="properties.html">Properties</a></li>
-                     <li><a href="property-details.html">Property Details</a></li>
-                     <li><a href="contact.html">Contact Us</a></li>
+                   <ul class="nav justify-content-between px-3 px-md-0">
+              <li class="ms-lg-5 col-9">
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Tìm kiếm..."
+                    aria-labbel="Timkiem" aria-describedby="button-addon2">
+                  <button class="btn btn-dark" type="button" id="button-addon2"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </div>
+              </li>
 
-                     <li>
-                     	<div class="btn-group">
-                     	  <button type="button" class="btn btn-danger">Action</button>
-						  <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-						    <span class="visually-hidden">Toggle Dropdown</span>
-						  </button>	
-                     	 <ul class="dropdown-menu" id="dropdown">
-						    <li><a class="dropdown-item" href="/home/main/user/user_shop.jsp">Gian hàng của bạn</a></li>
-						    <li><a class="" href="/home/main/user/shop">Thông tin cá nhân</a></li>
-						    <li><hr class="dropdown-divider"></li>
-						    <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
-						  </ul> 
-                     	</div>
-
-		              </li>   				
-                 </ul> 
- 
-                   <a class='menu-trigger'>
-                       <span>Menu</span>
-                   </a>
+              <li><a class="bg-dark " data-bs-toggle="dropdown" aria-expanded="false"><i
+                    class="fa fa-user text-light"></i>$username</a>
+                    <ul class="dropdown-menu" id="dropdown">
+                      <li><a class="dropdown-item text-center p-0 bg-white text-black" href="/home/main/user/user_shop.jsp">Gian hàng của bạn</a></li>
+                      <li><a class="dropdown-item text-center p-0 bg-white text-black" href="/home/main/user/shop">Thông tin cá nhân</a></li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li><a class="dropdown-item text-center p-0 bg-white text-black" href="#">Đăng xuất</a></li>
+                    </ul>
+                  
+              </li>
+            </ul>
+            <a class='menu-trigger'>
+              <span>Menu</span>
+            </a>
                    <!-- ***** Menu End ***** -->
                </nav>
            </div>
