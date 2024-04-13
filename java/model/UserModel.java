@@ -2,8 +2,8 @@ package model;
 
 import connection.*;
 import constant.USER_EDIT_TYPE;
+import constant.USER_SORT_TYPE;
 import entity.UserObject;
-import objects.*;
 import repository.User;
 import repository.UserImpl;
 import utility.Utilities;
@@ -116,6 +116,7 @@ public class UserModel {
 			UserObject similar, 
 			short page, 
 			byte uPerPage, 
+			USER_SORT_TYPE type,
 			boolean isExport) {
 		
 		//Gan gia tri khoi tao cho doi tuong UserObject
