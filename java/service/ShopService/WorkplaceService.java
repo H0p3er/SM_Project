@@ -1,4 +1,4 @@
-package service.workplaceService;
+package service.ShopService;
 
 import java.util.Scanner;
 

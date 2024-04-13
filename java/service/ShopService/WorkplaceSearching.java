@@ -1,4 +1,4 @@
-package service.workplaceService;
+package service.ShopService;
 
 import java.io.IOException;
 import java.io.PrintWriter;

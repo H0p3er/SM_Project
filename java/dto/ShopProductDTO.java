@@ -11,8 +11,6 @@ public class ShopProductDTO {
     private String last_modified;
     private int quantity;
     private ShopPCDTO pc_id;
-    private byte product_deleted;
-    private ShopDTO product_shop_id;
     
 	public int getId() {
 		return id;
@@ -73,18 +71,6 @@ public class ShopProductDTO {
 	}
 	public void setPc_id(ShopPCDTO pc_id) {
 		this.pc_id = pc_id;
-	}
-	public byte getProduct_deleted() {
-		return product_deleted;
-	}
-	public void setProduct_deleted(byte product_deleted) {
-		this.product_deleted = product_deleted;
-	}
-	public ShopDTO getProduct_shop_id() {
-		return product_shop_id;
-	}
-	public void setProduct_shop_id(ShopDTO product_shop_id) {
-		this.product_shop_id = product_shop_id;
 	}
     
 }

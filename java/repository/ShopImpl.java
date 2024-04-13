@@ -221,10 +221,12 @@ public class ShopImpl extends BasicImpl implements Shop {
 		// TODO Auto-generated method stub
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT shop.*, u.user_fullname, u.user_images FROM tblshop s LEFT JOIN tbluser u ");
+		sql.append("ON s.shop_user_id = u.user_id ");
 		sql.append("WHERE (s.shop_id="+id+") AND (shop_deleted=0); ");
 		
-		sql.append("SELECT p.*, pc.name FROM tblproduct p LEFT JOIN tblpc pc ");		
-		sql.append("WHERE (p.product_shop_id="+id+") AND (p.product_status=1)");
+		sql.append("SELECT p.*, pc.name FROM tblproduct p LEFT JOIN tblpc pc ");
+		sql.append("ON p.product_pc_id = pc.pc_id ");
+		sql.append("WHERE (p.product_shop_id="+id+") AND (p.product_status=1); ");
 		
 		return this.getReList(sql.toString());
 	}
@@ -236,11 +238,13 @@ public class ShopImpl extends BasicImpl implements Shop {
 		
 		sql.append("SELECT * FROM tblshop WHERE (shop_id="+user.getUser_id()+") AND (shop_deleted=0); ");
 		
-		sql.append("SELECT p.*,pc.name FROM tblproduct p LEFT JOIN tblpc pc ");		
-		sql.append("WHERE (p.product_shop_id="+user.getUser_id()+") AND (p.product_deleted=0)");
+		sql.append("SELECT p.*,pc.pc_name FROM tblproduct p LEFT JOIN tblpc pc ");	
+		sql.append("ON p.product_pc_id = pc.pc_id ");
+		sql.append("WHERE (p.product_shop_id="+user.getUser_id()+") AND (p.product_deleted=0); ");
 		
-		sql.append("SELECT p.*, pc.price FROM tblbill b LEFT JOIN tblproduct p ");		
-		sql.append("WHERE (p.product_shop_id="+user.getUser_id()+") AND (p.product_deleted=0)");
+//		sql.append("SELECT p.* FROM tblbd b LEFT JOIN tblproduct p ");
+//		sql.append("ON p.product_pc_id = b.pc_id ");
+//		sql.append("WHERE (p.product_shop_id="+user.getUser_id()+") AND (p.product_deleted=0); ");
 		return this.getReList(sql.toString());
 	}
 
