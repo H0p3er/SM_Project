@@ -46,8 +46,8 @@
 						<li><a class="bg-dark " data-bs-toggle="dropdown" aria-expanded="false"><i
                     class="fa fa-user text-light"></i>$username</a>
                     <ul class="dropdown-menu" id="dropdown">
-                      <li><a class="dropdown-item text-center p-0 bg-white text-black" href="/home/main/user/user_shop.jsp">Gian hàng của bạn</a></li>
-                      <li><a class="dropdown-item text-center p-0 bg-white text-black" href="/home/main/user/shop">Thông tin cá nhân</a></li>
+                      <li><a class="dropdown-item text-center p-0 bg-white text-black" href="/home/main/seller/seller_shop.jsp">Gian hàng của bạn</a></li>
+                      <li><a class="dropdown-item text-center p-0 bg-white text-black" href="/home/main/user/user_profile.jsp">Thông tin cá nhân</a></li>
                       <li><hr class="dropdown-divider"></li>
                       <li><a class="dropdown-item text-center p-0 bg-white text-black" href="#">Đăng xuất</a></li>
                     </ul>
