@@ -28,26 +28,26 @@
                <nav class="main-nav">
                    <!-- ***** Logo Start ***** -->
                    <a href="/home/main/home.jsp" class="logo">
-                       <h1>SM</h1>
+                       <img height="120px" width="200px" src="/home/assets/images/sm.png" alt="">
                    </a>
                    <!-- ***** Logo End ***** -->
                    <!-- ***** Menu Start ***** -->
                    <ul class="nav justify-content-between px-3 px-md-0">
-              <li class="ms-lg-5 col-9">
-                <div class="input-group">
+              		<li class="ms-lg-5 col-8">
+                	<div class="input-group">
                   <input type="text" class="form-control" placeholder="Tìm kiếm..."
                     aria-labbel="Timkiem" aria-describedby="button-addon2">
                   <button class="btn btn-dark" type="button" id="button-addon2"><i class="fa fa-search" aria-hidden="true"></i></button>
                 </div>
               </li>
 				<%session = request.getSession(true); 
-					if (session.getAttribute("userLogined")==null)
+					if (session.getAttribute("userLogined")!=null)
 					{ %>
 						<li><a class="bg-dark " data-bs-toggle="dropdown" aria-expanded="false"><i
                     class="fa fa-user text-light"></i>$username</a>
                     <ul class="dropdown-menu" id="dropdown">
-                      <li><a class="dropdown-item text-center p-0 bg-white text-black" href="/home/main/seller/seller_shop.jsp">Gian hàng của bạn</a></li>
-                      <li><a class="dropdown-item text-center p-0 bg-white text-black" href="/home/main/user/user_profile.jsp">Thông tin cá nhân</a></li>
+                      <li><a class="dropdown-item text-center p-0 bg-white text-black" href="/home/main/user/user_shop.jsp">Gian hàng của bạn</a></li>
+                      <li><a class="dropdown-item text-center p-0 bg-white text-black" href="/home/main/user/shop">Thông tin cá nhân</a></li>
                       <li><hr class="dropdown-divider"></li>
                       <li><a class="dropdown-item text-center p-0 bg-white text-black" href="#">Đăng xuất</a></li>
                     </ul>
@@ -55,7 +55,7 @@
               		</li> 
 					<%} else {%>
 						<li>
-							<a href="/home/guest/login.jsp" class="bg-dark"><i class="fa fa-user text-light"></i>Login</a>
+							<a href="/home/main/guest/login.jsp" class="bg-dark"><i class="fa fa-user text-light"></i>Login</a>
               			</li> 	
 					<% }%>
 					

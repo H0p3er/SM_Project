@@ -424,6 +424,7 @@ Header Style
 
 .header-area .main-nav ul.nav {
   flex-basis: 100%;
+  margin-top: 30px;
   justify-content: right;
   align-items: center;
   -webkit-transition: all 0.3s ease 0s;
@@ -432,6 +433,7 @@ Header Style
   transition: all 0.3s ease 0s;
   position: relative;
   z-index: 999;
+  height: 100px;
 }
 
 .header-area .main-nav .nav li:last-child {
