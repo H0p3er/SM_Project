@@ -40,8 +40,10 @@
                   <button class="btn btn-dark" type="button" id="button-addon2"><i class="fa fa-search" aria-hidden="true"></i></button>
                 </div>
               </li>
-
-              <li><a class="bg-dark " data-bs-toggle="dropdown" aria-expanded="false"><i
+				<%session = request.getSession(true); 
+					if (session.getAttribute("userLogined")==null)
+					{ %>
+						<li><a class="bg-dark " data-bs-toggle="dropdown" aria-expanded="false"><i
                     class="fa fa-user text-light"></i>$username</a>
                     <ul class="dropdown-menu" id="dropdown">
                       <li><a class="dropdown-item text-center p-0 bg-white text-black" href="/home/main/user/user_shop.jsp">Gian hàng của bạn</a></li>
@@ -50,7 +52,14 @@
                       <li><a class="dropdown-item text-center p-0 bg-white text-black" href="#">Đăng xuất</a></li>
                     </ul>
                   
-              </li>
+              		</li> 
+					<%} else {%>
+						<li>
+							<a href="/home/guest/login.jsp" class="bg-dark"><i class="fa fa-user text-light"></i>Login</a>
+              			</li> 	
+					<% }%>
+					
+              
             </ul>
             <a class='menu-trigger'>
               <span>Menu</span>

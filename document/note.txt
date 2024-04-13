@@ -1,0 +1,1 @@
+Đăng nhập: nếu chưa đăng nhập thì giao diện hiển thị nút đăng nhập thay vì username
