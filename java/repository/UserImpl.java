@@ -35,7 +35,7 @@ public class UserImpl extends BasicImpl implements User {
 		sql.append("user_nickname, user_fullname, user_images, ");
 		sql.append("user_email, user_notes, user_permission, ");
 		sql.append("user_gender, user_address, user_created_date, ");
-		sql.append("user_phone, user_social_links ");
+		sql.append("user_mobile_phone, user_social_links ");
 		sql.append(")");
 		sql.append("VALUES(?,md5(?),?,?,?,?,?,?,?,?,?,?,?);");
 		
@@ -53,7 +53,7 @@ public class UserImpl extends BasicImpl implements User {
 			pre.setByte(9, item.getUser_gender());
 			pre.setString(10, Utilities.encode(item.getUser_address()));
 			pre.setString(11, item.getUser_created_date());
-			pre.setString(12, item.getUser_phone());
+			pre.setString(12, item.getUser_mobile_phone());
 			pre.setString(13, item.getUser_social_links());
 
 			
@@ -95,25 +95,20 @@ public class UserImpl extends BasicImpl implements User {
 		String sql ="UPDATE tbluser SET ";
 		switch (et) {
 			case GENERAL:
-				sql += "(";
-				sql += "user_nickname=?, user_fullname=?, user_images=?, ";
-				sql += "user_email=?, user_notes=?, ";
-				sql += "user_last_modified_id=?, user_gender=?, ";
-				sql += "user_address=?,";
-				sql += "user_mobile_phone=?, user_office_phone=?, user_social_links=?";
-				sql += ") ";
+			    sql += "user_nickname=?, user_fullname=?, user_images=?, ";
+			    sql += "user_email=?, user_notes=?, user_gender=?, ";
+			    sql += "user_address=?, user_mobile_phone=?, user_social_links=?";
 			break;
-			
 			case SETTINGS:
 				sql+="user_permission=? ";
 			break;
 			
 			case TRASH:
-				sql+="user_deleted=1, user_last_modified_date=? ";
+				sql+="user_deleted=1 ";
 			break;
 		}
 		
-		sql += "WHERE user_id=?; ";
+		sql += "WHERE user_id=?;";
 		
 		
 		//Bien dich
@@ -126,14 +121,12 @@ public class UserImpl extends BasicImpl implements User {
 					pre.setString(3, item.getUser_images());
 					pre.setString(4, item.getUser_email());
 					pre.setString(5, item.getUser_notes());		
-					pre.setInt(6, item.getUser_last_modified_id());
-					pre.setByte(7, item.getUser_gender());
+					pre.setByte(6, item.getUser_gender());
+					pre.setString(7, item.getUser_address());
 					pre.setString(8, item.getUser_mobile_phone());	
-					pre.setString(9, item.getUser_office_phone());
-					pre.setString(10, item.getUser_email());
-					pre.setString(11, item.getUser_address());
-
-					pre.setInt(14, item.getUser_id());
+					pre.setString(9, item.getUser_social_links());
+					
+					pre.setInt(10, item.getUser_id());
 					break;
 				
 				case SETTINGS:
@@ -141,10 +134,8 @@ public class UserImpl extends BasicImpl implements User {
 					pre.setInt(2, item.getUser_id());
 					break;
 				
-				
 				case TRASH:
-					pre.setString(1, item.getUser_last_modified_date());
-					pre.setInt(2, item.getUser_id());
+					pre.setInt(1, item.getUser_id());
 					break;
 			}
 			
@@ -195,9 +186,7 @@ public class UserImpl extends BasicImpl implements User {
 		boolean flag = true;
 		
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT export_bill_id FROM tblexportbill WHERE (export_bill_customer_id="+ item.getUser_id()+"); ");
-		sql.append("SELECT user_id FROM tbluser WHERE (user_parent_id="+item.getUser_id()+"); ");
-		sql.append("SELECT employee_id FROM tblemployee WHERE (employee_id="+item.getUser_id()+"); ");
+		sql.append("SELECT user_id FROM tbluser WHERE user_id="+item.getUser_id()+"; ");
 		
 		ArrayList<ResultSet> res = this.getReList(sql.toString());
 		
@@ -245,6 +234,9 @@ public class UserImpl extends BasicImpl implements User {
 		sql+= this.createCondition(similar);
 		
 		switch (type) {
+			case NAME:
+				sql+= " ORDER BY user_name ASC ";
+				break;
 			case FULLNAME:
 				sql+= " ORDER BY user_fullname ASC ";
 				break;
@@ -286,7 +278,7 @@ public class UserImpl extends BasicImpl implements User {
 				 int id = similar.getUser_id();
 				 
 				 if (id>0) {
-					 conds.append("AND ( (user_parent_id=").append(id).append(") OR (user_id=").append(id).append(") )") ;
+					 conds.append("AND (user_id=").append(id).append(") )") ;
 				 }
 			 }
 			 
@@ -322,27 +314,46 @@ public class UserImpl extends BasicImpl implements User {
 		
 		//Tao doi tuong thuc thi chuc nang muc User
 		User u=new UserImpl(cp);
-		
+	
 		//Them mot nguoi su dung
 		UserObject new_user = new UserObject();
-		new_user.setUser_name("Admin6");
-		new_user.setUser_pass("Admin1@");
-		new_user.setUser_nickname("Huong");
-		new_user.setUser_fullname("Tran The Huong");
+		new_user.setUser_name("name5");
+		new_user.setUser_pass("pas1");
+		new_user.setUser_nickname("ling");
+		new_user.setUser_fullname("123 ling");
+		new_user.setUser_images(null);
+		new_user.setUser_social_links(null);
+		new_user.setUser_gender((byte)1);
 		new_user.setUser_email("admin1@gmail.com");
 		new_user.setUser_address("Ha Noi");
-		new_user.setUser_created_date("29/12/2003");
-		new_user.setUser_parent_id(20);
+		new_user.setUser_created_date("2022/11/11");	
 		
-		new_user.setUser_id(17);
-		boolean result = u.delUser(new_user);
+		//add
+		boolean resultAdd =  u.addUser(new_user);
+		if (resultAdd)
+			System.out.println("true");
+		else {
+			System.out.println("false Add");
+			}
 		
-		if (!result) {
-			System.out.print("\n---------------------Khong thanh cong---------------------\n");
-		}
+		//edit 
+		boolean resultEdit =  u.editUser(new_user, USER_EDIT_TYPE.TRASH);
+		if (resultEdit)
+			System.out.println("true");
+		else {
+			System.out.println("false Edit");
+			}
+		
+		//del
+		boolean resultDel = u.delUser(new_user);
+		if (resultDel)
+			System.out.println("true");
+		else {
+			System.out.println("false Del");
+			}
 		
 		//Lay tap ban ghi nguoi su dung
-		ArrayList<ResultSet> res = u.getUsers(null,0,(byte)25, USER_SORT_TYPE.FULLNAME);
+		ArrayList<ResultSet> res = u.getUsers(null,0,(byte)25, USER_SORT_TYPE.NAME);
 		
 		ResultSet rs = res.get(0);
 		String row;
@@ -354,7 +365,6 @@ public class UserImpl extends BasicImpl implements User {
 					row += "\tNAME: "+rs.getString("user_name");
 					row += "\tNICKNAME: "+rs.getString("user_nickname");
 					row += "\tFULLNAME: "+rs.getString("user_fullname");
-					row += "\tPARENT: "+rs.getString("user_parent_id");
 					row += "\tLOGINED: "+rs.getShort("user_logined");
 					
 					System.out.println(row);
