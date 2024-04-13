@@ -8,6 +8,8 @@ import connection.*;
 import entity.*;
 import constant.*;
 import dto.*;
+import dto.user.UserShopDTO;
+import dto.user.UserShopProductDTO;
 
 public class ShopModel {
 	
@@ -99,11 +101,11 @@ public class ShopModel {
 		
 	}
 	
-	public ShopDTO getShopDTOByUser(UserObject currentUser) {
+	public UserShopDTO getShopDTOByUser(UserObject currentUser) {
 		//Gan gia tri khoi tao cho doi tuong ShopObject
-		ShopDTO shopDTO = null ;
-		ShopSellerDTO shopUserDTO = null;
-		ArrayList<ShopProductDTO> shopProductDTOs = new ArrayList<ShopProductDTO>();
+		UserShopDTO userShopDTO = null ;
+		UserShopProductDTO userShopProductDTO = null;
+		ArrayList<UserShopProductDTO> userShopProductDTOs = new ArrayList<UserShopProductDTO>();
 		//Lay ban ghi 
 		ArrayList<ResultSet> resultSets = this.shop.getShopByUser(currentUser);
 		
@@ -112,9 +114,9 @@ public class ShopModel {
 		if (rs!=null) {
 			try {
 				if (rs.next()) {
-					shopDTO = new ShopDTO();
-					shopDTO.setId(rs.getInt("shop_id"));
-					shopDTO.setName(rs.getString("shop_name"));
+					userShopDTO = new UserShopDTO();
+					userShopDTO.setId(rs.getInt("shop_id"));
+					userShopDTO.setName(rs.getString("shop_name"));
 
 				}
 			} catch (SQLException e) {
@@ -122,7 +124,23 @@ public class ShopModel {
 				e.printStackTrace();
 			}
 		}
-		return shopDTO;
+		rs = resultSets.get(1);
+		if (rs!=null) {
+			try {
+				if (rs.next()) {
+					userShopProductDTO = new UserShopProductDTO();
+					userShopProductDTO.setId(rs.getInt("product_id"));
+					userShopProductDTO.setName(rs.getString("product_name"));
+					userShopProductDTOs.add(userShopProductDTO);				
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		userShopDTO.setStorage(userShopProductDTOs);
+		return userShopDTO;
 	}
 		
 }

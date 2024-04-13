@@ -8,6 +8,7 @@ import connection.*;
 import constant.SHOP_EDIT_TYPE;
 import constant.SHOP_SORT_TYPE;
 import dto.ShopDTO;
+import dto.user.UserShopDTO;
 import entity.UserObject;
 import entity.ProductObject;
 import entity.ShopObject;
@@ -27,32 +28,32 @@ public class ShopControl {
 		return this.shopModel.getCP();
 	}
 	
-	public void releaseConnection() {
+	public void releaseCP() {
 		this.shopModel.releaseCP();
 	}
 
 	
-	public boolean addShop(ShopDTO wItem, UserObject currentUser) {
-		return this.shopModel.addShop(wItem, currentUser);		
+	public boolean addShop(ShopDTO shopDTO, UserObject currentUser) {
+		return this.shopModel.addShop(shopDTO, currentUser);		
 	}
 	
-	public boolean editShop(ShopObject wItem, SHOP_EDIT_TYPE et, UserObject currentUser) {
-		return this.shopModel.editShop(wItem, et, currentUser);
+	public boolean editShop(ShopDTO shopDTO, SHOP_EDIT_TYPE et, UserObject currentUser) {
+		return this.shopModel.editShop(shopDTO, et, currentUser);
 	}
 	
-	public boolean delShop(ShopObject wItem, UserObject currentUser) {
+	public boolean delShop(ShopDTO wItem, UserObject currentUser) {
 		return this.shopModel.delShop(wItem, currentUser);
 	}
 
 	
-	public ArrayList<String> displayShopDetail(int id){
+	public ArrayList<String> displayShopProfile(int id){
 		ShopDTO shopDTO = this.shopModel.getShopDTOById(id);
 		return ShopLibrary.viewShop(shopDTO);
 	}
 	
-	public ArrayList<String> displayShopDetail(UserObject currentUser){
-		ShopDTO shopObject = this.shopModel.getShopDTOByUser(currentUser);
-		return ShopLibrary.viewUserShop(shopObject);
+	public ArrayList<String> displayShopProfile(UserObject currentUser){
+		UserShopDTO userShopDTO = this.shopModel.getShopDTOByUser(currentUser);
+		return ShopLibrary.viewShopProductList(userShopDTO);
 	}
 
 }

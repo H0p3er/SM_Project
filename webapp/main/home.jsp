@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
    
 <jsp:include page="component/header.jsp" flush="true"></jsp:include> 
-   
+  
   <div class="properties section">
     <div class="container">
       <div class="row">

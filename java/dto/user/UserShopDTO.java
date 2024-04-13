@@ -17,7 +17,7 @@ public class UserShopDTO {
     private String notes;
 	private String phone;
     private String email;
-	private ArrayList<ShopProductDTO> storage;
+	private ArrayList<UserShopProductDTO> storage;
 	
 	public int getId() {
 		return id;
@@ -107,11 +107,11 @@ public class UserShopDTO {
 		this.email = email;
 	}
 
-	public ArrayList<ShopProductDTO> getStorage() {
+	public ArrayList<UserShopProductDTO> getStorage() {
 		return storage;
 	}
 
-	public void setStorage(ArrayList<ShopProductDTO> storage) {
+	public void setStorage(ArrayList<UserShopProductDTO> storage) {
 		this.storage = storage;
 	}
 
