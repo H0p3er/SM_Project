@@ -35,36 +35,53 @@
        </div>
    </div>
  </header>
-  <div class="contact-content mt-5">
-    <div class="container mt-5">
+  <div class="contact-content mt-2">
+    <div class="container">
       <div class="row">
         <div class="d-flex justify-content-center">
           <div class="col-lg-6">
           <form id="contact-form"  action="" method="post">
-            <h1 class="my-5">Đăng nhập</h1>
+            <h1 class="my-5">Đăng ký</h1>
             <div class="row">
               <div class="col-lg-12">
                 <fieldset>
-                  <label for="name">Tên tài khoản</label>
-                  <input type="text" name="name" id="name" placeholder="Username" autocomplete="on" required>
+                  <label for="name">Họ và tên</label>
+                  <input type="text" name="name" id="name" placeholder="Name" required>
                 </fieldset>
               </div>
               <div class="col-lg-12">
                 <fieldset>
-                  <label for="email">Mật khẩu</label>
-                  <input type="password" name="email" id="email" pattern="[^ @]*@[^ @]*" placeholder="Password"
+                  <label for="username">Tên tài khoản</label>
+                  <input type="text" name="username" id="username" placeholder="Username" required>
+                </fieldset>
+              </div>
+              <div class="col-lg-12">
+                <fieldset>
+                  <label for="email">Email</label>
+                  <input type="email" name="email" id="email" placeholder="Email" required>
+                </fieldset>
+              </div>
+              <div class="col-lg-12">
+                <fieldset>
+                  <label for="password">Mật khẩu</label>
+                  <input type="password" name="password" id="password" pattern="[^ @]*@[^ @]*" placeholder="Password"
                     required>
                 </fieldset>
               </div>
-              <div class="row align-items-center">
-              <div class="col-lg-5">
+              <div class="col-lg-12">
                 <fieldset>
-                  <button type="submit" id="form-submit" class="orange-button">Đăng nhập</button>
+                  <label for="cfpassword">Xác nhận mật khẩu</label>
+                  <input type="password" name="cfpassword" id="retypepassword" pattern="[^ @]*@[^ @]*" placeholder="Re-type Password"
+                    required>
                 </fieldset>
               </div>
-              <div class="col-lg-7 mt-3 mt-lg-0">
-              	Chưa có tài khoản? <a href="/home/main/guest/register.jsp">Đăng ký</a>
+              <div class="col-lg-12">
+                <fieldset>
+                  <button type="submit" id="form-submit" class="orange-button">Đăng ký</button>
+                </fieldset>
               </div>
+              <div class="col-lg-12 mt-4">
+              	Đã có tài khoản? <a href="/home/main/guest/login.jsp">Đăng nhập</a>
               </div>
             </div>
           </form>
