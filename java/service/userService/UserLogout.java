@@ -35,7 +35,7 @@ public class UserLogout extends HttpServlet {
 		
 		session.removeAttribute("userLogined");
 		
-		response.sendRedirect("/home/user/login");
+		response.sendRedirect("/home/main/home.jsp");
 	}
 
 	/**

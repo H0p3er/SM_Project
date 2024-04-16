@@ -1,10 +1,14 @@
 package dto.seller;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+
+import org.javatuples.Pair;
 
 import entity.ShopObject;
 
-public class SellerShopDTO {
+public class SellerShopDTO implements Comparator<SellerShopDTO>{
 	private int id;
     private String name;
     private String address;
@@ -17,7 +21,6 @@ public class SellerShopDTO {
 	private String phone;
     private String email;
 	private List<SellerShopProductDTO> storage;
-	private SellerShopStatisticDTO statistic;
 
 	public int getId() {
 		return this.id;
@@ -115,20 +118,18 @@ public class SellerShopDTO {
 		this.storage = storage;
 	}
 
-	public SellerShopStatisticDTO getStatistic() {
-		return this.statistic;
-	}
 
-	public void setStatistic(SellerShopStatisticDTO statistic) {
-		this.statistic = statistic;
-	}
-	
 	public void applyToEntity(ShopObject shopObject) {
 		shopObject.setShop_name(this.name);
 		shopObject.setShop_address(address);
 		shopObject.setShop_address_link(address_link);
 		shopObject.setShop_images(images);
 		shopObject.setShop_email(images);
+	}
+
+	@Override
+	public int compare(SellerShopDTO o1, SellerShopDTO o2) {
+		return 0;
 	}
 }
     

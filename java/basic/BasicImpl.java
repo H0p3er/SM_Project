@@ -2,7 +2,9 @@ package basic;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import connection.*;
 
@@ -305,6 +307,43 @@ public class BasicImpl implements Basic {
 	public boolean delList(PreparedStatement pre) {
 		// TODO Auto-generated method stub
 		return this.exeList(pre);
+	}
+
+	@Override
+	public Map<String, ResultSet> getReList(Map<String, String> multiSelect) {
+		// TODO Auto-generated method stub
+		Map<String, ResultSet> res = new HashMap<String, ResultSet>();
+
+		try {
+			StringBuilder builder = new StringBuilder();
+			multiSelect.forEach((key,sql)->{
+				builder.append(sql);
+				res.put(key, null);
+			});
+			PreparedStatement pre = this.con.prepareStatement(builder.toString());
+			boolean result = pre.execute();
+			
+			do {
+				res.put(objectName, pre.getResultSet());
+				
+				//getMoreResults: Lay resultSet tiep theo, 
+				//Statement.Keep_current_result: giu cho resultSet hien tai khong bi do'ng, de su dung truy van cho nhung lan khac
+				result = pre.getMoreResults(Statement.KEEP_CURRENT_RESULT);
+			} while (result);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+			try {
+				this.con.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		
+		return res;
 	}
 	
 }

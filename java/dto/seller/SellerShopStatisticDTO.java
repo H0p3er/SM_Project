@@ -1,38 +1,38 @@
 package dto.seller;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.javatuples.Pair;
 
 public class SellerShopStatisticDTO {
-	private HashMap<Integer,Pair<SellerShopProductDTO,Integer>> TotalSellingQuantityPerProduct;
-	private HashMap<Integer,Pair<SellerShopProductDTO,Double>> TotalSellingPricePerProduct;
+	private Map<Integer,Pair<SellerShopProductDTO,Integer>> TotalSellingQuantityPerProduct;
+	private Map<Integer,Pair<SellerShopProductDTO,Double>> TotalSellingPricePerProduct;
 	private int TotalSellingQuantityAllProduct;
 	private double TotalSellingPriceAllProduct;
 	
-	private HashMap<Integer,Pair<SellerShopProductDTO,Integer>> TotalQuantityPerProduct;
-	private HashMap<Integer,Pair<SellerShopProductDTO,Double>> TotalPricePerProduct;
+	private Map<Integer,Pair<SellerShopProductDTO,Integer>> TotalQuantityPerProduct;
+	private Map<Integer,Pair<SellerShopProductDTO,Double>> TotalPricePerProduct;
+	
 	private int TotalQuantityAllProduct;
 	private double TotalPriceAllProduct;
 	
 	private int TotalProduct;
 
-	public HashMap<Integer, Pair<SellerShopProductDTO, Integer>> getTotalSellingQuantityPerProduct() {
+	public Map<Integer, Pair<SellerShopProductDTO, Integer>> getTotalSellingQuantityPerProduct() {
 		return this.TotalSellingQuantityPerProduct;
 	}
 
 	public void setTotalSellingQuantityPerProduct(
-			HashMap<Integer, Pair<SellerShopProductDTO, Integer>> totalSellingQuantityPerProduct) {
+			Map<Integer, Pair<SellerShopProductDTO, Integer>> totalSellingQuantityPerProduct) {
 		this.TotalSellingQuantityPerProduct = totalSellingQuantityPerProduct;
 	}
 
-	public HashMap<Integer, Pair<SellerShopProductDTO, Double>> getTotalSellingPricePerProduct() {
+	public Map<Integer, Pair<SellerShopProductDTO, Double>> getTotalSellingPricePerProduct() {
 		return this.TotalSellingPricePerProduct;
 	}
 
 	public void setTotalSellingPricePerProduct(
-			HashMap<Integer, Pair<SellerShopProductDTO, Double>> totalSellingPricePerProduct) {
+			Map<Integer, Pair<SellerShopProductDTO, Double>> totalSellingPricePerProduct) {
 		this.TotalSellingPricePerProduct = totalSellingPricePerProduct;
 	}
 
@@ -52,19 +52,19 @@ public class SellerShopStatisticDTO {
 		this.TotalSellingPriceAllProduct = totalSellingPriceAllProduct;
 	}
 
-	public HashMap<Integer, Pair<SellerShopProductDTO, Integer>> getTotalQuantityPerProduct() {
+	public Map<Integer, Pair<SellerShopProductDTO, Integer>> getTotalQuantityPerProduct() {
 		return this.TotalQuantityPerProduct;
 	}
 
-	public void setTotalQuantityPerProduct(HashMap<Integer, Pair<SellerShopProductDTO, Integer>> totalQuantityPerProduct) {
+	public void setTotalQuantityPerProduct(Map<Integer, Pair<SellerShopProductDTO, Integer>> totalQuantityPerProduct) {
 		this.TotalQuantityPerProduct = totalQuantityPerProduct;
 	}
 
-	public HashMap<Integer, Pair<SellerShopProductDTO, Double>> getTotalPricePerProduct() {
+	public Map<Integer, Pair<SellerShopProductDTO, Double>> getTotalPricePerProduct() {
 		return this.TotalPricePerProduct;
 	}
 
-	public void setTotalPricePerProduct(HashMap<Integer, Pair<SellerShopProductDTO, Double>> totalPricePerProduct) {
+	public void setTotalPricePerProduct(Map<Integer, Pair<SellerShopProductDTO, Double>> totalPricePerProduct) {
 		this.TotalPricePerProduct = totalPricePerProduct;
 	}
 

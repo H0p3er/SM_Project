@@ -5,7 +5,7 @@
         <div class="col-lg-12">
           	<div class="card">
 			   <div class="card-body">
-			     <h5 class="card-title">Danh sach</h5>
+			     <h5 class="card-title">Danh sách sản phẩm</h5>
 			    
 			     <table class="table table-sm">
 			       <thead>
@@ -15,7 +15,7 @@
 			           <th scope="col">Số lượng sản phẩm</th>
 			           <th scope="col">Giá bán</th>
 			           <th scope="col">Ngày khởi tạo</th>
-			           <th scope="col">Hành động</th>
+			           <th scope="col" colspan="2" class="text-center">Thực hiện</th>
 			         </tr>
 			       </thead>
 			       <tbody id="product-list">

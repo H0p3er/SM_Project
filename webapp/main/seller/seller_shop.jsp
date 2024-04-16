@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 
 <jsp:include page="../component/header.jsp" flush="true"></jsp:include>
-
+<jsp:include page="../component/navigation-bar.jsp" flush="true"></jsp:include>
  <div class="section best-deal">
     <div class="container">
       <div class="row">

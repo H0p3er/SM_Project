@@ -40,20 +40,19 @@
       <div class="row">
         <div class="d-flex justify-content-center">
           <div class="col-lg-6">
-          <form id="contact-form"  action="" method="post">
+          <form id="contact-form"  action="/home/user/login" method="post">
             <h1 class="my-5">Login</h1>
             <div class="row">
               <div class="col-lg-12">
                 <fieldset>
                   <label for="name">Username</label>
-                  <input type="name" name="name" id="name" placeholder="Username" autocomplete="on" required>
+                  <input type="name" name="txtname" id="txtname" placeholder="Username" autocomplete="on" required>
                 </fieldset>
               </div>
               <div class="col-lg-12">
                 <fieldset>
                   <label for="email">Password</label>
-                  <input type="password" name="email" id="email" pattern="[^ @]*@[^ @]*" placeholder="Password"
-                    required="">
+                  <input type="password" name="txtpass" id="txtpass" placeholder="Password" required>
                 </fieldset>
               </div>
               <div class="col-lg-12">

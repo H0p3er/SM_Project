@@ -17,6 +17,8 @@ public interface Basic extends ShareControl{
 	public ResultSet gets(String sql);
 	public ArrayList<ResultSet> getReList(String multiSelect);
 	
+	public Map<String,ResultSet> getReList(Map<String,String> multiSelect);
+	
 	//Phương thức thêm đa bảng
 	public boolean addListV1(PreparedStatement pre, int add_number);
 	

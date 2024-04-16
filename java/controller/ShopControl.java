@@ -9,6 +9,7 @@ import constant.SHOP_EDIT_TYPE;
 import constant.SHOP_SORT_TYPE;
 import dto.ShopDTO;
 import dto.seller.SellerShopDTO;
+import dto.seller.SellerShopStatisticDTO;
 import entity.UserObject;
 import entity.ProductObject;
 import entity.ShopObject;
@@ -51,8 +52,8 @@ public class ShopControl {
 		return ShopLibrary.viewShop(shopDTO);
 	}
 	
-	public ArrayList<String> displaySellerShopProfile(Triplet<String, Short, Byte> infors, UserObject currentUser){
-		SellerShopDTO userShopDTO = this.shopModel.getShopDTOByUser(infors,currentUser);
+	public Map<String,String> displaySellerShopProfile(Triplet<String, Short, Byte> infors, UserObject currentUser){
+		Pair<SellerShopDTO,SellerShopStatisticDTO> userShopDTO = this.shopModel.getShopDTOByUser(infors,currentUser);
 		return ShopLibrary.viewSellerShopProfile(userShopDTO);
 	}
 

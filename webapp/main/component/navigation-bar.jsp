@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="connection.*, entity.*" %>
  <div class="sub-header">
    <div class="container">
      <div class="row">
@@ -44,12 +45,12 @@
 					if (session.getAttribute("userLogined")!=null)
 					{ %>
 						<li><a class="bg-dark " data-bs-toggle="dropdown" aria-expanded="false"><i
-                    class="fa fa-user text-light"></i>$username</a>
+                    class="fa fa-user text-light"></i><% UserObject user = (UserObject) session.getAttribute("userLogined"); out.append(user.getUser_fullname());%></a>
                     <ul class="dropdown-menu" id="dropdown">
-                      <li><a class="dropdown-item text-center p-0 bg-white text-black" href="/home/main/user/user_shop.jsp">Gian hàng của bạn</a></li>
+                      <li><a class="dropdown-item text-center p-0 bg-white text-black" href="/home/main/seller/seller_shop.jsp">Gian hàng của bạn</a></li>
                       <li><a class="dropdown-item text-center p-0 bg-white text-black" href="/home/main/user/shop">Thông tin cá nhân</a></li>
                       <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item text-center p-0 bg-white text-black" href="#">Đăng xuất</a></li>
+                      <li><a class="dropdown-item text-center p-0 bg-white text-black" href="/home/user/logout">Đăng xuất</a></li>
                     </ul>
                   
               		</li> 

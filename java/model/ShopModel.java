@@ -112,7 +112,7 @@ public class ShopModel {
 		
 	}
 	
-	public SellerShopDTO getShopDTOByUser(Triplet<String, Short, Byte> infors, UserObject currentUser) {
+	public Pair<SellerShopDTO, SellerShopStatisticDTO> getShopDTOByUser(Triplet<String, Short, Byte> infors, UserObject currentUser) {
 		//Lay ban ghi 
 		String filter = infors.getValue0();
 		Short pagePos = infors.getValue1();
@@ -126,10 +126,7 @@ public class ShopModel {
 		//Gan gia tri khoi tao cho doi tuong ShopObject
 		SellerShopDTO sellerShopDTO = new SellerShopDTO() ;
 		ArrayList<SellerShopProductDTO> sellerShopProductDTOs = new ArrayList<SellerShopProductDTO>();
-		SellerShopStatisticDTO sellerShopStatisticDTO = new SellerShopStatisticDTO();
-		sellerShopDTO.setStatistic(sellerShopStatisticDTO);
 		sellerShopDTO.setStorage(sellerShopProductDTOs);
-		
 		if (rs!=null) {
 			try {
 				if (rs.next()) {
@@ -145,13 +142,15 @@ public class ShopModel {
 			}
 		}
 		
+		
+		SellerShopStatisticDTO sellerShopStatisticDTO = new SellerShopStatisticDTO();
 		int TotalProduct = 0;
 		rs = resultSets.get(1);
 		if (rs!=null) {
 			try {
 				if (rs.next()) {
 					TotalProduct = rs.getInt("TotalProduct");
-					sellerShopDTO.getStatistic().setTotalProduct(TotalProduct);
+					sellerShopStatisticDTO.setTotalProduct(TotalProduct);
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -162,6 +161,8 @@ public class ShopModel {
 		
 		rs = resultSets.get(2);
 		ShopPCDTO shopPCDTO = null;
+		int QuantityAllProduct = 0;
+		double PriceAllProduct = 0;
 		if (rs!=null) {
 			try {
 				while (rs.next()) {
@@ -170,20 +171,27 @@ public class ShopModel {
 					sellerShopProductDTO.setName(rs.getString("product_name"));
 					sellerShopProductDTO.setQuantity(rs.getInt("product_quantity"));
 					sellerShopProductDTO.setPrice(rs.getDouble("product_price"));
+					
+					QuantityAllProduct += rs.getInt("product_quantity");
+					PriceAllProduct += rs.getDouble("product_price");
+					
 					shopPCDTO = new ShopPCDTO();
 					shopPCDTO.setName(rs.getString("pc_name"));
 					sellerShopProductDTO.setPc(shopPCDTO);
-					sellerShopDTO.getStorage().add(sellerShopProductDTO);				
+					sellerShopDTO.getStorage().add(sellerShopProductDTO);	
 				}
+				
+				sellerShopStatisticDTO.setTotalPriceAllProduct(PriceAllProduct);
+				sellerShopStatisticDTO.setTotalQuantityAllProduct(QuantityAllProduct);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}				
 		HashMap<Integer,Pair<SellerShopProductDTO, Double>> hashMap1 = new HashMap<Integer, Pair<SellerShopProductDTO,Double>>();
-		sellerShopDTO.getStatistic().setTotalSellingPricePerProduct(hashMap1);
+		sellerShopStatisticDTO.setTotalSellingPricePerProduct(hashMap1);
 		HashMap<Integer,Pair<SellerShopProductDTO, Integer>> hashMap2 = new HashMap<Integer, Pair<SellerShopProductDTO,Integer>>();
-		sellerShopDTO.getStatistic().setTotalSellingQuantityPerProduct(hashMap2);
+		sellerShopStatisticDTO.setTotalSellingQuantityPerProduct(hashMap2);
 		
 		/*
 		 * System.out.println(sellerShopDTO.getStatistic().getTotalSellingPerProduct());
@@ -194,10 +202,9 @@ public class ShopModel {
 
 		rs = resultSets.get(3);
 		if (rs!=null) {
-			try {
-				
-				int TotalSellingQuantityAllProduct = 0;
-				double TotalSellingPriceAllProduct = 0;
+			try {			
+				QuantityAllProduct = 0;
+				PriceAllProduct = 0;
 				int TotalSellingQuantityPerProduct = 0;
 				double TotalSellingPricePerProduct = 0;
 				while (rs.next()) {
@@ -205,44 +212,30 @@ public class ShopModel {
 					TotalSellingQuantityPerProduct = rs.getInt("TotalSellingQuantityPerProduct");
 					TotalSellingPricePerProduct = rs.getInt("TotalSellingPricePerProduct");
 					
-					TotalSellingQuantityAllProduct+=TotalSellingQuantityPerProduct;
-					TotalSellingPriceAllProduct+=TotalSellingPricePerProduct;
-					
-					System.out.println("per product quantity:"+TotalSellingQuantityPerProduct);
-					System.out.println("all product quantity:"+TotalSellingQuantityAllProduct);
-					
-
-					System.out.println("per product price:"+TotalSellingPricePerProduct);
-					System.out.println("all product price:"+TotalSellingPriceAllProduct);
-
+					QuantityAllProduct+=TotalSellingQuantityPerProduct;
+					PriceAllProduct+=TotalSellingPricePerProduct;
 					
 					SellerShopProductDTO sellerShopProductDTO = new SellerShopProductDTO();
 					sellerShopProductDTO.setId(rs.getInt("product_id"));
 					sellerShopProductDTO.setName(rs.getString("product_name"));
 					
 					Pair<SellerShopProductDTO, Integer> pair1 = new Pair<SellerShopProductDTO, Integer>(sellerShopProductDTO, TotalSellingQuantityPerProduct);
-					sellerShopDTO.getStatistic().getTotalSellingQuantityPerProduct().put(product_id,pair1);
+					sellerShopStatisticDTO.getTotalSellingQuantityPerProduct().put(product_id,pair1);
 					
 					Pair<SellerShopProductDTO, Double> pair2 = new Pair<SellerShopProductDTO, Double>(sellerShopProductDTO, TotalSellingPricePerProduct);
-					sellerShopDTO.getStatistic().getTotalSellingPricePerProduct().put(product_id,pair2);
+					sellerShopStatisticDTO.getTotalSellingPricePerProduct().put(product_id,pair2);
 					
-					sellerShopDTO.getStatistic().setTotalSellingPriceAllProduct(TotalSellingPriceAllProduct);
-					sellerShopDTO.getStatistic().setTotalSellingQuantityAllProduct(TotalSellingQuantityAllProduct);
+					sellerShopStatisticDTO.setTotalSellingPriceAllProduct(PriceAllProduct);
+					sellerShopStatisticDTO.setTotalSellingQuantityAllProduct(QuantityAllProduct);
 					
-					System.out.println("price:"+sellerShopDTO.getStatistic().getTotalPriceAllProduct());
-					System.out.println("quantity"+sellerShopDTO.getStatistic().getTotalQuantityAllProduct());
 				}
-				
-				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		
 
-		return sellerShopDTO;	
-		
+		return new Pair<SellerShopDTO, SellerShopStatisticDTO>(sellerShopDTO,sellerShopStatisticDTO);	
 	}
 	
 	public static void main(String[] args) {
@@ -263,16 +256,15 @@ public class ShopModel {
 		currentUser.setUser_id((byte)2);
 
 		//Lay tap ban ghi nguoi su dung
-		SellerShopDTO rs = u.getShopDTOByUser(new Triplet<String, Short, Byte>("",(short) 0,(byte) 0),currentUser);
+		SellerShopStatisticDTO rs = u.getShopDTOByUser(new Triplet<String, Short, Byte>("",(short) 0,(byte) 0),currentUser).getValue1();
 		
 		String row = null;
 		//Duyen va hien thi danh sach nguoi su dung
 		if (rs!=null) {
-
-			
-			rs.getStorage().forEach(product->{
-				System.out.println(product.getName());
-			});
+			System.out.println("object:"+rs);
+			System.out.println("price:"+rs.getTotalPriceAllProduct());
+			System.out.println("quantity:"+rs.getTotalQuantityAllProduct());
+	
 		}
 
 	}

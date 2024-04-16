@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,6 +19,7 @@ import org.javatuples.Triplet;
 import com.google.gson.Gson;
 
 import connection.ConnectionPool;
+import controller.ProductControl;
 import controller.ShopControl;
 import entity.UserObject;
 import entity.ShopObject;
@@ -29,13 +31,20 @@ import entity.ShopObject;
 public class ShopProfile extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String CONTENT_TYPE = "application/json; charset=utf-8";
-
+	private ShopControl shopControl;
+	private ProductControl productControl;
+	private ConnectionPool connectionPool;
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public ShopProfile() {
 		super();
-		// TODO Auto-generated constructor stub
+	}
+	
+	@Override
+	protected void finalize() throws Throwable {
+		// TODO Auto-generated method stub
+		this.shopControl.releaseCP();
 	}
 
 	/**
@@ -49,13 +58,9 @@ public class ShopProfile extends HttpServlet {
 		UserObject user = (UserObject) request.getSession().getAttribute("userLogined");
 		
 		 if (user!=null) { 
-			 view(request, response, user); 
-		 
-		 } else {
-			 user = new UserObject();
-			 user.setUser_id(2);
 			 view(request, response, user);
-//			 response.sendRedirect("/home/login"); 
+		 } else {;
+			 response.sendRedirect("/home/main/home.jsp"); 
 		 }
 	}
 
@@ -67,25 +72,29 @@ public class ShopProfile extends HttpServlet {
 		/* EmployeeObject similar = new EmployeeObject(); */
 		ShopObject similar = new ShopObject();
 
-		ConnectionPool connectionPool = (ConnectionPool) getServletContext().getAttribute("CPool");
-
-		ShopControl shopControl = new ShopControl(connectionPool);
-
+		this.connectionPool = (ConnectionPool) getServletContext().getAttribute("CPool");
+		this.shopControl = new ShopControl(connectionPool);
+		// TODO Auto-generated constructor stub
 		if (connectionPool == null) {
-			getServletContext().setAttribute("CPool", shopControl.getCP());
-		}
-
-		shopControl.releaseCP();// Tra ve ket noi
+			getServletContext().setAttribute("CPool", this.shopControl.getCP());
+		} 
 
 		PrintWriter out = response.getWriter();
+		
 		// Xac dinh kieu noi dung xuat ve trinh khach
 		Triplet<String, Short, Byte> infors = new Triplet<String, Short, Byte>("",(short) 0,(byte) 0);
-		List<String> data = shopControl.displaySellerShopProfile(infors,user);
+		
+		Map<String,String> data = shopControl.displaySellerShopProfile(infors,user);
+		
+		this.shopControl.releaseCP();
+		
 		Gson gson = new Gson();
+		
 	    String jsonData = gson.toJson(data);
 		out.append(jsonData);
 		// Tạo đối tượng thực hiện xuất nội dung
 		out.flush();
+		
 	}
 
 	/**
@@ -94,14 +103,16 @@ public class ShopProfile extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WorkplaceProfile");
 
-		if (dispatcher != null) {
-			dispatcher.forward(request, response);
-		} else {
-			response.sendRedirect("/error?err=404NotFound");
-		}
+	}
+	
+	protected void doPut(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+	}
+	
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 	}
 
 }
