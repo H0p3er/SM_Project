@@ -3,6 +3,7 @@ package service.productService;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.javatuples.Quartet;
+
+import com.google.gson.Gson;
 
 import connection.*;
 import constant.PRODUCT_SORT_TYPE;
@@ -73,22 +76,12 @@ public class ProductList extends HttpServlet {
 		
 		// Lấy câu trúc
 		ProductObject similar = new ProductObject();
-		similar.setProduct_import_price(user.getUser_id());
 		similar.setProduct_status(user.getUser_permission());
 		similar.setProduct_name(saveKey);
 		
 		// Tìm tham số xác định loại danh sách
 		String trash = request.getParameter("trash");
 		String title, pos;
-		if(trash == null) {
-			similar.setProduct_deleted(false);
-			pos = "plist";
-			title = "Danh sách sản phẩm";
-		} else {
-			similar.setProduct_deleted(true);
-			pos = "ptrash";
-			title = "Danh sách sản phẩm bị xóa";
-		}
 
 		short page = Utilities.getShortParam(request, "page");
 		if(page < 1) {
@@ -98,13 +91,20 @@ public class ProductList extends HttpServlet {
 		Quartet<ProductObject, Short, Byte, PRODUCT_SORT_TYPE> infors = new Quartet<>(similar, page, (byte) 10,
 				PRODUCT_SORT_TYPE.NAME);
 
-		String productList = pc.getProductLists(infors);
+		Map<String,String> viewProductsList = pc.viewProductsList(infors);
 
 		// Trả về kết nối
 		pc.releaseConnection();
 		
-		request.setAttribute("plist", productList);
-		request.getRequestDispatcher("/home/product/home.jsp");
+		Gson gson = new Gson();
+		
+	    String jsonData = gson.toJson(viewProductsList);
+		out.append(jsonData);
+		// Tạo đối tượng thực hiện xuất nội dung
+		out.flush();
+		
+		
+		
 	}
 
 	/**

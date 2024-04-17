@@ -1,8 +1,9 @@
 package dto;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import dto.seller.SellerShopDTO;
+import dto.user.ShopProductDTO;
+import dto.user.ShopSellerDTO;
 import entity.ShopObject;
 
 public class ShopDTO {
@@ -10,7 +11,7 @@ public class ShopDTO {
     private String name;
     private String address;
     private byte status;
-    private SellerShopDTO user;
+    private ShopSellerDTO user;
     private String website_link;
     private String address_link;
     private String created_date;
@@ -18,7 +19,7 @@ public class ShopDTO {
     private String notes;
 	private String phone;
     private String email;
-	private ArrayList<ShopProductDTO> storage;
+	private List<ShopProductDTO> storage;
 	
 	public int getId() {
 		return id;
@@ -52,13 +53,6 @@ public class ShopDTO {
 		this.status = status;
 	}
 
-	public SellerShopDTO getUser() {
-		return user;
-	}
-
-	public void setUser(SellerShopDTO user) {
-		this.user = user;
-	}
 
 	public String getWebsite_link() {
 		return website_link;
@@ -116,11 +110,11 @@ public class ShopDTO {
 		this.email = email;
 	}
 
-	public ArrayList<ShopProductDTO> getStorage() {
+	public List<ShopProductDTO> getStorage() {
 		return storage;
 	}
 
-	public void setStorage(ArrayList<ShopProductDTO> storage) {
+	public void setStorage(List<ShopProductDTO> storage) {
 		this.storage = storage;
 	}
 
@@ -130,5 +124,13 @@ public class ShopDTO {
 		shopObject.setShop_address_link(address_link);
 		shopObject.setShop_images(images);
 		shopObject.setShop_email(images);
+	}
+
+	public ShopSellerDTO getUser() {
+		return user;
+	}
+
+	public void setUser(ShopSellerDTO user) {
+		this.user = user;
 	}
 }

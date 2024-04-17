@@ -22,14 +22,14 @@
  </div>
 
  <!-- ***** Header Area Start ***** -->
- <header class="header-area header-sticky">
+ <header class="header-area header-sticky shadow-sm">
    <div class="container">
        <div class="row">
            <div class="col-12">
                <nav class="main-nav">
                    <!-- ***** Logo Start ***** -->
-                   <a href="/home/main/home.jsp" class="logo">
-                       <img height="120px" width="200px" src="/home/assets/images/sm.png" alt="">
+                   <a href="/home/main/home.jsp" class="logo d-flex align-items-center">
+                       <img height="80px" width="120px" src="/home/assets/images/sm.png" alt="">
                    </a>
                    <!-- ***** Logo End ***** -->
                    <!-- ***** Menu Start ***** -->

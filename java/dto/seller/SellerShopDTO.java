@@ -1,14 +1,10 @@
 package dto.seller;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
-
-import org.javatuples.Pair;
 
 import entity.ShopObject;
 
-public class SellerShopDTO implements Comparator<SellerShopDTO>{
+public class SellerShopDTO {
 	private int id;
     private String name;
     private String address;
@@ -127,10 +123,6 @@ public class SellerShopDTO implements Comparator<SellerShopDTO>{
 		shopObject.setShop_email(images);
 	}
 
-	@Override
-	public int compare(SellerShopDTO o1, SellerShopDTO o2) {
-		return 0;
-	}
 }
     
 

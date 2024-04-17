@@ -17,6 +17,9 @@ import dto.*;
 import dto.seller.SellerShopDTO;
 import dto.seller.SellerShopProductDTO;
 import dto.seller.SellerShopStatisticDTO;
+import dto.user.ShopPCDTO;
+import dto.user.ShopProductDTO;
+import dto.user.ShopSellerDTO;
 
 public class ShopModel {
 	

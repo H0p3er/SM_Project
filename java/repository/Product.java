@@ -20,4 +20,8 @@ public interface Product extends ShareControl {
 	public ResultSet getProductByCreatedDate(Date date, Date date2);
 
 	public ArrayList<ResultSet> getProducts(ProductObject similar, int at, byte total, PRODUCT_SORT_TYPE type);
+	
+	
+	public ArrayList<ResultSet> getProductStatisticV2(String multiCondition, int at, byte total, String multiField, String multiSort);
+	public ArrayList<ResultSet> getProductListV2(String multiCondition, int at, byte total, String multiField, String multiSort);
 }

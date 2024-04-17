@@ -3,6 +3,9 @@ package repository;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import connection.*;
 import constant.PRODUCT_EDIT_TYPE;
@@ -287,4 +290,164 @@ public class ProductImpl extends BasicImpl implements Product {
 		return null;
 	}
 	
+	@Override
+	public ArrayList<ResultSet> getProductStatisticV2(String multiCondition, int at, byte total, String multiField, String multiSort) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT "+SELECTConditions(multiField)+" FROM tblproduct ");
+		sql.append(this.WHEREConditions(multiCondition));
+		sql.append(this.ORDERConditions(multiSort));	
+		if(total > 0) {
+			sql.append("LIMIT " + at + ", " + total + "; ");
+		} else {
+			sql.append(";");
+		}
+		
+		sql.append("SELECT COUNT(product_id) AS product_count FROM tblproduct; ");
+		sql.append(this.WHEREConditions(multiCondition));
+		
+		System.out.println(sql);
+		return this.getReList(sql.toString());
+	}
+	
+	@Override
+	public ArrayList<ResultSet> getProductListV2(String multiCondition, int at, byte total, String multiField, String multiSort) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT "+SELECTConditions(multiField)+" FROM tblproduct ");
+		sql.append(this.WHEREConditions(multiCondition));
+		sql.append(this.ORDERConditions(multiSort));	
+		if(total > 0) {
+			sql.append("LIMIT " + at + ", " + total + "; ");
+		} else {
+			sql.append(";");
+		}
+		
+		sql.append("SELECT COUNT(product_id) AS product_count FROM tblproduct; ");
+		sql.append(this.WHEREConditions(multiCondition));
+		
+		System.out.println(sql);
+		return this.getReList(sql.toString());
+	}
+	
+	private String SELECTConditions(String multiField) {
+		StringBuilder SELECT = new StringBuilder();
+
+		if (multiField!=null) {
+			if (!multiField.equalsIgnoreCase("")) {
+				Map<String,String> SortMap = new TreeMap<String,String>();
+				String[] Pair = multiField.trim().split(";");
+				for (int i=0; i<Pair.length;i++) {
+					String[] div = Pair[i].split(":");
+					SortMap.put(div[0], div[1]);
+				}			
+
+				SortMap.forEach((key,value)->{
+					switch (key) {			
+					case "name":
+						SELECT.append("product_name");
+						break;
+					case "address":
+						SELECT.append("product_address");
+						break;
+					case "last_modified":
+						SELECT.append("product_last_modified");
+						break;
+					default:
+						SELECT.append("product_id= ");
+					}			
+					SELECT.append(value);
+				});
+				
+				if(!SELECT.toString().equalsIgnoreCase("")) {
+					SELECT.insert(0, "WHERE  ");
+				}
+			}
+		}
+		return SELECT.toString();
+	}
+	
+	private String WHEREConditions(String multiCondition) {
+		StringBuilder WHERE = new StringBuilder();
+		
+		if (multiCondition!=null) {
+			if (!multiCondition.equalsIgnoreCase("")) {
+				Map<String,String> SortMap = new TreeMap<String,String>();
+				String[] Pair = multiCondition.trim().split(";");
+				for (int i=0; i<Pair.length;i++) {
+					String[] div = Pair[i].split(":");
+					SortMap.put(div[0], div[1]);
+				}			
+
+				SortMap.forEach((key,value)->{
+					switch (key) {			
+					case "name":
+						WHERE.append("product_name");
+						break;
+					case "address":
+						WHERE.append("product_address");
+						break;
+					case "last_modified":
+						WHERE.append("product_last_modified");
+						break;
+					default:
+						WHERE.append("product_id= ");
+					}			
+					WHERE.append(value);
+				});
+				
+				if(!WHERE.toString().equalsIgnoreCase("")) {
+					WHERE.insert(0, "WHERE  ");
+				}
+			}
+		}
+
+		return WHERE.toString();
+	}
+	
+	private String ORDERConditions(String multiSort) {
+		StringBuilder ORDER = new StringBuilder();
+		if (multiSort!=null) {
+			if (!multiSort.equalsIgnoreCase("")) {
+				Map<String,String> SortMap = new TreeMap<String,String>();
+				
+				String[] Pair = multiSort.trim().split(";");
+				for (int i=0; i<Pair.length;i++) {
+					String[] div = Pair[i].split(":");
+					SortMap.put(div[0], div[1]);
+				}			
+
+				SortMap.forEach((key,value)->{
+					switch (key) {			
+					case "name":
+						ORDER.append("product_name");
+						break;
+					case "address":
+						ORDER.append("product_address");
+						break;
+					case "last_modified":
+						ORDER.append("product_last_modified");
+						break;
+					default:
+						ORDER.append("product_id ");
+					}			
+					switch (value) {
+					case "asc":
+						ORDER.append(" ASC;");
+						break;
+					case "desc":
+						ORDER.append(" DESC;");
+						break;
+					default:
+						ORDER.append(" ASC;");
+						break;
+					}
+				});
+				
+				
+				if(!ORDER.toString().equalsIgnoreCase("")) {
+					ORDER.insert(0, "ORDER BY ");
+				}
+			}
+		}
+		return ORDER.toString();
+	}
 }

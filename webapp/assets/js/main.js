@@ -66,40 +66,6 @@ document.addEventListener("DOMContentLoaded", function(){
 			   
 	            }
 	        });
-	        
-	        let product_edit_action = document.getElementsByClassName("product-edit-action");    
-	        for (var item of product_edit_action){
-				item.addEventListener("click",()=>{
-					$.ajax({
-						url: "/home/shop/profile?edit=?",
-						method: "POST",
-						dataType: "json",
-						success: function(response) {
-							let data = response;			
-						},
-						false: function(response){
-				
-						},
-					});
-				});
-			}
-
-			let product_del_action = document.getElementsByClassName("product-edit-action");
-			for (var item of product_del_action){
-				item.addEventListener("click",()=>{
-					$.ajax({
-						url: "/home/shop/profile?del=?",
-						method: "POST",
-						dataType: "json",
-						success: function(response) {
-							let data = response;			
-						},
-						false: function(response){
-				
-						},
-					});
-				});
-			}
 			
 	    }
 	
@@ -111,9 +77,54 @@ document.addEventListener("DOMContentLoaded", function(){
 	});
 	
 	
-	// forEach(element => {
-	// 	element.addEventListener("",)
-	// });
+	let product_edit_action = document.getElementsByClassName("product-edit-action");    
+    for (var item of product_edit_action){
+		item.addEventListener("click",()=>{
+			$.ajax({
+				url: "/home/shop/profile?edit=?",
+				method: "POST",
+				dataType: "json",
+				success: function(response) {
+					let data = response;			
+				},
+				error: function(response){
+		
+				},
+			});
+		});
+	}
+
+	let product_del_action = document.getElementsByClassName("product-del-action");
+	for (var item of product_del_action){
+		item.addEventListener("click",()=>{
+			$.ajax({
+				url: "/home/shop/profile?del=?",
+				method: "POST",
+				dataType: "json",
+				success: function(response) {
+					let data = response;			
+				},
+				error: function(response){
+		
+				},
+			});
+		});
+	}
+	
+	
+	let home_product_list = document.getElementById("home_product_list");
+	$.ajax({
+		url: "/home/product/list",
+		method: "GET",
+		dataType: "json",
+		success: function(response) {
+			let data = response;	
+			$("#home_product_list").html(data.home_product_list);	
+		},
+		error: function(response){
+
+		},
+	});
 
 });
 	

@@ -1,4 +1,4 @@
-package dto;
+package dto.user;
 
 public class ShopPCDTO {
 	  private String name;

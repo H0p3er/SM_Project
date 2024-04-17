@@ -1,3 +1,4 @@
+
 package service.userService;
 
 import java.io.IOException;
@@ -14,7 +15,7 @@ import entity.*;
 /**
  * Servlet implementation class UserLogin
  */
-@WebServlet("/user/login")
+@WebServlet("/guest/login")
 public class UserLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	//Dinh nghia kieu noi dung xuat ve trinh khach

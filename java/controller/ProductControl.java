@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.javatuples.Pair;
 import org.javatuples.Quartet;
@@ -83,14 +84,14 @@ private ProductModel pm;
 	 * 
 	 * <br/>Cập nhật ngày 26/10/2023
 	 */
-	public ArrayList<String> viewProductsList(Quartet<ProductObject, Short, Byte, PRODUCT_SORT_TYPE> infors){
+	public Map<String,String> viewProductsList(Quartet<ProductObject, Short, Byte, PRODUCT_SORT_TYPE> infors){
 		//Lay du lieu
 		ProductObject similar = infors.getValue0();
 		short page = infors.getValue1();
-		byte uPerPage = infors.getValue2();
+		byte shopPerPage = infors.getValue2();
 		PRODUCT_SORT_TYPE ust = infors.getValue3();
 		
-		Pair<ArrayList<ProductObject>,Integer> datas = this.pm.getProductObjects(similar, page, uPerPage, ust, false);
+		Pair<ArrayList<ProductObject>,Integer> datas = this.pm.getProductObjects(similar, page, shopPerPage, ust, false);
 		
 		return ProductLibrary.viewProductList(datas, infors);
 	}

@@ -114,7 +114,7 @@ public class ProductModel {
 					item.setProduct_price(rs.getDouble("product_price"));
 					item.setProduct_images(rs.getString("product_images"));
 					item.setProduct_notes(rs.getString("product_notes"));
-					item.setProduct_last_modified(rs.getString("product_last_modified"));
+					item.setProduct_last_modified(rs.getString("product_modified_date"));
 					item.setProduct_pc_id(rs.getInt("product_pc_id"));
 					item.setProduct_shop_id(rs.getInt("product_shop_id"));
 					item.setProduct_quantity(rs.getInt("product_quantity"));

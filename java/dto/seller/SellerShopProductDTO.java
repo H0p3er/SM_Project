@@ -1,6 +1,6 @@
 package dto.seller;
 
-import dto.ShopPCDTO;
+import dto.user.ShopPCDTO;
 
 public class SellerShopProductDTO {
 	private int id;

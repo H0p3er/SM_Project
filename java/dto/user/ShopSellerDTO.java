@@ -1,4 +1,4 @@
-package dto;
+package dto.user;
 
 public class ShopSellerDTO {
     private String user_fullname;
