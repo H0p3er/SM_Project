@@ -19,7 +19,7 @@ import library.ProductLibrary;
 import model.ProductModel;
 
 public class ProductControl {
-private ProductModel pm;
+	private ProductModel pm;
 	
 	public ProductControl(ConnectionPool cp) {
 		this.pm = new ProductModel(cp);
