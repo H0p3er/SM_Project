@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function(){
 	    // Call fetchData() every 30 seconds to refresh content
 	    setInterval(fetchData, 300000); // 30 seconds
 	});
-	
+/*	
 	
 	let product_edit_action = document.getElementsByClassName("product-edit-action");    
     for (var item of product_edit_action){
@@ -124,7 +124,7 @@ document.addEventListener("DOMContentLoaded", function(){
 		error: function(response){
 
 		},
-	});
+	});*/
 
 });
 	

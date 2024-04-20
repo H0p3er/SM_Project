@@ -271,8 +271,7 @@ public class ShopImpl extends BasicImpl implements Shop {
 		 StringBuilder conds = new StringBuilder();
 		 
 		 return conds.toString();
-	}
-	
+	}	
 	
 	private String WHERECondition(ShopObject similar, UserObject currentUser) {
 		 StringBuilder conds = new StringBuilder();

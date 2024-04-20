@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.Map" %>
+<%@ page import="com.google.gson.*" %>
    
 <jsp:include page="component/header.jsp" flush="true"></jsp:include> 
 <jsp:include page="component/navigation-bar.jsp" flush="true"></jsp:include>
@@ -13,8 +15,16 @@
           </div>
         </div>
       </div>
-      <div class="row">
-		<div id="home_product_list"></div>
+      <div class="row" id="home_product_list">
+      	<% 
+      		Gson gson = new Gson();
+      		Map<String,String> map = gson.fromJson((String) request.getAttribute("home-page"), Map.class);
+      		if (map!=null){
+      			out.append(map.get("home_product_list"));
+      		} else {
+      			out.append("Lỗi kết nối");
+      		}
+      	%>
       </div>
     </div>
   </div>
