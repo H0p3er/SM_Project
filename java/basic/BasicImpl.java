@@ -229,39 +229,6 @@ public class BasicImpl implements Basic {
 		}
 		
 	}
-
-	
-	@Override
-	public boolean addListV1(PreparedStatement pre, int add_number) {
-		
-		try {	
-			
-			int results = pre.executeUpdate();
-			
-			if (results==0 || results!=add_number) {
-				//Tro lai trang thai an toan neu ko tim duoc 
-				this.con.rollback();
-				return false;				
-			}
-			
-			//Xac nhan Execute
-			this.con.commit();
-			return true;
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			
-			try {
-				this.con.rollback();
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-		
-		return false;
-	}	
 	
 	private synchronized boolean exeList(PreparedStatement pre) {	
 		try {	
@@ -310,7 +277,7 @@ public class BasicImpl implements Basic {
 	}
 
 	@Override
-	public Map<String, ResultSet> getReList(Map<String, String> multiSelect) {
+	public Map<String, ResultSet> getReListV1(Map<String, String> multiSelect) {
 		// TODO Auto-generated method stub
 		Map<String, ResultSet> res = new HashMap<String, ResultSet>();
 

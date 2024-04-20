@@ -11,6 +11,7 @@ import org.javatuples.*;
 import connection.*;
 import constant.BILL_EDIT_TYPE;
 import constant.BILL_SORT_TYPE;
+import entity.BDObject;
 import entity.BillObject;
 import entity.EmployeeObject;
 import objects.*;
@@ -35,16 +36,16 @@ public class BillModel {
 	}
 	
 	public void releaseConnection() {
-		this.w.releaseConnection();
+		this.w.releaseCP();
 	}
 
 	//***********************Chuyen huong dieu khien tu Bill Impl*****************************************
-	public boolean addBill(BillObject item) {
-		return this.w.addBill(item);
+	public boolean addBill(BillObject item, ArrayList<BDObject> bdObjects) {
+		return this.w.addBill(item,bdObjects);
 	}
 	
-	public boolean editBill(BillObject item, BILL_EDIT_TYPE et) {
-		return this.w.editBill(item, et);
+	public boolean editBill(BillObject item, ArrayList<BDObject> bdObjects, BILL_EDIT_TYPE et) {
+		return this.w.editBill(item, bdObjects, et);
 	}
 	
 	public boolean delBill(BillObject item) {
@@ -59,7 +60,7 @@ public class BillModel {
 		BillObject item = null ;
 		
 		//Lay ban ghi 
-		ResultSet rs = this.w.getBill(id);
+		ResultSet rs = this.w.getBillById(id);
 		
 		
 		//Chuyen doi ban ghi thanh doi tuong
@@ -83,11 +84,7 @@ public class BillModel {
 		return item;
 	}
 		
-	public Quintet<	ArrayList<BillObject>,
-					Integer, 
-					HashMap<String,Integer>, 
-					HashMap<String,Integer>, ArrayList<String>> 
-						getBillObjects(Sextet<	EmployeeObject, 
+	public ArrayList<BillDTO> getBillObjects(Sextet<	EmployeeObject, 
 													BillObject, 
 													Short, 
 													Byte ,
@@ -126,49 +123,11 @@ public class BillModel {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
-		
-		
-		ArrayList<String> date = new ArrayList<String>();
-		//Lấy hóa đơn xuất
-		rs = res.get(1);
-		HashMap<String, Integer> exportBill= new HashMap<String, Integer>();
-		//Chuyen doi ban ghi thanh doi tuong
-		if (rs!=null) {
-			try {
-				while (rs.next()) {
-					exportBill.put(rs.getString("bill_created_date"), rs.getInt("export_price"));
-					date.add(rs.getString("bill_created_date"));
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		//Lấy hóa đơn nhập
-		rs = res.get(2);
-		HashMap<String, Integer> importBill= new HashMap<String, Integer>();
-		//Chuyen doi ban ghi thanh doi tuong
-		if (rs!=null) {
-			try {
-				while (rs.next()) {
-					importBill.put(rs.getString("bill_created_date"), rs.getInt("import_price"));
-					if (!date.contains(rs.getString("bill_created_date"))) {
-						date.add(rs.getString("bill_created_date"));
-					}
-					
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
+		} 
 		
 		//Lấy tổng số bản ghi
 		int totalGlobal = 0;
-		rs = res.get(3);
+		rs = res.get(1);
 		if (rs!=null) {
 			try {
 				if (rs.next()) {

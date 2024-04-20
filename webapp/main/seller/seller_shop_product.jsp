@@ -7,7 +7,7 @@
 			   <div class="card-body">
 			     <h5 class="card-title">Danh sách sản phẩm</h5>
 			    
-			     <table class="table table-sm">
+			     <table class="table table-sm .datatable">
 			       <thead>
 			         <tr>
 			           <th scope="col">#</th>

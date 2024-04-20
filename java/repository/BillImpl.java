@@ -5,20 +5,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
-
-import org.javatuples.Quartet;
-import org.javatuples.Quintet;
-import org.javatuples.Sextet;
+import java.util.Map;
+import java.util.TreeMap;
 
 import basic.BasicImpl;
 import connection.ConnectionPool;
 import connection.ConnectionPoolImpl;
 import constant.BILL_EDIT_TYPE;
 import constant.BILL_SORT_TYPE;
-import constant.EMPLOYEE_SORT_TYPE;
-import dto.ImportBillDTO;
+import entity.BDObject;
 import entity.BillObject;
-import entity.EmployeeObject;
 import entity.UserObject;
 import utility.Utilities;
 
@@ -51,7 +47,7 @@ public class BillImpl extends BasicImpl implements Bill {
 	}
 	
 	@Override
-	public boolean addBill(BillObject item) {
+	public boolean addBill(BillObject item, ArrayList<BDObject> bdObjects) {
 		
 		if (this.isExisting(item)) {
 			return false;
@@ -78,43 +74,10 @@ public class BillImpl extends BasicImpl implements Bill {
 				
 				sql.append("INSERT INTO tblbill(");
 				sql.append("bill_status, bill_created_date, ");
-				sql.append("bill_last_modified_date, bill_last_modified_id, bill_creator_id, ");
-				sql.append("bill_transporter_id, bill_type ");
+				sql.append("bill_last_modified_date, bill_last_modified_id, bill_shop_id, ");
+				sql.append("bill_transporter_id, bill_type, bill_customer_id, bill_target_address ");
 				sql.append(")");
-				sql.append("VALUES(?,?,?,?,?,?,?); ");	
-				
-				switch (item.getBill_type()) {
-					case 1:				
-						sql.append("INSERT INTO tblimportbill(");
-						sql.append("import_bill_id, import_bill_target_workplace_id");
-						sql.append("import_bill_provider_id");				
-						sql.append(")");
-						sql.append("VALUES(?,?,?);");	
-						break;
-					
-					case 2:
-						sql.append("INSERT INTO tblexportbill(");
-						sql.append(")");
-					
-						sql.append("VALUES(?,?,?,?,?,?,?,?);");	
-						break;
-					
-					case 3:
-						sql.append("INSERT INTO tbltransferbill(");
-						sql.append(")");
-						sql.append("VALUES(?,?,?,?,?,?,?,?);");	
-						break;
-						
-					default:
-						
-						break;
-				}
-				
-				sql.append("INSERT INTO tblbilldetail(");
-				sql.append("billdetail_id, billdetail_price, ");
-				sql.append("billdetail_product_id, billdetail_product_quantity");				
-				sql.append(")");
-				sql.append("VALUES(?,?,?,?);");	
+				sql.append("VALUES(?,?,?,?,?,?,?,?,?); ");	
 				
 				PreparedStatement pre = this.con.prepareStatement(sql.toString());
 				
@@ -126,33 +89,28 @@ public class BillImpl extends BasicImpl implements Bill {
 				pre.setInt(6, item.getBill_transporter_id());
 				pre.setByte(7, item.getBill_type());
 				
-				switch (item.getBill_type()) {
-				case 1:				
-					ImportBillDTO ibo = (ImportBillDTO) item;
-					pre.setInt(8, id);
-					pre.setInt(9, ibo.getImport_bill_target_workplace_id());
-					pre.setInt(11, ibo.getImport_bill_provider_id());
-					
-					break;
-				
-				case 2:
-					break;
-				
-				case 3:
-
-					break;
-					
-				default:
-					
-					break;
-				}
-				
-				pre.setInt(12, id);
-				pre.setInt(13, id);
-				pre.setInt(14, id);
-				pre.setInt(15, id);
-				
-				return this.addList(pre);
+				if (this.add(pre)) {
+					sql.setLength(0);
+					sql.append("INSERT INTO tblbd(");
+					sql.append("bd_bill_id, bd_product_id, ");
+					sql.append("bd_product_quantity");				
+					sql.append(")");
+					sql.append("VALUES(?,?,?,?);");	
+					PreparedStatement pre2 = this.con.prepareStatement(sql.toString());
+					bdObjects.forEach(bd->{
+						try {
+							pre2.setInt(1, bd.getBd_bill_id());
+							pre2.setInt(2, bd.getBd_product_id());
+							pre2.setInt(3, bd.getBd_product_quantity());
+							pre2.addBatch();
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+					});
+					return this.addList(pre);
+				} 	
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -164,7 +122,7 @@ public class BillImpl extends BasicImpl implements Bill {
 	
 
 	@Override
-	public boolean editBill(BillObject item, BILL_EDIT_TYPE et) {
+	public boolean editBill(BillObject item, ArrayList<BDObject> bdObjects ,BILL_EDIT_TYPE et) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("UPDATE tblbill SET ");
 		switch (et) {
@@ -311,61 +269,48 @@ public class BillImpl extends BasicImpl implements Bill {
 	}
 	
 	@Override
-	public ArrayList<ResultSet> getBillList(Sextet<UserObject, BillObject, Integer, Byte, BILL_SORT_TYPE, Boolean> infors) {
-		UserObject currentUser = infors.getValue0();
-		BillObject similar = infors.getValue1();
-		int at = infors.getValue2();
-		byte bPerPage = infors.getValue3(); 
-		BILL_SORT_TYPE type = infors.getValue4();
-		boolean isDetail = infors.getValue5();
-		
+	public ArrayList<ResultSet> getBillList(UserObject currentUser, BillObject similar, Integer at, Byte bPerPage, BILL_SORT_TYPE type) {
+//		UserObject currentUser = infors.getValue0();
+//		BillObject similar = infors.getValue1();
+//		int at = infors.getValue2();
+//		byte bPerPage = infors.getValue3(); 
+//		BILL_SORT_TYPE type = infors.getValue4();
+//		boolean isDetail = infors.getValue5();
+//		
 		StringBuilder sql = new StringBuilder();
 		
-		if (isDetail) {
-			sql.append("SELECT * FROM tblbill ");
-			sql.append("WHERE (bill_id="+similar.getBill_id()+"); ");
-			sql.append("LEFT JOIN tblemployee ON tblbill.bill_creator_id=tblemployee.employee_id ");
-			sql.append("LEFT JOIN tblbilldetail ON tblbill.bill_id=tblbilldetail.bill_detail_id");
-		} else {
-			sql.append("SELECT * FROM tblbill ");	 
-			sql.append("LEFT JOIN tblemployee ON tblbill.bill_creator_id=tblemployee.employee_id ");
-			sql.append("LEFT JOIN tblbilldetail ON tblbill.bill_id=tblbilldetail.bill_detail_id");
 	
-//			sql.append(this.createCondition(currentUser));
-			switch (type) {	
-				case NAME:
-					sql.append(" ORDER BY bill_id ASC ");
+		sql.append("SELECT * FROM tblbill ");	 
+		sql.append("LEFT JOIN tblemployee ON tblbill.bill_creator_id=tblemployee.employee_id ");
+		sql.append("LEFT JOIN tblbilldetail ON tblbill.bill_id=tblbilldetail.bill_detail_id");
+
+//		sql.append(this.createCondition(currentUser));
+		switch (type) {	
+			case NAME:
+				sql.append(" ORDER BY bill_id ASC ");
+			break;
+			case ADDRESS:
+				sql.append(" ORDER BY bill_address ASC ");
 				break;
-				case ADDRESS:
-					sql.append(" ORDER BY bill_address ASC ");
-					break;
-				case CREATED:
-					sql.append(" ORDER BY bill_created_date DESC ");
-					break;
-				case MODIFIED:
-					sql.append(" ORDER BY bill_last_modified_date DESC ");
-					break;
-				default:
-					sql.append(" ORDER BY bill_id ASC ");
-			}	
-			sql.append("LIMIT "+at+"," +bPerPage+"; ") ;
-			sql.append(" ");					
-			
-		}		
+			case CREATED:
+				sql.append(" ORDER BY bill_created_date DESC ");
+				break;
+			case MODIFIED:
+				sql.append(" ORDER BY bill_last_modified_date DESC ");
+				break;
+			default:
+				sql.append(" ORDER BY bill_id ASC ");
+		}	
+		sql.append("LIMIT "+at+"," +bPerPage+"; ") ;
+		sql.append(" ");	
 		
 		sql.append("SELECT tblbill.bill_created_date, SUM(bill_detail_product_price*bill_detail_product_quantity) as export_price FROM tblbill ");
 		sql.append("LEFT JOIN tblbilldetail ON tblbill.bill_id=tblbilldetail.bill_detail_id ");
-		sql.append("WHERE bill_type=1 ");
+
 		sql.append("GROUP BY tblbill.bill_created_date ");
 		sql.append("ORDER BY STR_TO_DATE(bill_created_date, '%e/%c/%Y') ASC ");
 		sql.append("LIMIT 50; ");
 
-		sql.append("SELECT tblbill.bill_created_date, SUM(bill_detail_product_price*bill_detail_product_quantity) as import_price FROM tblbill ");
-		sql.append("LEFT JOIN tblbilldetail ON tblbill.bill_id=tblbilldetail.bill_detail_id ");
-		sql.append("WHERE bill_type=0 ");
-		sql.append("GROUP BY tblbill.bill_created_date ");
-		sql.append("ORDER BY STR_TO_DATE(bill_created_date, '%e/%c/%Y') ASC ");
-		sql.append("LIMIT 50; ");
 		
 		
 		sql.append("SELECT COUNT(bill_id) AS total FROM tblbill");
@@ -375,6 +320,110 @@ public class BillImpl extends BasicImpl implements Bill {
 		return this.getReList(sql.toString());
 	}
 
+
+
+	@Override
+	public ResultSet getBillByCreatedDate(Date start, Date end) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<ResultSet> getBillByUser(UserObject user, Integer at, Byte bPerPage, String multiSort, String multiFilter) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT * FROM tblbill b ");	 
+		sql.append("LEFT JOIN tblbd bd ON b.bill_id=bd.bd_id ");
+		sql.append(this.ORDERConditions(multiSort));
+		sql.append("LIMIT "+at+"," +bPerPage+"; ") ;
+
+		
+		sql.append("SELECT COUNT(bill_id) AS total FROM tblbill");
+		sql.append("; ");
+		System.out.print(sql.toString());
+		return this.getReList(sql.toString());
+	}
+	
+	private String SELECTConditions(String multiField) {
+		StringBuilder SELECT = new StringBuilder();
+
+	
+		return SELECT.toString();
+	}
+	
+	private String WHEREConditions(String multiCondition) {
+		StringBuilder WHERE = new StringBuilder();
+
+		return WHERE.toString();
+	}
+	
+	private String ORDERConditions(String multiSort) {
+		StringBuilder ORDER = new StringBuilder();
+		if (multiSort!=null) {
+			if (!multiSort.equalsIgnoreCase("")) {
+				Map<String,String> SortMap = new TreeMap<String,String>();
+				
+				String[] Pair = multiSort.trim().split(";");
+				for (int i=0; i<Pair.length;i++) {
+					String[] div = Pair[i].split(":");
+					SortMap.put(div[0], div[1]);
+				}			
+
+				SortMap.forEach((key,value)->{
+					if(!ORDER.isEmpty()&&!ORDER.toString().isBlank()) {
+						ORDER.append(",");
+					}
+					switch (key) {			
+					case "id":
+						ORDER.append("bill_id");
+						break;
+					case "status":
+						ORDER.append("bill_status");
+						break;
+					case "created_date":
+						ORDER.append("STR_TO_DATE(bill_created_date, '%e/%c/%Y')");
+						break;
+					case "modified_date":
+						ORDER.append("STR_TO_DATE(bill_last_modified_date, '%e/%c/%Y')");
+						break;
+					case "shop":
+						ORDER.append("bill_shop_id");
+						break;
+					case "transporter":
+						ORDER.append("bill_transporter_id");
+						break;					
+					case "type":
+						ORDER.append("bill_type");
+						break;
+					case "customer":
+						ORDER.append("bill_customer_id");
+						break;
+					case "address":
+						ORDER.append("bill_target_address");
+						break;
+					default:
+						ORDER.append("STR_TO_DATE(bill_created_date, '%e/%c/%Y')");
+					}		
+					
+					switch (value) {
+					case "asc":
+						ORDER.append(" ASC ");
+						break;
+					case "desc":
+						ORDER.append(" DESC ");
+						break;
+					default:
+						ORDER.append(" ASC ");
+						break;
+					}
+				});
+				
+				if(!ORDER.toString().equalsIgnoreCase("")) {
+					ORDER.insert(0, "ORDER BY ");
+				}
+			}
+		}
+		return ORDER.toString();
+	}
 	
 	public static void main(String[] args) {
 		//Khoi tao bo quan li ket noi
@@ -383,17 +432,10 @@ public class BillImpl extends BasicImpl implements Bill {
 		//Tao doi tuong thuc thi chuc nang muc User
 		BillImpl u = new BillImpl(cp);
 		
-		//Them mot nguoi su dung
-		ImportBillDTO bill = new ImportBillDTO();
-		
-		bill.setBill_creator_id(40);
-		bill.setBill_created_date("29/12/2003");
-		bill.setBill_type((byte)1);
-		bill.setImport_bill_product_id(5);
-		bill.setImport_bill_product_quantity(10);
-		bill.setImport_bill_price(100);
 
-		
+		UserObject currentUser = new UserObject();
+		int at = 0;
+		byte bPerPage = 6; 
 		
 //		boolean result = u.addBill(bill);
 //		
@@ -401,19 +443,16 @@ public class BillImpl extends BasicImpl implements Bill {
 //			System.out.print("\n---------------------Khong thanh cong-------------------\n");
 //		}
 		
-		//Lay tap ban ghi nguoi su dung
-		EmployeeObject employee = new EmployeeObject();
-		ArrayList<ResultSet> res = u.getBills(new Sextet<EmployeeObject, BillObject, Integer, Byte, BILL_SORT_TYPE, Boolean>(employee,null,1,(byte)10,BILL_SORT_TYPE.CREATED,false));
+		ArrayList<ResultSet> res = u.getBillByUser(currentUser, at, bPerPage, "created_date:desc;shop:asc","");
 		
-		ResultSet rs = res.get(2);
+		ResultSet rs = res.get(0);
 		String row;
 		//Duyen va hien thi danh sach nguoi su dung
 		if (rs!=null) {
 			try {
 				while (rs.next()) {
-					row = "ID: "+rs.getString("bill_created_date");
-					row += "\tNAME: "+rs.getString("import_price");
-					
+					row = " date: "+rs.getString("bill_created_date");
+					row += " shop: "+rs.getInt("bill_shop_id");
 					System.out.println(row);
 				}			
 				rs.close();
@@ -424,7 +463,7 @@ public class BillImpl extends BasicImpl implements Bill {
 			}
 		}
 		
-		rs=res.get(4);
+		rs=res.get(1);
 		if (rs!=null) {
 			try {
 				if (rs.next()) {
@@ -436,18 +475,6 @@ public class BillImpl extends BasicImpl implements Bill {
 			}
 		}
 		
-	}
-
-	@Override
-	public ResultSet getBillByCreator(UserObject user) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ResultSet getBillByCreatedDate(Date start, Date end) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

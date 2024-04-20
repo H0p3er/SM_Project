@@ -49,7 +49,7 @@ public class ShopLibrary {
 		StringBuilder series = new StringBuilder();
 		
 		sellerShopStatisticDTO.getTotalSellingPricePerProduct().forEach((id,product)->{
-			if (!label.isEmpty()) {
+			if (!label.isEmpty()&&!label.toString().isBlank()) {
 				label.append(",");
 				series.append(",");
 			}
