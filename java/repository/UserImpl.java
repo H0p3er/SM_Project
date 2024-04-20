@@ -12,11 +12,11 @@ import utility.Utilities;
 import constant.*;
 
 public class UserImpl extends BasicImpl implements User {
-	
+
 	public UserImpl(ConnectionPool cp) {
 		super(cp, "User");
 	}
-	
+
 	public UserImpl(ConnectionPool cp, String objecname) {
 		super(cp, objecname);
 	}
@@ -24,11 +24,11 @@ public class UserImpl extends BasicImpl implements User {
 	@Override
 	public boolean addUser(UserObject item) {
 		// TODO Auto-generated method stub
-		
+
 		if (this.isExisting(item)) {
 			return false;
 		}
-		
+
 		StringBuilder sql = new StringBuilder();
 		sql.append("INSERT INTO tbluser(");
 		sql.append("user_name, user_pass, ");
@@ -38,26 +38,33 @@ public class UserImpl extends BasicImpl implements User {
 		sql.append("user_mobile_phone, user_social_links ");
 		sql.append(")");
 		sql.append("VALUES(?,md5(?),?,?,?,?,?,?,?,?,?,?,?);");
-		
-		//Bien dich
-		try {
-			PreparedStatement pre = this.con.prepareStatement(sql.toString());
-			pre.setString(1, item.getUser_name());
-			pre.setString(2, item.getUser_pass());
-			pre.setString(3, item.getUser_nickname());
-			pre.setString(4, Utilities.encode(item.getUser_fullname()));
-			pre.setString(5, item.getUser_images());
-			pre.setString(6, item.getUser_email());
-			pre.setString(7, item.getUser_notes());		
-			pre.setByte(8, item.getUser_permission());	
-			pre.setByte(9, item.getUser_gender());
-			pre.setString(10, Utilities.encode(item.getUser_address()));
-			pre.setString(11, item.getUser_created_date());
-			pre.setString(12, item.getUser_mobile_phone());
-			pre.setString(13, item.getUser_social_links());
 
-			
-			return this.add(pre);
+		// Bien dich
+		try {
+            PreparedStatement pre = this.con.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS);
+            pre.setString(1, item.getUser_name());
+            pre.setString(2, item.getUser_pass());
+            pre.setString(3, item.getUser_nickname());
+            pre.setString(4, Utilities.encode(item.getUser_fullname()));
+            pre.setString(5, item.getUser_images());
+            pre.setString(6, item.getUser_email());
+            pre.setString(7, item.getUser_notes());
+            pre.setByte(8, item.getUser_permission());
+            pre.setByte(9, item.getUser_gender());
+            pre.setString(10, Utilities.encode(item.getUser_address()));
+            pre.setString(11, item.getUser_created_date());
+            pre.setString(12, item.getUser_mobile_phone());
+            pre.setString(13, item.getUser_social_links());
+
+            boolean success = this.add(pre);
+            if (success) {
+                ResultSet generatedKeys = pre.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    int newUserId = generatedKeys.getInt(1);
+                    item.setUser_id(newUserId);
+                } 
+            }
+            return success;
 		} catch (SQLException e) {
 			try {
 				this.con.rollback();
@@ -73,7 +80,7 @@ public class UserImpl extends BasicImpl implements User {
 
 	private boolean isExisting(UserObject item) {
 		boolean flag = false;
-		String sql = "SELECT user_id FROM tbluser WHERE (user_name='"+item.getUser_name()+"'); ";
+		String sql = "SELECT user_id FROM tbluser WHERE (user_name='" + item.getUser_name() + "'); ";
 		ResultSet rs = this.gets(sql);
 		try {
 			if (rs.next()) {
@@ -86,59 +93,56 @@ public class UserImpl extends BasicImpl implements User {
 		}
 		return flag;
 	}
-	
-	
+
 	@Override
 	public boolean editUser(UserObject item, USER_EDIT_TYPE et) {
 		// TODO Auto-generated method stub
-		
-		String sql ="UPDATE tbluser SET ";
+
+		String sql = "UPDATE tbluser SET ";
 		switch (et) {
-			case GENERAL:
-			    sql += "user_nickname=?, user_fullname=?, user_images=?, ";
-			    sql += "user_email=?, user_notes=?, user_gender=?, ";
-			    sql += "user_address=?, user_mobile_phone=?, user_social_links=?";
+		case GENERAL:
+			sql += "user_nickname=?, user_fullname=?, user_images=?, ";
+			sql += "user_email=?, user_notes=?, user_gender=?, ";
+			sql += "user_address=?, user_mobile_phone=?, user_social_links=?";
 			break;
-			case SETTINGS:
-				sql+="user_permission=? ";
+		case SETTINGS:
+			sql += "user_permission=? ";
 			break;
-			
-			case TRASH:
-				sql+="user_deleted=1 ";
+
+		case TRASH:
+			sql += "user_deleted=1 ";
 			break;
 		}
-		
-		sql += "WHERE user_id=?;";
-		
-		
-		//Bien dich
+
+		sql += " WHERE user_id=?;";
+
+		// Bien dich
 		try {
 			PreparedStatement pre = this.con.prepareStatement(sql);
-			switch(et) {
-				case GENERAL:
-					pre.setString(1, item.getUser_nickname());
-					pre.setString(2, item.getUser_fullname());
-					pre.setString(3, item.getUser_images());
-					pre.setString(4, item.getUser_email());
-					pre.setString(5, item.getUser_notes());		
-					pre.setByte(6, item.getUser_gender());
-					pre.setString(7, item.getUser_address());
-					pre.setString(8, item.getUser_mobile_phone());	
-					pre.setString(9, item.getUser_social_links());
-					
-					pre.setInt(10, item.getUser_id());
-					break;
-				
-				case SETTINGS:
-					pre.setByte(1, item.getUser_permission());
-					pre.setInt(2, item.getUser_id());
-					break;
-				
-				case TRASH:
-					pre.setInt(1, item.getUser_id());
-					break;
+			switch (et) {
+			case GENERAL:
+				pre.setString(1, item.getUser_nickname());
+				pre.setString(2, item.getUser_fullname());
+				pre.setString(3, item.getUser_images());
+				pre.setString(4, item.getUser_email());
+				pre.setString(5, item.getUser_notes());
+				pre.setByte(6, item.getUser_gender());
+				pre.setString(7, item.getUser_address());
+				pre.setString(8, item.getUser_mobile_phone());
+				pre.setString(9, item.getUser_social_links());
+				pre.setInt(10, item.getUser_id());
+				break;
+
+			case SETTINGS:
+				pre.setByte(1, item.getUser_permission());
+				pre.setInt(2, item.getUser_id());
+				break;
+
+			case TRASH:
+				pre.setInt(1, item.getUser_id());
+				break;
 			}
-			
+
 			return this.edit(pre);
 		} catch (SQLException e) {
 			try {
@@ -152,57 +156,50 @@ public class UserImpl extends BasicImpl implements User {
 		}
 		return false;
 	}
-
 	@Override
 	public boolean delUser(UserObject item) {
-		// TODO Auto-generated method stub
-		
-		if (!this.isEmpty(item)) {
-			return false;
-		}
-		
-		String sql = "DELETE FROM tbluser WHERE (user_id=?);";
-		
-		try {
-			PreparedStatement pre = this.con.prepareStatement(sql);
-			pre.setInt(1, item.getUser_id());
-			
-			return this.del(pre);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			try {
-				this.con.rollback();
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-		
-		return false;
+	    // Kiểm tra xem user_id hợp lệ không
+	    if (!isValidUserId(item.getUser_id())) {
+	        return false;
+	    }
+
+	    String sql = "DELETE FROM tbluser WHERE (user_id=?);";
+
+	    try {
+	        PreparedStatement pre = this.con.prepareStatement(sql);
+	        pre.setInt(1, item.getUser_id());
+
+	        return this.del(pre);
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        try {
+	            this.con.rollback();
+	        } catch (SQLException e1) {
+	            e1.printStackTrace();
+	        }
+	    }
+
+	    return false;
 	}
-	
-	private boolean isEmpty(UserObject item) {
-		boolean flag = true;
-		
-		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT user_id FROM tbluser WHERE user_id="+item.getUser_id()+"; ");
-		
-		ArrayList<ResultSet> res = this.getReList(sql.toString());
-		
-		for (ResultSet rs: res) {
-			try {
-				if (rs!=null && rs.next()) {
-					flag = false;
-					break;
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		return flag;
+
+	// Kiểm tra xem user_id có tồn tại không
+	private boolean isValidUserId(int userId) {
+	    String sql = "SELECT user_id FROM tbluser WHERE user_id=? AND user_deleted=0;";
+	    ResultSet rs = this.get(sql, userId);
+	    try {
+	        return rs.next(); // Trả về true nếu có bản ghi tồn tại
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (rs != null) {
+	                rs.close();
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    return false;
 	}
 
 	@Override
@@ -216,172 +213,164 @@ public class UserImpl extends BasicImpl implements User {
 	public ResultSet getUser(String username, String userpass) {
 		// TODO Auto-generated method stub
 		String sqlSelect = "SELECT * FROM tbluser WHERE (user_name=?) AND (user_pass=md5(?)) AND (user_deleted=0); ";
-		
+
 		String sqlUpdate = "UPDATE tbluser SET user_logined = user_logined+1 WHERE (user_name=?) AND (user_pass=md5(?)); ";
-		
+
 		ArrayList<String> sql = new ArrayList<>();
 		sql.add(sqlSelect);
 		sql.add(sqlUpdate);
-		
+
 		return this.get(sql, username, userpass);
 	}
 
 	@Override
 	public ArrayList<ResultSet> getUsers(UserObject similar, int at, byte uPerPage, USER_SORT_TYPE type) {
 		// TODO Auto-generated method stub
-		
-		String sql ="SELECT * FROM tbluser ";
-		sql+= this.createCondition(similar);
-		
+
+		String sql = "SELECT * FROM tbluser ";
+		sql += this.createCondition(similar);
+
 		switch (type) {
-			case NAME:
-				sql+= " ORDER BY user_name ASC ";
-				break;
-			case FULLNAME:
-				sql+= " ORDER BY user_fullname ASC ";
-				break;
-			case ADDRESS:
-				sql+= " ORDER BY user_address ASC ";
-				break;
-			case CREATED:
-				sql+= " ORDER BY user_created_date DESC ";
-				break;
-			case MODIFIED:
-				sql+= " ORDER BY user_last_modified_date DESC ";
-				break;
-			default:
-				sql+= "ORDER BY user_id ASC ";
+		case NAME:
+			sql += " ORDER BY user_name ASC ";
+			break;
+		case FULLNAME:
+			sql += " ORDER BY user_fullname ASC ";
+			break;
+		case ADDRESS:
+			sql += " ORDER BY user_address ASC ";
+			break;
+		case CREATED:
+			sql += " ORDER BY user_created_date DESC ";
+			break;
+		case MODIFIED:
+			sql += " ORDER BY user_last_modified_date DESC ";
+			break;
+		default:
+			sql += "ORDER BY user_id ASC ";
 		}
-		
-		sql+= "LIMIT "+at+"," +uPerPage+";";
-		sql+= " ";
-		
+
+		sql += "LIMIT " + at + "," + uPerPage + ";";
+		sql += " ";
+
 		StringBuilder multiSelect = new StringBuilder();
 		multiSelect.append(sql);
 		multiSelect.append("SELECT COUNT(user_id) AS total FROM tbluser ");
 		multiSelect.append(this.createCondition(similar));
 		multiSelect.append(";");
-		
+
 		return this.getReList(multiSelect.toString());
 	}
-	
+
 	private String createCondition(UserObject similar) {
-		 StringBuilder conds = new StringBuilder();
-		 
-		 if (similar!=null) {
-			 byte permis = similar.getUser_permission();// Tài khoản đăng nhập truyên cho
-			 
-			 //Phân tầng quản trị
-			 conds.append("(user_permission<=").append(permis).append(") ");
-			 
-			 if (permis<4) {
-				 int id = similar.getUser_id();
-				 
-				 if (id>0) {
-					 conds.append("AND (user_id=").append(id).append(") )") ;
-				 }
-			 }
-			 
-			 
-			 //Xử lí từ khóa tìm kiếm
-			 String key = similar.getUser_fullname();
-			 if (key!=null && !key.equalsIgnoreCase("")) {
-				 conds.append(" AND (");
-				 conds.append("(user_fullname LIKE '%"+key+"%') OR ");
-				 conds.append("(user_address LIKE '%"+key+"%') OR ");
-				 conds.append("(user_email LIKE '%"+key+"%')");
-				 conds.append(") ");
-			 }
-			 
-			 //Kiểm tra tồn tại
-			 if (similar.isUser_deleted()) {
-				 conds.append("AND (user_deleted=1)");
-			 } else {
-				 conds.append("AND (user_deleted=0)");
-			 }
-		 }
-		 
-		 if (!conds.toString().equalsIgnoreCase("")) {
-			 conds.insert(0,"WHERE ");
-		 }
-		 
-		 return conds.toString();
+		StringBuilder conds = new StringBuilder();
+
+		if (similar != null) {
+			byte permis = similar.getUser_permission();// Tài khoản đăng nhập truyên cho
+
+			// Phân tầng quản trị
+			conds.append("(user_permission<=").append(permis).append(") ");
+
+			if (permis < 4) {
+				int id = similar.getUser_id();
+
+				if (id > 0) {
+					conds.append("AND (user_id=").append(id).append(") )");
+				}
+			}
+
+			// Xử lí từ khóa tìm kiếm
+			String key = similar.getUser_fullname();
+			if (key != null && !key.equalsIgnoreCase("")) {
+				conds.append(" AND (");
+				conds.append("(user_fullname LIKE '%" + key + "%') OR ");
+				conds.append("(user_address LIKE '%" + key + "%') OR ");
+				conds.append("(user_email LIKE '%" + key + "%')");
+				conds.append(") ");
+			}
+
+			// Kiểm tra tồn tại
+			if (similar.isUser_deleted()) {
+				conds.append("AND (user_deleted=1)");
+			} else {
+				conds.append("AND (user_deleted=0)");
+			}
+		}
+
+		if (!conds.toString().equalsIgnoreCase("")) {
+			conds.insert(0, "WHERE ");
+		}
+
+		return conds.toString();
 	}
-	
-	public static void main(String[] args) {
-		//Khoi tao bo quan li ket noi
+
+	public static void main(String[] args) throws SQLException {
+		// Khoi tao bo quan li ket noi
 		ConnectionPool cp = new ConnectionPoolImpl();
-		
-		//Tao doi tuong thuc thi chuc nang muc User
-		User u=new UserImpl(cp);
-	
-		//Them mot nguoi su dung
+
+		// Tao doi tuong thuc thi chuc nang muc User
+		User u = new UserImpl(cp);
+
+		// Them mot nguoi su dung
 		UserObject new_user = new UserObject();
-		new_user.setUser_name("name5");
-		new_user.setUser_pass("pas1");
-		new_user.setUser_nickname("ling");
+		new_user.setUser_name("lingling1");
+		new_user.setUser_pass("linhuu111");
+		new_user.setUser_nickname("godah");
 		new_user.setUser_fullname("123 ling");
 		new_user.setUser_images(null);
 		new_user.setUser_social_links(null);
-		new_user.setUser_gender((byte)1);
+		new_user.setUser_gender((byte) 1);
 		new_user.setUser_email("admin1@gmail.com");
 		new_user.setUser_address("Ha Noi");
-		new_user.setUser_created_date("2022/11/11");	
+		new_user.setUser_created_date("2022/11/11");
+
+		boolean resultAdd = u.addUser(new_user);
+		if (resultAdd) {
+			System.out.println("ok1");
+		} else {
+			System.out.println("FAILED1");
+		}
+		System.out.println(new_user.getUser_id());
 		
-		//add
-		boolean resultAdd =  u.addUser(new_user);
-		if (resultAdd)
-			System.out.println("true");
-		else {
-			System.out.println("false Add");
-			}
-		
-		//edit 
-		boolean resultEdit =  u.editUser(new_user, USER_EDIT_TYPE.TRASH);
-		if (resultEdit)
-			System.out.println("true");
-		else {
-			System.out.println("false Edit");
-			}
-		
-		//del
+		boolean resultEdit = u.editUser(new_user, USER_EDIT_TYPE.GENERAL);
+		if (resultEdit) {
+			System.out.println("ok2");
+		} else {
+			System.out.println("FAILED2");
+		}
 		boolean resultDel = u.delUser(new_user);
-		if (resultDel)
-			System.out.println("true");
-		else {
-			System.out.println("false Del");
-			}
-		
-		//Lay tap ban ghi nguoi su dung
-		ArrayList<ResultSet> res = u.getUsers(null,0,(byte)25, USER_SORT_TYPE.NAME);
-		
+		if (resultDel) {
+			System.out.println("ok3");
+		} else {
+			System.out.println("FAILED3");
+		}
+		ArrayList<ResultSet> res = u.getUsers(null, 0, (byte) 25, USER_SORT_TYPE.NAME);
+
 		ResultSet rs = res.get(0);
 		String row;
-		//Duyen va hien thi danh sach nguoi su dung
-		if (rs!=null) {
+		// Duyen va hien thi danh sach nguoi su dung
+		if (rs != null) {
 			try {
 				while (rs.next()) {
-					row = "ID: "+rs.getInt("user_id");
-					row += "\tNAME: "+rs.getString("user_name");
-					row += "\tNICKNAME: "+rs.getString("user_nickname");
-					row += "\tFULLNAME: "+rs.getString("user_fullname");
-					row += "\tLOGINED: "+rs.getShort("user_logined");
-					
+					row = "ID: " + rs.getInt("user_id");
+					row += "\tNAME: " + rs.getString("user_name");
+					row += "\tLOGINED: " + rs.getShort("user_logined");
+
 					System.out.println(row);
-				}			
+				}
 				rs.close();
-				
+
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		
-		rs=res.get(1);
-		if (rs!=null) {
+
+		rs = res.get(1);
+		if (rs != null) {
 			try {
 				if (rs.next()) {
-					System.out.print("Total:"+rs.getInt("total"));
+					System.out.print("Total:" + rs.getInt("total"));
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
