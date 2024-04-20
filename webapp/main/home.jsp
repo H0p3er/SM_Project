@@ -13,8 +13,7 @@
           </div>
         </div>
       </div>
-      <div class="row">
-		<div id="home_product_list"></div>
+      <div class="row" id="home_product_list">
       </div>
     </div>
   </div>
