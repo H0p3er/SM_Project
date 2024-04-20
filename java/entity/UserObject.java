@@ -14,7 +14,7 @@ public class UserObject {
     private String user_address;
     private String user_created_date;
     private boolean user_deleted;
-    private String user_mobile_phone;
+    private String user_phone;
     private String user_social_links;
     private long user_logined;
 	public int getUser_id() {
@@ -95,11 +95,11 @@ public class UserObject {
 	public void setUser_deleted(boolean user_deleted) {
 		this.user_deleted = user_deleted;
 	}
-	public String getUser_mobile_phone() {
-		return user_mobile_phone;
+	public String getUser_phone() {
+		return user_phone;
 	}
-	public void setUser_mobile_phone(String user_mobile_phone) {
-		this.user_mobile_phone = user_mobile_phone;
+	public void setUser_phone(String user_phone) {
+		this.user_phone = user_phone;
 	}
 	public String getUser_social_links() {
 		return user_social_links;
@@ -113,7 +113,7 @@ public class UserObject {
 	public void setUser_logined(long user_logined) {
 		this.user_logined = user_logined;
 	}
-    
-
+	
+	
     
 }
