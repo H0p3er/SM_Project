@@ -328,15 +328,11 @@ CREATE TABLE `tblbill` (
   `bill_status` smallint(1) DEFAULT '1' COMMENT '1-Hóa đơn chưa thanh toán; 2-Hóa đơn đã được thanh toán',
   `bill_created_date` varchar(15) DEFAULT NULL COMMENT 'Ngày tạo hóa đơn',
   `bill_last_modified_date` varchar(15) DEFAULT NULL COMMENT 'Ngày chỉnh sửa lần cuối',
-  `bill_last_modified_id` int(11) DEFAULT '0' COMMENT 'Người chỉnh sửa lần cuối',
-  `bill_creator_id` int(11) DEFAULT '0' COMMENT 'Người tạo hóa đơn',
+  `bill_shop_id` int(11) DEFAULT '0' COMMENT 'Người tạo hóa đơn',
   `bill_transporter_id` int(11) DEFAULT '0' COMMENT 'Người vận chuyển, Đơn vị vận chuyển',
   `bill_type` smallint(1) unsigned NOT NULL DEFAULT '0' COMMENT 'Loại hóa đơn: 1= import, 2 = export, 3 = transfer',
-  `bi_target_shop_id` int(11) DEFAULT '0' COMMENT 'ID kho hoặc cửa hàng được nhập hàng',
-  `bi_provider_id` int(11) DEFAULT '0' COMMENT 'ID Nhà cung cấp',
-  `be_customer_id` int(11) DEFAULT '0' COMMENT 'Người nhận hàng',
-  `be_current_shop_id` int(11) DEFAULT '0' COMMENT 'ID Kho xuất hàng',
-  `be_target_address` varchar(100) DEFAULT NULL COMMENT 'Địa chỉ nhận hàng',
+  `bill_customer_id` int(11) DEFAULT '0' COMMENT 'Người mua hàng',
+  `bill_target_address` varchar(100) DEFAULT NULL COMMENT 'Địa chỉ nhận hàng',
   PRIMARY KEY (`bill_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8 COMMENT='Bảng hóa đơn';
 
@@ -345,57 +341,57 @@ CREATE TABLE `tblbill` (
 --
 
 /*!40000 ALTER TABLE `tblbill` DISABLE KEYS */;
-INSERT INTO `tblbill` (`bill_id`,`bill_status`,`bill_created_date`,`bill_last_modified_date`,`bill_last_modified_id`,`bill_creator_id`,`bill_transporter_id`,`bill_type`,`bi_target_shop_id`,`bi_provider_id`,`be_customer_id`,`be_current_shop_id`,`be_target_address`) VALUES 
- (1,1,'1/1/2023','4/1/2023',1,1,1,1,0,0,1,1,'8 Hùng Vương, Điện Biên, Ba Đình, Hà Nội'),
- (2,1,'6/1/2023','9/1/2023',2,2,2,1,0,0,2,2,'458 Minh Khai, P.Vĩnh Tuy, Q.Hai Bà Trưng, Hà Nội'),
- (3,1,'13/1/2023','16/1/2023',3,3,3,1,0,0,3,3,'72 Nguyễn Trãi, Thanh Xuân, Hà Nội'),
- (4,1,'20/1/2023','23/1/2023',4,4,4,1,0,0,4,4,'12 Đường Bưởi, Thủ Lệ, Ba Đình, Hà Nội'),
- (5,1,'26/1/2023','1/2/2023',5,5,5,1,0,0,5,5,'47 Phạm Hùng, Mễ Trì, Nam Từ Liêm, Hà Nội'),
- (6,1,'3/2/2023','6/2/2023',6,6,6,1,0,0,1,1,'1 Lương Yên, Bạch Đằng, Hai Bà Trưng, Hà Nội'),
- (7,1,'8/2/2023','10/2/2023',7,7,7,1,0,0,2,2,'27 Cổ Linh, Long Biên, Hà Nội'),
- (8,1,'12/2/2023','16/2/2023',8,8,8,1,0,0,3,3,'Ngõ 264 Âu Cơ, Nhật Tân, Tây Hồ, Hà Nội'),
- (9,1,'18/2/2023','20/2/2023',9,9,9,1,0,0,4,4,'16 tuyến phố xung quanh Hồ Gươm, Hoàn Kiếm, Hà Nội'),
- (10,1,'23/2/2023','25/2/2023',10,10,10,1,0,0,5,5,'222 Trần Duy Hưng, Cầu Giấy, Hà Nội'),
- (11,1,'1/3/2023','5/3/2023',11,1,11,1,0,0,1,1,'11 Lê Lợi, Vinh, Nghệ An'),
- (12,1,'9/3/2023','12/3/2023',12,2,12,1,0,0,2,2,'102 Đào Duy Từ, Hà Tĩnh, Hà Tĩnh'),
- (13,1,'15/3/2023','19/3/2023',13,3,13,1,0,0,3,3,'63 Nguyễn Huệ, Huế, Thừa Thiên Huế'),
- (14,1,'21/3/2023','24/3/2023',14,4,14,1,0,0,4,4,'75 Lê Lai, Đà Nẵng'),
- (15,1,'28/3/2023','1/4/2023',15,5,15,1,0,0,5,5,'29 Trần Hưng Đạo, Quảng Ngãi, Quảng Ngãi'),
- (16,1,'3/4/2023','6/4/2023',16,6,16,1,0,0,1,1,'144 Quang Trung, Pleiku, Gia Lai'),
- (17,1,'8/4/2023','12/4/2023',17,7,17,1,0,0,2,2,'212 Lê Duẩn, Buôn Ma Thuột, Đắk Lắk'),
- (18,1,'15/4/2023','18/4/2023',18,8,18,1,0,0,3,3,'9 Nguyễn Văn Cừ, Nha Trang, Khánh Hòa'),
- (19,1,'22/4/2023','24/4/2023',19,9,19,1,0,0,4,4,'16 Ngô Quyền, Cam Ranh, Khánh Hòa'),
- (20,1,'26/4/2023','1/5/2023',20,10,20,1,0,0,5,5,'89 Hùng Vương, Phan Thiết, Bình Thuận'),
- (21,1,'5/5/2023','7/5/2023',21,1,21,1,0,0,1,1,'6 Lê Lai, Vũng Tàu, Bà Rịa - Vũng Tàu'),
- (22,1,'10/5/2023','14/5/2023',22,2,22,1,0,0,2,2,'37 Đống Đa, Biên Hòa, Đồng Nai'),
- (23,1,'16/5/2023','19/5/2023',23,3,23,1,0,0,3,3,'88 Trần Hưng Đạo, Long Xuyên, An Giang'),
- (24,1,'21/5/2023','23/5/2023',24,4,24,1,0,0,4,4,'2 Nguyễn Huệ, Cần Thơ'),
- (25,1,'27/5/2023','1/6/2023',25,5,25,1,0,0,5,5,'4 Hàm Nghi, Sóc Trăng'),
- (26,1,'5/6/2023','9/6/2023',26,6,26,0,1,1,0,0,NULL),
- (27,1,'11/6/2023','13/6/2023',27,7,27,0,2,2,0,0,NULL),
- (28,1,'17/6/2023','19/6/2023',28,8,28,0,3,3,0,0,NULL),
- (29,1,'23/6/2023','26/6/2023',29,9,29,0,4,4,0,0,NULL),
- (30,1,'28/6/2023','1/7/2023',30,10,30,0,5,5,0,0,NULL),
- (31,1,'4/7/2023','7/7/2023',31,1,31,0,1,6,0,0,NULL),
- (32,1,'11/7/2023','15/7/2023',32,2,32,0,2,1,0,0,NULL),
- (33,1,'17/7/2023','21/7/2023',33,3,33,0,3,2,0,0,NULL),
- (34,1,'23/7/2023','26/7/2023',34,4,34,0,4,3,0,0,NULL),
- (35,1,'1/8/2023','4/8/2023',35,5,35,0,5,4,0,0,NULL),
- (36,1,'8/8/2023','12/8/2023',36,6,36,0,1,5,0,0,NULL),
- (37,1,'14/8/2023','16/8/2023',37,7,37,0,2,6,0,0,NULL),
- (38,1,'19/8/2023','22/8/2023',38,8,38,0,3,1,0,0,NULL),
- (39,1,'25/8/2023','1/9/2023',39,9,39,0,4,2,0,0,NULL),
- (40,1,'4/9/2023','8/9/2023',40,10,40,0,5,3,0,0,NULL),
- (41,1,'12/9/2023','14/9/2023',41,1,41,0,1,4,0,0,NULL),
- (42,1,'17/9/2023','20/9/2023',42,2,42,0,2,5,0,0,NULL),
- (43,1,'24/9/2023','27/9/2023',43,3,43,0,3,6,0,0,NULL),
- (44,1,'1/10/2023','3/10/2023',44,4,44,0,4,1,0,0,NULL),
- (45,1,'7/10/2023','9/10/2023',45,5,45,0,5,2,0,0,NULL),
- (46,1,'13/10/2023','15/10/2023',46,6,46,0,1,3,0,0,NULL),
- (47,1,'17/10/2023','19/10/2023',47,7,47,0,2,4,0,0,NULL),
- (48,1,'23/10/2023','26/10/2023',48,8,48,0,3,5,0,0,NULL),
- (49,1,'1/11/2023','4/11/2023',49,9,49,0,4,6,0,0,NULL),
- (50,1,'8/11/2023','10/11/2023',50,10,50,0,5,1,0,0,NULL);
+INSERT INTO `tblbill` (`bill_id`,`bill_status`,`bill_created_date`,`bill_last_modified_date`,`bill_shop_id`,`bill_transporter_id`,`bill_type`,`bill_customer_id`,`bill_target_address`) VALUES 
+ (1,1,'1/1/2023','4/1/2023',1,1,1,1,'8 Hùng Vương, Điện Biên, Ba Đình, Hà Nội'),
+ (2,1,'6/1/2023','9/1/2023',2,2,1,2,'458 Minh Khai, P.Vĩnh Tuy, Q.Hai Bà Trưng, Hà Nội'),
+ (3,1,'13/1/2023','16/1/2023',3,3,1,3,'72 Nguyễn Trãi, Thanh Xuân, Hà Nội'),
+ (4,1,'20/1/2023','23/1/2023',4,4,1,4,'12 Đường Bưởi, Thủ Lệ, Ba Đình, Hà Nội'),
+ (5,1,'26/1/2023','1/2/2023',5,5,1,5,'47 Phạm Hùng, Mễ Trì, Nam Từ Liêm, Hà Nội'),
+ (6,1,'3/2/2023','6/2/2023',6,6,1,1,'1 Lương Yên, Bạch Đằng, Hai Bà Trưng, Hà Nội'),
+ (7,1,'8/2/2023','10/2/2023',7,7,1,2,'27 Cổ Linh, Long Biên, Hà Nội'),
+ (8,1,'12/2/2023','16/2/2023',8,8,1,3,'Ngõ 264 Âu Cơ, Nhật Tân, Tây Hồ, Hà Nội'),
+ (9,1,'18/2/2023','20/2/2023',9,9,1,4,'16 tuyến phố xung quanh Hồ Gươm, Hoàn Kiếm, Hà Nội'),
+ (10,1,'23/2/2023','25/2/2023',10,10,1,5,'222 Trần Duy Hưng, Cầu Giấy, Hà Nội'),
+ (11,1,'1/3/2023','5/3/2023',1,11,1,1,'11 Lê Lợi, Vinh, Nghệ An'),
+ (12,1,'9/3/2023','12/3/2023',2,12,1,2,'102 Đào Duy Từ, Hà Tĩnh, Hà Tĩnh'),
+ (13,1,'15/3/2023','19/3/2023',3,13,1,3,'63 Nguyễn Huệ, Huế, Thừa Thiên Huế'),
+ (14,1,'21/3/2023','24/3/2023',4,14,1,4,'75 Lê Lai, Đà Nẵng'),
+ (15,1,'28/3/2023','1/4/2023',5,15,1,5,'29 Trần Hưng Đạo, Quảng Ngãi, Quảng Ngãi'),
+ (16,1,'3/4/2023','6/4/2023',6,16,1,1,'144 Quang Trung, Pleiku, Gia Lai'),
+ (17,1,'8/4/2023','12/4/2023',7,17,1,2,'212 Lê Duẩn, Buôn Ma Thuột, Đắk Lắk'),
+ (18,1,'15/4/2023','18/4/2023',8,18,1,3,'9 Nguyễn Văn Cừ, Nha Trang, Khánh Hòa'),
+ (19,1,'22/4/2023','24/4/2023',9,19,1,4,'16 Ngô Quyền, Cam Ranh, Khánh Hòa'),
+ (20,1,'26/4/2023','1/5/2023',10,20,1,5,'89 Hùng Vương, Phan Thiết, Bình Thuận'),
+ (21,1,'5/5/2023','7/5/2023',1,21,1,1,'6 Lê Lai, Vũng Tàu, Bà Rịa - Vũng Tàu'),
+ (22,1,'10/5/2023','14/5/2023',2,22,1,2,'37 Đống Đa, Biên Hòa, Đồng Nai'),
+ (23,1,'16/5/2023','19/5/2023',3,23,1,3,'88 Trần Hưng Đạo, Long Xuyên, An Giang'),
+ (24,1,'21/5/2023','23/5/2023',4,24,1,4,'2 Nguyễn Huệ, Cần Thơ'),
+ (25,1,'27/5/2023','1/6/2023',5,25,1,5,'4 Hàm Nghi, Sóc Trăng'),
+ (26,1,'5/6/2023','9/6/2023',6,26,0,0,NULL),
+ (27,1,'11/6/2023','13/6/2023',7,27,0,0,NULL),
+ (28,1,'17/6/2023','19/6/2023',8,28,0,0,NULL),
+ (29,1,'23/6/2023','26/6/2023',9,29,0,0,NULL),
+ (30,1,'28/6/2023','1/7/2023',10,30,0,0,NULL),
+ (31,1,'4/7/2023','7/7/2023',1,31,0,0,NULL),
+ (32,1,'11/7/2023','15/7/2023',2,32,0,0,NULL),
+ (33,1,'17/7/2023','21/7/2023',3,33,0,0,NULL),
+ (34,1,'23/7/2023','26/7/2023',4,34,0,0,NULL),
+ (35,1,'1/8/2023','4/8/2023',5,35,0,0,NULL),
+ (36,1,'8/8/2023','12/8/2023',6,36,0,0,NULL),
+ (37,1,'14/8/2023','16/8/2023',7,37,0,0,NULL),
+ (38,1,'19/8/2023','22/8/2023',8,38,0,0,NULL),
+ (39,1,'25/8/2023','1/9/2023',9,39,0,0,NULL),
+ (40,1,'4/9/2023','8/9/2023',10,40,0,0,NULL),
+ (41,1,'12/9/2023','14/9/2023',1,41,0,0,NULL),
+ (42,1,'17/9/2023','20/9/2023',2,42,0,0,NULL),
+ (43,1,'24/9/2023','27/9/2023',3,43,0,0,NULL),
+ (44,1,'1/10/2023','3/10/2023',4,44,0,0,NULL),
+ (45,1,'7/10/2023','9/10/2023',5,45,0,0,NULL),
+ (46,1,'13/10/2023','15/10/2023',6,46,0,0,NULL),
+ (47,1,'17/10/2023','19/10/2023',7,47,0,0,NULL),
+ (48,1,'23/10/2023','26/10/2023',8,48,0,0,NULL),
+ (49,1,'1/11/2023','4/11/2023',9,49,0,0,NULL),
+ (50,1,'8/11/2023','10/11/2023',10,50,0,0,NULL);
 /*!40000 ALTER TABLE `tblbill` ENABLE KEYS */;
 
 
@@ -526,6 +522,7 @@ CREATE TABLE `tblproduct` (
   `product_pc_id` smallint(5) unsigned NOT NULL COMMENT 'Loai san pham',
   `product_shop_id` int(10) unsigned DEFAULT '0',
   `product_quantity` int(10) unsigned DEFAULT '0',
+  `product_price` double NOT NULL DEFAULT '1000',
   PRIMARY KEY (`product_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8 COMMENT='Bảng sản phẩm';
 
@@ -534,71 +531,44 @@ CREATE TABLE `tblproduct` (
 --
 
 /*!40000 ALTER TABLE `tblproduct` DISABLE KEYS */;
-INSERT INTO `tblproduct` (`product_id`,`product_name`,`product_status`,`product_deleted`,`product_images`,`product_guarantee_id`,`product_notes`,`product_created_date`,`product_modified_date`,`product_pc_id`,`product_shop_id`,`product_quantity`) VALUES 
- (6,'MacBook Air 13 inch M1 2020 7-core GPU',1,0,' /home/images/product/macbook-air-m1-2020-gray-600x600.jpg',0,' null',NULL,' 30/10/2023',1,2,1),
- (7,'HP 15s fq5229TU i3 1215U (8U237PA)',0,0,' /home/images/product/hp-15s-fq5229tu-i3-8u237pa-thumb-600x600.png',0,' null',NULL,' 30/10/2023',2,2,2),
- (8,'Asus TUF Gaming F15 FX506HF i5 11400H (HN014W)',1,0,' /home/images/product/asus-tuf-gaming-f15-fx506hf-i5-hn014w-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',3,2,3),
- (9,'Acer Aspire 5 Gaming A515 58GM 51LB i5 13420H (NX.KQ4SV.002)',0,0,' /home/images/product/acer-aspire-5-a515-58gm-51lb-i5-nxkq4sv002-170923-015941-600x600.jpg',0,' null',NULL,' 30/10/2023',4,1,4),
- (10,'Asus Vivobook Go 15 E1504FA R5 7520U (NJ776W)',1,0,' /home/images/product/asus-vivobook-go-15-e1504fa-r5-nj776w-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',5,2,5),
- (12,'HP 240 G9 i3 1215U (6L1X7PA)',1,0,' /home/images/product/hp-240-g9-i3-6l1x7pa-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',7,2,12),
- (13,'Asus Vivobook 16 X1605VA i5 1335U (MB360W)',0,0,' /home/images/product/asus-vivobook-16-x1605va-i5-mb360w-thumb-laptop-600x600.jpg',0,' null',NULL,' 30/10/2023',7,1,5),
- (14,'HP 15s fq5162TU i5 1235U (7C134PA)',1,0,' /home/images/product/hp-15s-fq5162tu-i5-7c134pa-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',7,2,12),
- (15,'Asus Vivobook 15 X1504ZA i3 1215U (NJ102W)',0,0,' /home/images/product/asus-vivobook-15-x1504za-i3-nj102w-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',7,2,5),
- (16,'Asus Vivobook X515EA i3 1115G4 (EJ3948W)',1,0,' /home/images/product/asus-vivobook-x515ea-i3-ej3948w-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',8,2,12),
- (17,'HP Pavilion 14 dv2074TU i5 1235U (7C0P3PA)',0,0,' /home/images/product/hp-pavilion-14-dv2074tu-i5-7c0p3pa-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',8,2,5),
- (18,'Asus Vivobook X515EA i5 1135G7 (EJ4155W)',1,0,' /home/images/product/asus-vivobook-x515ea-i5-ej4155w-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',16,2,1),
- (19,'Dell Vostro 15 3520 i3 1215U (5M2TT1)',0,0,' /home/images/product/dell-vostro-15-3520-i3-5m2tt1-090823-041032-600x600.png',0,' null',NULL,' 30/10/2023',16,1,2),
- (20,'HP 14 ep0126TU i3 N305 (8U233PA)',1,0,' /home/images/product/hp-14-ep0126tu-i3-8u233pa-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',16,19,35),
- (21,'Lenovo Ideapad 3 15ITL6 i3 1115G4 (82H803SGVN)',0,0,' /home/images/product/lenovo-ideapad-3-15itl6-i3-82h803sgvn-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',16,1,23),
- (22,'Dell Inspiron 15 3520 i3 1215U (71003264)',1,0,' /home/images/product/dell-inspiron-3520-i3-71003264-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',16,4,4),
- (23,'HP 15s fq2716TU i3 1115G4 (7C0X3PA)',0,0,' /home/images/product/hp-15s-fq2716tu-i3-7c0x3pa-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',2,6,3),
- (24,'Asus Vivobook X415EA i3 1115G4 (EK2034W)',1,0,' /home/images/product/asus-vivobook-x415ea-i3-ek2034w-thumb-laptop-600x600.jpg',0,' null',NULL,' 30/10/2023',2,5,1),
- (26,'Dell Inspiron 15 3520 i5 1235U (N5I5122W1)',1,0,' /home/images/product/dell-inspiron-15-3520-i5-n5i5122w1-191222-091429-600x600.jpg',0,' null',NULL,' 30/10/2023',17,4,3),
- (27,'Asus Vivobook 15 X1504VA i5 1335U (NJ025W)',0,0,' /home/images/product/asus-vivobook-15-x1504va-i5-nj025w-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',17,5,1),
- (29,'Lenovo Ideapad 3 15IAU7 i3 1215U (82RK005LVN)',0,0,' /home/images/product/lenovo-ideapad-3-15iau7-i3-82rk005lvn-281122-051953-600x600.jpg',0,' null',NULL,' 30/10/2023',17,1,2),
- (30,'HP Pavilion 15 eg2082TU i5 1240P (7C0Q5PA)',1,0,' /home/images/product/hp-pavilion-15-eg2082tu-i5-7c0q5pa-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',17,2,12),
- (31,'Lenovo Ideapad 3 15ITL6 i5 1155G7 (82H803RRVN)',0,0,' /home/images/product/lenovo-ideapad-3-15itl6-i5-82h803rrvn-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',17,1,1),
- (32,'HP 240 G8 i3 1115G4 (6L1A1PA)',1,0,' /home/images/product/hp-240-g8-i3-6l1a1pa-210423-031503-600x600.jpg',0,'null',NULL,' 30/10/2023',17,2,3),
- (33,'Asus TUF Gaming F15 FX506HE i7 11800H (HN378W)',0,0,' /home/images/product/asus-tuf-gaming-f15-fx506he-i7-hn378w-thumb-600x600.jpg',0,'null',NULL,' 30/10/2023',2,3,1),
- (34,'HP 15s fq5147TU i7 1255U (7C133PA)',1,0,' /home/images/product/hp-15s-fq5147tu-i7-7c133pa-thumb-600x600.jpg',0,'null',NULL,' 30/10/2023',2,3,3),
- (35,'Acer Aspire 3 A315 59 314F i3 1215U (NX.K6TSV.002)',0,0,' /home/images/product/acer-aspire-3-a315-59-314f-i3-nxk6tsv002-thumb-1-600x600.jpg',0,' null',NULL,' 30/10/2023',2,3,2),
- (36,'MSI Gaming GF63 Thin 11SC i5 11400H (664VN)',1,0,' /home/images/product/msi-gaming-gf63-thin-11sc-i5-664vn-glr-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',2,3,1),
- (38,'MSI Gaming GF63 Thin 11UC i7 11800H (1228VN)',1,0,' /home/images/product/msi-gaming-gf63-thin-11uc-i7-1228vn-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',2,3,1),
- (39,'Asus Vivobook 15 OLED A1505VA i5 13500H (L1341W)',0,1,' /home/images/product/asus-vivobook-15-oled-a1505va-i5-l1341w-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',2,4,1),
- (40,'Lenovo Ideapad Slim 3 15IAH8 i5 12450H (83ER000EVN)',1,0,' /home/images/product/lenovo-ideapad-slim-3-15iah8-i5-83er00evn-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',2,5,1),
- (41,'MacBook Air 13 inch M2 2022 8-core GPU',0,0,' /home/images/product/apple-macbook-air-m2-2022-vang-600x600.jpg',0,' null',NULL,' 30/10/2023',2,2,1),
- (42,'Acer Nitro 5 Gaming AN515 57 5669 i5 11400H (NH.QEHSV.001)',1,0,' /home/images/product/acer-nitro-5-gaming-an515-57-5669-i5-11400h-8gb-512gb-144hz-4gb-gtx1650-win11-nhqehsv001-031221-100506-600x600.jpg',0,' null',NULL,' 30/10/2023',2,4,1),
- (43,'HP Pavilion 15 eg2081TU i5 1240P (7C0Q4PA)',0,0,' /home/images/product/hp-pavilion-15-eg2081tu-i5-7c0q4pa-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',2,1,1),
- (44,'Dell Vostro 3520 i3 1215U (V5I3614W1)',1,0,' /home/images/product/dell-vostro-3520-i3-v5i3614w1-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',2,3,1),
- (45,'Lenovo Ideapad 3 15ITL6 i3 1115G4 (82H803SFVN)',0,1,' /home/images/product/lenovo-ideapad-3-15itl6-i3-82h803sfvn-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',2,2,1);
+INSERT INTO `tblproduct` (`product_id`,`product_name`,`product_status`,`product_deleted`,`product_images`,`product_guarantee_id`,`product_notes`,`product_created_date`,`product_modified_date`,`product_pc_id`,`product_shop_id`,`product_quantity`,`product_price`) VALUES 
+ (6,'MacBook Air 13 inch M1 2020 7-core GPU',1,0,' /home/images/product/macbook-air-m1-2020-gray-600x600.jpg',0,' null',NULL,' 30/10/2023',1,2,1,1000),
+ (7,'HP 15s fq5229TU i3 1215U (8U237PA)',0,0,' /home/images/product/hp-15s-fq5229tu-i3-8u237pa-thumb-600x600.png',0,' null',NULL,' 30/10/2023',2,2,2,1000),
+ (8,'Asus TUF Gaming F15 FX506HF i5 11400H (HN014W)',1,0,' /home/images/product/asus-tuf-gaming-f15-fx506hf-i5-hn014w-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',3,2,3,1000),
+ (9,'Acer Aspire 5 Gaming A515 58GM 51LB i5 13420H (NX.KQ4SV.002)',0,0,' /home/images/product/acer-aspire-5-a515-58gm-51lb-i5-nxkq4sv002-170923-015941-600x600.jpg',0,' null',NULL,' 30/10/2023',4,1,4,1000),
+ (10,'Asus Vivobook Go 15 E1504FA R5 7520U (NJ776W)',1,0,' /home/images/product/asus-vivobook-go-15-e1504fa-r5-nj776w-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',5,2,5,1000),
+ (12,'HP 240 G9 i3 1215U (6L1X7PA)',1,0,' /home/images/product/hp-240-g9-i3-6l1x7pa-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',7,2,12,1000),
+ (13,'Asus Vivobook 16 X1605VA i5 1335U (MB360W)',0,0,' /home/images/product/asus-vivobook-16-x1605va-i5-mb360w-thumb-laptop-600x600.jpg',0,' null',NULL,' 30/10/2023',7,1,5,1000),
+ (14,'HP 15s fq5162TU i5 1235U (7C134PA)',1,0,' /home/images/product/hp-15s-fq5162tu-i5-7c134pa-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',7,2,12,1000),
+ (15,'Asus Vivobook 15 X1504ZA i3 1215U (NJ102W)',0,0,' /home/images/product/asus-vivobook-15-x1504za-i3-nj102w-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',7,2,5,1000),
+ (16,'Asus Vivobook X515EA i3 1115G4 (EJ3948W)',1,0,' /home/images/product/asus-vivobook-x515ea-i3-ej3948w-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',8,2,12,1000),
+ (17,'HP Pavilion 14 dv2074TU i5 1235U (7C0P3PA)',0,0,' /home/images/product/hp-pavilion-14-dv2074tu-i5-7c0p3pa-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',8,2,5,1000),
+ (18,'Asus Vivobook X515EA i5 1135G7 (EJ4155W)',1,0,' /home/images/product/asus-vivobook-x515ea-i5-ej4155w-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',16,2,1,1000),
+ (19,'Dell Vostro 15 3520 i3 1215U (5M2TT1)',0,0,' /home/images/product/dell-vostro-15-3520-i3-5m2tt1-090823-041032-600x600.png',0,' null',NULL,' 30/10/2023',16,1,2,1000),
+ (20,'HP 14 ep0126TU i3 N305 (8U233PA)',1,0,' /home/images/product/hp-14-ep0126tu-i3-8u233pa-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',16,19,35,1000),
+ (21,'Lenovo Ideapad 3 15ITL6 i3 1115G4 (82H803SGVN)',0,0,' /home/images/product/lenovo-ideapad-3-15itl6-i3-82h803sgvn-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',16,1,23,1000),
+ (22,'Dell Inspiron 15 3520 i3 1215U (71003264)',1,0,' /home/images/product/dell-inspiron-3520-i3-71003264-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',16,4,4,1000),
+ (23,'HP 15s fq2716TU i3 1115G4 (7C0X3PA)',0,0,' /home/images/product/hp-15s-fq2716tu-i3-7c0x3pa-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',2,6,3,1000),
+ (24,'Asus Vivobook X415EA i3 1115G4 (EK2034W)',1,0,' /home/images/product/asus-vivobook-x415ea-i3-ek2034w-thumb-laptop-600x600.jpg',0,' null',NULL,' 30/10/2023',2,5,1,1000),
+ (26,'Dell Inspiron 15 3520 i5 1235U (N5I5122W1)',1,0,' /home/images/product/dell-inspiron-15-3520-i5-n5i5122w1-191222-091429-600x600.jpg',0,' null',NULL,' 30/10/2023',17,4,3,1000),
+ (27,'Asus Vivobook 15 X1504VA i5 1335U (NJ025W)',0,0,' /home/images/product/asus-vivobook-15-x1504va-i5-nj025w-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',17,5,1,1000),
+ (29,'Lenovo Ideapad 3 15IAU7 i3 1215U (82RK005LVN)',0,0,' /home/images/product/lenovo-ideapad-3-15iau7-i3-82rk005lvn-281122-051953-600x600.jpg',0,' null',NULL,' 30/10/2023',17,1,2,1000),
+ (30,'HP Pavilion 15 eg2082TU i5 1240P (7C0Q5PA)',1,0,' /home/images/product/hp-pavilion-15-eg2082tu-i5-7c0q5pa-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',17,2,12,1000),
+ (31,'Lenovo Ideapad 3 15ITL6 i5 1155G7 (82H803RRVN)',0,0,' /home/images/product/lenovo-ideapad-3-15itl6-i5-82h803rrvn-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',17,1,1,1000),
+ (32,'HP 240 G8 i3 1115G4 (6L1A1PA)',1,0,' /home/images/product/hp-240-g8-i3-6l1a1pa-210423-031503-600x600.jpg',0,'null',NULL,' 30/10/2023',17,2,3,1000),
+ (33,'Asus TUF Gaming F15 FX506HE i7 11800H (HN378W)',0,0,' /home/images/product/asus-tuf-gaming-f15-fx506he-i7-hn378w-thumb-600x600.jpg',0,'null',NULL,' 30/10/2023',2,3,1,1000),
+ (34,'HP 15s fq5147TU i7 1255U (7C133PA)',1,0,' /home/images/product/hp-15s-fq5147tu-i7-7c133pa-thumb-600x600.jpg',0,'null',NULL,' 30/10/2023',2,3,3,1000),
+ (35,'Acer Aspire 3 A315 59 314F i3 1215U (NX.K6TSV.002)',0,0,' /home/images/product/acer-aspire-3-a315-59-314f-i3-nxk6tsv002-thumb-1-600x600.jpg',0,' null',NULL,' 30/10/2023',2,3,2,1000),
+ (36,'MSI Gaming GF63 Thin 11SC i5 11400H (664VN)',1,0,' /home/images/product/msi-gaming-gf63-thin-11sc-i5-664vn-glr-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',2,3,1,1000),
+ (38,'MSI Gaming GF63 Thin 11UC i7 11800H (1228VN)',1,0,' /home/images/product/msi-gaming-gf63-thin-11uc-i7-1228vn-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',2,3,1,1000),
+ (39,'Asus Vivobook 15 OLED A1505VA i5 13500H (L1341W)',0,1,' /home/images/product/asus-vivobook-15-oled-a1505va-i5-l1341w-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',2,4,1,1000),
+ (40,'Lenovo Ideapad Slim 3 15IAH8 i5 12450H (83ER000EVN)',1,0,' /home/images/product/lenovo-ideapad-slim-3-15iah8-i5-83er00evn-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',2,5,1,1000),
+ (41,'MacBook Air 13 inch M2 2022 8-core GPU',0,0,' /home/images/product/apple-macbook-air-m2-2022-vang-600x600.jpg',0,' null',NULL,' 30/10/2023',2,2,1,1000),
+ (42,'Acer Nitro 5 Gaming AN515 57 5669 i5 11400H (NH.QEHSV.001)',1,0,' /home/images/product/acer-nitro-5-gaming-an515-57-5669-i5-11400h-8gb-512gb-144hz-4gb-gtx1650-win11-nhqehsv001-031221-100506-600x600.jpg',0,' null',NULL,' 30/10/2023',2,4,1,1000),
+ (43,'HP Pavilion 15 eg2081TU i5 1240P (7C0Q4PA)',0,0,' /home/images/product/hp-pavilion-15-eg2081tu-i5-7c0q4pa-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',2,1,1,1000),
+ (44,'Dell Vostro 3520 i3 1215U (V5I3614W1)',1,0,' /home/images/product/dell-vostro-3520-i3-v5i3614w1-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',2,3,1,1000),
+ (45,'Lenovo Ideapad 3 15ITL6 i3 1115G4 (82H803SFVN)',0,1,' /home/images/product/lenovo-ideapad-3-15itl6-i3-82h803sfvn-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',2,2,1,1000);
 /*!40000 ALTER TABLE `tblproduct` ENABLE KEYS */;
-
-
---
--- Definition of table `tblproviders`
---
-
-DROP TABLE IF EXISTS `tblproviders`;
-CREATE TABLE `tblproviders` (
-  `provider_id` int(11) NOT NULL AUTO_INCREMENT,
-  `provider_name` varchar(100) CHARACTER SET utf8 NOT NULL COMMENT 'Tên nhà cung cấp',
-  `provider_notes` text CHARACTER SET utf8 COMMENT 'Mô tả ',
-  `provider_address` varchar(45) CHARACTER SET utf8 DEFAULT NULL COMMENT 'Địa chỉ',
-  PRIMARY KEY (`provider_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='Bảng nhà cung cấp';
-
---
--- Dumping data for table `tblproviders`
---
-
-/*!40000 ALTER TABLE `tblproviders` DISABLE KEYS */;
-INSERT INTO `tblproviders` (`provider_id`,`provider_name`,`provider_notes`,`provider_address`) VALUES 
- (1,'Apple','Apple là m?t hãng công ngh? ?a d?ng n?i ti?ng v?i s?n ph?m máy tính và thi?t b? ?i?n t? sang tr?ng và hi?u su?t cao.','1 Infinite Loop, Cupertino, California 95014,'),
- (2,'Microsoft','Microsoft là m?t trong nh?ng tên tu?i hàng ??u trong l?nh v?c công ngh?, chuyên s?n xu?t các s?n ph?m và d?ch v? liên quan ??n máy tính và ph?n m?m.','1 Microsoft Way, Redmond, Washington 98052, H'),
- (3,'HP','HP (Hewlett-Packard) là m?t trong nh?ng th??ng hi?u n?i ti?ng trong ngành công nghi?p máy tính, chuyên s?n xu?t các s?n ph?m máy tính và máy in.','1501 Page Mill Road, Palo Alto, California 94'),
- (4,'Dell','Dell là m?t hãng máy tính toàn c?u n?i ti?ng v?i s? chuyên nghi?p trong vi?c s?n xu?t máy tính cá nhân, máy tính xách tay và các d?ch v? công ngh? liên quan.','1 Dell Way, Round Rock, Texas 78682, Hoa Kỳ.'),
- (5,'MSI','MSI (Micro-Star International) là m?t công ty chuyên s?n xu?t các s?n ph?m công ngh? ch?i game, bao g?m máy tính và linh ki?n ch?i game cao c?p.','69, Lide St., Zhonghe Dist., New Taipei City ');
-/*!40000 ALTER TABLE `tblproviders` ENABLE KEYS */;
 
 
 --
@@ -639,6 +609,33 @@ INSERT INTO `tblshop` (`shop_id`,`shop_name`,`shop_address`,`shop_status`,`shop_
 
 
 --
+-- Definition of table `tbltranspoter`
+--
+
+DROP TABLE IF EXISTS `tbltranspoter`;
+CREATE TABLE `tbltranspoter` (
+  `transpoter_id` int(11) NOT NULL AUTO_INCREMENT,
+  `transpoter_name` varchar(100) CHARACTER SET utf8 NOT NULL COMMENT 'Tên nhà cung cấp',
+  `transpoter_notes` text CHARACTER SET utf8 COMMENT 'Mô tả ',
+  `transpoter_address` varchar(45) CHARACTER SET utf8 DEFAULT NULL COMMENT 'Địa chỉ',
+  PRIMARY KEY (`transpoter_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='Bảng nhà cung cấp';
+
+--
+-- Dumping data for table `tbltranspoter`
+--
+
+/*!40000 ALTER TABLE `tbltranspoter` DISABLE KEYS */;
+INSERT INTO `tbltranspoter` (`transpoter_id`,`transpoter_name`,`transpoter_notes`,`transpoter_address`) VALUES 
+ (1,'Apple','Apple là m?t hãng công ngh? ?a d?ng n?i ti?ng v?i s?n ph?m máy tính và thi?t b? ?i?n t? sang tr?ng và hi?u su?t cao.','1 Infinite Loop, Cupertino, California 95014,'),
+ (2,'Microsoft','Microsoft là m?t trong nh?ng tên tu?i hàng ??u trong l?nh v?c công ngh?, chuyên s?n xu?t các s?n ph?m và d?ch v? liên quan ??n máy tính và ph?n m?m.','1 Microsoft Way, Redmond, Washington 98052, H'),
+ (3,'HP','HP (Hewlett-Packard) là m?t trong nh?ng th??ng hi?u n?i ti?ng trong ngành công nghi?p máy tính, chuyên s?n xu?t các s?n ph?m máy tính và máy in.','1501 Page Mill Road, Palo Alto, California 94'),
+ (4,'Dell','Dell là m?t hãng máy tính toàn c?u n?i ti?ng v?i s? chuyên nghi?p trong vi?c s?n xu?t máy tính cá nhân, máy tính xách tay và các d?ch v? công ngh? liên quan.','1 Dell Way, Round Rock, Texas 78682, Hoa Kỳ.'),
+ (5,'MSI','MSI (Micro-Star International) là m?t công ty chuyên s?n xu?t các s?n ph?m công ngh? ch?i game, bao g?m máy tính và linh ki?n ch?i game cao c?p.','69, Lide St., Zhonghe Dist., New Taipei City ');
+/*!40000 ALTER TABLE `tbltranspoter` ENABLE KEYS */;
+
+
+--
 -- Definition of table `tbluser`
 --
 
@@ -674,11 +671,11 @@ CREATE TABLE `tbluser` (
 /*!40000 ALTER TABLE `tbluser` DISABLE KEYS */;
 INSERT INTO `tbluser` (`user_id`,`user_nickname`,`user_fullname`,`user_images`,`user_email`,`user_notes`,`user_permission`,`user_last_modified_id`,`user_last_modified_date`,`user_gender`,`user_address`,`user_created_date`,`user_deleted`,`user_mobile_phone`,`user_office_phone`,`user_social_links`,`user_creator_id`,`user_logined`,`user_name`,`user_pass`) VALUES 
  (1,'Dog lover','John Wick','\\home\\images\\user\\01.jpg','doglover@gmail.com','Ng??i tiêu dùng',1,0,NULL,0,'7 Lê Duẩn, Quận 1, Thành phố Hồ Chí Minh.','01/12/2023',0,'0342312435','0456323456',NULL,5,0,'DogLoverr','NoDogNoLife3000'),
- (2,'Pé','Nguyễn Thị Ngọc Mai','\\home\\images\\user\\02.jpg','mai06071969@gmail.com','Không có thông tin',1,0,NULL,0,'46 Hòa Mã, Quận Ba Đình, Hà Nội.','02/12/2023',0,'0123423131','0563457123',NULL,4,0,'Pé','Pe060769'),
+ (2,'Pé','Nguyễn Thị Ngọc Mai','\\home\\images\\user\\02.jpg','mai06071969@gmail.com','Không có thông tin',1,0,NULL,0,'46 Hòa Mã, Quận Ba Đình, Hà Nội.','02/12/2023',0,'0123423131','0563457123',NULL,4,29,'testing','ae2b1fca515949e5d54fb22b8ed95575'),
  (3,'SKT Khánh','Mai Quốc Khánh','\\home\\images\\user\\03.jpg','faker123@gmail.com','Không có thông tin',1,0,NULL,1,'191 Lãng Yên, Quận Hà Đông, Hà Nội.','03/12/2023',0,'0257123423','0353412345',NULL,3,3,'SktKhanh','738a1eca9e15f674ff6fd7434ea1b965'),
  (4,'Cloudy Vân','Tô Văn Vân','\\home\\images\\user\\04.jpg','imhigh@gmail.com','Không có thông tin',1,0,NULL,1,'57 Trần Hưng Đạo, Hoàn Kiếm, Hà Nội.','04/12/2023',0,'0385175892','0653451234',NULL,2,0,'Cloudy999','VanCloud'),
  (5,'Tuấn White','Trần Tuấn Bạch','\\home\\images\\user\\05.jpg','maninblack@gmail.com','Không có thông tin',1,1,NULL,1,'27 Liễu Giai, Quận Ba Đình, Hà Nội.','05/12/2023',0,'0385174512','0578412345',NULL,1,0,'TuanWhite','TrangNhuOMO'),
- (6,'Donald Trump','Đỗ Nam Trung','\\home\\images\\user\06.jpg','greatagain999@gmail.com','Qu?n lý t?i chi nhánh Lâm ??ng',4,0,NULL,1,'51 Nguyễn Du, Quận Hai Bà Trưng, Hà Nội.','06/12/2023',0,'08967912345','0123542523',NULL,20,575,'admin@gmail.com','75d23af433e0cea4c0e45a56dba18b30'),
+ (6,'Donald Trump','Đỗ Nam Trung','\\home\\images\\user\06.jpg','greatagain999@gmail.com','Qu?n lý t?i chi nhánh Lâm ??ng',4,0,NULL,1,'51 Nguyễn Du, Quận Hai Bà Trưng, Hà Nội.','06/12/2023',0,'08967912345','0123542523',NULL,20,594,'admin@gmail.com','75d23af433e0cea4c0e45a56dba18b30'),
  (7,'Janua','Trường','\\home\\images\\user\\07.jpg','janua@gmail.com','Không có thông tin',1,0,NULL,0,'47 Đào Duy Từ, quận Hoàn Kiếm','07/12/2023',0,'0912334253','0123456789',NULL,0,1,'January3','Xy#7pLz!'),
  (8,'Februa','Kỳ','\\home\\images\\user\\08.jpg','februa@gmail.com','Không có thông tin',2,0,NULL,1,'24 Hàng Bồ, quận Hoàn Kiếm','08/12/2023',0,'0875643865','0345678901',NULL,0,1,'February1','qRt2$yZa'),
  (9,'March','Kháng','\\home\\images\\user\\09.jpg','march@gmail.com','Không có thông tin',3,0,NULL,0,'49 Bát Đàn, quận Hoàn Kiếm ','09/12/2023',0,'0864479754','0987654321',NULL,0,1,'March7th','9b#6sPxY'),
