@@ -57,7 +57,7 @@ CREATE TABLE `tblbd` (
   `bd_product_quantity` int(10) NOT NULL DEFAULT '0' COMMENT 'Số lượng',
   `bd_product_note` varchar(14) NOT NULL COMMENT 'Ghi chu',
   PRIMARY KEY (`bd_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=251 DEFAULT CHARSET=latin1 COMMENT='Bảng chi tiết hóa đơn';
+) ENGINE=InnoDB AUTO_INCREMENT=251 DEFAULT CHARSET=utf8 COMMENT='Bảng chi tiết hóa đơn';
 
 --
 -- Dumping data for table `tblbd`
@@ -411,7 +411,7 @@ CREATE TABLE `tblguarantee` (
   `guarantee_deleted` smallint(6) DEFAULT NULL,
   `guarantee_price` int(11) DEFAULT NULL,
   `guarantee_method` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tblguarantee`
@@ -448,7 +448,7 @@ CREATE TABLE `tbllog` (
   `log_notes` text COMMENT 'Ghi chú của log',
   `log_created_date` varchar(45) DEFAULT NULL COMMENT 'Ngày khởi tạo Log',
   PRIMARY KEY (`log_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1 COMMENT='Bảng thông tin nhật ký';
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='Bảng thông tin nhật ký';
 
 --
 -- Dumping data for table `tbllog`
@@ -480,7 +480,7 @@ CREATE TABLE `tblpc` (
   `pc_name` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
   `pc_notes` text CHARACTER SET utf8,
   PRIMARY KEY (`pc_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1 COMMENT='Bảng danh mục sản phẩm';
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='Bảng danh mục sản phẩm';
 
 --
 -- Dumping data for table `tblpc`
@@ -527,7 +527,7 @@ CREATE TABLE `tblproduct` (
   `product_shop_id` int(10) unsigned DEFAULT '0',
   `product_quantity` int(10) unsigned DEFAULT '0',
   PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=latin1 COMMENT='Bảng sản phẩm';
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8 COMMENT='Bảng sản phẩm';
 
 --
 -- Dumping data for table `tblproduct`
@@ -585,7 +585,7 @@ CREATE TABLE `tblproviders` (
   `provider_notes` text CHARACTER SET utf8 COMMENT 'Mô tả ',
   `provider_address` varchar(45) CHARACTER SET utf8 DEFAULT NULL COMMENT 'Địa chỉ',
   PRIMARY KEY (`provider_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1 COMMENT='Bảng nhà cung cấp';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='Bảng nhà cung cấp';
 
 --
 -- Dumping data for table `tblproviders`
@@ -622,7 +622,7 @@ CREATE TABLE `tblshop` (
   `shop_phone` varchar(15) DEFAULT NULL COMMENT 'Số điện thoại liên hệ',
   `shop_email` varchar(45) DEFAULT NULL COMMENT 'Email liên hệ',
   PRIMARY KEY (`shop_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1 COMMENT='Bảng gian hàng';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='Bảng gian hàng';
 
 --
 -- Dumping data for table `tblshop`
@@ -665,7 +665,7 @@ CREATE TABLE `tbluser` (
   `user_name` varchar(45) NOT NULL COMMENT 'Tài khoản',
   `user_pass` varchar(45) NOT NULL COMMENT 'Mật khẩu',
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1 COMMENT='Bảng người dùng';
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COMMENT='Bảng người dùng';
 
 --
 -- Dumping data for table `tbluser`

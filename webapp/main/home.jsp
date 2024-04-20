@@ -15,7 +15,7 @@
           </div>
         </div>
       </div>
-      <div class="row">
+      <div class="row" id="home_product_list">
       	<% 
 
       		Gson gson = new Gson();
