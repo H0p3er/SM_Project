@@ -1,405 +1,426 @@
--- MySQL Administrator dump 1.4
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
 --
--- ------------------------------------------------------
--- Server version	5.7.39-log
+-- Host: 127.0.0.1
+-- Generation Time: Apr 20, 2024 at 06:57 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-
+/*!40101 SET NAMES utf8mb4 */;
 
 --
--- Create schema sm_project
+-- Database: `sm_project`
 --
 
-CREATE DATABASE IF NOT EXISTS sm_project;
-USE sm_project;
+-- --------------------------------------------------------
 
 --
--- Definition of table `tblaction`
+-- Table structure for table `comment`
 --
 
-DROP TABLE IF EXISTS `tblaction`;
+CREATE TABLE `comment` (
+  `comment_id` int(11) NOT NULL,
+  `comment_content` text NOT NULL,
+  `comment_created_date` int(11) NOT NULL,
+  `comment_creator_id` int(11) NOT NULL,
+  `comment_product_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `delivery`
+--
+
+CREATE TABLE `delivery` (
+  `delivery_id` int(11) NOT NULL,
+  `delivery_name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sale`
+--
+
+CREATE TABLE `sale` (
+  `sale_id` int(11) NOT NULL,
+  `sale_name` varchar(255) NOT NULL,
+  `sale_product_id` int(11) NOT NULL,
+  `sale_off_price` float NOT NULL,
+  `sale_off_price_percent` float NOT NULL,
+  `sale_start_date` date NOT NULL,
+  `sale_end_date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tblaction`
+--
+
 CREATE TABLE `tblaction` (
-  `action_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `action_id` int(11) UNSIGNED NOT NULL,
   `action_created_date` varchar(14) NOT NULL,
-  `action_creator_id` int(11) unsigned NOT NULL DEFAULT '0',
-  `action_target_table` int(11) unsigned NOT NULL,
-  `action_target_column` int(11) unsigned NOT NULL DEFAULT '0',
-  `action_method` int(1) unsigned NOT NULL,
-  PRIMARY KEY (`action_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `action_creator_id` int(11) UNSIGNED NOT NULL DEFAULT 0,
+  `action_target_table` int(11) UNSIGNED NOT NULL,
+  `action_target_column` int(11) UNSIGNED NOT NULL DEFAULT 0,
+  `action_method` int(1) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `tblaction`
+-- Table structure for table `tblbd`
 --
 
-/*!40000 ALTER TABLE `tblaction` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tblaction` ENABLE KEYS */;
-
-
---
--- Definition of table `tblbd`
---
-
-DROP TABLE IF EXISTS `tblbd`;
 CREATE TABLE `tblbd` (
-  `bd_id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `bd_bill_id` int(11) NOT NULL DEFAULT '0' COMMENT 'ID hóa đơn',
-  `bd_product_id` int(11) NOT NULL DEFAULT '0' COMMENT 'ID Sản phẩm',
-  `bd_product_price` int(11) NOT NULL DEFAULT '0' COMMENT 'Gia',
-  `bd_product_quantity` int(10) NOT NULL DEFAULT '0' COMMENT 'Số lượng',
-  `bd_product_note` varchar(14) NOT NULL COMMENT 'Ghi chu',
-  PRIMARY KEY (`bd_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=251 DEFAULT CHARSET=utf8 COMMENT='Bảng chi tiết hóa đơn';
+  `bd_id` int(11) UNSIGNED NOT NULL COMMENT 'ID',
+  `bd_bill_id` int(11) NOT NULL DEFAULT 0 COMMENT 'ID hóa đơn',
+  `bd_product_id` int(11) NOT NULL DEFAULT 0 COMMENT 'ID Sản phẩm',
+  `bd_product_quantity` int(10) NOT NULL DEFAULT 0 COMMENT 'Số lượng'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci COMMENT='Bảng chi tiết hóa đơn';
 
 --
 -- Dumping data for table `tblbd`
 --
 
-/*!40000 ALTER TABLE `tblbd` DISABLE KEYS */;
-INSERT INTO `tblbd` (`bd_id`,`bd_bill_id`,`bd_product_id`,`bd_product_price`,`bd_product_quantity`,`bd_product_note`) VALUES 
- (1,1,7,0,5,'0'),
- (2,1,8,17990000,3,'0'),
- (3,1,9,17590000,2,'0'),
- (4,1,10,10990000,1,'0'),
- (5,1,6,8990000,4,'0'),
- (6,2,8,27090000,3,'0'),
- (7,2,9,17590000,2,'0'),
- (8,2,12,8990000,4,'0'),
- (9,2,7,10690000,1,'0'),
- (10,2,9,13490000,3,'0'),
- (11,3,12,17990000,4,'0'),
- (12,3,15,10990000,2,'0'),
- (13,3,6,19590000,1,'0'),
- (14,3,8,16990000,3,'0'),
- (15,3,10,13490000,2,'0'),
- (16,4,13,27090000,2,'0'),
- (17,4,23,17590000,3,'0'),
- (18,4,25,8990000,1,'0'),
- (19,4,17,10690000,4,'0'),
- (20,4,19,13490000,2,'0'),
- (21,5,21,17990000,3,'0'),
- (22,5,14,10990000,4,'0'),
- (23,5,16,19590000,1,'0'),
- (24,5,8,16990000,2,'0'),
- (25,5,10,13490000,3,'0'),
- (26,6,12,27090000,3,'0'),
- (27,6,13,17590000,2,'0'),
- (28,6,15,8990000,4,'0'),
- (29,6,17,10690000,1,'0'),
- (30,6,9,13490000,3,'0'),
- (31,7,12,17990000,4,'0'),
- (32,7,14,10990000,2,'0'),
- (33,7,6,19590000,1,'0'),
- (34,7,8,16990000,3,'0'),
- (35,7,10,13490000,2,'0'),
- (36,8,12,27090000,2,'0'),
- (37,8,13,17590000,3,'0'),
- (38,8,15,8990000,1,'0'),
- (39,8,7,10690000,4,'0'),
- (40,8,9,13490000,2,'0'),
- (41,9,12,17990000,3,'0'),
- (42,9,14,10990000,4,'0'),
- (43,9,16,19590000,1,'0'),
- (44,9,18,16990000,2,'0'),
- (45,9,10,13490000,3,'0'),
- (46,10,12,27090000,5,'0'),
- (47,10,12,17990000,3,'0'),
- (48,10,13,17590000,2,'0'),
- (49,10,14,10990000,1,'0'),
- (50,10,15,8990000,4,'0'),
- (51,11,12,27090000,3,'0'),
- (52,11,21,17990000,2,'0'),
- (53,11,13,17590000,1,'0'),
- (54,11,14,10990000,4,'0'),
- (55,11,15,8990000,3,'0'),
- (56,12,6,19590000,2,'0'),
- (57,12,8,16990000,3,'0'),
- (58,12,10,13490000,1,'0'),
- (59,12,12,9690000,4,'0'),
- (60,12,14,14990000,2,'0'),
- (61,13,16,9790000,3,'0'),
- (62,13,18,13990000,4,'0'),
- (63,13,20,11990000,1,'0'),
- (64,13,22,9190000,3,'0'),
- (65,13,24,15990000,2,'0'),
- (66,14,17,16290000,4,'0'),
- (67,14,19,13990000,2,'0'),
- (68,14,21,10990000,1,'0'),
- (69,14,23,15990000,3,'0'),
- (70,14,25,9190000,2,'0'),
- (71,15,12,27090000,3,'0'),
- (72,15,13,17590000,2,'0'),
- (73,15,15,8990000,1,'0'),
- (74,15,7,10690000,4,'0'),
- (75,15,9,13490000,2,'0'),
- (76,16,12,17990000,4,'0'),
- (77,16,14,10990000,2,'0'),
- (78,16,16,19590000,1,'0'),
- (79,16,18,16990000,3,'0'),
- (80,16,10,13490000,2,'0'),
- (81,17,12,27090000,2,'0'),
- (82,17,31,17590000,3,'0'),
- (83,17,15,8990000,1,'0'),
- (84,17,17,10690000,4,'0'),
- (85,17,9,13490000,2,'0'),
- (86,18,12,17990000,3,'0'),
- (87,18,14,10990000,4,'0'),
- (88,18,16,19590000,1,'0'),
- (89,18,8,16990000,2,'0'),
- (90,18,10,13490000,3,'0'),
- (91,19,12,15000000,3,'0'),
- (92,19,13,12000000,2,'0'),
- (93,19,15,9000000,1,'0'),
- (94,19,17,11000000,4,'0'),
- (95,19,19,13500000,2,'0'),
- (96,20,12,16000000,4,'0'),
- (97,20,14,13000000,3,'0'),
- (98,20,16,10000000,2,'0'),
- (99,20,18,8000000,1,'0'),
- (100,20,20,14000000,4,'0'),
- (101,21,21,27090000,3,'0'),
- (102,21,22,17990000,2,'0'),
- (103,21,23,17590000,1,'0'),
- (104,21,24,10990000,4,'0'),
- (105,21,25,8990000,3,'0'),
- (106,22,6,19590000,2,'0'),
- (107,22,8,16990000,3,'0'),
- (108,22,10,13490000,1,'0'),
- (109,22,12,9690000,4,'0'),
- (110,22,14,14990000,2,'0'),
- (111,23,16,9790000,3,'0'),
- (112,23,18,13990000,4,'0'),
- (113,23,20,11990000,1,'0'),
- (114,23,22,9190000,3,'0'),
- (115,23,24,15990000,2,'0'),
- (116,24,17,16290000,4,'0'),
- (117,24,19,13990000,2,'0'),
- (118,24,21,10990000,1,'0'),
- (119,24,23,15990000,3,'0'),
- (120,24,25,9190000,2,'0'),
- (121,25,12,27090000,3,'0'),
- (122,25,13,17590000,2,'0'),
- (123,25,15,8990000,1,'0'),
- (124,25,17,10690000,4,'0'),
- (125,25,9,13490000,2,'0'),
- (126,26,12,17990000,4,'0'),
- (127,26,14,10990000,2,'0'),
- (128,26,6,19590000,1,'0'),
- (129,26,8,16990000,3,'0'),
- (130,26,10,13490000,2,'0'),
- (131,27,10,27090000,2,'0'),
- (132,27,31,17590000,3,'0'),
- (133,27,15,8990000,1,'0'),
- (134,27,7,10690000,4,'0'),
- (135,27,9,13490000,2,'0'),
- (136,28,12,17990000,3,'0'),
- (137,28,14,10990000,4,'0'),
- (138,28,6,19590000,1,'0'),
- (139,28,8,16990000,2,'0'),
- (140,28,10,13490000,3,'0'),
- (141,29,10,15000000,3,'0'),
- (142,29,13,12000000,2,'0'),
- (143,29,15,9000000,1,'0'),
- (144,29,17,11000000,4,'0'),
- (145,29,19,13500000,2,'0'),
- (146,30,12,16000000,4,'0'),
- (147,30,14,13000000,3,'0'),
- (148,30,16,10000000,2,'0'),
- (149,30,18,8000000,1,'0'),
- (150,30,20,14000000,4,'0'),
- (151,31,21,27090000,3,'0'),
- (152,31,22,17990000,2,'0'),
- (153,31,23,17590000,1,'0'),
- (154,31,24,10990000,4,'0'),
- (155,31,25,8990000,3,'0'),
- (156,32,6,19590000,2,'0'),
- (157,32,8,16990000,3,'0'),
- (158,32,10,13490000,1,'0'),
- (159,32,12,9690000,4,'0'),
- (160,32,14,14990000,2,'0'),
- (161,33,16,9790000,3,'0'),
- (162,33,18,13990000,4,'0'),
- (163,33,20,11990000,1,'0'),
- (164,33,22,9190000,3,'0'),
- (165,33,24,15990000,2,'0'),
- (166,34,17,16290000,4,'0'),
- (167,34,19,13990000,2,'0'),
- (168,34,21,10990000,1,'0'),
- (169,34,23,15990000,3,'0'),
- (170,34,25,9190000,2,'0'),
- (171,35,10,27090000,3,'0'),
- (172,35,13,17590000,2,'0'),
- (173,35,15,8990000,1,'0'),
- (174,35,17,10690000,4,'0'),
- (175,35,9,13490000,2,'0'),
- (176,36,12,17990000,4,'0'),
- (177,36,14,10990000,2,'0'),
- (178,36,6,19590000,1,'0'),
- (179,36,8,16990000,3,'0'),
- (180,36,10,13490000,2,'0'),
- (181,37,10,27090000,2,'0'),
- (182,37,13,17590000,3,'0'),
- (183,37,15,8990000,1,'0'),
- (184,37,7,10690000,4,'0'),
- (185,37,19,13490000,2,'0'),
- (186,38,12,17990000,3,'0'),
- (187,38,14,10990000,4,'0'),
- (188,38,16,19590000,1,'0'),
- (189,38,8,16990000,2,'0'),
- (190,38,10,13490000,3,'0'),
- (191,39,12,15000000,3,'0'),
- (192,39,13,12000000,2,'0'),
- (193,39,15,9000000,1,'0'),
- (194,39,17,11000000,4,'0'),
- (195,39,19,13500000,2,'0'),
- (196,40,12,16000000,4,'0'),
- (197,40,14,13000000,3,'0'),
- (198,40,16,10000000,2,'0'),
- (199,40,18,8000000,1,'0'),
- (200,40,20,14000000,4,'0'),
- (201,41,21,27090000,3,'0'),
- (202,41,22,17990000,2,'0'),
- (203,41,23,17590000,1,'0'),
- (204,41,24,10990000,4,'0'),
- (205,41,25,8990000,3,'0'),
- (206,42,6,19590000,2,'0'),
- (207,42,8,16990000,3,'0'),
- (208,42,10,13490000,1,'0'),
- (209,42,12,9690000,4,'0'),
- (210,42,14,14990000,2,'0'),
- (211,43,16,9790000,3,'0'),
- (212,43,18,13990000,4,'0'),
- (213,43,20,11990000,1,'0'),
- (214,43,22,9190000,3,'0'),
- (215,43,24,15990000,2,'0'),
- (216,44,17,16290000,4,'0'),
- (217,44,19,13990000,2,'0'),
- (218,44,21,10990000,1,'0'),
- (219,44,23,15990000,3,'0'),
- (220,44,25,9190000,2,'0'),
- (221,45,13,27090000,3,'0'),
- (222,45,13,17590000,2,'0'),
- (223,45,15,8990000,1,'0'),
- (224,45,7,10690000,4,'0'),
- (225,45,9,13490000,2,'0'),
- (226,46,12,17990000,4,'0'),
- (227,46,14,10990000,2,'0'),
- (228,46,6,19590000,1,'0'),
- (229,46,8,16990000,3,'0'),
- (230,46,10,13490000,2,'0'),
- (231,47,14,27090000,2,'0'),
- (232,47,13,17590000,3,'0'),
- (233,47,5,8990000,1,'0'),
- (234,47,7,10690000,4,'0'),
- (235,47,9,13490000,2,'0'),
- (236,48,12,17990000,3,'0'),
- (237,48,14,10990000,4,'0'),
- (238,48,16,19590000,1,'0'),
- (239,48,8,16990000,2,'0'),
- (240,48,10,13490000,3,'0'),
- (241,49,15,15000000,3,'0'),
- (242,49,13,12000000,2,'0'),
- (243,49,15,9000000,1,'0'),
- (244,49,17,11000000,4,'0'),
- (245,49,19,13500000,2,'0'),
- (246,50,12,16000000,4,'0'),
- (247,50,14,13000000,3,'0'),
- (248,50,16,10000000,2,'0'),
- (249,50,18,8000000,1,'0'),
- (250,50,20,14000000,4,'0');
-/*!40000 ALTER TABLE `tblbd` ENABLE KEYS */;
+INSERT INTO `tblbd` (`bd_id`, `bd_bill_id`, `bd_product_id`, `bd_product_quantity`) VALUES
+(1, 1, 7, 5),
+(2, 1, 8, 3),
+(3, 1, 9, 2),
+(4, 1, 10, 1),
+(5, 1, 6, 4),
+(6, 2, 8, 3),
+(7, 2, 9, 2),
+(8, 2, 12, 4),
+(9, 2, 7, 1),
+(10, 2, 9, 3),
+(11, 3, 12, 4),
+(12, 3, 15, 2),
+(13, 3, 6, 1),
+(14, 3, 8, 3),
+(15, 3, 10, 2),
+(16, 4, 13, 2),
+(17, 4, 23, 3),
+(18, 4, 25, 1),
+(19, 4, 17, 4),
+(20, 4, 19, 2),
+(21, 5, 21, 3),
+(22, 5, 14, 4),
+(23, 5, 16, 1),
+(24, 5, 8, 2),
+(25, 5, 10, 3),
+(26, 6, 12, 3),
+(27, 6, 13, 2),
+(28, 6, 15, 4),
+(29, 6, 17, 1),
+(30, 6, 9, 3),
+(31, 7, 12, 4),
+(32, 7, 14, 2),
+(33, 7, 6, 1),
+(34, 7, 8, 3),
+(35, 7, 10, 2),
+(36, 8, 12, 2),
+(37, 8, 13, 3),
+(38, 8, 15, 1),
+(39, 8, 7, 4),
+(40, 8, 9, 2),
+(41, 9, 12, 3),
+(42, 9, 14, 4),
+(43, 9, 16, 1),
+(44, 9, 18, 2),
+(45, 9, 10, 3),
+(46, 10, 12, 5),
+(47, 10, 12, 3),
+(48, 10, 13, 2),
+(49, 10, 14, 1),
+(50, 10, 15, 4),
+(51, 11, 12, 3),
+(52, 11, 21, 2),
+(53, 11, 13, 1),
+(54, 11, 14, 4),
+(55, 11, 15, 3),
+(56, 12, 6, 2),
+(57, 12, 8, 3),
+(58, 12, 10, 1),
+(59, 12, 12, 4),
+(60, 12, 14, 2),
+(61, 13, 16, 3),
+(62, 13, 18, 4),
+(63, 13, 20, 1),
+(64, 13, 22, 3),
+(65, 13, 24, 2),
+(66, 14, 17, 4),
+(67, 14, 19, 2),
+(68, 14, 21, 1),
+(69, 14, 23, 3),
+(70, 14, 25, 2),
+(71, 15, 12, 3),
+(72, 15, 13, 2),
+(73, 15, 15, 1),
+(74, 15, 7, 4),
+(75, 15, 9, 2),
+(76, 16, 12, 4),
+(77, 16, 14, 2),
+(78, 16, 16, 1),
+(79, 16, 18, 3),
+(80, 16, 10, 2),
+(81, 17, 12, 2),
+(82, 17, 31, 3),
+(83, 17, 15, 1),
+(84, 17, 17, 4),
+(85, 17, 9, 2),
+(86, 18, 12, 3),
+(87, 18, 14, 4),
+(88, 18, 16, 1),
+(89, 18, 8, 2),
+(90, 18, 10, 3),
+(91, 19, 12, 3),
+(92, 19, 13, 2),
+(93, 19, 15, 1),
+(94, 19, 17, 4),
+(95, 19, 19, 2),
+(96, 20, 12, 4),
+(97, 20, 14, 3),
+(98, 20, 16, 2),
+(99, 20, 18, 1),
+(100, 20, 20, 4),
+(101, 21, 21, 3),
+(102, 21, 22, 2),
+(103, 21, 23, 1),
+(104, 21, 24, 4),
+(105, 21, 25, 3),
+(106, 22, 6, 2),
+(107, 22, 8, 3),
+(108, 22, 10, 1),
+(109, 22, 12, 4),
+(110, 22, 14, 2),
+(111, 23, 16, 3),
+(112, 23, 18, 4),
+(113, 23, 20, 1),
+(114, 23, 22, 3),
+(115, 23, 24, 2),
+(116, 24, 17, 4),
+(117, 24, 19, 2),
+(118, 24, 21, 1),
+(119, 24, 23, 3),
+(120, 24, 25, 2),
+(121, 25, 12, 3),
+(122, 25, 13, 2),
+(123, 25, 15, 1),
+(124, 25, 17, 4),
+(125, 25, 9, 2),
+(126, 26, 12, 4),
+(127, 26, 14, 2),
+(128, 26, 6, 1),
+(129, 26, 8, 3),
+(130, 26, 10, 2),
+(131, 27, 10, 2),
+(132, 27, 31, 3),
+(133, 27, 15, 1),
+(134, 27, 7, 4),
+(135, 27, 9, 2),
+(136, 28, 12, 3),
+(137, 28, 14, 4),
+(138, 28, 6, 1),
+(139, 28, 8, 2),
+(140, 28, 10, 3),
+(141, 29, 10, 3),
+(142, 29, 13, 2),
+(143, 29, 15, 1),
+(144, 29, 17, 4),
+(145, 29, 19, 2),
+(146, 30, 12, 4),
+(147, 30, 14, 3),
+(148, 30, 16, 2),
+(149, 30, 18, 1),
+(150, 30, 20, 4),
+(151, 31, 21, 3),
+(152, 31, 22, 2),
+(153, 31, 23, 1),
+(154, 31, 24, 4),
+(155, 31, 25, 3),
+(156, 32, 6, 2),
+(157, 32, 8, 3),
+(158, 32, 10, 1),
+(159, 32, 12, 4),
+(160, 32, 14, 2),
+(161, 33, 16, 3),
+(162, 33, 18, 4),
+(163, 33, 20, 1),
+(164, 33, 22, 3),
+(165, 33, 24, 2),
+(166, 34, 17, 4),
+(167, 34, 19, 2),
+(168, 34, 21, 1),
+(169, 34, 23, 3),
+(170, 34, 25, 2),
+(171, 35, 10, 3),
+(172, 35, 13, 2),
+(173, 35, 15, 1),
+(174, 35, 17, 4),
+(175, 35, 9, 2),
+(176, 36, 12, 4),
+(177, 36, 14, 2),
+(178, 36, 6, 1),
+(179, 36, 8, 3),
+(180, 36, 10, 2),
+(181, 37, 10, 2),
+(182, 37, 13, 3),
+(183, 37, 15, 1),
+(184, 37, 7, 4),
+(185, 37, 19, 2),
+(186, 38, 12, 3),
+(187, 38, 14, 4),
+(188, 38, 16, 1),
+(189, 38, 8, 2),
+(190, 38, 10, 3),
+(191, 39, 12, 3),
+(192, 39, 13, 2),
+(193, 39, 15, 1),
+(194, 39, 17, 4),
+(195, 39, 19, 2),
+(196, 40, 12, 4),
+(197, 40, 14, 3),
+(198, 40, 16, 2),
+(199, 40, 18, 1),
+(200, 40, 20, 4),
+(201, 41, 21, 3),
+(202, 41, 22, 2),
+(203, 41, 23, 1),
+(204, 41, 24, 4),
+(205, 41, 25, 3),
+(206, 42, 6, 2),
+(207, 42, 8, 3),
+(208, 42, 10, 1),
+(209, 42, 12, 4),
+(210, 42, 14, 2),
+(211, 43, 16, 3),
+(212, 43, 18, 4),
+(213, 43, 20, 1),
+(214, 43, 22, 3),
+(215, 43, 24, 2),
+(216, 44, 17, 4),
+(217, 44, 19, 2),
+(218, 44, 21, 1),
+(219, 44, 23, 3),
+(220, 44, 25, 2),
+(221, 45, 13, 3),
+(222, 45, 13, 2),
+(223, 45, 15, 1),
+(224, 45, 7, 4),
+(225, 45, 9, 2),
+(226, 46, 12, 4),
+(227, 46, 14, 2),
+(228, 46, 6, 1),
+(229, 46, 8, 3),
+(230, 46, 10, 2),
+(231, 47, 14, 2),
+(232, 47, 13, 3),
+(233, 47, 5, 1),
+(234, 47, 7, 4),
+(235, 47, 9, 2),
+(236, 48, 12, 3),
+(237, 48, 14, 4),
+(238, 48, 16, 1),
+(239, 48, 8, 2),
+(240, 48, 10, 3),
+(241, 49, 15, 3),
+(242, 49, 13, 2),
+(243, 49, 15, 1),
+(244, 49, 17, 4),
+(245, 49, 19, 2),
+(246, 50, 12, 4),
+(247, 50, 14, 3),
+(248, 50, 16, 2),
+(249, 50, 18, 1),
+(250, 50, 20, 4);
 
+-- --------------------------------------------------------
 
 --
--- Definition of table `tblbill`
+-- Table structure for table `tblbill`
 --
 
-DROP TABLE IF EXISTS `tblbill`;
 CREATE TABLE `tblbill` (
-  `bill_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID hóa đơn',
-  `bill_status` smallint(1) DEFAULT '1' COMMENT '1-Hóa đơn chưa thanh toán; 2-Hóa đơn đã được thanh toán',
+  `bill_id` int(11) NOT NULL COMMENT 'ID hóa đơn',
   `bill_created_date` varchar(15) DEFAULT NULL COMMENT 'Ngày tạo hóa đơn',
-  `bill_last_modified_date` varchar(15) DEFAULT NULL COMMENT 'Ngày chỉnh sửa lần cuối',
-  `bill_shop_id` int(11) DEFAULT '0' COMMENT 'Người tạo hóa đơn',
-  `bill_transporter_id` int(11) DEFAULT '0' COMMENT 'Người vận chuyển, Đơn vị vận chuyển',
-  `bill_type` smallint(1) unsigned NOT NULL DEFAULT '0' COMMENT 'Loại hóa đơn: 1= import, 2 = export, 3 = transfer',
-  `bill_customer_id` int(11) DEFAULT '0' COMMENT 'Người mua hàng',
-  `bill_target_address` varchar(100) DEFAULT NULL COMMENT 'Địa chỉ nhận hàng',
-  PRIMARY KEY (`bill_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8 COMMENT='Bảng hóa đơn';
+  `bill_creator_id` int(11) DEFAULT 0 COMMENT 'Người tạo hóa đơn',
+  `bill_delivery_id` int(11) DEFAULT 0 COMMENT 'Người vận chuyển, Đơn vị vận chuyển'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Bảng hóa đơn';
 
 --
 -- Dumping data for table `tblbill`
 --
 
-/*!40000 ALTER TABLE `tblbill` DISABLE KEYS */;
-INSERT INTO `tblbill` (`bill_id`,`bill_status`,`bill_created_date`,`bill_last_modified_date`,`bill_shop_id`,`bill_transporter_id`,`bill_type`,`bill_customer_id`,`bill_target_address`) VALUES 
- (1,1,'1/1/2023','4/1/2023',1,1,1,1,'8 Hùng Vương, Điện Biên, Ba Đình, Hà Nội'),
- (2,1,'6/1/2023','9/1/2023',2,2,1,2,'458 Minh Khai, P.Vĩnh Tuy, Q.Hai Bà Trưng, Hà Nội'),
- (3,1,'13/1/2023','16/1/2023',3,3,1,3,'72 Nguyễn Trãi, Thanh Xuân, Hà Nội'),
- (4,1,'20/1/2023','23/1/2023',4,4,1,4,'12 Đường Bưởi, Thủ Lệ, Ba Đình, Hà Nội'),
- (5,1,'26/1/2023','1/2/2023',5,5,1,5,'47 Phạm Hùng, Mễ Trì, Nam Từ Liêm, Hà Nội'),
- (6,1,'3/2/2023','6/2/2023',6,6,1,1,'1 Lương Yên, Bạch Đằng, Hai Bà Trưng, Hà Nội'),
- (7,1,'8/2/2023','10/2/2023',7,7,1,2,'27 Cổ Linh, Long Biên, Hà Nội'),
- (8,1,'12/2/2023','16/2/2023',8,8,1,3,'Ngõ 264 Âu Cơ, Nhật Tân, Tây Hồ, Hà Nội'),
- (9,1,'18/2/2023','20/2/2023',9,9,1,4,'16 tuyến phố xung quanh Hồ Gươm, Hoàn Kiếm, Hà Nội'),
- (10,1,'23/2/2023','25/2/2023',10,10,1,5,'222 Trần Duy Hưng, Cầu Giấy, Hà Nội'),
- (11,1,'1/3/2023','5/3/2023',1,11,1,1,'11 Lê Lợi, Vinh, Nghệ An'),
- (12,1,'9/3/2023','12/3/2023',2,12,1,2,'102 Đào Duy Từ, Hà Tĩnh, Hà Tĩnh'),
- (13,1,'15/3/2023','19/3/2023',3,13,1,3,'63 Nguyễn Huệ, Huế, Thừa Thiên Huế'),
- (14,1,'21/3/2023','24/3/2023',4,14,1,4,'75 Lê Lai, Đà Nẵng'),
- (15,1,'28/3/2023','1/4/2023',5,15,1,5,'29 Trần Hưng Đạo, Quảng Ngãi, Quảng Ngãi'),
- (16,1,'3/4/2023','6/4/2023',6,16,1,1,'144 Quang Trung, Pleiku, Gia Lai'),
- (17,1,'8/4/2023','12/4/2023',7,17,1,2,'212 Lê Duẩn, Buôn Ma Thuột, Đắk Lắk'),
- (18,1,'15/4/2023','18/4/2023',8,18,1,3,'9 Nguyễn Văn Cừ, Nha Trang, Khánh Hòa'),
- (19,1,'22/4/2023','24/4/2023',9,19,1,4,'16 Ngô Quyền, Cam Ranh, Khánh Hòa'),
- (20,1,'26/4/2023','1/5/2023',10,20,1,5,'89 Hùng Vương, Phan Thiết, Bình Thuận'),
- (21,1,'5/5/2023','7/5/2023',1,21,1,1,'6 Lê Lai, Vũng Tàu, Bà Rịa - Vũng Tàu'),
- (22,1,'10/5/2023','14/5/2023',2,22,1,2,'37 Đống Đa, Biên Hòa, Đồng Nai'),
- (23,1,'16/5/2023','19/5/2023',3,23,1,3,'88 Trần Hưng Đạo, Long Xuyên, An Giang'),
- (24,1,'21/5/2023','23/5/2023',4,24,1,4,'2 Nguyễn Huệ, Cần Thơ'),
- (25,1,'27/5/2023','1/6/2023',5,25,1,5,'4 Hàm Nghi, Sóc Trăng'),
- (26,1,'5/6/2023','9/6/2023',6,26,0,0,NULL),
- (27,1,'11/6/2023','13/6/2023',7,27,0,0,NULL),
- (28,1,'17/6/2023','19/6/2023',8,28,0,0,NULL),
- (29,1,'23/6/2023','26/6/2023',9,29,0,0,NULL),
- (30,1,'28/6/2023','1/7/2023',10,30,0,0,NULL),
- (31,1,'4/7/2023','7/7/2023',1,31,0,0,NULL),
- (32,1,'11/7/2023','15/7/2023',2,32,0,0,NULL),
- (33,1,'17/7/2023','21/7/2023',3,33,0,0,NULL),
- (34,1,'23/7/2023','26/7/2023',4,34,0,0,NULL),
- (35,1,'1/8/2023','4/8/2023',5,35,0,0,NULL),
- (36,1,'8/8/2023','12/8/2023',6,36,0,0,NULL),
- (37,1,'14/8/2023','16/8/2023',7,37,0,0,NULL),
- (38,1,'19/8/2023','22/8/2023',8,38,0,0,NULL),
- (39,1,'25/8/2023','1/9/2023',9,39,0,0,NULL),
- (40,1,'4/9/2023','8/9/2023',10,40,0,0,NULL),
- (41,1,'12/9/2023','14/9/2023',1,41,0,0,NULL),
- (42,1,'17/9/2023','20/9/2023',2,42,0,0,NULL),
- (43,1,'24/9/2023','27/9/2023',3,43,0,0,NULL),
- (44,1,'1/10/2023','3/10/2023',4,44,0,0,NULL),
- (45,1,'7/10/2023','9/10/2023',5,45,0,0,NULL),
- (46,1,'13/10/2023','15/10/2023',6,46,0,0,NULL),
- (47,1,'17/10/2023','19/10/2023',7,47,0,0,NULL),
- (48,1,'23/10/2023','26/10/2023',8,48,0,0,NULL),
- (49,1,'1/11/2023','4/11/2023',9,49,0,0,NULL),
- (50,1,'8/11/2023','10/11/2023',10,50,0,0,NULL);
-/*!40000 ALTER TABLE `tblbill` ENABLE KEYS */;
+INSERT INTO `tblbill` (`bill_id`, `bill_created_date`, `bill_creator_id`, `bill_delivery_id`) VALUES
+(1, '1/1/2023', 1, 1),
+(2, '6/1/2023', 2, 2),
+(3, '13/1/2023', 3, 3),
+(4, '20/1/2023', 4, 4),
+(5, '26/1/2023', 5, 5),
+(6, '3/2/2023', 6, 6),
+(7, '8/2/2023', 7, 7),
+(8, '12/2/2023', 8, 8),
+(9, '18/2/2023', 9, 9),
+(10, '23/2/2023', 10, 10),
+(11, '1/3/2023', 1, 11),
+(12, '9/3/2023', 2, 12),
+(13, '15/3/2023', 3, 13),
+(14, '21/3/2023', 4, 14),
+(15, '28/3/2023', 5, 15),
+(16, '3/4/2023', 6, 16),
+(17, '8/4/2023', 7, 17),
+(18, '15/4/2023', 8, 18),
+(19, '22/4/2023', 9, 19),
+(20, '26/4/2023', 10, 20),
+(21, '5/5/2023', 1, 21),
+(22, '10/5/2023', 2, 22),
+(23, '16/5/2023', 3, 23),
+(24, '21/5/2023', 4, 24),
+(25, '27/5/2023', 5, 25),
+(26, '5/6/2023', 6, 26),
+(27, '11/6/2023', 7, 27),
+(28, '17/6/2023', 8, 28),
+(29, '23/6/2023', 9, 29),
+(30, '28/6/2023', 10, 30),
+(31, '4/7/2023', 1, 31),
+(32, '11/7/2023', 2, 32),
+(33, '17/7/2023', 3, 33),
+(34, '23/7/2023', 4, 34),
+(35, '1/8/2023', 5, 35),
+(36, '8/8/2023', 6, 36),
+(37, '14/8/2023', 7, 37),
+(38, '19/8/2023', 8, 38),
+(39, '25/8/2023', 9, 39),
+(40, '4/9/2023', 10, 40),
+(41, '12/9/2023', 1, 41),
+(42, '17/9/2023', 2, 42),
+(43, '24/9/2023', 3, 43),
+(44, '1/10/2023', 4, 44),
+(45, '7/10/2023', 5, 45),
+(46, '13/10/2023', 6, 46),
+(47, '17/10/2023', 7, 47),
+(48, '23/10/2023', 8, 48),
+(49, '1/11/2023', 9, 49),
+(50, '8/11/2023', 10, 50);
 
+-- --------------------------------------------------------
 
 --
--- Definition of table `tblguarantee`
+-- Table structure for table `tblguarantee`
 --
 
-DROP TABLE IF EXISTS `tblguarantee`;
 CREATE TABLE `tblguarantee` (
   `guarantee_id` int(11) DEFAULT NULL,
   `guarantee_started_date` date DEFAULT NULL,
@@ -407,298 +428,1021 @@ CREATE TABLE `tblguarantee` (
   `guarantee_deleted` smallint(6) DEFAULT NULL,
   `guarantee_price` int(11) DEFAULT NULL,
   `guarantee_method` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tblguarantee`
 --
 
-/*!40000 ALTER TABLE `tblguarantee` DISABLE KEYS */;
-INSERT INTO `tblguarantee` (`guarantee_id`,`guarantee_started_date`,`guarantee_expired_date`,`guarantee_deleted`,`guarantee_price`,`guarantee_method`) VALUES 
- (8,'0000-00-00','0000-00-00',0,10000,0),
- (9,'0000-00-00','0000-00-00',0,900000,0),
- (10,'0000-00-00','0000-00-00',0,40000,0),
- (11,'0000-00-00','0000-00-00',0,45000,0),
- (12,'0000-00-00','0000-00-00',0,620000,0),
- (13,'0000-00-00','0000-00-00',1,780000,0),
- (14,'0000-00-00','0000-00-00',1,93000,0),
- (15,'0000-00-00','0000-00-00',1,365000,0),
- (16,'0000-00-00','0000-00-00',1,21000,0),
- (17,'0000-00-00','0000-00-00',1,104000,0);
-/*!40000 ALTER TABLE `tblguarantee` ENABLE KEYS */;
+INSERT INTO `tblguarantee` (`guarantee_id`, `guarantee_started_date`, `guarantee_expired_date`, `guarantee_deleted`, `guarantee_price`, `guarantee_method`) VALUES
+(8, '0000-00-00', '0000-00-00', 0, 10000, 0),
+(9, '0000-00-00', '0000-00-00', 0, 900000, 0),
+(10, '0000-00-00', '0000-00-00', 0, 40000, 0),
+(11, '0000-00-00', '0000-00-00', 0, 45000, 0),
+(12, '0000-00-00', '0000-00-00', 0, 620000, 0),
+(13, '0000-00-00', '0000-00-00', 1, 780000, 0),
+(14, '0000-00-00', '0000-00-00', 1, 93000, 0),
+(15, '0000-00-00', '0000-00-00', 1, 365000, 0),
+(16, '0000-00-00', '0000-00-00', 1, 21000, 0),
+(17, '0000-00-00', '0000-00-00', 1, 104000, 0);
 
+-- --------------------------------------------------------
 
 --
--- Definition of table `tbllog`
+-- Table structure for table `tbllog`
 --
 
-DROP TABLE IF EXISTS `tbllog`;
 CREATE TABLE `tbllog` (
-  `log_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `log_creator_id` varchar(45) NOT NULL COMMENT 'ID người khởi tạo',
-  `log_user_permission` smallint(1) unsigned NOT NULL COMMENT 'Quyền của người dùng',
+  `log_id` int(10) UNSIGNED NOT NULL,
+  `log_user_id` varchar(45) NOT NULL COMMENT 'ID người khởi tạo',
+  `log_user_permission` smallint(1) UNSIGNED NOT NULL COMMENT 'Quyền của người dùng',
   `log_username` varchar(45) NOT NULL COMMENT 'Tên người dùng',
-  `log_action` smallint(1) unsigned NOT NULL COMMENT '1-Add, 2- Edit, 3-Del',
-  `log_position` smallint(50) unsigned NOT NULL COMMENT 'Vị trí bảng (1-bill, 2-bd, 3-employee. 4-guarantee, 5-product, 6-provider, 7-user, 8-shop, 9-wsd)',
-  `log_name` text COMMENT 'Tên log',
-  `log_notes` text COMMENT 'Ghi chú của log',
+  `log_action` smallint(1) UNSIGNED NOT NULL COMMENT '1-Add, 2- Edit, 3-Del',
+  `log_position` smallint(50) UNSIGNED NOT NULL COMMENT 'Vị trí bảng (1-bill, 2-bd, 3-employee. 4-guarantee, 5-product, 6-provider, 7-user, 8-shop, 9-wsd)',
+  `log_name` text DEFAULT NULL COMMENT 'Tên log',
+  `log_notes` text DEFAULT NULL COMMENT 'Ghi chú của log',
   `log_created_date` varchar(45) DEFAULT NULL COMMENT 'Ngày khởi tạo Log',
-  PRIMARY KEY (`log_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='Bảng thông tin nhật ký';
+  `log_deleted` bit(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci COMMENT='Bảng thông tin nhật ký';
 
 --
 -- Dumping data for table `tbllog`
 --
 
-/*!40000 ALTER TABLE `tbllog` DISABLE KEYS */;
-INSERT INTO `tbllog` (`log_id`,`log_creator_id`,`log_user_permission`,`log_username`,`log_action`,`log_position`,`log_name`,`log_notes`,`log_created_date`) VALUES 
- (1,'1',1,'DogLoverr',1,1,'log_name 1','log_notes 1','10:20:40 21/12/2023'),
- (2,'2',2,'Pé',2,2,'log_name 2','log_notes 2','15:20:30 22/12/2023'),
- (3,'3',3,'SktKhanh',3,3,'log_name 3','log_notes 3','9:30:05 23/12/2023'),
- (4,'4',4,'Cloudy999',1,4,'log_name 4','log_notes 4','8:11:06 24/12/2023'),
- (5,'5',5,'TuanWhite',2,5,'log_name 5','log_notes 5','9:09:08 24/12/2023'),
- (6,'6',4,'admin@gmail.com',1,8,NULL,'','07:08:06 26/12/2023'),
- (7,'6',4,'admin@gmail.com',1,8,NULL,'','02:37:07 29/12/2023'),
- (8,'6',4,'admin@gmail.com',1,8,NULL,'','09:18:16 29/12/2023'),
- (9,'6',4,'admin@gmail.com',3,8,NULL,'','23:01:01 04/01/2024'),
- (10,'6',4,'admin@gmail.com',1,8,NULL,'','23:02:24 04/01/2024'),
- (11,'6',4,'admin@gmail.com',1,8,NULL,'','23:03:04 04/01/2024');
-/*!40000 ALTER TABLE `tbllog` ENABLE KEYS */;
+INSERT INTO `tbllog` (`log_id`, `log_user_id`, `log_user_permission`, `log_username`, `log_action`, `log_position`, `log_name`, `log_notes`, `log_created_date`, `log_deleted`) VALUES
+(1, '1', 1, 'DogLoverr', 1, 1, 'log_name 1', 'log_notes 1', '10:20:40 21/12/2023', b'0'),
+(2, '2', 2, 'Pé', 2, 2, 'log_name 2', 'log_notes 2', '15:20:30 22/12/2023', b'0'),
+(3, '3', 3, 'SktKhanh', 3, 3, 'log_name 3', 'log_notes 3', '9:30:05 23/12/2023', b'0'),
+(4, '4', 4, 'Cloudy999', 1, 4, 'log_name 4', 'log_notes 4', '8:11:06 24/12/2023', b'0'),
+(5, '5', 5, 'TuanWhite', 2, 5, 'log_name 5', 'log_notes 5', '9:09:08 24/12/2023', b'0'),
+(6, '6', 4, 'admin@gmail.com', 1, 8, NULL, '', '07:08:06 26/12/2023', b'0'),
+(7, '6', 4, 'admin@gmail.com', 1, 8, NULL, '', '02:37:07 29/12/2023', b'0'),
+(8, '6', 4, 'admin@gmail.com', 1, 8, NULL, '', '09:18:16 29/12/2023', b'0'),
+(9, '6', 4, 'admin@gmail.com', 3, 8, NULL, '', '23:01:01 04/01/2024', b'0'),
+(10, '6', 4, 'admin@gmail.com', 1, 8, NULL, '', '23:02:24 04/01/2024', b'0'),
+(11, '6', 4, 'admin@gmail.com', 1, 8, NULL, '', '23:03:04 04/01/2024', b'0');
 
+-- --------------------------------------------------------
 
 --
--- Definition of table `tblpc`
+-- Table structure for table `tblpc`
 --
 
-DROP TABLE IF EXISTS `tblpc`;
 CREATE TABLE `tblpc` (
-  `pc_id` int(11) NOT NULL AUTO_INCREMENT,
-  `pc_name` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
-  `pc_notes` text CHARACTER SET utf8,
-  PRIMARY KEY (`pc_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='Bảng danh mục sản phẩm';
+  `pc_id` int(11) NOT NULL,
+  `pc_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `pc_notes` text CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `pc_created_date` varchar(10) DEFAULT NULL,
+  `pc_image` varchar(100) DEFAULT NULL,
+  `pc_enable` bit(1) DEFAULT NULL,
+  `pc_parent_id` int(11) DEFAULT NULL,
+  `pc_creator_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci COMMENT='Bảng danh mục sản phẩm';
 
 --
 -- Dumping data for table `tblpc`
 --
 
-/*!40000 ALTER TABLE `tblpc` DISABLE KEYS */;
-INSERT INTO `tblpc` (`pc_id`,`pc_name`,`pc_notes`) VALUES 
- (1,'Laptop - Tablet - Mobile','Danh m?c Laptop - Tablet - Mobile'),
- (2,'Máy tính - Máy chủ','Danh m?c Máy tính - Máy ch?'),
- (3,'Máy tính All-in-one','Danh m?c Máy tính All-in-one'),
- (4,'PCAP Máy Tính An Phát','Danh m?c PCAP Máy Tính An Phát'),
- (5,'Apple, đèn led','Danh m?c Apple'),
- (6,'Máy in - TB Văn Phòng','Danh m?c Máy in - TB V?n Phòng'),
- (7,'Linh Kiện Máy Tính','Danh m?c Linh Ki?n Máy Tính'),
- (8,'Màn Hình Máy Tính','Danh m?c Màn Hình Máy Tính'),
- (9,'Gaming Gear','Danh m?c Gaming Gear'),
- (10,'Thiết bị lưu trữ, USB, thẻ nhớ','Danh m?c Thi?t b? l?u tr?, USB, th? nh?'),
- (11,'Loa, Tai Nghe, Webcam, Tivi','Danh m?c Loa, Tai Nghe, Webcam, Tivi'),
- (12,'Camera','Danh m?c Camera'),
- (13,'Cooling, Tản nhiệt','Danh m?c Cooling, T?n nhi?t'),
- (14,'Thiết Bị Mạng','Danh m?c Thi?t B? M?ng'),
- (15,'Phụ Kiện Laptop, PC, Khác','Danh m?c Ph? Ki?n Laptop, PC, Khác'),
- (16,'Xe Đạp Điện, Smart Home','Danh m?c Xe ??p ?i?n, Smart Home'),
- (17,'Buồng Chơi Game Giả Lập','Danh m?c Bu?ng Ch?i Game Gi? L?p');
-/*!40000 ALTER TABLE `tblpc` ENABLE KEYS */;
+INSERT INTO `tblpc` (`pc_id`, `pc_name`, `pc_notes`, `pc_created_date`, `pc_image`, `pc_enable`, `pc_parent_id`, `pc_creator_id`) VALUES
+(1, 'Laptop - Tablet - Mobile', 'Danh m?c Laptop - Tablet - Mobile', '', '', b'0', 0, 0),
+(2, 'Máy tính - Máy chủ', 'Danh m?c Máy tính - Máy ch?', '', '', b'0', 0, 0),
+(3, 'Máy tính All-in-one', 'Danh m?c Máy tính All-in-one', '', '', b'0', 0, 0),
+(4, 'PCAP Máy Tính An Phát', 'Danh m?c PCAP Máy Tính An Phát', '', '', b'0', 0, 0),
+(5, 'Apple, đèn led', 'Danh m?c Apple', '', '', b'0', 0, 0),
+(6, 'Máy in - TB Văn Phòng', 'Danh m?c Máy in - TB V?n Phòng', '', '', b'0', 0, 0),
+(7, 'Linh Kiện Máy Tính', 'Danh m?c Linh Ki?n Máy Tính', '', '', b'0', 0, 0),
+(8, 'Màn Hình Máy Tính', 'Danh m?c Màn Hình Máy Tính', '', '', b'0', 0, 0),
+(9, 'Gaming Gear', 'Danh m?c Gaming Gear', '', '', b'0', 0, 0),
+(10, 'Thiết bị lưu trữ, USB, thẻ nhớ', 'Danh m?c Thi?t b? l?u tr?, USB, th? nh?', '', '', b'0', 0, 0),
+(11, 'Loa, Tai Nghe, Webcam, Tivi', 'Danh m?c Loa, Tai Nghe, Webcam, Tivi', '', '', b'0', 0, 0),
+(12, 'Camera', 'Danh m?c Camera', '', '', b'0', 0, 0),
+(13, 'Cooling, Tản nhiệt', 'Danh m?c Cooling, T?n nhi?t', '', '', b'0', 0, 0),
+(14, 'Thiết Bị Mạng', 'Danh m?c Thi?t B? M?ng', '', '', b'0', 0, 0),
+(15, 'Phụ Kiện Laptop, PC, Khác', 'Danh m?c Ph? Ki?n Laptop, PC, Khác', '', '', b'0', 0, 0),
+(16, 'Xe Đạp Điện, Smart Home', 'Danh m?c Xe ??p ?i?n, Smart Home', '', '', b'0', 0, 0),
+(17, 'Buồng Chơi Game Giả Lập', 'Danh m?c Bu?ng Ch?i Game Gi? L?p', '', '', b'0', 0, 0);
 
+-- --------------------------------------------------------
 
 --
--- Definition of table `tblproduct`
+-- Table structure for table `tblproduct`
 --
 
-DROP TABLE IF EXISTS `tblproduct`;
 CREATE TABLE `tblproduct` (
-  `product_id` int(11) NOT NULL AUTO_INCREMENT,
-  `product_name` varchar(100) NOT NULL,
-  `product_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0 - chưa  đư?c bán\n1 - đang bán\n2 - ng?ng kinh doanh',
-  `product_deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0 - không b? đưa vào thùng rác\n1 - b? đưa vào thùng rác',
-  `product_images` text,
-  `product_guarantee_id` int(11) DEFAULT NULL COMMENT 'M? b?o hành',
-  `product_notes` text,
-  `product_created_date` varchar(45) DEFAULT NULL,
-  `product_modified_date` varchar(45) DEFAULT NULL,
-  `product_pc_id` smallint(5) unsigned NOT NULL COMMENT 'Loai san pham',
-  `product_shop_id` int(10) unsigned DEFAULT '0',
-  `product_quantity` int(10) unsigned DEFAULT '0',
-  `product_price` double NOT NULL DEFAULT '1000',
-  PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8 COMMENT='Bảng sản phẩm';
+  `product_id` int(11) NOT NULL,
+  `product_name` varchar(100) DEFAULT NULL,
+  `product_status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0 - chưa  đư?c bán\n1 - đang bán\n2 - ng?ng kinh doanh',
+  `product_visited` int(11) NOT NULL DEFAULT 0 COMMENT '0 - không b? đưa vào thùng rác\r\n1 - b? đưa vào thùng rác',
+  `product_price` int(11) NOT NULL DEFAULT 0,
+  `product_images` text DEFAULT NULL,
+  `product_notes` text DEFAULT NULL,
+  `product_last_modified` varchar(45) DEFAULT NULL,
+  `product_pc_id` smallint(5) UNSIGNED NOT NULL COMMENT 'Loai san pham',
+  `product_shop_id` int(10) UNSIGNED DEFAULT 0,
+  `product_quantity` int(10) UNSIGNED DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci COMMENT='Bảng sản phẩm';
 
 --
 -- Dumping data for table `tblproduct`
 --
 
-/*!40000 ALTER TABLE `tblproduct` DISABLE KEYS */;
-INSERT INTO `tblproduct` (`product_id`,`product_name`,`product_status`,`product_deleted`,`product_images`,`product_guarantee_id`,`product_notes`,`product_created_date`,`product_modified_date`,`product_pc_id`,`product_shop_id`,`product_quantity`,`product_price`) VALUES 
- (6,'MacBook Air 13 inch M1 2020 7-core GPU',1,0,' /home/images/product/macbook-air-m1-2020-gray-600x600.jpg',0,' null',NULL,' 30/10/2023',1,2,1,1000),
- (7,'HP 15s fq5229TU i3 1215U (8U237PA)',0,0,' /home/images/product/hp-15s-fq5229tu-i3-8u237pa-thumb-600x600.png',0,' null',NULL,' 30/10/2023',2,2,2,1000),
- (8,'Asus TUF Gaming F15 FX506HF i5 11400H (HN014W)',1,0,' /home/images/product/asus-tuf-gaming-f15-fx506hf-i5-hn014w-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',3,2,3,1000),
- (9,'Acer Aspire 5 Gaming A515 58GM 51LB i5 13420H (NX.KQ4SV.002)',0,0,' /home/images/product/acer-aspire-5-a515-58gm-51lb-i5-nxkq4sv002-170923-015941-600x600.jpg',0,' null',NULL,' 30/10/2023',4,1,4,1000),
- (10,'Asus Vivobook Go 15 E1504FA R5 7520U (NJ776W)',1,0,' /home/images/product/asus-vivobook-go-15-e1504fa-r5-nj776w-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',5,2,5,1000),
- (12,'HP 240 G9 i3 1215U (6L1X7PA)',1,0,' /home/images/product/hp-240-g9-i3-6l1x7pa-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',7,2,12,1000),
- (13,'Asus Vivobook 16 X1605VA i5 1335U (MB360W)',0,0,' /home/images/product/asus-vivobook-16-x1605va-i5-mb360w-thumb-laptop-600x600.jpg',0,' null',NULL,' 30/10/2023',7,1,5,1000),
- (14,'HP 15s fq5162TU i5 1235U (7C134PA)',1,0,' /home/images/product/hp-15s-fq5162tu-i5-7c134pa-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',7,2,12,1000),
- (15,'Asus Vivobook 15 X1504ZA i3 1215U (NJ102W)',0,0,' /home/images/product/asus-vivobook-15-x1504za-i3-nj102w-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',7,2,5,1000),
- (16,'Asus Vivobook X515EA i3 1115G4 (EJ3948W)',1,0,' /home/images/product/asus-vivobook-x515ea-i3-ej3948w-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',8,2,12,1000),
- (17,'HP Pavilion 14 dv2074TU i5 1235U (7C0P3PA)',0,0,' /home/images/product/hp-pavilion-14-dv2074tu-i5-7c0p3pa-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',8,2,5,1000),
- (18,'Asus Vivobook X515EA i5 1135G7 (EJ4155W)',1,0,' /home/images/product/asus-vivobook-x515ea-i5-ej4155w-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',16,2,1,1000),
- (19,'Dell Vostro 15 3520 i3 1215U (5M2TT1)',0,0,' /home/images/product/dell-vostro-15-3520-i3-5m2tt1-090823-041032-600x600.png',0,' null',NULL,' 30/10/2023',16,1,2,1000),
- (20,'HP 14 ep0126TU i3 N305 (8U233PA)',1,0,' /home/images/product/hp-14-ep0126tu-i3-8u233pa-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',16,19,35,1000),
- (21,'Lenovo Ideapad 3 15ITL6 i3 1115G4 (82H803SGVN)',0,0,' /home/images/product/lenovo-ideapad-3-15itl6-i3-82h803sgvn-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',16,1,23,1000),
- (22,'Dell Inspiron 15 3520 i3 1215U (71003264)',1,0,' /home/images/product/dell-inspiron-3520-i3-71003264-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',16,4,4,1000),
- (23,'HP 15s fq2716TU i3 1115G4 (7C0X3PA)',0,0,' /home/images/product/hp-15s-fq2716tu-i3-7c0x3pa-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',2,6,3,1000),
- (24,'Asus Vivobook X415EA i3 1115G4 (EK2034W)',1,0,' /home/images/product/asus-vivobook-x415ea-i3-ek2034w-thumb-laptop-600x600.jpg',0,' null',NULL,' 30/10/2023',2,5,1,1000),
- (26,'Dell Inspiron 15 3520 i5 1235U (N5I5122W1)',1,0,' /home/images/product/dell-inspiron-15-3520-i5-n5i5122w1-191222-091429-600x600.jpg',0,' null',NULL,' 30/10/2023',17,4,3,1000),
- (27,'Asus Vivobook 15 X1504VA i5 1335U (NJ025W)',0,0,' /home/images/product/asus-vivobook-15-x1504va-i5-nj025w-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',17,5,1,1000),
- (29,'Lenovo Ideapad 3 15IAU7 i3 1215U (82RK005LVN)',0,0,' /home/images/product/lenovo-ideapad-3-15iau7-i3-82rk005lvn-281122-051953-600x600.jpg',0,' null',NULL,' 30/10/2023',17,1,2,1000),
- (30,'HP Pavilion 15 eg2082TU i5 1240P (7C0Q5PA)',1,0,' /home/images/product/hp-pavilion-15-eg2082tu-i5-7c0q5pa-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',17,2,12,1000),
- (31,'Lenovo Ideapad 3 15ITL6 i5 1155G7 (82H803RRVN)',0,0,' /home/images/product/lenovo-ideapad-3-15itl6-i5-82h803rrvn-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',17,1,1,1000),
- (32,'HP 240 G8 i3 1115G4 (6L1A1PA)',1,0,' /home/images/product/hp-240-g8-i3-6l1a1pa-210423-031503-600x600.jpg',0,'null',NULL,' 30/10/2023',17,2,3,1000),
- (33,'Asus TUF Gaming F15 FX506HE i7 11800H (HN378W)',0,0,' /home/images/product/asus-tuf-gaming-f15-fx506he-i7-hn378w-thumb-600x600.jpg',0,'null',NULL,' 30/10/2023',2,3,1,1000),
- (34,'HP 15s fq5147TU i7 1255U (7C133PA)',1,0,' /home/images/product/hp-15s-fq5147tu-i7-7c133pa-thumb-600x600.jpg',0,'null',NULL,' 30/10/2023',2,3,3,1000),
- (35,'Acer Aspire 3 A315 59 314F i3 1215U (NX.K6TSV.002)',0,0,' /home/images/product/acer-aspire-3-a315-59-314f-i3-nxk6tsv002-thumb-1-600x600.jpg',0,' null',NULL,' 30/10/2023',2,3,2,1000),
- (36,'MSI Gaming GF63 Thin 11SC i5 11400H (664VN)',1,0,' /home/images/product/msi-gaming-gf63-thin-11sc-i5-664vn-glr-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',2,3,1,1000),
- (38,'MSI Gaming GF63 Thin 11UC i7 11800H (1228VN)',1,0,' /home/images/product/msi-gaming-gf63-thin-11uc-i7-1228vn-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',2,3,1,1000),
- (39,'Asus Vivobook 15 OLED A1505VA i5 13500H (L1341W)',0,1,' /home/images/product/asus-vivobook-15-oled-a1505va-i5-l1341w-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',2,4,1,1000),
- (40,'Lenovo Ideapad Slim 3 15IAH8 i5 12450H (83ER000EVN)',1,0,' /home/images/product/lenovo-ideapad-slim-3-15iah8-i5-83er00evn-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',2,5,1,1000),
- (41,'MacBook Air 13 inch M2 2022 8-core GPU',0,0,' /home/images/product/apple-macbook-air-m2-2022-vang-600x600.jpg',0,' null',NULL,' 30/10/2023',2,2,1,1000),
- (42,'Acer Nitro 5 Gaming AN515 57 5669 i5 11400H (NH.QEHSV.001)',1,0,' /home/images/product/acer-nitro-5-gaming-an515-57-5669-i5-11400h-8gb-512gb-144hz-4gb-gtx1650-win11-nhqehsv001-031221-100506-600x600.jpg',0,' null',NULL,' 30/10/2023',2,4,1,1000),
- (43,'HP Pavilion 15 eg2081TU i5 1240P (7C0Q4PA)',0,0,' /home/images/product/hp-pavilion-15-eg2081tu-i5-7c0q4pa-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',2,1,1,1000),
- (44,'Dell Vostro 3520 i3 1215U (V5I3614W1)',1,0,' /home/images/product/dell-vostro-3520-i3-v5i3614w1-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',2,3,1,1000),
- (45,'Lenovo Ideapad 3 15ITL6 i3 1115G4 (82H803SFVN)',0,1,' /home/images/product/lenovo-ideapad-3-15itl6-i3-82h803sfvn-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',2,2,1,1000);
-/*!40000 ALTER TABLE `tblproduct` ENABLE KEYS */;
+INSERT INTO `tblproduct` (`product_id`, `product_name`, `product_status`, `product_visited`, `product_price`, `product_images`, `product_notes`, `product_last_modified`, `product_pc_id`, `product_shop_id`, `product_quantity`) VALUES
+(6, 'MacBook Air 13 inch M1 2020 7-core GPU', 1, 0, 0, ' /home/images/product/macbook-air-m1-2020-gray-600x600.jpg', ' null', ' 30/10/2023', 1, 2, 1),
+(7, 'HP 15s fq5229TU i3 1215U (8U237PA)', 0, 0, 0, ' /home/images/product/hp-15s-fq5229tu-i3-8u237pa-thumb-600x600.png', ' null', ' 30/10/2023', 2, 2, 2),
+(8, 'Asus TUF Gaming F15 FX506HF i5 11400H (HN014W)', 1, 0, 0, ' /home/images/product/asus-tuf-gaming-f15-fx506hf-i5-hn014w-thumb-600x600.jpg', ' null', ' 30/10/2023', 3, 2, 3),
+(9, 'Acer Aspire 5 Gaming A515 58GM 51LB i5 13420H (NX.KQ4SV.002)', 0, 0, 0, ' /home/images/product/acer-aspire-5-a515-58gm-51lb-i5-nxkq4sv002-170923-015941-600x600.jpg', ' null', ' 30/10/2023', 4, 1, 4),
+(10, 'Asus Vivobook Go 15 E1504FA R5 7520U (NJ776W)', 1, 0, 0, ' /home/images/product/asus-vivobook-go-15-e1504fa-r5-nj776w-thumb-600x600.jpg', ' null', ' 30/10/2023', 5, 2, 5),
+(12, 'HP 240 G9 i3 1215U (6L1X7PA)', 1, 0, 0, ' /home/images/product/hp-240-g9-i3-6l1x7pa-thumb-600x600.jpg', ' null', ' 30/10/2023', 7, 2, 12),
+(13, 'Asus Vivobook 16 X1605VA i5 1335U (MB360W)', 0, 0, 0, ' /home/images/product/asus-vivobook-16-x1605va-i5-mb360w-thumb-laptop-600x600.jpg', ' null', ' 30/10/2023', 7, 1, 5),
+(14, 'HP 15s fq5162TU i5 1235U (7C134PA)', 1, 0, 0, ' /home/images/product/hp-15s-fq5162tu-i5-7c134pa-thumb-600x600.jpg', ' null', ' 30/10/2023', 7, 2, 12),
+(15, 'Asus Vivobook 15 X1504ZA i3 1215U (NJ102W)', 0, 0, 0, ' /home/images/product/asus-vivobook-15-x1504za-i3-nj102w-thumb-600x600.jpg', ' null', ' 30/10/2023', 7, 2, 5),
+(16, 'Asus Vivobook X515EA i3 1115G4 (EJ3948W)', 1, 0, 0, ' /home/images/product/asus-vivobook-x515ea-i3-ej3948w-thumb-600x600.jpg', ' null', ' 30/10/2023', 8, 2, 12),
+(17, 'HP Pavilion 14 dv2074TU i5 1235U (7C0P3PA)', 0, 0, 0, ' /home/images/product/hp-pavilion-14-dv2074tu-i5-7c0p3pa-thumb-600x600.jpg', ' null', ' 30/10/2023', 8, 2, 5),
+(18, 'Asus Vivobook X515EA i5 1135G7 (EJ4155W)', 1, 0, 0, ' /home/images/product/asus-vivobook-x515ea-i5-ej4155w-thumb-600x600.jpg', ' null', ' 30/10/2023', 16, 2, 1),
+(19, 'Dell Vostro 15 3520 i3 1215U (5M2TT1)', 0, 0, 0, ' /home/images/product/dell-vostro-15-3520-i3-5m2tt1-090823-041032-600x600.png', ' null', ' 30/10/2023', 16, 1, 2),
+(20, 'HP 14 ep0126TU i3 N305 (8U233PA)', 1, 0, 0, ' /home/images/product/hp-14-ep0126tu-i3-8u233pa-thumb-600x600.jpg', ' null', ' 30/10/2023', 16, 19, 35),
+(21, 'Lenovo Ideapad 3 15ITL6 i3 1115G4 (82H803SGVN)', 0, 0, 0, ' /home/images/product/lenovo-ideapad-3-15itl6-i3-82h803sgvn-thumb-600x600.jpg', ' null', ' 30/10/2023', 16, 1, 23),
+(22, 'Dell Inspiron 15 3520 i3 1215U (71003264)', 1, 0, 0, ' /home/images/product/dell-inspiron-3520-i3-71003264-thumb-600x600.jpg', ' null', ' 30/10/2023', 16, 4, 4),
+(23, 'HP 15s fq2716TU i3 1115G4 (7C0X3PA)', 0, 0, 0, ' /home/images/product/hp-15s-fq2716tu-i3-7c0x3pa-thumb-600x600.jpg', ' null', ' 30/10/2023', 2, 6, 3),
+(24, 'Asus Vivobook X415EA i3 1115G4 (EK2034W)', 1, 0, 0, ' /home/images/product/asus-vivobook-x415ea-i3-ek2034w-thumb-laptop-600x600.jpg', ' null', ' 30/10/2023', 2, 5, 1),
+(26, 'Dell Inspiron 15 3520 i5 1235U (N5I5122W1)', 1, 0, 0, ' /home/images/product/dell-inspiron-15-3520-i5-n5i5122w1-191222-091429-600x600.jpg', ' null', ' 30/10/2023', 17, 4, 3),
+(27, 'Asus Vivobook 15 X1504VA i5 1335U (NJ025W)', 0, 0, 0, ' /home/images/product/asus-vivobook-15-x1504va-i5-nj025w-thumb-600x600.jpg', ' null', ' 30/10/2023', 17, 5, 1),
+(29, 'Lenovo Ideapad 3 15IAU7 i3 1215U (82RK005LVN)', 0, 0, 0, ' /home/images/product/lenovo-ideapad-3-15iau7-i3-82rk005lvn-281122-051953-600x600.jpg', ' null', ' 30/10/2023', 17, 1, 2),
+(30, 'HP Pavilion 15 eg2082TU i5 1240P (7C0Q5PA)', 1, 0, 0, ' /home/images/product/hp-pavilion-15-eg2082tu-i5-7c0q5pa-thumb-600x600.jpg', ' null', ' 30/10/2023', 17, 2, 12),
+(31, 'Lenovo Ideapad 3 15ITL6 i5 1155G7 (82H803RRVN)', 0, 0, 0, ' /home/images/product/lenovo-ideapad-3-15itl6-i5-82h803rrvn-thumb-600x600.jpg', ' null', ' 30/10/2023', 17, 1, 1),
+(32, 'HP 240 G8 i3 1115G4 (6L1A1PA)', 1, 0, 0, ' /home/images/product/hp-240-g8-i3-6l1a1pa-210423-031503-600x600.jpg', 'null', ' 30/10/2023', 17, 2, 3),
+(33, 'Asus TUF Gaming F15 FX506HE i7 11800H (HN378W)', 0, 0, 0, ' /home/images/product/asus-tuf-gaming-f15-fx506he-i7-hn378w-thumb-600x600.jpg', 'null', ' 30/10/2023', 2, 3, 1),
+(34, 'HP 15s fq5147TU i7 1255U (7C133PA)', 1, 0, 0, ' /home/images/product/hp-15s-fq5147tu-i7-7c133pa-thumb-600x600.jpg', 'null', ' 30/10/2023', 2, 3, 3),
+(35, 'Acer Aspire 3 A315 59 314F i3 1215U (NX.K6TSV.002)', 0, 0, 0, ' /home/images/product/acer-aspire-3-a315-59-314f-i3-nxk6tsv002-thumb-1-600x600.jpg', ' null', ' 30/10/2023', 2, 3, 2),
+(36, 'MSI Gaming GF63 Thin 11SC i5 11400H (664VN)', 1, 0, 0, ' /home/images/product/msi-gaming-gf63-thin-11sc-i5-664vn-glr-thumb-600x600.jpg', ' null', ' 30/10/2023', 2, 3, 1),
+(38, 'MSI Gaming GF63 Thin 11UC i7 11800H (1228VN)', 1, 0, 0, ' /home/images/product/msi-gaming-gf63-thin-11uc-i7-1228vn-thumb-600x600.jpg', ' null', ' 30/10/2023', 2, 3, 1),
+(39, 'Asus Vivobook 15 OLED A1505VA i5 13500H (L1341W)', 0, 1, 0, ' /home/images/product/asus-vivobook-15-oled-a1505va-i5-l1341w-thumb-600x600.jpg', ' null', ' 30/10/2023', 2, 4, 1),
+(40, 'Lenovo Ideapad Slim 3 15IAH8 i5 12450H (83ER000EVN)', 1, 0, 0, ' /home/images/product/lenovo-ideapad-slim-3-15iah8-i5-83er00evn-thumb-600x600.jpg', ' null', ' 30/10/2023', 2, 5, 1),
+(41, 'MacBook Air 13 inch M2 2022 8-core GPU', 0, 0, 0, ' /home/images/product/apple-macbook-air-m2-2022-vang-600x600.jpg', ' null', ' 30/10/2023', 2, 2, 1),
+(42, 'Acer Nitro 5 Gaming AN515 57 5669 i5 11400H (NH.QEHSV.001)', 1, 0, 0, ' /home/images/product/acer-nitro-5-gaming-an515-57-5669-i5-11400h-8gb-512gb-144hz-4gb-gtx1650-win11-nhqehsv001-031221-100506-600x600.jpg', ' null', ' 30/10/2023', 2, 4, 1),
+(43, 'HP Pavilion 15 eg2081TU i5 1240P (7C0Q4PA)', 0, 0, 0, ' /home/images/product/hp-pavilion-15-eg2081tu-i5-7c0q4pa-thumb-600x600.jpg', ' null', ' 30/10/2023', 2, 1, 1),
+(44, 'Dell Vostro 3520 i3 1215U (V5I3614W1)', 1, 0, 0, ' /home/images/product/dell-vostro-3520-i3-v5i3614w1-thumb-600x600.jpg', ' null', ' 30/10/2023', 2, 3, 1),
+(45, 'Lenovo Ideapad 3 15ITL6 i3 1115G4 (82H803SFVN)', 0, 1, 0, ' /home/images/product/lenovo-ideapad-3-15itl6-i3-82h803sfvn-thumb-600x600.jpg', ' null', ' 30/10/2023', 2, 2, 1);
 
+-- --------------------------------------------------------
 
 --
--- Definition of table `tblshop`
+-- Table structure for table `tblproviders`
 --
 
-DROP TABLE IF EXISTS `tblshop`;
+CREATE TABLE `tblproviders` (
+  `provider_id` int(11) NOT NULL,
+  `provider_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'Tên nhà cung cấp',
+  `provider_notes` text CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'Mô tả ',
+  `provider_address` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'Địa chỉ'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci COMMENT='Bảng nhà cung cấp';
+
+--
+-- Dumping data for table `tblproviders`
+--
+
+INSERT INTO `tblproviders` (`provider_id`, `provider_name`, `provider_notes`, `provider_address`) VALUES
+(1, 'Apple', 'Apple là m?t hãng công ngh? ?a d?ng n?i ti?ng v?i s?n ph?m máy tính và thi?t b? ?i?n t? sang tr?ng và hi?u su?t cao.', '1 Infinite Loop, Cupertino, California 95014,'),
+(2, 'Microsoft', 'Microsoft là m?t trong nh?ng tên tu?i hàng ??u trong l?nh v?c công ngh?, chuyên s?n xu?t các s?n ph?m và d?ch v? liên quan ??n máy tính và ph?n m?m.', '1 Microsoft Way, Redmond, Washington 98052, H'),
+(3, 'HP', 'HP (Hewlett-Packard) là m?t trong nh?ng th??ng hi?u n?i ti?ng trong ngành công nghi?p máy tính, chuyên s?n xu?t các s?n ph?m máy tính và máy in.', '1501 Page Mill Road, Palo Alto, California 94'),
+(4, 'Dell', 'Dell là m?t hãng máy tính toàn c?u n?i ti?ng v?i s? chuyên nghi?p trong vi?c s?n xu?t máy tính cá nhân, máy tính xách tay và các d?ch v? công ngh? liên quan.', '1 Dell Way, Round Rock, Texas 78682, Hoa Kỳ.'),
+(5, 'MSI', 'MSI (Micro-Star International) là m?t công ty chuyên s?n xu?t các s?n ph?m công ngh? ch?i game, bao g?m máy tính và linh ki?n ch?i game cao c?p.', '69, Lide St., Zhonghe Dist., New Taipei City ');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tblshop`
+--
+
 CREATE TABLE `tblshop` (
-  `shop_id` int(11) NOT NULL AUTO_INCREMENT,
-  `shop_name` varchar(100) CHARACTER SET utf8 NOT NULL COMMENT 'Tên gian hàng',
-  `shop_address` varchar(100) CHARACTER SET utf8 DEFAULT NULL COMMENT 'Địa chỉ gian hàng',
-  `shop_status` smallint(1) NOT NULL DEFAULT '1' COMMENT 'Trạng thái của gian hàng',
-  `shop_user_id` int(11) DEFAULT '0' COMMENT 'Người quản lý gian hàng',
+  `shop_id` int(11) NOT NULL,
+  `shop_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'Tên gian hàng',
+  `shop_address` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'Địa chỉ gian hàng',
+  `shop_status` smallint(1) NOT NULL DEFAULT 1 COMMENT 'Trạng thái của gian hàng',
+  `shop_creator_id` int(11) DEFAULT 0 COMMENT 'Người quản lý gian hàng',
   `shop_website_link` varchar(45) DEFAULT NULL COMMENT 'Đường dẫn liên kết đến trang web làm việc',
-  `shop_address_link` varchar(45) DEFAULT NULL COMMENT 'Đường dẫn địa chỉ',
+  `shop_map_link` varchar(100) DEFAULT NULL,
   `shop_created_date` varchar(45) NOT NULL DEFAULT '1/1/2000' COMMENT 'Thời gian khởi tạo',
-  `shop_modified_date` varchar(45) DEFAULT NULL COMMENT 'Thời gian chỉnh sửa',
-  `shop_deleted` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT 'Trạng thái xóa',
+  `shop_deleted` smallint(6) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Trạng thái xóa',
   `shop_images` varchar(100) DEFAULT NULL COMMENT 'Hình ảnh gian hàng',
-  `shop_notes` text COMMENT 'Mô tả',
+  `shop_notes` text DEFAULT NULL COMMENT 'Mô tả',
   `shop_phone` varchar(15) DEFAULT NULL COMMENT 'Số điện thoại liên hệ',
-  `shop_email` varchar(45) DEFAULT NULL COMMENT 'Email liên hệ',
-  PRIMARY KEY (`shop_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='Bảng gian hàng';
+  `shop_email` varchar(45) DEFAULT NULL COMMENT 'Email liên hệ'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci COMMENT='Bảng gian hàng';
 
 --
 -- Dumping data for table `tblshop`
 --
 
-/*!40000 ALTER TABLE `tblshop` DISABLE KEYS */;
-INSERT INTO `tblshop` (`shop_id`,`shop_name`,`shop_address`,`shop_status`,`shop_user_id`,`shop_website_link`,`shop_address_link`,`shop_created_date`,`shop_modified_date`,`shop_deleted`,`shop_images`,`shop_notes`,`shop_phone`,`shop_email`) VALUES 
- (1,'Kho Vingroup','Tầng 7, Tòa nhà Vincom Center, 72 Lê Thánh Tôn, Phường Bến Nghé, Quận 1, Thành phố Hồ Chí Minh.',1,1,NULL,NULL,'30/4/2023','04/01/2024',1,'/home/images/shop/storage01.jpg','',NULL,NULL),
- (2,'Kho Viettel','285 Cách Mạng Tháng Tám, Phường 12, Quận 10, Thành phố Hồ Chí Minh.',1,2,NULL,NULL,'1/5/2023','04/01/2024',0,'/home/images/shop/storage02.jpg','',NULL,NULL),
- (3,'Kho FPT','Số 17 Duy Tân, Dịch Vọng Hậu, Cầu Giấy, Hà Nội.',1,3,NULL,NULL,'28/6/2023','23/12/2023',1,'/home/images/shop/storage01.jpg','',NULL,NULL),
- (4,'Kho Sun Group','14, Hạ Long , Bãi Cháy, Thành phố Hạ Long, Quảng Ninh.',1,4,NULL,NULL,'14/2/2023','23/12/2023',0,'/home/images/shop/storage03.jpg','',NULL,NULL),
- (5,'Kho PV Gas','36 Hoàng Cầu, Đống Đa, Hà Nội.',1,5,NULL,NULL,'3/4/2023','23/12/2023',0,'/home/images/shop/storage02.jpg','',NULL,NULL);
-/*!40000 ALTER TABLE `tblshop` ENABLE KEYS */;
+INSERT INTO `tblshop` (`shop_id`, `shop_name`, `shop_address`, `shop_status`, `shop_creator_id`, `shop_website_link`, `shop_map_link`, `shop_created_date`, `shop_deleted`, `shop_images`, `shop_notes`, `shop_phone`, `shop_email`) VALUES
+(1, 'Kho Vingroup', 'Tầng 7, Tòa nhà Vincom Center, 72 Lê Thánh Tôn, Phường Bến Nghé, Quận 1, Thành phố Hồ Chí Minh.', 1, 1, NULL, '', '30/4/2023', 1, '/home/images/shop/storage01.jpg', '', NULL, NULL),
+(2, 'Kho Viettel', '285 Cách Mạng Tháng Tám, Phường 12, Quận 10, Thành phố Hồ Chí Minh.', 1, 2, NULL, '', '1/5/2023', 0, '/home/images/shop/storage02.jpg', '', NULL, NULL),
+(3, 'Kho FPT', 'Số 17 Duy Tân, Dịch Vọng Hậu, Cầu Giấy, Hà Nội.', 1, 3, NULL, '', '28/6/2023', 1, '/home/images/shop/storage01.jpg', '', NULL, NULL),
+(4, 'Kho Sun Group', '14, Hạ Long , Bãi Cháy, Thành phố Hạ Long, Quảng Ninh.', 1, 4, NULL, '', '14/2/2023', 0, '/home/images/shop/storage03.jpg', '', NULL, NULL),
+(5, 'Kho PV Gas', '36 Hoàng Cầu, Đống Đa, Hà Nội.', 1, 5, NULL, '', '3/4/2023', 0, '/home/images/shop/storage02.jpg', '', NULL, NULL);
 
+-- --------------------------------------------------------
 
 --
--- Definition of table `tbltranspoter`
+-- Table structure for table `tbltranspoter`
 --
 
-DROP TABLE IF EXISTS `tbltranspoter`;
 CREATE TABLE `tbltranspoter` (
-  `transpoter_id` int(11) NOT NULL AUTO_INCREMENT,
-  `transpoter_name` varchar(100) CHARACTER SET utf8 NOT NULL COMMENT 'Tên nhà cung cấp',
-  `transpoter_notes` text CHARACTER SET utf8 COMMENT 'Mô tả ',
-  `transpoter_address` varchar(45) CHARACTER SET utf8 DEFAULT NULL COMMENT 'Địa chỉ',
-  PRIMARY KEY (`transpoter_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='Bảng nhà cung cấp';
+  `transpoter_id` int(11) NOT NULL,
+  `transpoter_name` varchar(100) NOT NULL COMMENT 'Tên nhà cung cấp',
+  `transpoter_notes` text DEFAULT NULL COMMENT 'Mô tả ',
+  `transpoter_address` varchar(45) DEFAULT NULL COMMENT 'Địa chỉ'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Bảng nhà cung cấp';
 
 --
 -- Dumping data for table `tbltranspoter`
 --
 
-/*!40000 ALTER TABLE `tbltranspoter` DISABLE KEYS */;
-INSERT INTO `tbltranspoter` (`transpoter_id`,`transpoter_name`,`transpoter_notes`,`transpoter_address`) VALUES 
- (1,'Apple','Apple là m?t hãng công ngh? ?a d?ng n?i ti?ng v?i s?n ph?m máy tính và thi?t b? ?i?n t? sang tr?ng và hi?u su?t cao.','1 Infinite Loop, Cupertino, California 95014,'),
- (2,'Microsoft','Microsoft là m?t trong nh?ng tên tu?i hàng ??u trong l?nh v?c công ngh?, chuyên s?n xu?t các s?n ph?m và d?ch v? liên quan ??n máy tính và ph?n m?m.','1 Microsoft Way, Redmond, Washington 98052, H'),
- (3,'HP','HP (Hewlett-Packard) là m?t trong nh?ng th??ng hi?u n?i ti?ng trong ngành công nghi?p máy tính, chuyên s?n xu?t các s?n ph?m máy tính và máy in.','1501 Page Mill Road, Palo Alto, California 94'),
- (4,'Dell','Dell là m?t hãng máy tính toàn c?u n?i ti?ng v?i s? chuyên nghi?p trong vi?c s?n xu?t máy tính cá nhân, máy tính xách tay và các d?ch v? công ngh? liên quan.','1 Dell Way, Round Rock, Texas 78682, Hoa Kỳ.'),
- (5,'MSI','MSI (Micro-Star International) là m?t công ty chuyên s?n xu?t các s?n ph?m công ngh? ch?i game, bao g?m máy tính và linh ki?n ch?i game cao c?p.','69, Lide St., Zhonghe Dist., New Taipei City ');
-/*!40000 ALTER TABLE `tbltranspoter` ENABLE KEYS */;
+INSERT INTO `tbltranspoter` (`transpoter_id`, `transpoter_name`, `transpoter_notes`, `transpoter_address`) VALUES
+(1, 'Apple', 'Apple là m?t hãng công ngh? ?a d?ng n?i ti?ng v?i s?n ph?m máy tính và thi?t b? ?i?n t? sang tr?ng và hi?u su?t cao.', '1 Infinite Loop, Cupertino, California 95014,'),
+(2, 'Microsoft', 'Microsoft là m?t trong nh?ng tên tu?i hàng ??u trong l?nh v?c công ngh?, chuyên s?n xu?t các s?n ph?m và d?ch v? liên quan ??n máy tính và ph?n m?m.', '1 Microsoft Way, Redmond, Washington 98052, H'),
+(3, 'HP', 'HP (Hewlett-Packard) là m?t trong nh?ng th??ng hi?u n?i ti?ng trong ngành công nghi?p máy tính, chuyên s?n xu?t các s?n ph?m máy tính và máy in.', '1501 Page Mill Road, Palo Alto, California 94'),
+(4, 'Dell', 'Dell là m?t hãng máy tính toàn c?u n?i ti?ng v?i s? chuyên nghi?p trong vi?c s?n xu?t máy tính cá nhân, máy tính xách tay và các d?ch v? công ngh? liên quan.', '1 Dell Way, Round Rock, Texas 78682, Hoa Kỳ.'),
+(5, 'MSI', 'MSI (Micro-Star International) là m?t công ty chuyên s?n xu?t các s?n ph?m công ngh? ch?i game, bao g?m máy tính và linh ki?n ch?i game cao c?p.', '69, Lide St., Zhonghe Dist., New Taipei City ');
 
+-- --------------------------------------------------------
 
 --
--- Definition of table `tbluser`
+-- Table structure for table `tbluser`
 --
 
-DROP TABLE IF EXISTS `tbluser`;
 CREATE TABLE `tbluser` (
-  `user_id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_nickname` varchar(100) CHARACTER SET utf8 DEFAULT NULL COMMENT 'Biệt danh',
-  `user_fullname` varchar(100) CHARACTER SET utf8 DEFAULT NULL COMMENT 'Tên đầy đủ',
+  `user_id` int(11) NOT NULL,
+  `user_nickname` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'Biệt danh',
+  `user_fullname` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'Tên đầy đủ',
   `user_images` varchar(200) DEFAULT NULL COMMENT 'Hình ảnh',
   `user_email` varchar(100) DEFAULT NULL COMMENT 'Email',
-  `user_notes` text COMMENT 'Mô tả',
-  `user_permission` smallint(6) NOT NULL DEFAULT '0' COMMENT 'Quyền trong hệ thống',
-  `user_last_modified_id` int(11) DEFAULT '0' COMMENT 'Người chỉnh sửa lần cuối',
-  `user_last_modified_date` varchar(15) DEFAULT NULL COMMENT 'Thời gian chỉnh sửa',
-  `user_gender` smallint(1) NOT NULL DEFAULT '0' COMMENT 'Giới tính',
-  `user_address` varchar(100) CHARACTER SET utf8 DEFAULT NULL COMMENT 'Địa chỉ',
-  `user_created_date` varchar(15) DEFAULT NULL COMMENT 'Thời gian khởi tạo',
-  `user_deleted` smallint(6) DEFAULT '0' COMMENT 'Trạng thái xóa ',
-  `user_mobile_phone` varchar(15) DEFAULT NULL COMMENT 'Số điện thoại',
-  `user_office_phone` varchar(20) DEFAULT NULL COMMENT 'Số điện thoại văn phòng',
+  `user_notes` text DEFAULT NULL COMMENT 'Mô tả',
+  `user_permission` smallint(6) NOT NULL DEFAULT 0 COMMENT 'Quyền trong hệ thống',
+  `user_gender` smallint(1) NOT NULL DEFAULT 0 COMMENT 'Giới tính',
+  `user_address` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'Địa chỉ',
+  `user_deleted` smallint(6) DEFAULT 0 COMMENT 'Trạng thái xóa ',
+  `user_phone` varchar(15) DEFAULT NULL COMMENT 'Số điện thoại',
   `user_social_links` varchar(100) DEFAULT NULL COMMENT 'Liên hệ',
-  `user_creator_id` int(11) DEFAULT '0' COMMENT 'Người khởi tạo',
-  `user_logined` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Số lần đăng nhập',
+  `user_logined` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Số lần đăng nhập',
   `user_name` varchar(45) NOT NULL COMMENT 'Tài khoản',
-  `user_pass` varchar(45) NOT NULL COMMENT 'Mật khẩu',
-  PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COMMENT='Bảng người dùng';
+  `user_pass` varchar(45) NOT NULL COMMENT 'Mật khẩu'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci COMMENT='Bảng người dùng';
 
 --
 -- Dumping data for table `tbluser`
 --
 
-/*!40000 ALTER TABLE `tbluser` DISABLE KEYS */;
-INSERT INTO `tbluser` (`user_id`,`user_nickname`,`user_fullname`,`user_images`,`user_email`,`user_notes`,`user_permission`,`user_last_modified_id`,`user_last_modified_date`,`user_gender`,`user_address`,`user_created_date`,`user_deleted`,`user_mobile_phone`,`user_office_phone`,`user_social_links`,`user_creator_id`,`user_logined`,`user_name`,`user_pass`) VALUES 
- (1,'Dog lover','John Wick','\\home\\images\\user\\01.jpg','doglover@gmail.com','Ng??i tiêu dùng',1,0,NULL,0,'7 Lê Duẩn, Quận 1, Thành phố Hồ Chí Minh.','01/12/2023',0,'0342312435','0456323456',NULL,5,0,'DogLoverr','NoDogNoLife3000'),
- (2,'Pé','Nguyễn Thị Ngọc Mai','\\home\\images\\user\\02.jpg','mai06071969@gmail.com','Không có thông tin',1,0,NULL,0,'46 Hòa Mã, Quận Ba Đình, Hà Nội.','02/12/2023',0,'0123423131','0563457123',NULL,4,29,'testing','ae2b1fca515949e5d54fb22b8ed95575'),
- (3,'SKT Khánh','Mai Quốc Khánh','\\home\\images\\user\\03.jpg','faker123@gmail.com','Không có thông tin',1,0,NULL,1,'191 Lãng Yên, Quận Hà Đông, Hà Nội.','03/12/2023',0,'0257123423','0353412345',NULL,3,3,'SktKhanh','738a1eca9e15f674ff6fd7434ea1b965'),
- (4,'Cloudy Vân','Tô Văn Vân','\\home\\images\\user\\04.jpg','imhigh@gmail.com','Không có thông tin',1,0,NULL,1,'57 Trần Hưng Đạo, Hoàn Kiếm, Hà Nội.','04/12/2023',0,'0385175892','0653451234',NULL,2,0,'Cloudy999','VanCloud'),
- (5,'Tuấn White','Trần Tuấn Bạch','\\home\\images\\user\\05.jpg','maninblack@gmail.com','Không có thông tin',1,1,NULL,1,'27 Liễu Giai, Quận Ba Đình, Hà Nội.','05/12/2023',0,'0385174512','0578412345',NULL,1,0,'TuanWhite','TrangNhuOMO'),
- (6,'Donald Trump','Đỗ Nam Trung','\\home\\images\\user\06.jpg','greatagain999@gmail.com','Qu?n lý t?i chi nhánh Lâm ??ng',4,0,NULL,1,'51 Nguyễn Du, Quận Hai Bà Trưng, Hà Nội.','06/12/2023',0,'08967912345','0123542523',NULL,20,594,'admin@gmail.com','75d23af433e0cea4c0e45a56dba18b30'),
- (7,'Janua','Trường','\\home\\images\\user\\07.jpg','janua@gmail.com','Không có thông tin',1,0,NULL,0,'47 Đào Duy Từ, quận Hoàn Kiếm','07/12/2023',0,'0912334253','0123456789',NULL,0,1,'January3','Xy#7pLz!'),
- (8,'Februa','Kỳ','\\home\\images\\user\\08.jpg','februa@gmail.com','Không có thông tin',2,0,NULL,1,'24 Hàng Bồ, quận Hoàn Kiếm','08/12/2023',0,'0875643865','0345678901',NULL,0,1,'February1','qRt2$yZa'),
- (9,'March','Kháng','\\home\\images\\user\\09.jpg','march@gmail.com','Không có thông tin',3,0,NULL,0,'49 Bát Đàn, quận Hoàn Kiếm ','09/12/2023',0,'0864479754','0987654321',NULL,0,1,'March7th','9b#6sPxY'),
- (10,'April','Chiến','\\home\\images\\user\\10.jpg','april@gmail.com','Không có thông tin',4,0,NULL,1,'235B Thụy Khuê, quận Tây Hồ','10/12/2023',0,'0654312675','0456789012',NULL,0,1,'UrLieInApril','dF!4a2tZ'),
- (11,'May','Nhất','\\home\\images\\user\\11.jpg','may@gmail.com','Không có thông tin',5,0,NULL,0,'36 Tạm Thương, quận Hoàn Kiếm','11/12/2023',0,'0321498765','0678901234',NULL,0,1,'AuntMay<3','8m%1pQxW'),
- (12,'June','Định','\\home\\images\\user\\12.jpg','june@gmail.com','Không có thông tin',1,0,NULL,1,'61 Đinh Tiên Hoàng, quận Hoàn Kiếm','12/12/2023',0,'0124465899','0234567890',NULL,0,1,'JuneJune','J!0zYx#7'),
- (13,'July','Thắng','\\home\\images\\user\\13.jpg','july@gmail.com','Không có thông tin',2,0,NULL,0,'10 Lý Quốc Sư, quận Hoàn Kiếm','13/12/2023',0,'0535567843','0890123456',NULL,0,1,'Julyette','cA2!vL8x'),
- (14,'August','Lợi','\\home\\images\\user\\14.jpg','august@gmail.com','Không có thông tin',3,0,NULL,1,'43 Nguyễn Siêu, quận Hoàn Kiếm','14/12/2023',0,'0298846558','0567890123',NULL,0,1,'August2','K5!a7yRz'),
- (15,'Septem','Nguyễn Hoàng Đức','\\home\\images\\user\\15.jpg','septem@gmail.com','Không có thông tin',4,0,NULL,0,'66 Tô Hiến Thành, quận Hoàn Kiếm','15/12/2023',0,'0321635289','0789012345',NULL,0,1,'Septemvaotu','g3xYt#P!'),
- (16,'Octo','Nguyễn Đức Chiến','\\home\\images\\user\\16.jpg','octo@gmail.com','Không có thông tin',5,0,NULL,1,'29A Nguyễn Thiếp, quận Hoàn Kiếm','16/12/2023',0,'0859986589','0321456789',NULL,0,1,'Octopuss','dZ9!o5xQ'),
- (17,'Novem','Trương Tiến Anh','\\home\\images\\user\\17.jpg','novem@gmail.com','Không có thông tin',1,0,NULL,1,'Ngã 3 Cao Thắng, quận Hoàn Kiếm','17/12/2023',0,'0614585455','0543210987',NULL,0,1,'NNNovember','b7!2rWtX'),
- (18,'Decem','Khuất Văn Khang','\\home\\images\\user\\18.jpg','decem@gmail.com','Không có thông tin',2,0,NULL,0,'47 Mã Mây, quận Hoàn Kiếm','18/12/2023',0,'0898745654','0102345678',NULL,0,1,'DDDecember','Hx!Y3zL9'),
- (19,'AlphaMail','Nguyễn Quang Hải','\\home\\images\\user\\19.jpg','alphamail@gmail.com','Ng??i tiêu dùng',3,0,NULL,0,'1 Hàng Mành, quận Hoàn Kiếm','19/12/2023',0,'0356865325','0102345678',NULL,0,1,'1stAlphaMail','6o!z1WpL'),
- (20,'GigaChat','Phạm Văn Luân','\\home\\images\\user\\20.jpg','gigachat@gmail.com','Ng??i tiêu dùng',4,0,NULL,1,'48 Cầu Gỗ, quận Hoàn Kiếm','20/12/2023',0,'0468532568','0765432109',NULL,0,1,'GigachartGaren','T#8x5y!A');
-/*!40000 ALTER TABLE `tbluser` ENABLE KEYS */;
+INSERT INTO `tbluser` (`user_id`, `user_nickname`, `user_fullname`, `user_images`, `user_email`, `user_notes`, `user_permission`, `user_gender`, `user_address`, `user_deleted`, `user_phone`, `user_social_links`, `user_logined`, `user_name`, `user_pass`) VALUES
+(1, 'Dog lover', 'John Wick', '\\home\\images\\user\\01.jpg', 'doglover@gmail.com', 'Ng??i tiêu dùng', 1, 0, '7 Lê Duẩn, Quận 1, Thành phố Hồ Chí Minh.', 0, '0342312435', NULL, 0, 'DogLoverr', 'NoDogNoLife3000'),
+(2, 'Pé', 'Nguyễn Thị Ngọc Mai', '\\home\\images\\user\\02.jpg', 'mai06071969@gmail.com', 'Không có thông tin', 1, 0, '46 Hòa Mã, Quận Ba Đình, Hà Nội.', 0, '0123423131', NULL, 0, 'Pé', 'Pe060769'),
+(3, 'SKT Khánh', 'Mai Quốc Khánh', '\\home\\images\\user\\03.jpg', 'faker123@gmail.com', 'Không có thông tin', 1, 1, '191 Lãng Yên, Quận Hà Đông, Hà Nội.', 0, '0257123423', NULL, 3, 'SktKhanh', '738a1eca9e15f674ff6fd7434ea1b965'),
+(4, 'Cloudy Vân', 'Tô Văn Vân', '\\home\\images\\user\\04.jpg', 'imhigh@gmail.com', 'Không có thông tin', 1, 1, '57 Trần Hưng Đạo, Hoàn Kiếm, Hà Nội.', 0, '0385175892', NULL, 0, 'Cloudy999', 'VanCloud'),
+(5, 'Tuấn White', 'Trần Tuấn Bạch', '\\home\\images\\user\\05.jpg', 'maninblack@gmail.com', 'Không có thông tin', 1, 1, '27 Liễu Giai, Quận Ba Đình, Hà Nội.', 0, '0385174512', NULL, 0, 'TuanWhite', 'TrangNhuOMO'),
+(6, 'Donald Trump', 'Đỗ Nam Trung', '\\home\\images\\user\06.jpg', 'greatagain999@gmail.com', 'Qu?n lý t?i chi nhánh Lâm ??ng', 4, 1, '51 Nguyễn Du, Quận Hai Bà Trưng, Hà Nội.', 0, '08967912345', NULL, 575, 'admin@gmail.com', '75d23af433e0cea4c0e45a56dba18b30'),
+(7, 'Janua', 'Trường', '\\home\\images\\user\\07.jpg', 'janua@gmail.com', 'Không có thông tin', 1, 0, '47 Đào Duy Từ, quận Hoàn Kiếm', 0, '0912334253', NULL, 1, 'January3', 'Xy#7pLz!'),
+(8, 'Februa', 'Kỳ', '\\home\\images\\user\\08.jpg', 'februa@gmail.com', 'Không có thông tin', 2, 1, '24 Hàng Bồ, quận Hoàn Kiếm', 0, '0875643865', NULL, 1, 'February1', 'qRt2$yZa'),
+(9, 'March', 'Kháng', '\\home\\images\\user\\09.jpg', 'march@gmail.com', 'Không có thông tin', 3, 0, '49 Bát Đàn, quận Hoàn Kiếm ', 0, '0864479754', NULL, 1, 'March7th', '9b#6sPxY'),
+(10, 'April', 'Chiến', '\\home\\images\\user\\10.jpg', 'april@gmail.com', 'Không có thông tin', 4, 1, '235B Thụy Khuê, quận Tây Hồ', 0, '0654312675', NULL, 1, 'UrLieInApril', 'dF!4a2tZ'),
+(11, 'May', 'Nhất', '\\home\\images\\user\\11.jpg', 'may@gmail.com', 'Không có thông tin', 5, 0, '36 Tạm Thương, quận Hoàn Kiếm', 0, '0321498765', NULL, 1, 'AuntMay<3', '8m%1pQxW'),
+(12, 'June', 'Định', '\\home\\images\\user\\12.jpg', 'june@gmail.com', 'Không có thông tin', 1, 1, '61 Đinh Tiên Hoàng, quận Hoàn Kiếm', 0, '0124465899', NULL, 1, 'JuneJune', 'J!0zYx#7'),
+(13, 'July', 'Thắng', '\\home\\images\\user\\13.jpg', 'july@gmail.com', 'Không có thông tin', 2, 0, '10 Lý Quốc Sư, quận Hoàn Kiếm', 0, '0535567843', NULL, 1, 'Julyette', 'cA2!vL8x'),
+(14, 'August', 'Lợi', '\\home\\images\\user\\14.jpg', 'august@gmail.com', 'Không có thông tin', 3, 1, '43 Nguyễn Siêu, quận Hoàn Kiếm', 0, '0298846558', NULL, 1, 'August2', 'K5!a7yRz'),
+(15, 'Septem', 'Nguyễn Hoàng Đức', '\\home\\images\\user\\15.jpg', 'septem@gmail.com', 'Không có thông tin', 4, 0, '66 Tô Hiến Thành, quận Hoàn Kiếm', 0, '0321635289', NULL, 1, 'Septemvaotu', 'g3xYt#P!'),
+(16, 'Octo', 'Nguyễn Đức Chiến', '\\home\\images\\user\\16.jpg', 'octo@gmail.com', 'Không có thông tin', 5, 1, '29A Nguyễn Thiếp, quận Hoàn Kiếm', 0, '0859986589', NULL, 1, 'Octopuss', 'dZ9!o5xQ'),
+(17, 'Novem', 'Trương Tiến Anh', '\\home\\images\\user\\17.jpg', 'novem@gmail.com', 'Không có thông tin', 1, 1, 'Ngã 3 Cao Thắng, quận Hoàn Kiếm', 0, '0614585455', NULL, 1, 'NNNovember', 'b7!2rWtX'),
+(18, 'Decem', 'Khuất Văn Khang', '\\home\\images\\user\\18.jpg', 'decem@gmail.com', 'Không có thông tin', 2, 0, '47 Mã Mây, quận Hoàn Kiếm', 0, '0898745654', NULL, 1, 'DDDecember', 'Hx!Y3zL9'),
+(19, 'AlphaMail', 'Nguyễn Quang Hải', '\\home\\images\\user\\19.jpg', 'alphamail@gmail.com', 'Ng??i tiêu dùng', 3, 0, '1 Hàng Mành, quận Hoàn Kiếm', 0, '0356865325', NULL, 1, '1stAlphaMail', '6o!z1WpL'),
+(20, 'GigaChat', 'Phạm Văn Luân', '\\home\\images\\user\\20.jpg', 'gigachat@gmail.com', 'Ng??i tiêu dùng', 4, 1, '48 Cầu Gỗ, quận Hoàn Kiếm', 0, '0468532568', NULL, 1, 'GigachartGaren', 'T#8x5y!A');
 
+-- --------------------------------------------------------
 
+--
+-- Table structure for table `tbl_cases`
+--
 
+CREATE TABLE `tbl_cases` (
+  `case_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `case_manufacturer` varchar(50) DEFAULT NULL,
+  `case _color` varchar(50) DEFAULT NULL COMMENT 'Color',
+  `case_size` varchar(50) DEFAULT NULL COMMENT 'Case Size'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Cases Table';
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_cooling`
+--
+
+CREATE TABLE `tbl_cooling` (
+  `cooling_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `cooling_manufacturer` varchar(50) DEFAULT NULL,
+  `cooling_type` varchar(50) DEFAULT NULL COMMENT 'Cooling Type',
+  `cooling_color` varchar(50) DEFAULT NULL COMMENT 'Color',
+  `cooling_fan_size` varchar(50) DEFAULT NULL COMMENT 'Fan Size'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Cooling Table';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_cpus`
+--
+
+CREATE TABLE `tbl_cpus` (
+  `cpu_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `cpu_type` varchar(100) DEFAULT NULL COMMENT 'CPU Type',
+  `socket` varchar(50) NOT NULL,
+  `cores_theats` varchar(50) NOT NULL,
+  `speed` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='CPUs Table';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_desktops`
+--
+
+CREATE TABLE `tbl_desktops` (
+  `desktop_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `desktop_manufacturer` varchar(50) DEFAULT NULL,
+  `desktop_type` varchar(50) DEFAULT NULL COMMENT 'Type',
+  `desktop_cpu` varchar(100) DEFAULT NULL COMMENT 'CPU',
+  `desktop_gpu` varchar(100) DEFAULT NULL COMMENT 'GPU',
+  `desktop_ram_capacity` varchar(20) DEFAULT NULL COMMENT 'RAM Capacity',
+  `desktop_ram_type` varchar(20) DEFAULT NULL COMMENT 'RAM Type',
+  `desktop_storage` varchar(100) DEFAULT NULL COMMENT 'Storage',
+  `desktop_power_supply` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Desktops Table';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_graphics_cards`
+--
+
+CREATE TABLE `tbl_graphics_cards` (
+  `graphics_card_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `graphics_card_manufacturer` varchar(100) DEFAULT NULL COMMENT 'Manufacturer',
+  `graphics_card_speed` varchar(50) DEFAULT NULL,
+  `graphics_card_cores` varchar(50) DEFAULT NULL,
+  `graphics_card_version` varchar(50) DEFAULT NULL COMMENT 'Version',
+  `graphics_card_vram_capacity` varchar(20) DEFAULT NULL COMMENT 'VRAM Capacity',
+  `graphics_card_require_psu` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Graphics Cards Table';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_headphones_speakers`
+--
+
+CREATE TABLE `tbl_headphones_speakers` (
+  `headphones_speakers_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `headphones_manufacturer` varchar(50) DEFAULT NULL,
+  `headphone_type` varchar(100) DEFAULT NULL COMMENT 'Headphone Type',
+  `headphones_connection_type` varchar(50) DEFAULT NULL COMMENT 'Connection Type',
+  `headphones_connection_ports` varchar(100) DEFAULT NULL COMMENT 'Connection Ports'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Headphones/Speakers Table';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_keyboards`
+--
+
+CREATE TABLE `tbl_keyboards` (
+  `keyboard_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `keyboard_product_line` varchar(100) DEFAULT NULL COMMENT 'Product Line',
+  `keyboard_connection_type` varchar(50) DEFAULT NULL COMMENT 'Connection Type',
+  `keyboard_size_layout` varchar(50) DEFAULT NULL COMMENT 'Size Layout',
+  `keyboard_led_backlighting` tinyint(1) DEFAULT NULL COMMENT 'LED Backlighting'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Keyboards Table';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_laptops`
+--
+
+CREATE TABLE `tbl_laptops` (
+  `laptop_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `laptop_manufacturer` varchar(100) DEFAULT NULL COMMENT 'Manufacturer',
+  `laptop_cpu` varchar(100) DEFAULT NULL COMMENT 'CPU',
+  `laptop_ram` varchar(100) DEFAULT NULL COMMENT 'RAM',
+  `laptop_graphics_card` varchar(100) DEFAULT NULL COMMENT 'Graphics Card',
+  `laptop_storage` varchar(100) DEFAULT NULL COMMENT 'Storage',
+  `laptop_screen_size` varchar(20) DEFAULT NULL COMMENT 'Screen Size',
+  `laptop_refresh_rate` varchar(50) DEFAULT NULL COMMENT 'Refresh Rate',
+  `laptop_resolution` varchar(20) DEFAULT NULL COMMENT 'Resolution',
+  `laptop_type` varchar(50) DEFAULT NULL COMMENT 'Type'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Laptops Table';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_mice`
+--
+
+CREATE TABLE `tbl_mice` (
+  `mouse_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `mouse_manufacturer` varchar(50) DEFAULT NULL,
+  `mouse_product_line` varchar(100) DEFAULT NULL COMMENT 'Product Line',
+  `mouse_connection_type` varchar(50) DEFAULT NULL COMMENT 'Connection Type',
+  `mouse_design` varchar(100) DEFAULT NULL COMMENT 'Design',
+  `mouse_battery_type` varchar(50) DEFAULT NULL COMMENT 'Battery Type'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Mice Table';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_monitors`
+--
+
+CREATE TABLE `tbl_monitors` (
+  `monitor_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `monitor_manufacturer` varchar(100) DEFAULT NULL COMMENT 'Manufacturer',
+  `monitor_size` varchar(50) DEFAULT NULL COMMENT 'Size',
+  `monitor_usage` varchar(100) DEFAULT NULL COMMENT 'Usage',
+  `monitor_resolution` varchar(50) DEFAULT NULL COMMENT 'Resolution',
+  `monitor_panel_type` varchar(50) DEFAULT NULL COMMENT 'Panel Type',
+  `monitor_refresh_rate` varchar(50) DEFAULT NULL COMMENT 'Refresh Rate',
+  `monitor_screen_type` varchar(50) DEFAULT NULL COMMENT 'Screen Type',
+  `monitor_response` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Monitors Table';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_motherboards`
+--
+
+CREATE TABLE `tbl_motherboards` (
+  `motherboard_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `motherboard_manufacturer` varchar(100) DEFAULT NULL COMMENT 'Manufacturer',
+  `motherboard_chipset_cpu` varchar(100) DEFAULT NULL COMMENT 'Compatible CPU',
+  `motherboard_socket` varchar(50) NOT NULL,
+  `motherboard_size` varchar(50) DEFAULT NULL COMMENT 'Size',
+  `motherboard_ram_support` varchar(50) DEFAULT NULL COMMENT 'RAM Support',
+  `motherboard_ram_slots` varchar(50) DEFAULT NULL COMMENT 'Number of RAM Slots'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Motherboards Table';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_other_accessories`
+--
+
+CREATE TABLE `tbl_other_accessories` (
+  `accessory_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `description` varchar(255) DEFAULT NULL COMMENT 'Description'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Other Accessories Table';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_power_supply_units`
+--
+
+CREATE TABLE `tbl_power_supply_units` (
+  `psu_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `psu_manufacturer` varchar(50) DEFAULT NULL,
+  `psu_standard` varchar(50) DEFAULT NULL COMMENT 'Power Standard',
+  `psu_cable_type` varchar(100) DEFAULT NULL COMMENT 'Cable Type',
+  `psu_size` varchar(50) DEFAULT NULL COMMENT 'Size',
+  `psu_power_output` varchar(50) DEFAULT NULL COMMENT 'Power Output'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Power Supply Units Table';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_rams`
+--
+
+CREATE TABLE `tbl_rams` (
+  `ram_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `ram_manufacturer` varchar(50) DEFAULT NULL,
+  `ram_type` varchar(50) DEFAULT NULL COMMENT 'RAM Type',
+  `ram_capacity` varchar(20) DEFAULT NULL COMMENT 'RAM Capacity',
+  `ram_bus_speed` varchar(20) DEFAULT NULL COMMENT 'RAM Bus Speed',
+  `ram_standard` varchar(50) DEFAULT NULL COMMENT 'RAM Standard'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='RAMs Table';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_storage`
+--
+
+CREATE TABLE `tbl_storage` (
+  `storage_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `storage_manufacturer` varchar(50) DEFAULT NULL,
+  `storage_form_factor` varchar(50) DEFAULT NULL COMMENT 'Form Factor',
+  `storage_capacity` varchar(20) DEFAULT NULL COMMENT 'Capacity',
+  `storage_m2_pcie_standard` varchar(50) DEFAULT NULL COMMENT 'M.2 PCIe Standard',
+  `storage_rpm` int(11) DEFAULT NULL COMMENT 'RPM'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Storage Table';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_usbs`
+--
+
+CREATE TABLE `tbl_usbs` (
+  `usb_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `usb_manufacturer` varchar(100) DEFAULT NULL COMMENT 'Manufacturer',
+  `usb_storage` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='USBs Table';
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `comment`
+--
+ALTER TABLE `comment`
+  ADD PRIMARY KEY (`comment_id`);
+
+--
+-- Indexes for table `delivery`
+--
+ALTER TABLE `delivery`
+  ADD PRIMARY KEY (`delivery_id`);
+
+--
+-- Indexes for table `sale`
+--
+ALTER TABLE `sale`
+  ADD PRIMARY KEY (`sale_id`);
+
+--
+-- Indexes for table `tblaction`
+--
+ALTER TABLE `tblaction`
+  ADD PRIMARY KEY (`action_id`);
+
+--
+-- Indexes for table `tblbd`
+--
+ALTER TABLE `tblbd`
+  ADD PRIMARY KEY (`bd_id`);
+
+--
+-- Indexes for table `tblbill`
+--
+ALTER TABLE `tblbill`
+  ADD PRIMARY KEY (`bill_id`);
+
+--
+-- Indexes for table `tbllog`
+--
+ALTER TABLE `tbllog`
+  ADD PRIMARY KEY (`log_id`);
+
+--
+-- Indexes for table `tblpc`
+--
+ALTER TABLE `tblpc`
+  ADD PRIMARY KEY (`pc_id`) USING BTREE;
+
+--
+-- Indexes for table `tblproduct`
+--
+ALTER TABLE `tblproduct`
+  ADD PRIMARY KEY (`product_id`);
+
+--
+-- Indexes for table `tblproviders`
+--
+ALTER TABLE `tblproviders`
+  ADD PRIMARY KEY (`provider_id`);
+
+--
+-- Indexes for table `tblshop`
+--
+ALTER TABLE `tblshop`
+  ADD PRIMARY KEY (`shop_id`);
+
+--
+-- Indexes for table `tbltranspoter`
+--
+ALTER TABLE `tbltranspoter`
+  ADD PRIMARY KEY (`transpoter_id`) USING BTREE;
+
+--
+-- Indexes for table `tbluser`
+--
+ALTER TABLE `tbluser`
+  ADD PRIMARY KEY (`user_id`);
+
+--
+-- Indexes for table `tbl_cases`
+--
+ALTER TABLE `tbl_cases`
+  ADD PRIMARY KEY (`case_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `tbl_cooling`
+--
+ALTER TABLE `tbl_cooling`
+  ADD PRIMARY KEY (`cooling_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `tbl_cpus`
+--
+ALTER TABLE `tbl_cpus`
+  ADD PRIMARY KEY (`cpu_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `tbl_desktops`
+--
+ALTER TABLE `tbl_desktops`
+  ADD PRIMARY KEY (`desktop_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `tbl_graphics_cards`
+--
+ALTER TABLE `tbl_graphics_cards`
+  ADD PRIMARY KEY (`graphics_card_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `tbl_headphones_speakers`
+--
+ALTER TABLE `tbl_headphones_speakers`
+  ADD PRIMARY KEY (`headphones_speakers_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `tbl_keyboards`
+--
+ALTER TABLE `tbl_keyboards`
+  ADD PRIMARY KEY (`keyboard_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `tbl_laptops`
+--
+ALTER TABLE `tbl_laptops`
+  ADD PRIMARY KEY (`laptop_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `tbl_mice`
+--
+ALTER TABLE `tbl_mice`
+  ADD PRIMARY KEY (`mouse_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `tbl_monitors`
+--
+ALTER TABLE `tbl_monitors`
+  ADD PRIMARY KEY (`monitor_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `tbl_motherboards`
+--
+ALTER TABLE `tbl_motherboards`
+  ADD PRIMARY KEY (`motherboard_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `tbl_other_accessories`
+--
+ALTER TABLE `tbl_other_accessories`
+  ADD PRIMARY KEY (`accessory_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `tbl_power_supply_units`
+--
+ALTER TABLE `tbl_power_supply_units`
+  ADD PRIMARY KEY (`psu_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `tbl_rams`
+--
+ALTER TABLE `tbl_rams`
+  ADD PRIMARY KEY (`ram_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `tbl_storage`
+--
+ALTER TABLE `tbl_storage`
+  ADD PRIMARY KEY (`storage_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `tbl_usbs`
+--
+ALTER TABLE `tbl_usbs`
+  ADD PRIMARY KEY (`usb_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `comment`
+--
+ALTER TABLE `comment`
+  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `delivery`
+--
+ALTER TABLE `delivery`
+  MODIFY `delivery_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `sale`
+--
+ALTER TABLE `sale`
+  MODIFY `sale_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tblaction`
+--
+ALTER TABLE `tblaction`
+  MODIFY `action_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tblbd`
+--
+ALTER TABLE `tblbd`
+  MODIFY `bd_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID', AUTO_INCREMENT=251;
+
+--
+-- AUTO_INCREMENT for table `tblbill`
+--
+ALTER TABLE `tblbill`
+  MODIFY `bill_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID hóa đơn', AUTO_INCREMENT=51;
+
+--
+-- AUTO_INCREMENT for table `tbllog`
+--
+ALTER TABLE `tbllog`
+  MODIFY `log_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `tblpc`
+--
+ALTER TABLE `tblpc`
+  MODIFY `pc_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT for table `tblproduct`
+--
+ALTER TABLE `tblproduct`
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+
+--
+-- AUTO_INCREMENT for table `tblproviders`
+--
+ALTER TABLE `tblproviders`
+  MODIFY `provider_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `tblshop`
+--
+ALTER TABLE `tblshop`
+  MODIFY `shop_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `tbltranspoter`
+--
+ALTER TABLE `tbltranspoter`
+  MODIFY `transpoter_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `tbluser`
+--
+ALTER TABLE `tbluser`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT for table `tbl_cases`
+--
+ALTER TABLE `tbl_cases`
+  MODIFY `case_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tbl_cooling`
+--
+ALTER TABLE `tbl_cooling`
+  MODIFY `cooling_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tbl_cpus`
+--
+ALTER TABLE `tbl_cpus`
+  MODIFY `cpu_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tbl_desktops`
+--
+ALTER TABLE `tbl_desktops`
+  MODIFY `desktop_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tbl_graphics_cards`
+--
+ALTER TABLE `tbl_graphics_cards`
+  MODIFY `graphics_card_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tbl_headphones_speakers`
+--
+ALTER TABLE `tbl_headphones_speakers`
+  MODIFY `headphones_speakers_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tbl_keyboards`
+--
+ALTER TABLE `tbl_keyboards`
+  MODIFY `keyboard_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tbl_laptops`
+--
+ALTER TABLE `tbl_laptops`
+  MODIFY `laptop_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tbl_mice`
+--
+ALTER TABLE `tbl_mice`
+  MODIFY `mouse_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tbl_monitors`
+--
+ALTER TABLE `tbl_monitors`
+  MODIFY `monitor_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tbl_motherboards`
+--
+ALTER TABLE `tbl_motherboards`
+  MODIFY `motherboard_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tbl_other_accessories`
+--
+ALTER TABLE `tbl_other_accessories`
+  MODIFY `accessory_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tbl_power_supply_units`
+--
+ALTER TABLE `tbl_power_supply_units`
+  MODIFY `psu_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tbl_rams`
+--
+ALTER TABLE `tbl_rams`
+  MODIFY `ram_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tbl_storage`
+--
+ALTER TABLE `tbl_storage`
+  MODIFY `storage_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tbl_usbs`
+--
+ALTER TABLE `tbl_usbs`
+  MODIFY `usb_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `tbl_cases`
+--
+ALTER TABLE `tbl_cases`
+  ADD CONSTRAINT `tbl_cases_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `tblproduct` (`product_id`);
+
+--
+-- Constraints for table `tbl_cooling`
+--
+ALTER TABLE `tbl_cooling`
+  ADD CONSTRAINT `tbl_cooling_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `tblproduct` (`product_id`);
+
+--
+-- Constraints for table `tbl_cpus`
+--
+ALTER TABLE `tbl_cpus`
+  ADD CONSTRAINT `tbl_cpus_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `tblproduct` (`product_id`);
+
+--
+-- Constraints for table `tbl_desktops`
+--
+ALTER TABLE `tbl_desktops`
+  ADD CONSTRAINT `tbl_desktops_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `tblproduct` (`product_id`);
+
+--
+-- Constraints for table `tbl_graphics_cards`
+--
+ALTER TABLE `tbl_graphics_cards`
+  ADD CONSTRAINT `tbl_graphics_cards_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `tblproduct` (`product_id`);
+
+--
+-- Constraints for table `tbl_headphones_speakers`
+--
+ALTER TABLE `tbl_headphones_speakers`
+  ADD CONSTRAINT `tbl_headphones_speakers_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `tblproduct` (`product_id`);
+
+--
+-- Constraints for table `tbl_keyboards`
+--
+ALTER TABLE `tbl_keyboards`
+  ADD CONSTRAINT `tbl_keyboards_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `tblproduct` (`product_id`);
+
+--
+-- Constraints for table `tbl_laptops`
+--
+ALTER TABLE `tbl_laptops`
+  ADD CONSTRAINT `tbl_laptops_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `tblproduct` (`product_id`);
+
+--
+-- Constraints for table `tbl_mice`
+--
+ALTER TABLE `tbl_mice`
+  ADD CONSTRAINT `tbl_mice_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `tblproduct` (`product_id`);
+
+--
+-- Constraints for table `tbl_monitors`
+--
+ALTER TABLE `tbl_monitors`
+  ADD CONSTRAINT `tbl_monitors_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `tblproduct` (`product_id`);
+
+--
+-- Constraints for table `tbl_motherboards`
+--
+ALTER TABLE `tbl_motherboards`
+  ADD CONSTRAINT `tbl_motherboards_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `tblproduct` (`product_id`);
+
+--
+-- Constraints for table `tbl_other_accessories`
+--
+ALTER TABLE `tbl_other_accessories`
+  ADD CONSTRAINT `tbl_other_accessories_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `tblproduct` (`product_id`);
+
+--
+-- Constraints for table `tbl_power_supply_units`
+--
+ALTER TABLE `tbl_power_supply_units`
+  ADD CONSTRAINT `tbl_power_supply_units_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `tblproduct` (`product_id`);
+
+--
+-- Constraints for table `tbl_rams`
+--
+ALTER TABLE `tbl_rams`
+  ADD CONSTRAINT `tbl_rams_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `tblproduct` (`product_id`);
+
+--
+-- Constraints for table `tbl_storage`
+--
+ALTER TABLE `tbl_storage`
+  ADD CONSTRAINT `tbl_storage_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `tblproduct` (`product_id`);
+
+--
+-- Constraints for table `tbl_usbs`
+--
+ALTER TABLE `tbl_usbs`
+  ADD CONSTRAINT `tbl_usbs_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `tblproduct` (`product_id`);
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

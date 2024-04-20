@@ -35,7 +35,7 @@ public class UserImpl extends BasicImpl implements User {
 		sql.append("user_nickname, user_fullname, user_images, ");
 		sql.append("user_email, user_notes, user_permission, ");
 		sql.append("user_gender, user_address, user_created_date, ");
-		sql.append("user_mobile_phone, user_social_links ");
+		sql.append("user_phone, user_social_links ");
 		sql.append(")");
 		sql.append("VALUES(?,md5(?),?,?,?,?,?,?,?,?,?,?,?);");
 
@@ -53,7 +53,7 @@ public class UserImpl extends BasicImpl implements User {
             pre.setByte(9, item.getUser_gender());
             pre.setString(10, Utilities.encode(item.getUser_address()));
             pre.setString(11, item.getUser_created_date());
-            pre.setString(12, item.getUser_mobile_phone());
+            pre.setString(12, item.getUser_phone());
             pre.setString(13, item.getUser_social_links());
 
             boolean success = this.add(pre);
@@ -103,7 +103,7 @@ public class UserImpl extends BasicImpl implements User {
 		case GENERAL:
 			sql += "user_nickname=?, user_fullname=?, user_images=?, ";
 			sql += "user_email=?, user_notes=?, user_gender=?, ";
-			sql += "user_address=?, user_mobile_phone=?, user_social_links=?";
+			sql += "user_address=?, user_phone=?, user_social_links=?";
 			break;
 		case SETTINGS:
 			sql += "user_permission=? ";
@@ -128,7 +128,7 @@ public class UserImpl extends BasicImpl implements User {
 				pre.setString(5, item.getUser_notes());
 				pre.setByte(6, item.getUser_gender());
 				pre.setString(7, item.getUser_address());
-				pre.setString(8, item.getUser_mobile_phone());
+				pre.setString(8, item.getUser_phone());
 				pre.setString(9, item.getUser_social_links());
 				pre.setInt(10, item.getUser_id());
 				break;
