@@ -28,7 +28,7 @@
            <div class="col-12">
                <nav class="main-nav">
                    <!-- ***** Logo Start ***** -->
-                   <a href="/home/main/home.jsp" class="logo d-flex align-items-center">
+                   <a href="/home/homepage" class="logo d-flex align-items-center">
                        <img height="80px" width="120px" src="/home/assets/images/sm.png" alt="">
                    </a>
                    <!-- ***** Logo End ***** -->
@@ -41,7 +41,7 @@
                   <button class="btn btn-dark" type="button" id="button-addon2"><i class="fa fa-search" aria-hidden="true"></i></button>
                 </div>
               </li>
-				<%session = request.getSession(true); 
+				<%	session = request.getSession(true); 
 					if (session.getAttribute("userLogined")!=null)
 					{ %>
 						<li><a class="bg-dark " data-bs-toggle="dropdown" aria-expanded="false"><i
@@ -56,7 +56,7 @@
               		</li> 
 					<%} else {%>
 						<li>
-							<a href="/home/main/guest/login.jsp" class="bg-dark"><i class="fa fa-user text-light"></i>Login</a>
+							<a href="/home/guest/login" class="bg-dark"><i class="fa fa-user text-light"></i>Login</a>
               			</li> 	
 					<% }%>
 					

@@ -1,40 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.google.gson.*" %>
  <jsp:include page="../component/header.jsp" flush="true"></jsp:include>
- <div class="sub-header">
-   <div class="container">
-     <div class="row">
-       <div class="col-lg-8 col-md-8">
-         <ul class="info">
-           <li><i class="fa fa-envelope"></i> info@sm.vn</li>
-         </ul>
-       </div>
-       <div class="col-lg-4 col-md-4">
-         <ul class="social-links">
-           <li><a href="#"><i class="fab fa-facebook"></i></a></li>
-           <li><a href="https://x.com/minthu" target="_blank"><i class="fab fa-twitter"></i></a></li>
-           <li><a href="#"><i class="fab fa-linkedin"></i></a></li>
-           <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-         </ul>
-       </div>
-     </div>
-   </div>
- </div>
- <header class="header-area header-sticky">
-   <div class="container">
-       <div class="row">
-           <div class="col-12">
-               <nav class="main-nav">
-                   <!-- ***** Logo Start ***** -->
-                   <a href="/home/main/home.jsp" class="logo">
-                       <img height="120px" width="200" src="/home/assets/images/sm.png" alt="">
-                   </a>
-
-               </nav>
-           </div>
-       </div>
-   </div>
- </header>
+ <jsp:include page="../component/navigation-bar.jsp" flush="true"></jsp:include>
+      	<% 
+    		Gson gson = new Gson();
+    		String map = gson.fromJson((String) request.getAttribute("err"), String.class);
+    		if (map!=null){
+    			out.append(map);
+    		}
+    	%>
   <div class="contact-content mt-5">
     <div class="container mt-5">
       <div class="row">
@@ -45,13 +20,13 @@
             <div class="row">
               <div class="col-lg-12">
                 <fieldset>
-                  <label for="name">Username</label>
+                  <label for="name">Tên đăng nhập</label>
                   <input type="text" name="txtname" id="txtname" placeholder="Username" autocomplete="on" required>
                 </fieldset>
               </div>
               <div class="col-lg-12">
                 <fieldset>
-                  <label for="email">Password</label>
+                  <label for="email">Mật khẩu</label>
                   <input type="password" name="txtpass" id="txtpass" placeholder="Password" required>
                 </fieldset>
               </div>

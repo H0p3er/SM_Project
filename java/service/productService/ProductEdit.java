@@ -22,7 +22,7 @@ import connection.ConnectionPool;
 import constant.PRODUCT_EDIT_TYPE;
 import controller.ProductControl;
 import entity.ProductObject;
-import storage.StorageService;
+import file.StorageService;
 
 /**
  * Servlet implementation class ProductEdit
