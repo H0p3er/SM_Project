@@ -8,6 +8,8 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
+import com.google.gson.Gson;
+
 import connection.ConnectionPool;
 import controller.UserControl;
 import entity.*;
@@ -42,6 +44,39 @@ public class UserLogin extends HttpServlet {
 	 * @param response - lưu trữ các đáp ứng dữ liệu được trả về cho client
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String error = request.getParameter("err");
+		StringBuilder out = new StringBuilder();
+
+		if (error!=null) {
+			out.append("<div class=\"col-lg-6 offset-lg-3 mb-5 text-bg-light\">");
+			out.append("<div class=\"alert alert-warning alert-dismissible fade show\" role=\"alert\">");
+			out.append("<i class=\"fa-solid fa-triangle-exclamation\"></i>");
+			switch (error) {
+				case "param":
+					out.append("Tham số lấy giá trị không chính xác!");
+					break;
+				case "value":
+					out.append("Không tồn tại giá trị cho tài khoản!");
+					break;
+				case "notOk":
+					out.append("Đăng nhập không thành công!");
+					break;
+				default:
+					out.append("Có lỗi trong quá trình đăng nhập!");				
+			}
+			out.append("<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\" aria-label=\"Close\"></button>");
+			out.append("</div>");
+			out.append("</div>");
+			
+			Gson gson = new Gson();
+			
+		    String jsonData = gson.toJson(out.toString());
+		    
+		    request.setAttribute("err", jsonData);
+		}
+		
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/main/guest/login.jsp");
+	    requestDispatcher.forward(request, response);
 	}
 
 	/**
@@ -96,18 +131,18 @@ public class UserLogin extends HttpServlet {
 					session.setAttribute("userLogined", user);
 					
 					//Trở về giao diện chính
-					response.sendRedirect("/home/main/home.jsp");
+					response.sendRedirect("/home/homepage");
 					
 				} else {
-					response.sendRedirect("/home/main/guest/login.jsp?err=notOk");
+					response.sendRedirect("/home/guest/login?err=notOk");
 				}
 				
 			} else {
-				response.sendRedirect("/home/main/guest/login.jsp?err=value");
+				response.sendRedirect("/home/guest/login?err=value");
 			}
 		} else {			
 			//sendRedirect: vi tri tra ve 
-			response.sendRedirect("/home/main/guest/login.jsp?err=param");
+			response.sendRedirect("/home/guest/login?err=param");
 		}
 	}
 
