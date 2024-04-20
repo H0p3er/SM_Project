@@ -53,6 +53,8 @@ public class ProductLibrary {
 			tmp.append("</div>");//col-lg-4 col-md-6
 		});	
 		view.put("home_product_list",tmp.toString());
+		
+		
 		return view;
 	}
 }
