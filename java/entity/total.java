@@ -40,10 +40,12 @@ public class total {
         private int product_id;
         private String product_name;
         private byte product_status;
+        private byte product_deleted;
         private int product_visited;
         private int product_price;
         private String product_images;
         private String product_notes;
+        private String product_created_date;
         private String product_last_modified;
         private short product_quantity;
         private int product_pc_id;

@@ -1,19 +1,19 @@
 package entity;
 
 public class ProductObject {
-    private int product_id;
+	private int product_id;
     private String product_name;
     private byte product_status;
+    private byte product_deleted;
     private int product_visited;
     private double product_price;
     private String product_images;
     private String product_notes;
-    private String product_last_modified;
     private String product_created_date;
+    private String product_last_modified;
     private int product_quantity;
     private int product_pc_id;
-    private byte product_deleted;
-    private int product_shop_id;
+    private String product_shop_id;
 	public int getProduct_id() {
 		return product_id;
 	}
@@ -31,6 +31,12 @@ public class ProductObject {
 	}
 	public void setProduct_status(byte product_status) {
 		this.product_status = product_status;
+	}
+	public byte getProduct_deleted() {
+		return product_deleted;
+	}
+	public void setProduct_deleted(byte product_deleted) {
+		this.product_deleted = product_deleted;
 	}
 	public int getProduct_visited() {
 		return product_visited;
@@ -56,6 +62,12 @@ public class ProductObject {
 	public void setProduct_notes(String product_notes) {
 		this.product_notes = product_notes;
 	}
+	public String getProduct_created_date() {
+		return product_created_date;
+	}
+	public void setProduct_created_date(String product_created_date) {
+		this.product_created_date = product_created_date;
+	}
 	public String getProduct_last_modified() {
 		return product_last_modified;
 	}
@@ -74,24 +86,12 @@ public class ProductObject {
 	public void setProduct_pc_id(int product_pc_id) {
 		this.product_pc_id = product_pc_id;
 	}
-	public int getProduct_shop_id() {
+	public String getProduct_shop_id() {
 		return product_shop_id;
 	}
-	public void setProduct_shop_id(int product_shop_id) {
+	public void setProduct_shop_id(String product_shop_id) {
 		this.product_shop_id = product_shop_id;
 	}
-	public byte getProduct_deleted() {
-		return product_deleted;
-	}
-	public void setProduct_deleted(byte product_deleted) {
-		this.product_deleted = product_deleted;
-	}
-	public String getProduct_created_date() {
-		return product_created_date;
-	}
-	public void setProduct_created_date(String product_created_date) {
-		this.product_created_date = product_created_date;
-	}
-    
+	
     
 }

@@ -528,66 +528,67 @@ INSERT INTO `tblpc` (`pc_id`,`pc_name`,`pc_notes`,`pc_created_date`,`pc_image`,`
 --
 -- Definition of table `tblproduct`
 --
-DROP TABLE IF EXISTS `tblproduct`;
 
+DROP TABLE IF EXISTS `tblproduct`;
 CREATE TABLE `tblproduct` (
-  `product_id` int(11) NOT NULL,
-  `product_name` varchar(100) DEFAULT NULL,
-  `product_status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0 - chưa  đư?c bán\n1 - đang bán\n2 - ng?ng kinh doanh',
-  `product_visited` int(11) NOT NULL DEFAULT 0 COMMENT '0 - không b? đưa vào thùng rác\r\n1 - b? đưa vào thùng rác',
-  `product_price` int(11) NOT NULL DEFAULT 0,
-  `product_images` text DEFAULT NULL,
-  `product_notes` text DEFAULT NULL,
-  `product_last_modified` varchar(45) DEFAULT NULL,
-  `product_pc_id` smallint(5) UNSIGNED NOT NULL COMMENT 'Loai san pham',
-  `product_shop_id` int(10) UNSIGNED DEFAULT 0,
-  `product_quantity` int(10) UNSIGNED DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci COMMENT='Bảng sản phẩm';
+  `product_id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_name` varchar(100) NOT NULL,
+  `product_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0 - chưa  đư?c bán\n1 - đang bán\n2 - ng?ng kinh doanh',
+  `product_deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0 - không b? đưa vào thùng rác\n1 - b? đưa vào thùng rác',
+  `product_images` text,
+  `product_guarantee_id` int(11) DEFAULT NULL COMMENT 'M? b?o hành',
+  `product_notes` text,
+  `product_created_date` varchar(45) DEFAULT NULL,
+  `product_modified_date` varchar(45) DEFAULT NULL,
+  `product_pc_id` smallint(5) unsigned NOT NULL COMMENT 'Loai san pham',
+  `product_shop_id` int(10) unsigned DEFAULT '0',
+  `product_quantity` int(10) unsigned DEFAULT '0',
+  PRIMARY KEY (`product_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=latin1 COMMENT='Bảng sản phẩm';
 
 --
 -- Dumping data for table `tblproduct`
 --
 
 /*!40000 ALTER TABLE `tblproduct` DISABLE KEYS */;
-INSERT INTO `tblproduct` (`product_id`, `product_name`, `product_status`, `product_visited`, `product_price`, `product_images`, `product_notes`, `product_last_modified`, `product_pc_id`, `product_shop_id`, `product_quantity`) VALUES
-(6, 'MacBook Air 13 inch M1 2020 7-core GPU', 1, 0, 0, ' /home/images/product/macbook-air-m1-2020-gray-600x600.jpg', ' null', ' 30/10/2023', 1, 2, 1),
-(7, 'HP 15s fq5229TU i3 1215U (8U237PA)', 0, 0, 0, ' /home/images/product/hp-15s-fq5229tu-i3-8u237pa-thumb-600x600.png', ' null', ' 30/10/2023', 2, 2, 2),
-(8, 'Asus TUF Gaming F15 FX506HF i5 11400H (HN014W)', 1, 0, 0, ' /home/images/product/asus-tuf-gaming-f15-fx506hf-i5-hn014w-thumb-600x600.jpg', ' null', ' 30/10/2023', 3, 2, 3),
-(9, 'Acer Aspire 5 Gaming A515 58GM 51LB i5 13420H (NX.KQ4SV.002)', 0, 0, 0, ' /home/images/product/acer-aspire-5-a515-58gm-51lb-i5-nxkq4sv002-170923-015941-600x600.jpg', ' null', ' 30/10/2023', 4, 1, 4),
-(10, 'Asus Vivobook Go 15 E1504FA R5 7520U (NJ776W)', 1, 0, 0, ' /home/images/product/asus-vivobook-go-15-e1504fa-r5-nj776w-thumb-600x600.jpg', ' null', ' 30/10/2023', 5, 2, 5),
-(12, 'HP 240 G9 i3 1215U (6L1X7PA)', 1, 0, 0, ' /home/images/product/hp-240-g9-i3-6l1x7pa-thumb-600x600.jpg', ' null', ' 30/10/2023', 7, 2, 12),
-(13, 'Asus Vivobook 16 X1605VA i5 1335U (MB360W)', 0, 0, 0, ' /home/images/product/asus-vivobook-16-x1605va-i5-mb360w-thumb-laptop-600x600.jpg', ' null', ' 30/10/2023', 7, 1, 5),
-(14, 'HP 15s fq5162TU i5 1235U (7C134PA)', 1, 0, 0, ' /home/images/product/hp-15s-fq5162tu-i5-7c134pa-thumb-600x600.jpg', ' null', ' 30/10/2023', 7, 2, 12),
-(15, 'Asus Vivobook 15 X1504ZA i3 1215U (NJ102W)', 0, 0, 0, ' /home/images/product/asus-vivobook-15-x1504za-i3-nj102w-thumb-600x600.jpg', ' null', ' 30/10/2023', 7, 2, 5),
-(16, 'Asus Vivobook X515EA i3 1115G4 (EJ3948W)', 1, 0, 0, ' /home/images/product/asus-vivobook-x515ea-i3-ej3948w-thumb-600x600.jpg', ' null', ' 30/10/2023', 8, 2, 12),
-(17, 'HP Pavilion 14 dv2074TU i5 1235U (7C0P3PA)', 0, 0, 0, ' /home/images/product/hp-pavilion-14-dv2074tu-i5-7c0p3pa-thumb-600x600.jpg', ' null', ' 30/10/2023', 8, 2, 5),
-(18, 'Asus Vivobook X515EA i5 1135G7 (EJ4155W)', 1, 0, 0, ' /home/images/product/asus-vivobook-x515ea-i5-ej4155w-thumb-600x600.jpg', ' null', ' 30/10/2023', 16, 2, 1),
-(19, 'Dell Vostro 15 3520 i3 1215U (5M2TT1)', 0, 0, 0, ' /home/images/product/dell-vostro-15-3520-i3-5m2tt1-090823-041032-600x600.png', ' null', ' 30/10/2023', 16, 1, 2),
-(20, 'HP 14 ep0126TU i3 N305 (8U233PA)', 1, 0, 0, ' /home/images/product/hp-14-ep0126tu-i3-8u233pa-thumb-600x600.jpg', ' null', ' 30/10/2023', 16, 19, 35),
-(21, 'Lenovo Ideapad 3 15ITL6 i3 1115G4 (82H803SGVN)', 0, 0, 0, ' /home/images/product/lenovo-ideapad-3-15itl6-i3-82h803sgvn-thumb-600x600.jpg', ' null', ' 30/10/2023', 16, 1, 23),
-(22, 'Dell Inspiron 15 3520 i3 1215U (71003264)', 1, 0, 0, ' /home/images/product/dell-inspiron-3520-i3-71003264-thumb-600x600.jpg', ' null', ' 30/10/2023', 16, 4, 4),
-(23, 'HP 15s fq2716TU i3 1115G4 (7C0X3PA)', 0, 0, 0, ' /home/images/product/hp-15s-fq2716tu-i3-7c0x3pa-thumb-600x600.jpg', ' null', ' 30/10/2023', 2, 6, 3),
-(24, 'Asus Vivobook X415EA i3 1115G4 (EK2034W)', 1, 0, 0, ' /home/images/product/asus-vivobook-x415ea-i3-ek2034w-thumb-laptop-600x600.jpg', ' null', ' 30/10/2023', 2, 5, 1),
-(26, 'Dell Inspiron 15 3520 i5 1235U (N5I5122W1)', 1, 0, 0, ' /home/images/product/dell-inspiron-15-3520-i5-n5i5122w1-191222-091429-600x600.jpg', ' null', ' 30/10/2023', 17, 4, 3),
-(27, 'Asus Vivobook 15 X1504VA i5 1335U (NJ025W)', 0, 0, 0, ' /home/images/product/asus-vivobook-15-x1504va-i5-nj025w-thumb-600x600.jpg', ' null', ' 30/10/2023', 17, 5, 1),
-(29, 'Lenovo Ideapad 3 15IAU7 i3 1215U (82RK005LVN)', 0, 0, 0, ' /home/images/product/lenovo-ideapad-3-15iau7-i3-82rk005lvn-281122-051953-600x600.jpg', ' null', ' 30/10/2023', 17, 1, 2),
-(30, 'HP Pavilion 15 eg2082TU i5 1240P (7C0Q5PA)', 1, 0, 0, ' /home/images/product/hp-pavilion-15-eg2082tu-i5-7c0q5pa-thumb-600x600.jpg', ' null', ' 30/10/2023', 17, 2, 12),
-(31, 'Lenovo Ideapad 3 15ITL6 i5 1155G7 (82H803RRVN)', 0, 0, 0, ' /home/images/product/lenovo-ideapad-3-15itl6-i5-82h803rrvn-thumb-600x600.jpg', ' null', ' 30/10/2023', 17, 1, 1),
-(32, 'HP 240 G8 i3 1115G4 (6L1A1PA)', 1, 0, 0, ' /home/images/product/hp-240-g8-i3-6l1a1pa-210423-031503-600x600.jpg', 'null', ' 30/10/2023', 17, 2, 3),
-(33, 'Asus TUF Gaming F15 FX506HE i7 11800H (HN378W)', 0, 0, 0, ' /home/images/product/asus-tuf-gaming-f15-fx506he-i7-hn378w-thumb-600x600.jpg', 'null', ' 30/10/2023', 2, 3, 1),
-(34, 'HP 15s fq5147TU i7 1255U (7C133PA)', 1, 0, 0, ' /home/images/product/hp-15s-fq5147tu-i7-7c133pa-thumb-600x600.jpg', 'null', ' 30/10/2023', 2, 3, 3),
-(35, 'Acer Aspire 3 A315 59 314F i3 1215U (NX.K6TSV.002)', 0, 0, 0, ' /home/images/product/acer-aspire-3-a315-59-314f-i3-nxk6tsv002-thumb-1-600x600.jpg', ' null', ' 30/10/2023', 2, 3, 2),
-(36, 'MSI Gaming GF63 Thin 11SC i5 11400H (664VN)', 1, 0, 0, ' /home/images/product/msi-gaming-gf63-thin-11sc-i5-664vn-glr-thumb-600x600.jpg', ' null', ' 30/10/2023', 2, 3, 1),
-(38, 'MSI Gaming GF63 Thin 11UC i7 11800H (1228VN)', 1, 0, 0, ' /home/images/product/msi-gaming-gf63-thin-11uc-i7-1228vn-thumb-600x600.jpg', ' null', ' 30/10/2023', 2, 3, 1),
-(39, 'Asus Vivobook 15 OLED A1505VA i5 13500H (L1341W)', 0, 1, 0, ' /home/images/product/asus-vivobook-15-oled-a1505va-i5-l1341w-thumb-600x600.jpg', ' null', ' 30/10/2023', 2, 4, 1),
-(40, 'Lenovo Ideapad Slim 3 15IAH8 i5 12450H (83ER000EVN)', 1, 0, 0, ' /home/images/product/lenovo-ideapad-slim-3-15iah8-i5-83er00evn-thumb-600x600.jpg', ' null', ' 30/10/2023', 2, 5, 1),
-(41, 'MacBook Air 13 inch M2 2022 8-core GPU', 0, 0, 0, ' /home/images/product/apple-macbook-air-m2-2022-vang-600x600.jpg', ' null', ' 30/10/2023', 2, 2, 1),
-(42, 'Acer Nitro 5 Gaming AN515 57 5669 i5 11400H (NH.QEHSV.001)', 1, 0, 0, ' /home/images/product/acer-nitro-5-gaming-an515-57-5669-i5-11400h-8gb-512gb-144hz-4gb-gtx1650-win11-nhqehsv001-031221-100506-600x600.jpg', ' null', ' 30/10/2023', 2, 4, 1),
-(43, 'HP Pavilion 15 eg2081TU i5 1240P (7C0Q4PA)', 0, 0, 0, ' /home/images/product/hp-pavilion-15-eg2081tu-i5-7c0q4pa-thumb-600x600.jpg', ' null', ' 30/10/2023', 2, 1, 1),
-(44, 'Dell Vostro 3520 i3 1215U (V5I3614W1)', 1, 0, 0, ' /home/images/product/dell-vostro-3520-i3-v5i3614w1-thumb-600x600.jpg', ' null', ' 30/10/2023', 2, 3, 1),
-(45, 'Lenovo Ideapad 3 15ITL6 i3 1115G4 (82H803SFVN)', 0, 1, 0, ' /home/images/product/lenovo-ideapad-3-15itl6-i3-82h803sfvn-thumb-600x600.jpg', ' null', ' 30/10/2023', 2, 2, 1);
+INSERT INTO `tblproduct` (`product_id`,`product_name`,`product_status`,`product_deleted`,`product_images`,`product_guarantee_id`,`product_notes`,`product_created_date`,`product_modified_date`,`product_pc_id`,`product_shop_id`,`product_quantity`) VALUES 
+ (6,'MacBook Air 13 inch M1 2020 7-core GPU',1,0,' /home/images/product/macbook-air-m1-2020-gray-600x600.jpg',0,' null',NULL,' 30/10/2023',1,6,1),
+ (7,'HP 15s fq5229TU i3 1215U (8U237PA)',0,0,' /home/images/product/hp-15s-fq5229tu-i3-8u237pa-thumb-600x600.png',0,' null',NULL,' 30/10/2023',2,7,2),
+ (8,'Asus TUF Gaming F15 FX506HF i5 11400H (HN014W)',1,0,' /home/images/product/asus-tuf-gaming-f15-fx506hf-i5-hn014w-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',3,8,3),
+ (9,'Acer Aspire 5 Gaming A515 58GM 51LB i5 13420H (NX.KQ4SV.002)',0,0,' /home/images/product/acer-aspire-5-a515-58gm-51lb-i5-nxkq4sv002-170923-015941-600x600.jpg',0,' null',NULL,' 30/10/2023',4,9,4),
+ (10,'Asus Vivobook Go 15 E1504FA R5 7520U (NJ776W)',1,0,' /home/images/product/asus-vivobook-go-15-e1504fa-r5-nj776w-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',5,10,5),
+ (12,'HP 240 G9 i3 1215U (6L1X7PA)',1,0,' /home/images/product/hp-240-g9-i3-6l1x7pa-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',7,11,12),
+ (13,'Asus Vivobook 16 X1605VA i5 1335U (MB360W)',0,0,' /home/images/product/asus-vivobook-16-x1605va-i5-mb360w-thumb-laptop-600x600.jpg',0,' null',NULL,' 30/10/2023',7,12,5),
+ (14,'HP 15s fq5162TU i5 1235U (7C134PA)',1,0,' /home/images/product/hp-15s-fq5162tu-i5-7c134pa-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',7,13,12),
+ (15,'Asus Vivobook 15 X1504ZA i3 1215U (NJ102W)',0,0,' /home/images/product/asus-vivobook-15-x1504za-i3-nj102w-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',7,14,5),
+ (16,'Asus Vivobook X515EA i3 1115G4 (EJ3948W)',1,0,' /home/images/product/asus-vivobook-x515ea-i3-ej3948w-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',8,15,12),
+ (17,'HP Pavilion 14 dv2074TU i5 1235U (7C0P3PA)',0,0,' /home/images/product/hp-pavilion-14-dv2074tu-i5-7c0p3pa-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',8,16,5),
+ (18,'Asus Vivobook X515EA i5 1135G7 (EJ4155W)',1,0,' /home/images/product/asus-vivobook-x515ea-i5-ej4155w-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',16,17,1),
+ (19,'Dell Vostro 15 3520 i3 1215U (5M2TT1)',0,0,' /home/images/product/dell-vostro-15-3520-i3-5m2tt1-090823-041032-600x600.png',0,' null',NULL,' 30/10/2023',16,18,2),
+ (20,'HP 14 ep0126TU i3 N305 (8U233PA)',1,0,' /home/images/product/hp-14-ep0126tu-i3-8u233pa-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',16,19,35),
+ (21,'Lenovo Ideapad 3 15ITL6 i3 1115G4 (82H803SGVN)',0,0,' /home/images/product/lenovo-ideapad-3-15itl6-i3-82h803sgvn-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',16,20,23),
+ (22,'Dell Inspiron 15 3520 i3 1215U (71003264)',1,0,' /home/images/product/dell-inspiron-3520-i3-71003264-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',16,21,4),
+ (23,'HP 15s fq2716TU i3 1115G4 (7C0X3PA)',0,0,' /home/images/product/hp-15s-fq2716tu-i3-7c0x3pa-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',2,6,3),
+ (24,'Asus Vivobook X415EA i3 1115G4 (EK2034W)',1,0,' /home/images/product/asus-vivobook-x415ea-i3-ek2034w-thumb-laptop-600x600.jpg',0,' null',NULL,' 30/10/2023',2,12,1),
+ (26,'Dell Inspiron 15 3520 i5 1235U (N5I5122W1)',1,0,' /home/images/product/dell-inspiron-15-3520-i5-n5i5122w1-191222-091429-600x600.jpg',0,' null',NULL,' 30/10/2023',17,8,3),
+ (27,'Asus Vivobook 15 X1504VA i5 1335U (NJ025W)',0,0,' /home/images/product/asus-vivobook-15-x1504va-i5-nj025w-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',17,9,1),
+ (29,'Lenovo Ideapad 3 15IAU7 i3 1215U (82RK005LVN)',0,0,' /home/images/product/lenovo-ideapad-3-15iau7-i3-82rk005lvn-281122-051953-600x600.jpg',0,' null',NULL,' 30/10/2023',17,10,2),
+ (30,'HP Pavilion 15 eg2082TU i5 1240P (7C0Q5PA)',1,0,' /home/images/product/hp-pavilion-15-eg2082tu-i5-7c0q5pa-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',17,9,12),
+ (31,'Lenovo Ideapad 3 15ITL6 i5 1155G7 (82H803RRVN)',0,0,' /home/images/product/lenovo-ideapad-3-15itl6-i5-82h803rrvn-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',17,10,1),
+ (32,'HP 240 G8 i3 1115G4 (6L1A1PA)',1,0,' /home/images/product/hp-240-g8-i3-6l1a1pa-210423-031503-600x600.jpg',0,'null',NULL,' 30/10/2023',17,12,3),
+ (33,'Asus TUF Gaming F15 FX506HE i7 11800H (HN378W)',0,0,' /home/images/product/asus-tuf-gaming-f15-fx506he-i7-hn378w-thumb-600x600.jpg',0,'null',NULL,' 30/10/2023',2,7,1),
+ (34,'HP 15s fq5147TU i7 1255U (7C133PA)',1,0,' /home/images/product/hp-15s-fq5147tu-i7-7c133pa-thumb-600x600.jpg',0,'null',NULL,' 30/10/2023',2,8,3),
+ (35,'Acer Aspire 3 A315 59 314F i3 1215U (NX.K6TSV.002)',0,0,' /home/images/product/acer-aspire-3-a315-59-314f-i3-nxk6tsv002-thumb-1-600x600.jpg',0,' null',NULL,' 30/10/2023',2,9,2),
+ (36,'MSI Gaming GF63 Thin 11SC i5 11400H (664VN)',1,0,' /home/images/product/msi-gaming-gf63-thin-11sc-i5-664vn-glr-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',2,10,1),
+ (38,'MSI Gaming GF63 Thin 11UC i7 11800H (1228VN)',1,0,' /home/images/product/msi-gaming-gf63-thin-11uc-i7-1228vn-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',2,10,1),
+ (39,'Asus Vivobook 15 OLED A1505VA i5 13500H (L1341W)',0,1,' /home/images/product/asus-vivobook-15-oled-a1505va-i5-l1341w-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',2,10,1),
+ (40,'Lenovo Ideapad Slim 3 15IAH8 i5 12450H (83ER000EVN)',1,0,' /home/images/product/lenovo-ideapad-slim-3-15iah8-i5-83er00evn-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',2,10,1),
+ (41,'MacBook Air 13 inch M2 2022 8-core GPU',0,0,' /home/images/product/apple-macbook-air-m2-2022-vang-600x600.jpg',0,' null',NULL,' 30/10/2023',2,10,1),
+ (42,'Acer Nitro 5 Gaming AN515 57 5669 i5 11400H (NH.QEHSV.001)',1,0,' /home/images/product/acer-nitro-5-gaming-an515-57-5669-i5-11400h-8gb-512gb-144hz-4gb-gtx1650-win11-nhqehsv001-031221-100506-600x600.jpg',0,' null',NULL,' 30/10/2023',2,10,1),
+ (43,'HP Pavilion 15 eg2081TU i5 1240P (7C0Q4PA)',0,0,' /home/images/product/hp-pavilion-15-eg2081tu-i5-7c0q4pa-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',2,10,1),
+ (44,'Dell Vostro 3520 i3 1215U (V5I3614W1)',1,0,' /home/images/product/dell-vostro-3520-i3-v5i3614w1-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',2,10,1),
+ (45,'Lenovo Ideapad 3 15ITL6 i3 1115G4 (82H803SFVN)',0,1,' /home/images/product/lenovo-ideapad-3-15itl6-i3-82h803sfvn-thumb-600x600.jpg',0,' null',NULL,' 30/10/2023',2,10,1);
 /*!40000 ALTER TABLE `tblproduct` ENABLE KEYS */;
-
 --
 -- Definition of table `tblshop`
 --
