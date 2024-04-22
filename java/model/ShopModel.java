@@ -44,6 +44,7 @@ public class ShopModel {
 	
 	public void releaseCP() {
 		this.shop.releaseCP();
+		this.product.releaseCP();
 	}
 
 	//***********************Chuyen huong dieu khien tu Shop Impl*****************************************

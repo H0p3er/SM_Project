@@ -14,4 +14,9 @@ public class Utilities_text {
 		
 		return false;
 	}
+	
+	
+	public static boolean checkValidInput (String input) {
+		return false;
+	}
 }

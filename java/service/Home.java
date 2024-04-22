@@ -16,7 +16,6 @@ import org.javatuples.Quintet;
 import com.google.gson.Gson;
 
 import connection.ConnectionPool;
-import constant.PRODUCT_SORT_TYPE;
 import controller.ProductControl;
 import entity.ProductObject;
 import entity.UserObject;

@@ -7,13 +7,8 @@ import org.javatuples.Pair;
 import org.javatuples.Quartet;
 import org.javatuples.Quintet;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-
 import connection.ConnectionPool;
 import constant.PRODUCT_EDIT_TYPE;
-import constant.PRODUCT_SORT_TYPE;
 import entity.ProductObject;
 import library.ProductLibrary;
 import model.ProductModel;
@@ -86,35 +81,9 @@ public class ProductControl {
 	 */
 	public Map<String,String> viewProductsList(Quintet<Short, Byte, String, String, String> infors){
 
-		
 		Pair<ArrayList<ProductObject>,Integer> datas = this.pm.getProductObjects(infors);
 		
 		return ProductLibrary.viewProductList(datas, infors);
 	}
 	
-	public String getProductLists(Quartet<ProductObject, Short, Byte, PRODUCT_SORT_TYPE> infors) {
-		//Lay du lieu
-		ProductObject similar = infors.getValue0();
-		short page = infors.getValue1();
-		byte uPerPage = infors.getValue2();
-		PRODUCT_SORT_TYPE ust = infors.getValue3();
-		
-		Pair<ArrayList<ProductObject>,Integer> datas = this.pm.getProductObjects(similar, page, uPerPage, ust, false);
-		
-		// Chuyển dữ liệu thành json
-		ObjectMapper mapper = new ObjectMapper();
-		ObjectNode root = mapper.createObjectNode();
-		root.put("total", datas.getValue1());
-		root.putPOJO("products", datas.getValue0());
-		
-		String res = "";
-		try {
-			res = mapper.writeValueAsString(root);
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return res;
-	}
 }

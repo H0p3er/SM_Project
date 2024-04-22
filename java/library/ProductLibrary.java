@@ -23,7 +23,7 @@ public class ProductLibrary {
 			tmp.append("<div class=\"col-lg-4 col-md-6\">");
 			tmp.append("<div class=\"item\">");
 			tmp.append("<a href=\"property-details.html\"><img src=\"/home/assets/images/property-01.jpg\" alt=\"\"></a>");
-			tmp.append("<span class=\"category\">Luxury Villa</span>");
+			tmp.append("<span class=\"category\">"+product.getProduct_pc_id()+"</span>");
 			tmp.append("<h6>"+product.getProduct_price()+"</h6>");
 			tmp.append("<h4><a href=\"property-details.html\">"+product.getProduct_name()+"</a></h4>");
 			tmp.append("<ul>");

@@ -63,10 +63,13 @@ public class ConnectionPoolImpl implements ConnectionPool {
 
 		if (this.pool.isEmpty()) {
 			// Khởi tạo kêt nối mới
+	
+	
 			System.out.println(objectName + " have created a new Connection.");
 			return DriverManager.getConnection(this.url, this.username, this.userpass);
 		} else {
 			// Lấy một kết nối đa lưu cho đối tượng
+		
 			System.out.println(objectName + " have popped the Connection.");
 			// gọi ra kết nối mới nhất
 			return this.pool.pop();

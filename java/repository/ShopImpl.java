@@ -240,7 +240,6 @@ public class ShopImpl extends BasicImpl implements Shop {
 		// TODO Auto-generated method stub
 		StringBuilder sql = new StringBuilder();	
 		sql.append(this.getShopByUserSQL(user));	
-		System.out.println(sql.toString());
 		return this.getReList(sql.toString());
 	}
 

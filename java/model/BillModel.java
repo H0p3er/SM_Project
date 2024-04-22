@@ -84,7 +84,7 @@ public class BillModel {
 		return item;
 	}
 		
-	public ArrayList<BillDTO> getBillObjects(Sextet<	EmployeeObject, 
+	public ArrayList<BillObject> getBillObjects(Sextet<	EmployeeObject, 
 													BillObject, 
 													Short, 
 													Byte ,

@@ -10,6 +10,7 @@ import constant.BILL_EDIT_TYPE;
 import constant.BILL_SORT_TYPE;
 import entity.BDObject;
 import entity.BillObject;
+import entity.ShopObject;
 import entity.UserObject;
 
 public interface Bill extends ShareControl{
@@ -18,7 +19,9 @@ public interface Bill extends ShareControl{
 	public boolean delBill(BillObject item);
 	
 	public ResultSet getBillById(int id);
-	public ArrayList<ResultSet> getBillByUser(UserObject user, Integer at, Byte bPerPage, String multiSort, String multiFilter);
 	public ResultSet getBillByCreatedDate(Date start, Date end);
-	public ArrayList<ResultSet> getBillList(UserObject currentUser, BillObject similar, Integer at, Byte bPerPage, BILL_SORT_TYPE type);
+	
+	public ArrayList<ResultSet> getBillByUser(int at, byte total, String multiField,  String multiCondition, String multiSort, UserObject userObject);
+	public ArrayList<ResultSet> getBillByShop(int at, byte total, String multiField,  String multiCondition, String multiSort, ShopObject shopObject);
+
 }

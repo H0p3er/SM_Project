@@ -9,6 +9,8 @@ import java.util.TreeMap;
 
 import connection.*;
 import constant.PRODUCT_EDIT_TYPE;
+import entity.BillObject;
+import entity.PCObject;
 import entity.ProductObject;
 import entity.ShopObject;
 import entity.UserObject;
@@ -60,14 +62,15 @@ public class ProductImpl extends BasicImpl implements Product {
 		if (this.isExisting(item)) {
 			return false;
 		}
-		String sql = "INSERT INTO tblproduct(";
-		sql += "product_name, product_images, product_notes, product_created_date, ";
-		sql += "product_pc_id, product_shop_id, product_quantity, product_price)";
-		sql	+= "VALUE (?,?,?,?,?,?,?,?)";
+		StringBuilder sql = new StringBuilder();
+		sql.append("INSERT INTO tblproduct(");
+		sql.append("product_name, product_images, product_notes, product_created_date, ");
+		sql.append("product_pc_id, product_shop_id, product_quantity, product_price) ");
+		sql.append("VALUE (?,?,?,?,?,?,?,?)");
 
 		// Biên dịch
 		try {
-			PreparedStatement pre = this.con.prepareStatement(sql);
+			PreparedStatement pre = this.con.prepareStatement(sql.toString());
 			pre.setString(1, utility.Utilities.encode(item.getProduct_name()));
 			pre.setString(2, item.getProduct_images());
 			pre.setString(3, utility.Utilities.encode(item.getProduct_notes()));
@@ -107,13 +110,12 @@ public class ProductImpl extends BasicImpl implements Product {
 				e.printStackTrace();
 			}
 		}
-
 		return flag;
 	}
 
 	@Override
 	public boolean editProduct(ProductObject item, PRODUCT_EDIT_TYPE et) {
-		String sql = "UPDATE tblProduct SET ";
+		String sql = "UPDATE tblproduct SET ";
 		switch (et) {
 			case GENERAL:
 				sql += "product_name=?, product_images=?, product_notes=?, ";
@@ -163,7 +165,7 @@ public class ProductImpl extends BasicImpl implements Product {
 		if (!this.isEmpty(item)) {
 			return false;
 		}
-		String sql = "DELETE FROM tblProduct WHERE product_id=? ";
+		String sql = "DELETE FROM tblproduct WHERE product_id=? ";
 
 		try {
 			PreparedStatement pre = this.con.prepareStatement(sql);
@@ -233,9 +235,28 @@ public class ProductImpl extends BasicImpl implements Product {
 		return this.getReList(sql.toString());
 	}
 	
+	
 	@Override
-	public ResultSet getProductByCreatedDate(Date date, Date date2) {
+	public ArrayList<ResultSet> getProductsByBill(int at, byte total, String multiField, String multiCondition,
+			String multiSort, BillObject shopObject) {
+		StringBuilder sql = new StringBuilder();
+		sql.append(getProductsByBillSQL(at, total, multiCondition, multiField, multiSort, shopObject));
+		sql.append(getProductsSizeByBillSQL(shopObject));
+		return null;
+	}
+	
+	@Override
+	public ArrayList<ResultSet> getProductsByPC(int at, byte total, String multiField, String multiCondition,
+			String multiSort, PCObject shopObject) {
 		// TODO Auto-generated method stub
+		StringBuilder sql = new StringBuilder();
+		return null;
+	}
+	
+	@Override
+	public ResultSet getProductsByCreatedDate(Date date, Date date2) {
+		// TODO Auto-generated method stub
+		StringBuilder sql = new StringBuilder();
 		return null;
 	}
 	
@@ -250,7 +271,6 @@ public class ProductImpl extends BasicImpl implements Product {
 					String[] div = Pair[i].split(":");
 					SortMap.put(div[0], div[1]);
 				}			
-
 				SortMap.forEach((key,value)->{
 					switch (key) {			
 					case "name":
@@ -362,8 +382,6 @@ public class ProductImpl extends BasicImpl implements Product {
 		return ORDER.toString();
 	}
 	
-	
-	
 	private String getProductsSQL(String multiCondition, int at, byte total, String multiField, String multiSort) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT * FROM tblproduct ");
@@ -379,10 +397,8 @@ public class ProductImpl extends BasicImpl implements Product {
 	
 	private String getProductsSizeSQL(String multiCondition) {
 		StringBuilder sql = new StringBuilder();
-		
 		sql.append("SELECT COUNT(product_id) AS product_count FROM tblproduct; ");
-		sql.append(this.WHEREConditions(multiCondition));
-		
+		sql.append(this.WHEREConditions(multiCondition));	
 		return sql.toString();
 	}
 	
@@ -415,4 +431,43 @@ public class ProductImpl extends BasicImpl implements Product {
 		return sql.toString();
 	}
 	
+	
+	private String getProductsByPCSQL(int at, byte total, String multiCondition, String multiField, String multiSort, PCObject object) {	
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT p.*, pc.pc_name FROM tblproduct p ");	
+		sql.append("INNER JOIN tblpc pc ON p.product_pc_id = pc.pc_id ");
+		sql.append("WHERE (p.product_shop_id="+object.getPc_id()+") AND (p.product_deleted=0) ");
+		sql.append("GROUP BY p.product_id, pc.pc_name; ");
+
+		return sql.toString();
+	}	
+	
+	
+	private String getProductsSizeByPCSQL(PCObject object) {	
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT COUNT(p.product_id) as TotalProduct FROM tblproduct p ");	
+		sql.append("INNER JOIN tblpc pc ON p.product_pc_id = pc.pc_id ");
+		sql.append("WHERE (p.product_shop_id="+object.getPc_id()+") AND (p.product_deleted=0); ");
+		return sql.toString();
+	}
+	
+	
+	private String getProductsByBillSQL(int at, byte total, String multiCondition, String multiField, String multiSort, BillObject object) {	
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT p.*, pc.pc_name FROM tblproduct p ");	
+		sql.append("INNER JOIN tblbd bd ON bd.bd_product_id = p.product_id ");
+		sql.append("WHERE (p.product_shop_id="+object.getBill_id()+") AND (p.product_deleted=0) ");
+		sql.append("GROUP BY p.product_id, pc.pc_name; ");
+
+		return sql.toString();
+	}	
+	
+	
+	private String getProductsSizeByBillSQL(BillObject object) {	
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT COUNT(p.product_id) as TotalProduct FROM tblproduct p ");	
+		sql.append("INNER JOIN tblbd bd ON bd.bd_product_id = p.product_id ");
+		sql.append("WHERE (p.product_shop_id="+object.getBill_id()+") AND (p.product_deleted=0); ");
+		return sql.toString();
+	}
 }

@@ -3,13 +3,13 @@ package model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import org.javatuples.Pair;
 import org.javatuples.Quintet;
 
 import connection.ConnectionPool;
 import constant.PRODUCT_EDIT_TYPE;
-import constant.PRODUCT_SORT_TYPE;
 import repository.*;
 import entity.ProductObject;
 import utility.Utilities;
@@ -140,7 +140,7 @@ public class ProductModel {
 		if (rs != null) {
 			try {
 				if (rs.next()) {
-					totalGlobal = rs.getInt("total");
+					totalGlobal = rs.getInt("product_count");
 				}
 				rs.close();
 			} catch (SQLException e) {

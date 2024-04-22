@@ -15,6 +15,7 @@ import constant.BILL_EDIT_TYPE;
 import constant.BILL_SORT_TYPE;
 import entity.BDObject;
 import entity.BillObject;
+import entity.ShopObject;
 import entity.UserObject;
 import utility.Utilities;
 
@@ -267,59 +268,6 @@ public class BillImpl extends BasicImpl implements Bill {
 		 
 		 return conds.toString();
 	}
-	
-	@Override
-	public ArrayList<ResultSet> getBillList(UserObject currentUser, BillObject similar, Integer at, Byte bPerPage, BILL_SORT_TYPE type) {
-//		UserObject currentUser = infors.getValue0();
-//		BillObject similar = infors.getValue1();
-//		int at = infors.getValue2();
-//		byte bPerPage = infors.getValue3(); 
-//		BILL_SORT_TYPE type = infors.getValue4();
-//		boolean isDetail = infors.getValue5();
-//		
-		StringBuilder sql = new StringBuilder();
-		
-	
-		sql.append("SELECT * FROM tblbill ");	 
-		sql.append("LEFT JOIN tblemployee ON tblbill.bill_creator_id=tblemployee.employee_id ");
-		sql.append("LEFT JOIN tblbilldetail ON tblbill.bill_id=tblbilldetail.bill_detail_id");
-
-//		sql.append(this.createCondition(currentUser));
-		switch (type) {	
-			case NAME:
-				sql.append(" ORDER BY bill_id ASC ");
-			break;
-			case ADDRESS:
-				sql.append(" ORDER BY bill_address ASC ");
-				break;
-			case CREATED:
-				sql.append(" ORDER BY bill_created_date DESC ");
-				break;
-			case MODIFIED:
-				sql.append(" ORDER BY bill_last_modified_date DESC ");
-				break;
-			default:
-				sql.append(" ORDER BY bill_id ASC ");
-		}	
-		sql.append("LIMIT "+at+"," +bPerPage+"; ") ;
-		sql.append(" ");	
-		
-		sql.append("SELECT tblbill.bill_created_date, SUM(bill_detail_product_price*bill_detail_product_quantity) as export_price FROM tblbill ");
-		sql.append("LEFT JOIN tblbilldetail ON tblbill.bill_id=tblbilldetail.bill_detail_id ");
-
-		sql.append("GROUP BY tblbill.bill_created_date ");
-		sql.append("ORDER BY STR_TO_DATE(bill_created_date, '%e/%c/%Y') ASC ");
-		sql.append("LIMIT 50; ");
-
-		
-		
-		sql.append("SELECT COUNT(bill_id) AS total FROM tblbill");
-//		sql.append(this.createCondition(currentUser));
-		sql.append("; ");
-		System.out.print(sql.toString());
-		return this.getReList(sql.toString());
-	}
-
 
 
 	@Override
@@ -329,18 +277,44 @@ public class BillImpl extends BasicImpl implements Bill {
 	}
 
 	@Override
-	public ArrayList<ResultSet> getBillByUser(UserObject user, Integer at, Byte bPerPage, String multiSort, String multiFilter) {
+	public ArrayList<ResultSet> getBillByUser(int at, byte total, String multiField,  String multiCondition, String multiSort, UserObject userObject) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT * FROM tblbill b ");	 
 		sql.append("LEFT JOIN tblbd bd ON b.bill_id=bd.bd_id ");
 		sql.append(this.ORDERConditions(multiSort));
-		sql.append("LIMIT "+at+"," +bPerPage+"; ") ;
+		sql.append("LIMIT "+at+"," +total+"; ") ;
 
 		
 		sql.append("SELECT COUNT(bill_id) AS total FROM tblbill");
 		sql.append("; ");
 		System.out.print(sql.toString());
 		return this.getReList(sql.toString());
+	}
+	
+	@Override
+	public ArrayList<ResultSet> getBillByShop(int at, byte total, String multiField,  String multiCondition, String multiSort, ShopObject shopObject) {
+		StringBuilder sql = new StringBuilder();
+		sql.append(getBillByShopSQL(at, total, multiField, multiCondition, multiSort,shopObject));
+		sql.append(getBillByShopSQL(at, total, multiField, multiCondition, multiSort, shopObject));
+		System.out.print(sql.toString());
+		return this.getReList(sql.toString());
+	}
+	
+	private String getBillByShopSQL(int at, byte total, String multiField, String multiCondition, String multiSort, ShopObject shopObject) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT * FROM tblbill b ");	 
+		sql.append("LEFT JOIN tblbd bd ON b.bill_id=bd.bd_id ");
+		sql.append("WHERE b.bill_shop_id="+shopObject.getShop_id()+"");
+		sql.append(this.ORDERConditions(multiSort));
+		sql.append("LIMIT "+at+"," +total+"; ") ;
+		return sql.toString();
+	}
+	
+	private String getBillSizeByShopSQL(String multiCondition, ShopObject shopObject) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT COUNT(bill_id) AS total FROM tblbill b");
+		sql.append("WHERE b.bill_shop_id="+shopObject.getShop_id()+"");
+		return sql.toString();
 	}
 	
 	private String SELECTConditions(String multiField) {
@@ -443,7 +417,7 @@ public class BillImpl extends BasicImpl implements Bill {
 //			System.out.print("\n---------------------Khong thanh cong-------------------\n");
 //		}
 		
-		ArrayList<ResultSet> res = u.getBillByUser(currentUser, at, bPerPage, "created_date:desc;shop:asc","");
+		ArrayList<ResultSet> res = u.getBillByUser(at, bPerPage,"","", "created_date:desc;shop:asc",currentUser);
 		
 		ResultSet rs = res.get(0);
 		String row;
