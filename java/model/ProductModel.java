@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.javatuples.Pair;
+import org.javatuples.Quintet;
 
 import connection.ConnectionPool;
 import constant.PRODUCT_EDIT_TYPE;
@@ -90,16 +91,21 @@ public class ProductModel {
 	 * 		danh sách đối tượng<br/>
 	 * 		Tổng số bản ghi
 	 */
-	public Pair<ArrayList<ProductObject>, Integer> getProductObjects(ProductObject similar, short page, byte pPerPage,
-			PRODUCT_SORT_TYPE type, boolean isExport) {
-
+	public Pair<ArrayList<ProductObject>, Integer> getProductObjects(Quintet<Short, Byte, String, String, String> infors) {
+		//Lay du lieu
+		short page = infors.getValue0();
+		byte productPerPage = infors.getValue1();
+		
+		String multiField = infors.getValue2();
+		String multiCondition = infors.getValue3();
+		String multiSort = infors.getValue4();
 		// Gan gia tri khoi tao cho doi tuong ProductObject
 		ArrayList<ProductObject> items = new ArrayList<>();
 		ProductObject item = null;
 
 		// Lay ban ghi
-		int at = (page - 1) * pPerPage;
-		ArrayList<ResultSet> res = this.p.getProducts(similar, at, pPerPage, type);
+		int at = (page - 1) * productPerPage;
+		ArrayList<ResultSet> res = this.p.getProducts(at, productPerPage, multiField, multiCondition, multiSort);
 
 		ResultSet rs = res.get(0);
 

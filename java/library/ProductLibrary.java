@@ -6,13 +6,13 @@ import java.util.Map;
 
 import org.javatuples.Pair;
 import org.javatuples.Quartet;
+import org.javatuples.Quintet;
 
-import constant.PRODUCT_SORT_TYPE;
 import entity.ProductObject;
 
 public class ProductLibrary {
 	public static Map<String,String> viewProductList(Pair<ArrayList<ProductObject>, Integer> datas,
-			Quartet<ProductObject, Short, Byte, PRODUCT_SORT_TYPE> infors) {
+			Quintet<Short, Byte, String, String, String> infors) {
 		
 		Map<String,String> view = new HashMap<String,String>();
 		StringBuilder tmp = new StringBuilder();

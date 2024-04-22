@@ -6,7 +6,6 @@ import org.apache.tomcat.jni.Library;
 import org.javatuples.*;
 import connection.*;
 import constant.SHOP_EDIT_TYPE;
-import constant.SHOP_SORT_TYPE;
 import dto.ShopDTO;
 import dto.seller.SellerShopDTO;
 import dto.seller.SellerShopStatisticDTO;
@@ -52,8 +51,9 @@ public class ShopControl {
 		return ShopLibrary.viewShop(shopDTO);
 	}
 	
-	public Map<String,String> displaySellerShopProfile(Triplet<String, Short, Byte> infors, UserObject currentUser){
-		Pair<SellerShopDTO,SellerShopStatisticDTO> userShopDTO = this.shopModel.getShopDTOByUser(infors,currentUser);
+	public Map<String,String> displaySellerShopProfile(Quintet<Short, Byte, String, String, String> productInfors, 
+			UserObject currentUser){
+		Pair<SellerShopDTO,SellerShopStatisticDTO> userShopDTO = this.shopModel.getShopDTOByUser(productInfors,currentUser);
 		return ShopLibrary.viewSellerShopProfile(userShopDTO);
 	}
 

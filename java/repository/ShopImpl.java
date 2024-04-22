@@ -15,7 +15,6 @@ import org.javatuples.Triplet;
 
 import connection.*;
 import constant.SHOP_EDIT_TYPE;
-import constant.SHOP_SORT_TYPE;
 import entity.*;
 import basic.*;
 import utility.Utilities;
@@ -34,12 +33,9 @@ public class ShopImpl extends BasicImpl implements Shop {
 
 	private boolean isExisting(ShopObject item) {
 		boolean flag = false;
-		StringBuilder sql = new StringBuilder();
-		
+		StringBuilder sql = new StringBuilder();		
 		sql.append("SELECT shop_id FROM tblshop s WHERE (s.shop_name='"+item.getShop_name()+"');");
-
-		ArrayList<ResultSet> res = this.getReList(sql.toString());
-		
+		ArrayList<ResultSet> res = this.getReList(sql.toString());	
 		for (ResultSet rs: res) {
 			try {
 				if (rs!=null && rs.next()) {
@@ -52,26 +48,28 @@ public class ShopImpl extends BasicImpl implements Shop {
 			}
 		}
 		return flag;
-	}
-	
+	}	
 
-	@Override
-	public boolean addShop(ShopObject shopObject, UserObject currentUser) {
-		if (this.isExisting(shopObject)) {
-			return false;
-		}	
+	private String addShopSql() {		
 		StringBuilder sql = new StringBuilder();						
-		sql.append("INSERT INTO tblShop(");
+		sql.append("INSERT INTO tblshop(");
 		sql.append("shop_name, shop_address,  ");
 		sql.append("shop_status, shop_user_id, shop_website_link,  ");
 		sql.append("shop_address_link, shop_created_date, shop_modified_date,  ");
 		sql.append("shop_images, shop_notes, shop_phone, shop_email ");
 		sql.append(")");
 		sql.append("VALUES(?,?,?,?,?,?,?,?,?,?,?,?); ");	
-		System.out.println(sql.toString());
-		
+		System.out.println(sql.toString());		
+		return sql.toString();
+	}
+	
+	@Override
+	public boolean addShop(ShopObject shopObject, UserObject currentUser) {
+		if (this.isExisting(shopObject)) {
+			return false;
+		}				
 		try {				
-			PreparedStatement preparedStatement = this.con.prepareStatement(sql.toString());
+			PreparedStatement preparedStatement = this.con.prepareStatement(this.addShopSql());
 			preparedStatement.setString(1,shopObject.getShop_name());
 			preparedStatement.setString(2, shopObject.getShop_address());
 			preparedStatement.setByte(3, shopObject.getShop_status());
@@ -90,9 +88,8 @@ public class ShopImpl extends BasicImpl implements Shop {
 		}
 		return false;
 	}
-
-	@Override
-	public boolean editShop(ShopObject shopObject, SHOP_EDIT_TYPE et, UserObject currentUser) {
+	
+	private String editShopSql(SHOP_EDIT_TYPE et) {		
 		
 		StringBuilder sql = new StringBuilder();
 		sql.append("UPDATE tblShop SET ");
@@ -111,14 +108,20 @@ public class ShopImpl extends BasicImpl implements Shop {
 			case TRASH:
 				sql.append("shop_deleted=1, shop_modified_date=?");
 			break;
-		}
-		
+		default:
+			break;
+		}		
 		sql.append("WHERE (shop_id=?); ");
-		System.out.println(sql.toString());	
+		System.out.println(sql.toString());		
+		return sql.toString();
+	}
+
+	@Override
+	public boolean editShop(ShopObject shopObject, SHOP_EDIT_TYPE et, UserObject currentUser) {
 		
 		//Bien dich
 		try {
-			PreparedStatement pre = this.con.prepareStatement(sql.toString());
+			PreparedStatement pre = this.con.prepareStatement(this.editShopSql(et));
 			switch(et) {
 				case GENERAL:
 					pre.setString(1, shopObject.getShop_name());
@@ -144,6 +147,8 @@ public class ShopImpl extends BasicImpl implements Shop {
 					pre.setString(2, shopObject.getShop_modified_date());	
 					pre.setInt(3, shopObject.getShop_id());
 					break;
+			default:
+				break;
 			}
 			
 			return this.edit(pre);
@@ -227,41 +232,22 @@ public class ShopImpl extends BasicImpl implements Shop {
 		sql.append("SELECT p.*, pc.name FROM tblproduct p LEFT JOIN tblpc pc ");
 		sql.append("ON p.product_pc_id = pc.pc_id ");
 		sql.append("WHERE (p.product_shop_id="+id+") AND (p.product_status=1); ");
-		
 		return this.getReList(sql.toString());
 	}
 	
 	@Override
-	public ArrayList<ResultSet> getShopByUser(String filter, int recordPos, byte pageLength, UserObject user) {
+	public ArrayList<ResultSet> getShopByUser(UserObject user) {
 		// TODO Auto-generated method stub
-		StringBuilder sql = new StringBuilder();
-		
-		sql.append("SELECT * FROM tblshop s WHERE (s.shop_id="+user.getUser_id()+") AND (s.shop_deleted=0); ");
-		
-		sql.append("SELECT COUNT(p.product_id) as TotalProduct FROM tblproduct p ");	
-		sql.append("INNER JOIN tblshop s ON p.product_shop_id = s.shop_id ");
-		sql.append("WHERE (p.product_shop_id="+user.getUser_id()+") AND (p.product_deleted=0); ");
-		
-		sql.append("SELECT p.*, pc.pc_name FROM tblproduct p ");	
-		sql.append("LEFT JOIN tblpc pc ON p.product_pc_id = pc.pc_id ");
-		sql.append("INNER JOIN tblshop s ON p.product_shop_id = s.shop_id ");
-		sql.append("WHERE (p.product_shop_id="+user.getUser_id()+") AND (p.product_deleted=0) ");
-		sql.append("GROUP BY p.product_id, pc.pc_name; ");
-
-		// Lấy sản phẩm bán được 
-		sql.append("SELECT p.*, SUM(bd_product_quantity) as TotalSellingQuantityPerProduct, SUM(bd_product_price*bd_product_quantity) as TotalSellingPricePerProduct FROM tblproduct p ");
-		sql.append("INNER JOIN tblbd bd ON p.product_id = bd.bd_product_id ");
-		sql.append("WHERE (p.product_shop_id="+user.getUser_id()+") AND (p.product_deleted=0)");
-		sql.append("GROUP BY p.product_id; ");
-		
-	
+		StringBuilder sql = new StringBuilder();	
+		sql.append(this.getShopByUserSQL(user));	
+		System.out.println(sql.toString());
 		return this.getReList(sql.toString());
 	}
 
 
 	@Override
-	public synchronized ArrayList<ResultSet> getShops(
-			String filter, int pagePos, byte pageLength, UserObject currentUser) {
+	public ArrayList<ResultSet> getShops(
+			int at, byte total, String multiField, String multiCondition, String multiSort) {
 		// TODO Auto-generated method stub
 		StringBuilder sql = new StringBuilder();			
 		return this.getReList(sql.toString());
@@ -312,6 +298,15 @@ public class ShopImpl extends BasicImpl implements Shop {
 		 
 		 return conds.toString();
 	}
+	
+	
+	private String getShopByUserSQL(UserObject user) {	
+		return "SELECT * FROM tblshop s WHERE (s.shop_user_id="+user.getUser_id()+") AND (s.shop_deleted=0); ";
+	}
+	
+	private String getShopsSQL() {	
+		return "SELECT * FROM tblshop;";
+	}
 
 	
 	public static void main(String[] args) {
@@ -332,7 +327,7 @@ public class ShopImpl extends BasicImpl implements Shop {
 		currentUser.setUser_id((byte)2);
 
 		//Lay tap ban ghi nguoi su dung
-		ResultSet rs = u.getShopByUser("null",0,(byte)0,currentUser).get(3);
+		ResultSet rs = u.getShopByUser(currentUser).get(3);
 		
 		String row = null;
 		//Duyen va hien thi danh sach nguoi su dung
@@ -353,5 +348,10 @@ public class ShopImpl extends BasicImpl implements Shop {
 		}
 
 	}
-
 }
+
+//class SQLBuilder{
+//	private String table;
+//	private List<String> field;
+//	private 
+//}

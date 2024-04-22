@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.javatuples.Quartet;
+import org.javatuples.Quintet;
+
 import com.google.gson.Gson;
 
 import connection.ConnectionPool;
@@ -77,8 +79,7 @@ public class Home extends HttpServlet {
 			page = 1;
 		}
 		// Lấy cấu trúc
-		Quartet<ProductObject, Short, Byte, PRODUCT_SORT_TYPE> infors = new Quartet<>(similar, page, (byte) 6,
-				PRODUCT_SORT_TYPE.NAME);
+		 Quintet<Short, Byte, String, String, String> infors = new Quintet<>( page, (byte) 6,"","","");
 
 		Map<String,String> viewProductsList = pc.viewProductsList(infors);
 

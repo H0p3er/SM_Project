@@ -19,7 +19,6 @@ public interface Shop extends ShareControl{
 	
 	//Các phương thức, chức năng lấy thông tin nơi làm việc
 	public ArrayList<ResultSet> getShopById(String filter, int pagePos, byte pageLength, int id);
-	public ArrayList<ResultSet> getShopByUser(String filter, int recordPos, byte pageLength, UserObject currentUser);
-	public ArrayList<ResultSet> getShops(
-			String filter, int pagePos, byte pageLength, UserObject currentUser);
+	public ArrayList<ResultSet> getShopByUser(UserObject currentUser);
+	public ArrayList<ResultSet> getShops(int at, byte total, String multiField, String multiCondition, String multiSort);
 }

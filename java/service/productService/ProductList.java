@@ -12,11 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.javatuples.Quartet;
+import org.javatuples.Quintet;
 
 import com.google.gson.Gson;
 
 import connection.*;
-import constant.PRODUCT_SORT_TYPE;
 import controller.ProductControl;
 import entity.ProductObject;
 import entity.UserObject;
@@ -88,8 +88,7 @@ public class ProductList extends HttpServlet {
 			page = 1;
 		}
 		// Lấy cấu trúc
-		Quartet<ProductObject, Short, Byte, PRODUCT_SORT_TYPE> infors = new Quartet<>(similar, page, (byte) 10,
-				PRODUCT_SORT_TYPE.NAME);
+		 Quintet<Short, Byte, String, String, String> infors = new Quintet<>( page, (byte) 10,"","","");
 
 		Map<String,String> viewProductsList = pc.viewProductsList(infors);
 

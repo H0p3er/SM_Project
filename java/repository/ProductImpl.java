@@ -9,8 +9,9 @@ import java.util.TreeMap;
 
 import connection.*;
 import constant.PRODUCT_EDIT_TYPE;
-import constant.PRODUCT_SORT_TYPE;
 import entity.ProductObject;
+import entity.ShopObject;
+import entity.UserObject;
 import basic.BasicImpl;
 
 public class ProductImpl extends BasicImpl implements Product {
@@ -21,7 +22,7 @@ public class ProductImpl extends BasicImpl implements Product {
 		ArrayList<ResultSet> list = new ArrayList<ResultSet>();
 		Product a = new ProductImpl(cp);
 		ProductObject b = new ProductObject();
-		list = a.getProducts(b, id, (byte) 5, PRODUCT_SORT_TYPE.NAME);
+		
 		ResultSet rs = list.get(0);
 		if (rs!=null) {
 			try {
@@ -210,122 +211,32 @@ public class ProductImpl extends BasicImpl implements Product {
 	@Override
 	public ResultSet getProductById(int id) {
 		String sql = "SELECT * FROM tblProduct WHERE (product_id=?) AND (product_deleted=0)";
-
 		return this.get(sql, id);
-	}
+	}	
 	
 	// Phương thức này có thể thực hiện nhều câu lệnh cùng lúc
 	// similar là đối tượng tương tự
 	@Override
-	public ArrayList<ResultSet> getProducts(ProductObject similar, int at, byte total, PRODUCT_SORT_TYPE type) {
-
-		String sql = "SELECT * FROM tblProduct ";
-		String sql2 = "SELECT COUNT(Product_id) AS total FROM tblProduct ";
-		sql2 += this.createConditions(similar);
-		sql += this.createConditions(similar);
-		switch (type) {
-			case NAME:
-				sql += "ORDER BY product_name ASC ";
-				break;
-			case PRICE:
-				sql += "ORDER BY Product_address ASC ";
-				break;
-			case MODIFIED:
-				sql += "ORDER BY product_last_modified DESC ";
-				break;
-			default:
-				sql += "ORDER BY product_id ASC ";
-		}
-		if(total > 0) {
-			sql += "LIMIT " + at + ", " + total + "; ";
-		} else {
-			sql += ";";
-		}
-		
-		StringBuilder multiSelect = new StringBuilder();
-		multiSelect.append(sql);
-		multiSelect.append(sql2);
-		System.out.println(sql);
-		return this.getReList(multiSelect.toString());
+	public ArrayList<ResultSet> getProducts(int at, byte total, String multiField, String multiCondition, String multiSort) {
+		StringBuilder sql = new StringBuilder();
+		sql.append(getProductsSQL(multiCondition, at, total, multiField, multiSort));
+		sql.append(getProductsSizeSQL(multiCondition));		
+		return this.getReList(sql.toString());
 	}
 	
-	private String createConditions(ProductObject similar) {
-		StringBuilder conds = new StringBuilder();
-//		if(similar !=  null) {
-//			
-//			// Từ khóa tìm kiếm
-//			String key = similar.getProduct_name();
-//			if(similar.getProduct_deleted()==1) {
-//				conds.append("(product_deleted=1) ");
-//			} else {
-//				conds.append("(product_deleted=0) ");
-//			}
-//			if(key != null && !key.equalsIgnoreCase("")) {
-//				conds.append(" AND ");
-//				conds.append("(product_name LIKE '%"+key+"%')");
-//			}
-//		}
-//		
-//		if(!conds.toString().equalsIgnoreCase("")) {
-//			conds.insert(0, "WHERE ");
-//		}
-//		
-		if (similar != null)
-		{
-			if(similar.getProduct_deleted()==1) {
-				conds.append("(product_deleted=1) ");
-			} else {
-				conds.append("(product_deleted=0) ");
-			}
-		}
-		if(!conds.toString().equalsIgnoreCase("")) {
-		conds.insert(0, "WHERE ");
-		}
-		return conds.toString();
+	@Override
+	public ArrayList<ResultSet> getProductsByShop(int at, byte total, String multiCondition, String multiField, String multiSort, ShopObject shopObject){
+		StringBuilder sql = new StringBuilder();
+		sql.append(getProductByShopSQL(at, total, multiCondition, multiField, multiSort, shopObject));
+		sql.append(getProductsSizeByShopSQL(shopObject));
+		sql.append(getProductSoldByShopSQL(shopObject));
+		return this.getReList(sql.toString());
 	}
-
+	
 	@Override
 	public ResultSet getProductByCreatedDate(Date date, Date date2) {
 		// TODO Auto-generated method stub
 		return null;
-	}
-	
-	@Override
-	public ArrayList<ResultSet> getProductStatisticV2(String multiCondition, int at, byte total, String multiField, String multiSort) {
-		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT "+SELECTConditions(multiField)+" FROM tblproduct ");
-		sql.append(this.WHEREConditions(multiCondition));
-		sql.append(this.ORDERConditions(multiSort));	
-		if(total > 0) {
-			sql.append("LIMIT " + at + ", " + total + "; ");
-		} else {
-			sql.append(";");
-		}
-		
-		sql.append("SELECT COUNT(product_id) AS product_count FROM tblproduct; ");
-		sql.append(this.WHEREConditions(multiCondition));
-		
-		System.out.println(sql);
-		return this.getReList(sql.toString());
-	}
-	
-	@Override
-	public ArrayList<ResultSet> getProductListV2(String multiCondition, int at, byte total, String multiField, String multiSort) {
-		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT "+SELECTConditions(multiField)+" FROM tblproduct ");
-		sql.append(this.WHEREConditions(multiCondition));
-		sql.append(this.ORDERConditions(multiSort));	
-		if(total > 0) {
-			sql.append("LIMIT " + at + ", " + total + "; ");
-		} else {
-			sql.append(";");
-		}
-		
-		sql.append("SELECT COUNT(product_id) AS product_count FROM tblproduct; ");
-		sql.append(this.WHEREConditions(multiCondition));
-		
-		System.out.println(sql);
-		return this.getReList(sql.toString());
 	}
 	
 	private String SELECTConditions(String multiField) {
@@ -450,4 +361,58 @@ public class ProductImpl extends BasicImpl implements Product {
 		}
 		return ORDER.toString();
 	}
+	
+	
+	
+	private String getProductsSQL(String multiCondition, int at, byte total, String multiField, String multiSort) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT * FROM tblproduct ");
+		sql.append(this.WHEREConditions(multiCondition));
+		sql.append(this.ORDERConditions(multiSort));	
+		if(total > 0) {
+			sql.append("LIMIT " + at + ", " + total + "; ");
+		} else {
+			sql.append(";");
+		}
+		return sql.toString();
+	}
+	
+	private String getProductsSizeSQL(String multiCondition) {
+		StringBuilder sql = new StringBuilder();
+		
+		sql.append("SELECT COUNT(product_id) AS product_count FROM tblproduct; ");
+		sql.append(this.WHEREConditions(multiCondition));
+		
+		return sql.toString();
+	}
+	
+	private String getProductByShopSQL(int at, byte total, String multiCondition, String multiField, String multiSort, ShopObject object) {	
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT p.*, pc.pc_name FROM tblproduct p ");	
+		sql.append("LEFT JOIN tblpc pc ON p.product_pc_id = pc.pc_id ");
+		sql.append("INNER JOIN tblshop s ON p.product_shop_id = s.shop_id ");
+		sql.append("WHERE (p.product_shop_id="+object.getShop_id()+") AND (p.product_deleted=0) ");
+		sql.append("GROUP BY p.product_id, pc.pc_name; ");
+
+		return sql.toString();
+	}	
+	
+	private String getProductSoldByShopSQL(ShopObject object) {	
+		StringBuilder sql = new StringBuilder();
+		// Lấy sản phẩm bán được 
+		sql.append("SELECT p.*, SUM(bd_product_quantity) as TotalSellingQuantityPerProduct, SUM(bd_product_price*bd_product_quantity) as TotalSellingPricePerProduct FROM tblproduct p ");
+		sql.append("INNER JOIN tblbd bd ON p.product_id = bd.bd_product_id ");
+		sql.append("WHERE (p.product_shop_id="+object.getShop_id()+") AND (p.product_deleted=0)");
+		sql.append("GROUP BY p.product_id; ");
+		return sql.toString();
+	}
+	
+	private String getProductsSizeByShopSQL(ShopObject object) {	
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT COUNT(p.product_id) as TotalProduct FROM tblproduct p ");	
+		sql.append("INNER JOIN tblshop s ON p.product_shop_id = s.shop_id ");
+		sql.append("WHERE (p.product_shop_id="+object.getShop_id()+") AND (p.product_deleted=0); ");
+		return sql.toString();
+	}
+	
 }

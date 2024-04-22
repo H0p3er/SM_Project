@@ -84,14 +84,10 @@ public class ProductControl {
 	 * 
 	 * <br/>Cập nhật ngày 26/10/2023
 	 */
-	public Map<String,String> viewProductsList(Quartet<ProductObject, Short, Byte, PRODUCT_SORT_TYPE> infors){
-		//Lay du lieu
-		ProductObject similar = infors.getValue0();
-		short page = infors.getValue1();
-		byte shopPerPage = infors.getValue2();
-		PRODUCT_SORT_TYPE ust = infors.getValue3();
+	public Map<String,String> viewProductsList(Quintet<Short, Byte, String, String, String> infors){
+
 		
-		Pair<ArrayList<ProductObject>,Integer> datas = this.pm.getProductObjects(similar, page, shopPerPage, ust, false);
+		Pair<ArrayList<ProductObject>,Integer> datas = this.pm.getProductObjects(infors);
 		
 		return ProductLibrary.viewProductList(datas, infors);
 	}

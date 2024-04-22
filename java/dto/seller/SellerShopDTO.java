@@ -120,7 +120,8 @@ public class SellerShopDTO {
 		shopObject.setShop_address(address);
 		shopObject.setShop_address_link(address_link);
 		shopObject.setShop_images(images);
-		shopObject.setShop_email(images);
+		shopObject.setShop_email(email);
+		shopObject.setShop_notes(notes);
 	}
 
 }

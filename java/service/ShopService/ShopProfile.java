@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.javatuples.Triplet;
+import org.javatuples.Quintet;
 
 import com.google.gson.Gson;
 
@@ -82,9 +82,10 @@ public class ShopProfile extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		
 		// Xac dinh kieu noi dung xuat ve trinh khach
-		Triplet<String, Short, Byte> infors = new Triplet<String, Short, Byte>("",(short) 0,(byte) 0);
+		Quintet<Short, Byte, String, String, String> productInfors = 
+				new Quintet<Short, Byte, String, String, String>((short) 0,(byte) 0,"","","");
 		
-		Map<String,String> data = shopControl.displaySellerShopProfile(infors,user);
+		Map<String,String> data = shopControl.displaySellerShopProfile(productInfors,user);
 		
 		this.shopControl.releaseCP();
 		
