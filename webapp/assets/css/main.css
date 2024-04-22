@@ -9,3 +9,14 @@
   border-radius: 20px;
   padding-left: 0px;
 }
+
+.item .item-list  {
+    height: 95px ;
+}
+.item .item-list {
+    height: 170px ;
+}
+
+.item img {
+    aspect-ratio: 1;
+}

@@ -1184,7 +1184,6 @@ Properties Style
 }
 
 .properties .item ul li {
-  display: inline-block;
   font-size: 15px;
   color: #4a4a4a;
   margin-right: 20px;
@@ -1810,10 +1809,6 @@ body {
   .contact-page #contact-form {
     margin-left: 0px;
     margin-top: 60px;
-  }
-  .best-deal .info-table ul li span {
-    float: right !important;
-    width: auto !important;
   }
 }
 
