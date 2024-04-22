@@ -20,13 +20,14 @@ SET time_zone = "+00:00";
 --
 -- Database: `sm_project`
 --
-
+CREATE DATABASE IF NOT EXISTS sm_project;
+USE sm_project;
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `comment`
 --
-
+DROP TABLE IF EXISTS `comment`;
 CREATE TABLE `comment` (
   `comment_id` int(11) NOT NULL,
   `comment_content` text NOT NULL,
@@ -40,7 +41,7 @@ CREATE TABLE `comment` (
 --
 -- Table structure for table `delivery`
 --
-
+DROP TABLE IF EXISTS `delivery`;
 CREATE TABLE `delivery` (
   `delivery_id` int(11) NOT NULL,
   `delivery_name` varchar(255) NOT NULL
@@ -51,7 +52,7 @@ CREATE TABLE `delivery` (
 --
 -- Table structure for table `sale`
 --
-
+DROP TABLE IF EXISTS `sale`;
 CREATE TABLE `sale` (
   `sale_id` int(11) NOT NULL,
   `sale_name` varchar(255) NOT NULL,
@@ -67,7 +68,7 @@ CREATE TABLE `sale` (
 --
 -- Table structure for table `tblaction`
 --
-
+DROP TABLE IF EXISTS `tblaction`;
 CREATE TABLE `tblaction` (
   `action_id` int(11) UNSIGNED NOT NULL,
   `action_created_date` varchar(14) NOT NULL,
@@ -82,13 +83,13 @@ CREATE TABLE `tblaction` (
 --
 -- Table structure for table `tblbd`
 --
-
+DROP TABLE IF EXISTS `tblbd`;
 CREATE TABLE `tblbd` (
   `bd_id` int(11) UNSIGNED NOT NULL COMMENT 'ID',
   `bd_bill_id` int(11) NOT NULL DEFAULT 0 COMMENT 'ID hóa đơn',
   `bd_product_id` int(11) NOT NULL DEFAULT 0 COMMENT 'ID Sản phẩm',
   `bd_product_quantity` int(10) NOT NULL DEFAULT 0 COMMENT 'Số lượng'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci COMMENT='Bảng chi tiết hóa đơn';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Bảng chi tiết hóa đơn';
 
 --
 -- Dumping data for table `tblbd`
@@ -351,7 +352,7 @@ INSERT INTO `tblbd` (`bd_id`, `bd_bill_id`, `bd_product_id`, `bd_product_quantit
 --
 -- Table structure for table `tblbill`
 --
-
+DROP TABLE IF EXISTS `tblbill`;
 CREATE TABLE `tblbill` (
   `bill_id` int(11) NOT NULL COMMENT 'ID hóa đơn',
   `bill_created_date` varchar(15) DEFAULT NULL COMMENT 'Ngày tạo hóa đơn',
@@ -420,7 +421,7 @@ INSERT INTO `tblbill` (`bill_id`, `bill_created_date`, `bill_creator_id`, `bill_
 --
 -- Table structure for table `tblguarantee`
 --
-
+DROP TABLE IF EXISTS `tblguarantee`;
 CREATE TABLE `tblguarantee` (
   `guarantee_id` int(11) DEFAULT NULL,
   `guarantee_started_date` date DEFAULT NULL,
@@ -428,7 +429,7 @@ CREATE TABLE `tblguarantee` (
   `guarantee_deleted` smallint(6) DEFAULT NULL,
   `guarantee_price` int(11) DEFAULT NULL,
   `guarantee_method` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `tblguarantee`
@@ -451,7 +452,7 @@ INSERT INTO `tblguarantee` (`guarantee_id`, `guarantee_started_date`, `guarantee
 --
 -- Table structure for table `tbllog`
 --
-
+DROP TABLE IF EXISTS `tbllog`;
 CREATE TABLE `tbllog` (
   `log_id` int(10) UNSIGNED NOT NULL,
   `log_user_id` varchar(45) NOT NULL COMMENT 'ID người khởi tạo',
@@ -463,7 +464,7 @@ CREATE TABLE `tbllog` (
   `log_notes` text DEFAULT NULL COMMENT 'Ghi chú của log',
   `log_created_date` varchar(45) DEFAULT NULL COMMENT 'Ngày khởi tạo Log',
   `log_deleted` bit(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci COMMENT='Bảng thông tin nhật ký';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Bảng thông tin nhật ký';
 
 --
 -- Dumping data for table `tbllog`
@@ -487,7 +488,7 @@ INSERT INTO `tbllog` (`log_id`, `log_user_id`, `log_user_permission`, `log_usern
 --
 -- Table structure for table `tblpc`
 --
-
+DROP TABLE IF EXISTS `tblpc`;
 CREATE TABLE `tblpc` (
   `pc_id` int(11) NOT NULL,
   `pc_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
@@ -497,7 +498,7 @@ CREATE TABLE `tblpc` (
   `pc_enable` bit(1) DEFAULT NULL,
   `pc_parent_id` int(11) DEFAULT NULL,
   `pc_creator_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci COMMENT='Bảng danh mục sản phẩm';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Bảng danh mục sản phẩm';
 
 --
 -- Dumping data for table `tblpc`
@@ -527,7 +528,7 @@ INSERT INTO `tblpc` (`pc_id`, `pc_name`, `pc_notes`, `pc_created_date`, `pc_imag
 --
 -- Table structure for table `tblproduct`
 --
-
+DROP TABLE IF EXISTS `tblproduct`;
 CREATE TABLE `tblproduct` (
   `product_id` int(11) NOT NULL,
   `product_name` varchar(100) DEFAULT NULL,
@@ -540,7 +541,7 @@ CREATE TABLE `tblproduct` (
   `product_pc_id` smallint(5) UNSIGNED NOT NULL COMMENT 'Loai san pham',
   `product_shop_id` int(10) UNSIGNED DEFAULT 0,
   `product_quantity` int(10) UNSIGNED DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci COMMENT='Bảng sản phẩm';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Bảng sản phẩm';
 
 --
 -- Dumping data for table `tblproduct`
@@ -589,13 +590,13 @@ INSERT INTO `tblproduct` (`product_id`, `product_name`, `product_status`, `produ
 --
 -- Table structure for table `tblproviders`
 --
-
+DROP TABLE IF EXISTS `tblproviders`;
 CREATE TABLE `tblproviders` (
   `provider_id` int(11) NOT NULL,
   `provider_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'Tên nhà cung cấp',
   `provider_notes` text CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'Mô tả ',
   `provider_address` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'Địa chỉ'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci COMMENT='Bảng nhà cung cấp';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Bảng nhà cung cấp';
 
 --
 -- Dumping data for table `tblproviders`
@@ -613,7 +614,7 @@ INSERT INTO `tblproviders` (`provider_id`, `provider_name`, `provider_notes`, `p
 --
 -- Table structure for table `tblshop`
 --
-
+DROP TABLE IF EXISTS `tblshop`;
 CREATE TABLE `tblshop` (
   `shop_id` int(11) NOT NULL,
   `shop_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'Tên gian hàng',
@@ -628,7 +629,7 @@ CREATE TABLE `tblshop` (
   `shop_notes` text DEFAULT NULL COMMENT 'Mô tả',
   `shop_phone` varchar(15) DEFAULT NULL COMMENT 'Số điện thoại liên hệ',
   `shop_email` varchar(45) DEFAULT NULL COMMENT 'Email liên hệ'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci COMMENT='Bảng gian hàng';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Bảng gian hàng';
 
 --
 -- Dumping data for table `tblshop`
@@ -646,7 +647,7 @@ INSERT INTO `tblshop` (`shop_id`, `shop_name`, `shop_address`, `shop_status`, `s
 --
 -- Table structure for table `tbltranspoter`
 --
-
+DROP TABLE IF EXISTS `tbltranspoter`;
 CREATE TABLE `tbltranspoter` (
   `transpoter_id` int(11) NOT NULL,
   `transpoter_name` varchar(100) NOT NULL COMMENT 'Tên nhà cung cấp',
@@ -670,7 +671,7 @@ INSERT INTO `tbltranspoter` (`transpoter_id`, `transpoter_name`, `transpoter_not
 --
 -- Table structure for table `tbluser`
 --
-
+DROP TABLE IF EXISTS `tbluser`;
 CREATE TABLE `tbluser` (
   `user_id` int(11) NOT NULL,
   `user_nickname` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'Biệt danh',
@@ -687,7 +688,7 @@ CREATE TABLE `tbluser` (
   `user_logined` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Số lần đăng nhập',
   `user_name` varchar(45) NOT NULL COMMENT 'Tài khoản',
   `user_pass` varchar(45) NOT NULL COMMENT 'Mật khẩu'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci COMMENT='Bảng người dùng';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Bảng người dùng';
 
 --
 -- Dumping data for table `tbluser`
@@ -720,7 +721,7 @@ INSERT INTO `tbluser` (`user_id`, `user_nickname`, `user_fullname`, `user_images
 --
 -- Table structure for table `tbl_cases`
 --
-
+DROP TABLE IF EXISTS `tbl_cases`;
 CREATE TABLE `tbl_cases` (
   `case_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
@@ -734,7 +735,7 @@ CREATE TABLE `tbl_cases` (
 --
 -- Table structure for table `tbl_cooling`
 --
-
+DROP TABLE IF EXISTS `tbl_cooling`;
 CREATE TABLE `tbl_cooling` (
   `cooling_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
@@ -749,14 +750,15 @@ CREATE TABLE `tbl_cooling` (
 --
 -- Table structure for table `tbl_cpus`
 --
-
+DROP TABLE IF EXISTS `tbl_cpus`;
 CREATE TABLE `tbl_cpus` (
   `cpu_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `cpu_type` varchar(100) DEFAULT NULL COMMENT 'CPU Type',
-  `socket` varchar(50) NOT NULL,
-  `cores_theats` varchar(50) NOT NULL,
-  `speed` varchar(50) NOT NULL
+  `cpu_collection` varchar(100) DEFAULT NULL COMMENT 'core i5/ryzen 5',
+  `socket` varchar(50) DEFAULT NULL COMMENT 'Socket',
+  `cores` varchar(50) DEFAULT NULL COMMENT 'Core',
+  `theats` varchar(50) DEFAULT NULL COMMENT 'Theats',
+  `speed` varchar(50) DEFAULT NULL COMMENT 'Speed'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='CPUs Table';
 
 -- --------------------------------------------------------
@@ -764,7 +766,7 @@ CREATE TABLE `tbl_cpus` (
 --
 -- Table structure for table `tbl_desktops`
 --
-
+DROP TABLE IF EXISTS `tbl_desktops`;
 CREATE TABLE `tbl_desktops` (
   `desktop_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
@@ -783,7 +785,7 @@ CREATE TABLE `tbl_desktops` (
 --
 -- Table structure for table `tbl_graphics_cards`
 --
-
+DROP TABLE IF EXISTS `tbl_graphics_cards`;
 CREATE TABLE `tbl_graphics_cards` (
   `graphics_card_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
@@ -800,13 +802,13 @@ CREATE TABLE `tbl_graphics_cards` (
 --
 -- Table structure for table `tbl_headphones_speakers`
 --
-
+DROP TABLE IF EXISTS `tbl_headphones_speakers`;
 CREATE TABLE `tbl_headphones_speakers` (
   `headphones_speakers_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `headphones_manufacturer` varchar(50) DEFAULT NULL,
-  `headphone_type` varchar(100) DEFAULT NULL COMMENT 'Headphone Type',
-  `headphones_connection_type` varchar(50) DEFAULT NULL COMMENT 'Connection Type',
+  `headphone_type` varchar(100) DEFAULT NULL COMMENT 'Inear/Overear/Speaker',
+  `headphones_connection` varchar(50) DEFAULT NULL COMMENT 'Connection Type',
   `headphones_connection_ports` varchar(100) DEFAULT NULL COMMENT 'Connection Ports'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Headphones/Speakers Table';
 
@@ -815,11 +817,11 @@ CREATE TABLE `tbl_headphones_speakers` (
 --
 -- Table structure for table `tbl_keyboards`
 --
-
+DROP TABLE IF EXISTS `tbl_keyboards`;
 CREATE TABLE `tbl_keyboards` (
   `keyboard_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `keyboard_product_line` varchar(100) DEFAULT NULL COMMENT 'Product Line',
+  `keyboard_type` varchar(100) DEFAULT NULL COMMENT 'Gaming/mechanical/Office',
   `keyboard_connection_type` varchar(50) DEFAULT NULL COMMENT 'Connection Type',
   `keyboard_size_layout` varchar(50) DEFAULT NULL COMMENT 'Size Layout',
   `keyboard_led_backlighting` tinyint(1) DEFAULT NULL COMMENT 'LED Backlighting'
@@ -830,7 +832,7 @@ CREATE TABLE `tbl_keyboards` (
 --
 -- Table structure for table `tbl_laptops`
 --
-
+DROP TABLE IF EXISTS `tbl_laptops`;
 CREATE TABLE `tbl_laptops` (
   `laptop_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
@@ -850,15 +852,15 @@ CREATE TABLE `tbl_laptops` (
 --
 -- Table structure for table `tbl_mice`
 --
-
+DROP TABLE IF EXISTS `tbl_mice`;
 CREATE TABLE `tbl_mice` (
   `mouse_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `mouse_manufacturer` varchar(50) DEFAULT NULL,
-  `mouse_product_line` varchar(100) DEFAULT NULL COMMENT 'Product Line',
+  `mouse_type` varchar(100) DEFAULT NULL COMMENT 'Gaming/Office',
   `mouse_connection_type` varchar(50) DEFAULT NULL COMMENT 'Connection Type',
   `mouse_design` varchar(100) DEFAULT NULL COMMENT 'Design',
-  `mouse_battery_type` varchar(50) DEFAULT NULL COMMENT 'Battery Type'
+  `mouse_battery` varchar(50) DEFAULT NULL COMMENT 'Battery Type'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Mice Table';
 
 -- --------------------------------------------------------
@@ -866,18 +868,18 @@ CREATE TABLE `tbl_mice` (
 --
 -- Table structure for table `tbl_monitors`
 --
-
+DROP TABLE IF EXISTS `tbl_monitors`;
 CREATE TABLE `tbl_monitors` (
   `monitor_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `monitor_manufacturer` varchar(100) DEFAULT NULL COMMENT 'Manufacturer',
   `monitor_size` varchar(50) DEFAULT NULL COMMENT 'Size',
-  `monitor_usage` varchar(100) DEFAULT NULL COMMENT 'Usage',
+  `monitor_type` varchar(100) DEFAULT NULL COMMENT 'Gaming/Office/Graphics',
   `monitor_resolution` varchar(50) DEFAULT NULL COMMENT 'Resolution',
   `monitor_panel_type` varchar(50) DEFAULT NULL COMMENT 'Panel Type',
   `monitor_refresh_rate` varchar(50) DEFAULT NULL COMMENT 'Refresh Rate',
-  `monitor_screen_type` varchar(50) DEFAULT NULL COMMENT 'Screen Type',
-  `monitor_response` varchar(50) DEFAULT NULL
+  `monitor_screen_type` varchar(50) DEFAULT NULL COMMENT 'Shape/Ratio',
+  `monitor_response` varchar(50) DEFAULT NULL COMMENT 'Respone time'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Monitors Table';
 
 -- --------------------------------------------------------
@@ -885,13 +887,13 @@ CREATE TABLE `tbl_monitors` (
 --
 -- Table structure for table `tbl_motherboards`
 --
-
+DROP TABLE IF EXISTS `tbl_motherboards`;
 CREATE TABLE `tbl_motherboards` (
   `motherboard_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `motherboard_manufacturer` varchar(100) DEFAULT NULL COMMENT 'Manufacturer',
-  `motherboard_chipset_cpu` varchar(100) DEFAULT NULL COMMENT 'Compatible CPU',
-  `motherboard_socket` varchar(50) NOT NULL,
+  `motherboard_chipset` varchar(100) DEFAULT NULL COMMENT 'Chipset',
+  `motherboard_socket` varchar(50) DEFAULT NULL COMMENT 'Socket',
   `motherboard_size` varchar(50) DEFAULT NULL COMMENT 'Size',
   `motherboard_ram_support` varchar(50) DEFAULT NULL COMMENT 'RAM Support',
   `motherboard_ram_slots` varchar(50) DEFAULT NULL COMMENT 'Number of RAM Slots'
@@ -902,7 +904,7 @@ CREATE TABLE `tbl_motherboards` (
 --
 -- Table structure for table `tbl_other_accessories`
 --
-
+DROP TABLE IF EXISTS `tbl_other_accessories`;
 CREATE TABLE `tbl_other_accessories` (
   `accessory_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
@@ -912,25 +914,25 @@ CREATE TABLE `tbl_other_accessories` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_power_supply_units`
+-- Table structure for table `tbl_power_supply`
 --
-
-CREATE TABLE `tbl_power_supply_units` (
+DROP TABLE IF EXISTS `tbl_power_supply`;
+CREATE TABLE `tbl_power_supply` (
   `psu_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `psu_manufacturer` varchar(50) DEFAULT NULL,
-  `psu_standard` varchar(50) DEFAULT NULL COMMENT 'Power Standard',
+  `psu_certification` varchar(50) DEFAULT NULL COMMENT 'Power Certification',
   `psu_cable_type` varchar(100) DEFAULT NULL COMMENT 'Cable Type',
   `psu_size` varchar(50) DEFAULT NULL COMMENT 'Size',
   `psu_power_output` varchar(50) DEFAULT NULL COMMENT 'Power Output'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Power Supply Units Table';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Power Supply Table';
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `tbl_rams`
 --
-
+DROP TABLE IF EXISTS `tbl_rams`;
 CREATE TABLE `tbl_rams` (
   `ram_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
@@ -946,14 +948,14 @@ CREATE TABLE `tbl_rams` (
 --
 -- Table structure for table `tbl_storage`
 --
-
+DROP TABLE IF EXISTS `tbl_storage`;
 CREATE TABLE `tbl_storage` (
   `storage_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `storage_manufacturer` varchar(50) DEFAULT NULL,
-  `storage_form_factor` varchar(50) DEFAULT NULL COMMENT 'Form Factor',
+  `storage_type` varchar(50) DEFAULT NULL COMMENT 'SSD/HDD',
   `storage_capacity` varchar(20) DEFAULT NULL COMMENT 'Capacity',
-  `storage_m2_pcie_standard` varchar(50) DEFAULT NULL COMMENT 'M.2 PCIe Standard',
+  `storage_m2_pcie_type` varchar(50) DEFAULT NULL COMMENT 'M.2 PCIe type',
   `storage_rpm` int(11) DEFAULT NULL COMMENT 'RPM'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Storage Table';
 
@@ -967,7 +969,7 @@ CREATE TABLE `tbl_usbs` (
   `usb_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `usb_manufacturer` varchar(100) DEFAULT NULL COMMENT 'Manufacturer',
-  `usb_storage` varchar(50) DEFAULT NULL
+  `usb_capacity` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='USBs Table';
 
 --
@@ -1137,9 +1139,9 @@ ALTER TABLE `tbl_other_accessories`
   ADD KEY `product_id` (`product_id`);
 
 --
--- Indexes for table `tbl_power_supply_units`
+-- Indexes for table `tbl_power_supply`
 --
-ALTER TABLE `tbl_power_supply_units`
+ALTER TABLE `tbl_power_supply`
   ADD PRIMARY KEY (`psu_id`),
   ADD KEY `product_id` (`product_id`);
 
@@ -1319,9 +1321,9 @@ ALTER TABLE `tbl_other_accessories`
   MODIFY `accessory_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `tbl_power_supply_units`
+-- AUTO_INCREMENT for table `tbl_power_supply`
 --
-ALTER TABLE `tbl_power_supply_units`
+ALTER TABLE `tbl_power_supply`
   MODIFY `psu_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -1419,10 +1421,10 @@ ALTER TABLE `tbl_other_accessories`
   ADD CONSTRAINT `tbl_other_accessories_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `tblproduct` (`product_id`);
 
 --
--- Constraints for table `tbl_power_supply_units`
+-- Constraints for table `tbl_power_supply`
 --
-ALTER TABLE `tbl_power_supply_units`
-  ADD CONSTRAINT `tbl_power_supply_units_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `tblproduct` (`product_id`);
+ALTER TABLE `tbl_power_supply`
+  ADD CONSTRAINT `tbl_power_supply_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `tblproduct` (`product_id`);
 
 --
 -- Constraints for table `tbl_rams`
