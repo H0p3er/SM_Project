@@ -22,11 +22,11 @@ CREATE DATABASE IF NOT EXISTS sm_project;
 USE sm_project;
 
 --
--- Definition of table `comment`
+-- Definition of table `tblcomment`
 --
 
-DROP TABLE IF EXISTS `comment`;
-CREATE TABLE `comment` (
+DROP TABLE IF EXISTS `tblcomment`;
+CREATE TABLE `tblcomment` (
   `comment_id` int(11) NOT NULL,
   `comment_content` text NOT NULL,
   `comment_created_date` int(11) NOT NULL,
@@ -35,37 +35,37 @@ CREATE TABLE `comment` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `comment`
+-- Dumping data for table `tblcomment`
 --
 
-/*!40000 ALTER TABLE `comment` DISABLE KEYS */;
-/*!40000 ALTER TABLE `comment` ENABLE KEYS */;
+/*!40000 ALTER TABLE `tblcomment` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tblcomment` ENABLE KEYS */;
 
 
 --
--- Definition of table `delivery`
+-- Definition of table `tbldelivery`
 --
 
-DROP TABLE IF EXISTS `delivery`;
-CREATE TABLE `delivery` (
+DROP TABLE IF EXISTS `tbldelivery`;
+CREATE TABLE `tbldelivery` (
   `delivery_id` int(11) NOT NULL,
   `delivery_name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `delivery`
+-- Dumping data for table `tbldelivery`
 --
 
-/*!40000 ALTER TABLE `delivery` DISABLE KEYS */;
-/*!40000 ALTER TABLE `delivery` ENABLE KEYS */;
+/*!40000 ALTER TABLE `tbldelivery` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbldelivery` ENABLE KEYS */;
 
 
 --
--- Definition of table `sale`
+-- Definition of table `tblsale`
 --
 
-DROP TABLE IF EXISTS `sale`;
-CREATE TABLE `sale` (
+DROP TABLE IF EXISTS `tblsale`;
+CREATE TABLE `tblsale` (
   `sale_id` int(11) NOT NULL,
   `sale_name` varchar(255) NOT NULL,
   `sale_product_id` int(11) NOT NULL,
@@ -76,11 +76,11 @@ CREATE TABLE `sale` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `sale`
+-- Dumping data for table `tblsale`
 --
 
-/*!40000 ALTER TABLE `sale` DISABLE KEYS */;
-/*!40000 ALTER TABLE `sale` ENABLE KEYS */;
+/*!40000 ALTER TABLE `tblsale` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tblsale` ENABLE KEYS */;
 
 
 --
@@ -681,6 +681,343 @@ INSERT INTO `tbluser` (`user_id`,`user_nickname`,`user_fullname`,`user_images`,`
  (20,'GigaChat','Phạm Văn Luân','\\home\\images\\user\\20.jpg','gigachat@gmail.com','Ng??i tiêu dùng',4,0,NULL,1,'48 Cầu Gỗ, quận Hoàn Kiếm','20/12/2023',0,'0468532568','0765432109',NULL,0,1,'GigachartGaren','T#8x5y!A');
 /*!40000 ALTER TABLE `tbluser` ENABLE KEYS */;
 
+
+--
+-- Definition of table `tbl_cases`
+--
+DROP TABLE IF EXISTS `tbl_cases`;
+CREATE TABLE `tbl_cases` (
+  `case_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `case_manufacturer` varchar(50) DEFAULT NULL,
+  `case _color` varchar(50) DEFAULT NULL COMMENT 'Color',
+  `case_size` varchar(50) DEFAULT NULL COMMENT 'Case Size'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Cases Table';
+
+--
+-- Dumping data for table `tbl_cases`
+--
+
+/*!40000 ALTER TABLE `tbl_cases` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_cases` ENABLE KEYS */;
+
+
+--
+-- Definition of table `tbl_cooling`
+--
+DROP TABLE IF EXISTS `tbl_cooling`;
+CREATE TABLE `tbl_cooling` (
+  `cooling_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `cooling_manufacturer` varchar(50) DEFAULT NULL,
+  `cooling_type` varchar(50) DEFAULT NULL COMMENT 'Cooling Type',
+  `cooling_color` varchar(50) DEFAULT NULL COMMENT 'Color',
+  `cooling_fan_size` varchar(50) DEFAULT NULL COMMENT 'Fan Size'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Cooling Table';
+
+--
+-- Dumping data for table `tbl_cooling`
+--
+
+/*!40000 ALTER TABLE `tbl_cooling` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_cooling` ENABLE KEYS */;
+
+--
+-- Definition of table `tbl_cpus`
+--
+DROP TABLE IF EXISTS `tbl_cpus`;
+CREATE TABLE `tbl_cpus` (
+  `cpu_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `cpu_collection` varchar(100) DEFAULT NULL COMMENT 'core i5/ryzen 5',
+  `socket` varchar(50) DEFAULT NULL COMMENT 'Socket',
+  `cores` varchar(50) DEFAULT NULL COMMENT 'Core',
+  `theats` varchar(50) DEFAULT NULL COMMENT 'Theats',
+  `speed` varchar(50) DEFAULT NULL COMMENT 'Speed'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='CPUs Table';
+
+--
+-- Dumping data for table `tbl_cpus`
+--
+
+/*!40000 ALTER TABLE `tbl_cpus` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_cpus` ENABLE KEYS */;
+
+--
+-- Definition of table `tbl_desktops`
+--
+DROP TABLE IF EXISTS `tbl_desktops`;
+CREATE TABLE `tbl_desktops` (
+  `desktop_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `desktop_manufacturer` varchar(50) DEFAULT NULL,
+  `desktop_type` varchar(50) DEFAULT NULL COMMENT 'Type',
+  `desktop_cpu` varchar(100) DEFAULT NULL COMMENT 'CPU',
+  `desktop_gpu` varchar(100) DEFAULT NULL COMMENT 'GPU',
+  `desktop_ram_capacity` varchar(20) DEFAULT NULL COMMENT 'RAM Capacity',
+  `desktop_ram_type` varchar(20) DEFAULT NULL COMMENT 'RAM Type',
+  `desktop_storage` varchar(100) DEFAULT NULL COMMENT 'Storage',
+  `desktop_power_supply` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Desktops Table';
+
+--
+-- Dumping data for table `tbl_desktops`
+--
+
+/*!40000 ALTER TABLE `tbl_desktops` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_desktops` ENABLE KEYS */;
+
+--
+-- Definition of table `tbl_graphics_cards`
+--
+DROP TABLE IF EXISTS `tbl_graphics_cards`;
+CREATE TABLE `tbl_graphics_cards` (
+  `graphics_card_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `graphics_card_manufacturer` varchar(100) DEFAULT NULL COMMENT 'Manufacturer',
+  `graphics_card_speed` varchar(50) DEFAULT NULL,
+  `graphics_card_cores` varchar(50) DEFAULT NULL,
+  `graphics_card_version` varchar(50) DEFAULT NULL COMMENT 'Version',
+  `graphics_card_vram_capacity` varchar(20) DEFAULT NULL COMMENT 'VRAM Capacity',
+  `graphics_card_require_psu` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Graphics Cards Table';
+
+--
+-- Dumping data for table `tbl_graphics_cards`
+--
+
+/*!40000 ALTER TABLE `tbl_graphics_cards` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_graphics_cards` ENABLE KEYS */;
+
+--
+-- Definition of table `tbl_headphones_speakers`
+--
+DROP TABLE IF EXISTS `tbl_headphones_speakers`;
+CREATE TABLE `tbl_headphones_speakers` (
+  `headphones_speakers_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `headphones_manufacturer` varchar(50) DEFAULT NULL,
+  `headphone_type` varchar(100) DEFAULT NULL COMMENT 'Inear/Overear/Speaker',
+  `headphones_connection` varchar(50) DEFAULT NULL COMMENT 'Connection Type',
+  `headphones_connection_ports` varchar(100) DEFAULT NULL COMMENT 'Connection Ports'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Headphones/Speakers Table';
+
+--
+-- Dumping data for table `tbl_headphones_speakers`
+--
+
+/*!40000 ALTER TABLE `tbl_headphones_speakers` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_headphones_speakers` ENABLE KEYS */;
+
+--
+-- Definition of table `tbl_keyboards`
+--
+DROP TABLE IF EXISTS `tbl_keyboards`;
+CREATE TABLE `tbl_keyboards` (
+  `keyboard_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `keyboard_type` varchar(100) DEFAULT NULL COMMENT 'Gaming/mechanical/Office',
+  `keyboard_connection_type` varchar(50) DEFAULT NULL COMMENT 'Connection Type',
+  `keyboard_size_layout` varchar(50) DEFAULT NULL COMMENT 'Size Layout',
+  `keyboard_led_backlighting` tinyint(1) DEFAULT NULL COMMENT 'LED Backlighting'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Keyboards Table';
+
+--
+-- Dumping data for table `tbl_keyboards`
+--
+
+/*!40000 ALTER TABLE `tbl_keyboards` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_keyboards` ENABLE KEYS */;
+
+--
+-- Definition of table `tbl_laptops`
+--
+DROP TABLE IF EXISTS `tbl_laptops`;
+CREATE TABLE `tbl_laptops` (
+  `laptop_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `laptop_manufacturer` varchar(100) DEFAULT NULL COMMENT 'Manufacturer',
+  `laptop_cpu` varchar(100) DEFAULT NULL COMMENT 'CPU',
+  `laptop_ram` varchar(100) DEFAULT NULL COMMENT 'RAM',
+  `laptop_graphics_card` varchar(100) DEFAULT NULL COMMENT 'Graphics Card',
+  `laptop_storage` varchar(100) DEFAULT NULL COMMENT 'Storage',
+  `laptop_screen_size` varchar(20) DEFAULT NULL COMMENT 'Screen Size',
+  `laptop_refresh_rate` varchar(50) DEFAULT NULL COMMENT 'Refresh Rate',
+  `laptop_resolution` varchar(20) DEFAULT NULL COMMENT 'Resolution',
+  `laptop_type` varchar(50) DEFAULT NULL COMMENT 'Type'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Laptops Table';
+
+--
+-- Dumping data for table `tbl_laptops`
+--
+
+/*!40000 ALTER TABLE `tbl_laptops` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_laptops` ENABLE KEYS */;
+
+--
+-- Definition of table `tbl_mice`
+--
+DROP TABLE IF EXISTS `tbl_mice`;
+CREATE TABLE `tbl_mice` (
+  `mouse_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `mouse_manufacturer` varchar(50) DEFAULT NULL,
+  `mouse_type` varchar(100) DEFAULT NULL COMMENT 'Gaming/Office',
+  `mouse_connection_type` varchar(50) DEFAULT NULL COMMENT 'Connection Type',
+  `mouse_design` varchar(100) DEFAULT NULL COMMENT 'Design',
+  `mouse_battery` varchar(50) DEFAULT NULL COMMENT 'Battery Type'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Mice Table';
+
+--
+-- Dumping data for table `tbl_mice`
+--
+
+/*!40000 ALTER TABLE `tbl_mice` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_mice` ENABLE KEYS */;
+
+--
+-- Definition of table `tbl_monitors`
+--
+DROP TABLE IF EXISTS `tbl_monitors`;
+CREATE TABLE `tbl_monitors` (
+  `monitor_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `monitor_manufacturer` varchar(100) DEFAULT NULL COMMENT 'Manufacturer',
+  `monitor_size` varchar(50) DEFAULT NULL COMMENT 'Size',
+  `monitor_type` varchar(100) DEFAULT NULL COMMENT 'Gaming/Office/Graphics',
+  `monitor_resolution` varchar(50) DEFAULT NULL COMMENT 'Resolution',
+  `monitor_panel_type` varchar(50) DEFAULT NULL COMMENT 'Panel Type',
+  `monitor_refresh_rate` varchar(50) DEFAULT NULL COMMENT 'Refresh Rate',
+  `monitor_screen_type` varchar(50) DEFAULT NULL COMMENT 'Shape/Ratio',
+  `monitor_response` varchar(50) DEFAULT NULL COMMENT 'Respone time'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Monitors Table';
+
+--
+-- Dumping data for table `tbl_monitors`
+--
+
+/*!40000 ALTER TABLE `tbl_monitors` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_monitors` ENABLE KEYS */;
+
+--
+-- Definition of table `tbl_motherboards`
+--
+DROP TABLE IF EXISTS `tbl_motherboards`;
+CREATE TABLE `tbl_motherboards` (
+  `motherboard_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `motherboard_manufacturer` varchar(100) DEFAULT NULL COMMENT 'Manufacturer',
+  `motherboard_chipset` varchar(100) DEFAULT NULL COMMENT 'Chipset',
+  `motherboard_socket` varchar(50) DEFAULT NULL COMMENT 'Socket',
+  `motherboard_size` varchar(50) DEFAULT NULL COMMENT 'Size',
+  `motherboard_ram_support` varchar(50) DEFAULT NULL COMMENT 'RAM Support',
+  `motherboard_ram_slots` varchar(50) DEFAULT NULL COMMENT 'Number of RAM Slots'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Motherboards Table';
+
+--
+-- Dumping data for table `tbl_motherboards`
+--
+
+/*!40000 ALTER TABLE `tbl_motherboards` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_motherboards` ENABLE KEYS */;
+
+--
+-- Definition of table `tbl_other_accessories`
+--
+DROP TABLE IF EXISTS `tbl_other_accessories`;
+CREATE TABLE `tbl_other_accessories` (
+  `accessory_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `description` varchar(255) DEFAULT NULL COMMENT 'Description'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Other Accessories Table';
+
+--
+-- Dumping data for table `tbl_other_accessories`
+--
+
+/*!40000 ALTER TABLE `tbl_other_accessories` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_other_accessories` ENABLE KEYS */;
+
+--
+-- Definition of table `tbl_power_supply`
+--
+DROP TABLE IF EXISTS `tbl_power_supply`;
+CREATE TABLE `tbl_power_supply` (
+  `psu_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `psu_manufacturer` varchar(50) DEFAULT NULL,
+  `psu_certification` varchar(50) DEFAULT NULL COMMENT 'Power Certification',
+  `psu_cable_type` varchar(100) DEFAULT NULL COMMENT 'Cable Type',
+  `psu_size` varchar(50) DEFAULT NULL COMMENT 'Size',
+  `psu_power_output` varchar(50) DEFAULT NULL COMMENT 'Power Output'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Power Supply Table';
+
+--
+-- Dumping data for table `tbl_power_supply`
+--
+
+/*!40000 ALTER TABLE `tbl_power_supply` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_power_supply` ENABLE KEYS */;
+
+--
+-- Definition of table `tbl_rams`
+--
+DROP TABLE IF EXISTS `tbl_rams`;
+CREATE TABLE `tbl_rams` (
+  `ram_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `ram_manufacturer` varchar(50) DEFAULT NULL,
+  `ram_type` varchar(50) DEFAULT NULL COMMENT 'RAM Type',
+  `ram_capacity` varchar(20) DEFAULT NULL COMMENT 'RAM Capacity',
+  `ram_bus_speed` varchar(20) DEFAULT NULL COMMENT 'RAM Bus Speed',
+  `ram_standard` varchar(50) DEFAULT NULL COMMENT 'RAM Standard'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='RAMs Table';
+
+--
+-- Dumping data for table `tbl_rams`
+--
+
+/*!40000 ALTER TABLE `tbl_rams` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_rams` ENABLE KEYS */;
+
+--
+-- Definition of table `tbl_storage`
+--
+DROP TABLE IF EXISTS `tbl_storage`;
+CREATE TABLE `tbl_storage` (
+  `storage_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `storage_manufacturer` varchar(50) DEFAULT NULL,
+  `storage_type` varchar(50) DEFAULT NULL COMMENT 'SSD/HDD',
+  `storage_capacity` varchar(20) DEFAULT NULL COMMENT 'Capacity',
+  `storage_m2_pcie_type` varchar(50) DEFAULT NULL COMMENT 'M.2 PCIe type',
+  `storage_rpm` int(11) DEFAULT NULL COMMENT 'RPM'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Storage Table';
+
+--
+-- Dumping data for table `tbl_storage`
+--
+
+/*!40000 ALTER TABLE `tbl_storage` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_storage` ENABLE KEYS */;
+
+--
+-- Definition of table `tbl_usbs`
+--
+DROP TABLE IF EXISTS `tbl_usbs`;
+CREATE TABLE `tbl_usbs` (
+  `usb_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `usb_manufacturer` varchar(100) DEFAULT NULL COMMENT 'Manufacturer',
+  `usb_capacity` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='USBs Table';
+
+--
+-- Dumping data for table `tbl_usbs`
+--
+
+/*!40000 ALTER TABLE `tbl_usbs` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_usbs` ENABLE KEYS */;
 
 
 
