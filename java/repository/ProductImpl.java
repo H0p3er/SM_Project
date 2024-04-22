@@ -416,7 +416,7 @@ public class ProductImpl extends BasicImpl implements Product {
 	private String getProductSoldByShopSQL(ShopObject object) {	
 		StringBuilder sql = new StringBuilder();
 		// Lấy sản phẩm bán được 
-		sql.append("SELECT p.*, SUM(bd_product_quantity) as TotalSellingQuantityPerProduct, SUM(bd_product_price*bd_product_quantity) as TotalSellingPricePerProduct FROM tblproduct p ");
+		sql.append("SELECT p.*, SUM(bd_product_quantity) as TotalSellingQuantityPerProduct, SUM(p.product_price*bd_product_quantity) as TotalSellingPricePerProduct FROM tblproduct p ");
 		sql.append("INNER JOIN tblbd bd ON p.product_id = bd.bd_product_id ");
 		sql.append("WHERE (p.product_shop_id="+object.getShop_id()+") AND (p.product_deleted=0)");
 		sql.append("GROUP BY p.product_id; ");

@@ -13,7 +13,7 @@ public class ProductObject {
     private String product_last_modified;
     private int product_quantity;
     private int product_pc_id;
-    private String product_shop_id;
+    private int product_shop_id;
 	public int getProduct_id() {
 		return product_id;
 	}
@@ -86,10 +86,10 @@ public class ProductObject {
 	public void setProduct_pc_id(int product_pc_id) {
 		this.product_pc_id = product_pc_id;
 	}
-	public String getProduct_shop_id() {
+	public int getProduct_shop_id() {
 		return product_shop_id;
 	}
-	public void setProduct_shop_id(String product_shop_id) {
+	public void setProduct_shop_id(int product_shop_id) {
 		this.product_shop_id = product_shop_id;
 	}
 	
