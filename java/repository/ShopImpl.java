@@ -326,7 +326,7 @@ public class ShopImpl extends BasicImpl implements Shop {
 		currentUser.setUser_id((byte)2);
 
 		//Lay tap ban ghi nguoi su dung
-		ResultSet rs = u.getShopByUser(currentUser).get(3);
+		ResultSet rs = u.getShopByUser(currentUser).get(0);
 		
 		String row = null;
 		//Duyen va hien thi danh sach nguoi su dung
@@ -334,8 +334,8 @@ public class ShopImpl extends BasicImpl implements Shop {
 			try {
 				while (rs.next()) {
 
-					row = "\tPRODUCT: "+rs.getInt("product_id");
-					row += "\tSelling: "+rs.getInt("TotalSellingQuantityPerProduct");
+					row = "\tSHOP: "+rs.getInt("shop_id");
+					row += "\tSHOP NAME: "+rs.getString("shop_name");
 					System.out.println(row);
 				}			
 				rs.close();

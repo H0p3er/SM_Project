@@ -15,8 +15,7 @@ public class ShopObject {
     private String shop_notes;
 	private String shop_phone;
     private String shop_email;
-    
-    public int getShop_id() {
+	public int getShop_id() {
 		return shop_id;
 	}
 	public void setShop_id(int shop_id) {
@@ -100,5 +99,5 @@ public class ShopObject {
 	public void setShop_email(String shop_email) {
 		this.shop_email = shop_email;
 	}
- 
+	
 }
