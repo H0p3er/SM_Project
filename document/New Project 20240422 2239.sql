@@ -446,40 +446,6 @@ INSERT INTO `tblbill` (`bill_id`,`bill_created_date`,`bill_creator_id`,`bill_del
  (50,'8/11/2023',10,50);
 /*!40000 ALTER TABLE `tblbill` ENABLE KEYS */;
 
-
---
--- Definition of table `tblguarantee`
---
-
-DROP TABLE IF EXISTS `tblguarantee`;
-CREATE TABLE `tblguarantee` (
-  `guarantee_id` int(11) DEFAULT NULL,
-  `guarantee_started_date` date DEFAULT NULL,
-  `guarantee_expired_date` date DEFAULT NULL,
-  `guarantee_deleted` smallint(6) DEFAULT NULL,
-  `guarantee_price` int(11) DEFAULT NULL,
-  `guarantee_method` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `tblguarantee`
---
-
-/*!40000 ALTER TABLE `tblguarantee` DISABLE KEYS */;
-INSERT INTO `tblguarantee` (`guarantee_id`,`guarantee_started_date`,`guarantee_expired_date`,`guarantee_deleted`,`guarantee_price`,`guarantee_method`) VALUES 
- (8,'0000-00-00','0000-00-00',0,10000,0),
- (9,'0000-00-00','0000-00-00',0,900000,0),
- (10,'0000-00-00','0000-00-00',0,40000,0),
- (11,'0000-00-00','0000-00-00',0,45000,0),
- (12,'0000-00-00','0000-00-00',0,620000,0),
- (13,'0000-00-00','0000-00-00',1,780000,0),
- (14,'0000-00-00','0000-00-00',1,93000,0),
- (15,'0000-00-00','0000-00-00',1,365000,0),
- (16,'0000-00-00','0000-00-00',1,21000,0),
- (17,'0000-00-00','0000-00-00',1,104000,0);
-/*!40000 ALTER TABLE `tblguarantee` ENABLE KEYS */;
-
-
 --
 -- Definition of table `tbllog`
 --
@@ -559,6 +525,68 @@ INSERT INTO `tblpc` (`pc_id`,`pc_name`,`pc_notes`,`pc_created_date`,`pc_image`,`
  (17,'Buồng Chơi Game Giả Lập','Danh m?c Bu?ng Ch?i Game Gi? L?p','','',0x00,0,0);
 /*!40000 ALTER TABLE `tblpc` ENABLE KEYS */;
 
+--
+-- Definition of table `tblproduct`
+--
+DROP TABLE IF EXISTS `tblproduct`;
+
+CREATE TABLE `tblproduct` (
+  `product_id` int(11) NOT NULL,
+  `product_name` varchar(100) DEFAULT NULL,
+  `product_status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0 - chưa  đư?c bán\n1 - đang bán\n2 - ng?ng kinh doanh',
+  `product_visited` int(11) NOT NULL DEFAULT 0 COMMENT '0 - không b? đưa vào thùng rác\r\n1 - b? đưa vào thùng rác',
+  `product_price` int(11) NOT NULL DEFAULT 0,
+  `product_images` text DEFAULT NULL,
+  `product_notes` text DEFAULT NULL,
+  `product_last_modified` varchar(45) DEFAULT NULL,
+  `product_pc_id` smallint(5) UNSIGNED NOT NULL COMMENT 'Loai san pham',
+  `product_shop_id` int(10) UNSIGNED DEFAULT 0,
+  `product_quantity` int(10) UNSIGNED DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci COMMENT='Bảng sản phẩm';
+
+--
+-- Dumping data for table `tblproduct`
+--
+
+/*!40000 ALTER TABLE `tblproduct` DISABLE KEYS */;
+INSERT INTO `tblproduct` (`product_id`, `product_name`, `product_status`, `product_visited`, `product_price`, `product_images`, `product_notes`, `product_last_modified`, `product_pc_id`, `product_shop_id`, `product_quantity`) VALUES
+(6, 'MacBook Air 13 inch M1 2020 7-core GPU', 1, 0, 0, ' /home/images/product/macbook-air-m1-2020-gray-600x600.jpg', ' null', ' 30/10/2023', 1, 2, 1),
+(7, 'HP 15s fq5229TU i3 1215U (8U237PA)', 0, 0, 0, ' /home/images/product/hp-15s-fq5229tu-i3-8u237pa-thumb-600x600.png', ' null', ' 30/10/2023', 2, 2, 2),
+(8, 'Asus TUF Gaming F15 FX506HF i5 11400H (HN014W)', 1, 0, 0, ' /home/images/product/asus-tuf-gaming-f15-fx506hf-i5-hn014w-thumb-600x600.jpg', ' null', ' 30/10/2023', 3, 2, 3),
+(9, 'Acer Aspire 5 Gaming A515 58GM 51LB i5 13420H (NX.KQ4SV.002)', 0, 0, 0, ' /home/images/product/acer-aspire-5-a515-58gm-51lb-i5-nxkq4sv002-170923-015941-600x600.jpg', ' null', ' 30/10/2023', 4, 1, 4),
+(10, 'Asus Vivobook Go 15 E1504FA R5 7520U (NJ776W)', 1, 0, 0, ' /home/images/product/asus-vivobook-go-15-e1504fa-r5-nj776w-thumb-600x600.jpg', ' null', ' 30/10/2023', 5, 2, 5),
+(12, 'HP 240 G9 i3 1215U (6L1X7PA)', 1, 0, 0, ' /home/images/product/hp-240-g9-i3-6l1x7pa-thumb-600x600.jpg', ' null', ' 30/10/2023', 7, 2, 12),
+(13, 'Asus Vivobook 16 X1605VA i5 1335U (MB360W)', 0, 0, 0, ' /home/images/product/asus-vivobook-16-x1605va-i5-mb360w-thumb-laptop-600x600.jpg', ' null', ' 30/10/2023', 7, 1, 5),
+(14, 'HP 15s fq5162TU i5 1235U (7C134PA)', 1, 0, 0, ' /home/images/product/hp-15s-fq5162tu-i5-7c134pa-thumb-600x600.jpg', ' null', ' 30/10/2023', 7, 2, 12),
+(15, 'Asus Vivobook 15 X1504ZA i3 1215U (NJ102W)', 0, 0, 0, ' /home/images/product/asus-vivobook-15-x1504za-i3-nj102w-thumb-600x600.jpg', ' null', ' 30/10/2023', 7, 2, 5),
+(16, 'Asus Vivobook X515EA i3 1115G4 (EJ3948W)', 1, 0, 0, ' /home/images/product/asus-vivobook-x515ea-i3-ej3948w-thumb-600x600.jpg', ' null', ' 30/10/2023', 8, 2, 12),
+(17, 'HP Pavilion 14 dv2074TU i5 1235U (7C0P3PA)', 0, 0, 0, ' /home/images/product/hp-pavilion-14-dv2074tu-i5-7c0p3pa-thumb-600x600.jpg', ' null', ' 30/10/2023', 8, 2, 5),
+(18, 'Asus Vivobook X515EA i5 1135G7 (EJ4155W)', 1, 0, 0, ' /home/images/product/asus-vivobook-x515ea-i5-ej4155w-thumb-600x600.jpg', ' null', ' 30/10/2023', 16, 2, 1),
+(19, 'Dell Vostro 15 3520 i3 1215U (5M2TT1)', 0, 0, 0, ' /home/images/product/dell-vostro-15-3520-i3-5m2tt1-090823-041032-600x600.png', ' null', ' 30/10/2023', 16, 1, 2),
+(20, 'HP 14 ep0126TU i3 N305 (8U233PA)', 1, 0, 0, ' /home/images/product/hp-14-ep0126tu-i3-8u233pa-thumb-600x600.jpg', ' null', ' 30/10/2023', 16, 19, 35),
+(21, 'Lenovo Ideapad 3 15ITL6 i3 1115G4 (82H803SGVN)', 0, 0, 0, ' /home/images/product/lenovo-ideapad-3-15itl6-i3-82h803sgvn-thumb-600x600.jpg', ' null', ' 30/10/2023', 16, 1, 23),
+(22, 'Dell Inspiron 15 3520 i3 1215U (71003264)', 1, 0, 0, ' /home/images/product/dell-inspiron-3520-i3-71003264-thumb-600x600.jpg', ' null', ' 30/10/2023', 16, 4, 4),
+(23, 'HP 15s fq2716TU i3 1115G4 (7C0X3PA)', 0, 0, 0, ' /home/images/product/hp-15s-fq2716tu-i3-7c0x3pa-thumb-600x600.jpg', ' null', ' 30/10/2023', 2, 6, 3),
+(24, 'Asus Vivobook X415EA i3 1115G4 (EK2034W)', 1, 0, 0, ' /home/images/product/asus-vivobook-x415ea-i3-ek2034w-thumb-laptop-600x600.jpg', ' null', ' 30/10/2023', 2, 5, 1),
+(26, 'Dell Inspiron 15 3520 i5 1235U (N5I5122W1)', 1, 0, 0, ' /home/images/product/dell-inspiron-15-3520-i5-n5i5122w1-191222-091429-600x600.jpg', ' null', ' 30/10/2023', 17, 4, 3),
+(27, 'Asus Vivobook 15 X1504VA i5 1335U (NJ025W)', 0, 0, 0, ' /home/images/product/asus-vivobook-15-x1504va-i5-nj025w-thumb-600x600.jpg', ' null', ' 30/10/2023', 17, 5, 1),
+(29, 'Lenovo Ideapad 3 15IAU7 i3 1215U (82RK005LVN)', 0, 0, 0, ' /home/images/product/lenovo-ideapad-3-15iau7-i3-82rk005lvn-281122-051953-600x600.jpg', ' null', ' 30/10/2023', 17, 1, 2),
+(30, 'HP Pavilion 15 eg2082TU i5 1240P (7C0Q5PA)', 1, 0, 0, ' /home/images/product/hp-pavilion-15-eg2082tu-i5-7c0q5pa-thumb-600x600.jpg', ' null', ' 30/10/2023', 17, 2, 12),
+(31, 'Lenovo Ideapad 3 15ITL6 i5 1155G7 (82H803RRVN)', 0, 0, 0, ' /home/images/product/lenovo-ideapad-3-15itl6-i5-82h803rrvn-thumb-600x600.jpg', ' null', ' 30/10/2023', 17, 1, 1),
+(32, 'HP 240 G8 i3 1115G4 (6L1A1PA)', 1, 0, 0, ' /home/images/product/hp-240-g8-i3-6l1a1pa-210423-031503-600x600.jpg', 'null', ' 30/10/2023', 17, 2, 3),
+(33, 'Asus TUF Gaming F15 FX506HE i7 11800H (HN378W)', 0, 0, 0, ' /home/images/product/asus-tuf-gaming-f15-fx506he-i7-hn378w-thumb-600x600.jpg', 'null', ' 30/10/2023', 2, 3, 1),
+(34, 'HP 15s fq5147TU i7 1255U (7C133PA)', 1, 0, 0, ' /home/images/product/hp-15s-fq5147tu-i7-7c133pa-thumb-600x600.jpg', 'null', ' 30/10/2023', 2, 3, 3),
+(35, 'Acer Aspire 3 A315 59 314F i3 1215U (NX.K6TSV.002)', 0, 0, 0, ' /home/images/product/acer-aspire-3-a315-59-314f-i3-nxk6tsv002-thumb-1-600x600.jpg', ' null', ' 30/10/2023', 2, 3, 2),
+(36, 'MSI Gaming GF63 Thin 11SC i5 11400H (664VN)', 1, 0, 0, ' /home/images/product/msi-gaming-gf63-thin-11sc-i5-664vn-glr-thumb-600x600.jpg', ' null', ' 30/10/2023', 2, 3, 1),
+(38, 'MSI Gaming GF63 Thin 11UC i7 11800H (1228VN)', 1, 0, 0, ' /home/images/product/msi-gaming-gf63-thin-11uc-i7-1228vn-thumb-600x600.jpg', ' null', ' 30/10/2023', 2, 3, 1),
+(39, 'Asus Vivobook 15 OLED A1505VA i5 13500H (L1341W)', 0, 1, 0, ' /home/images/product/asus-vivobook-15-oled-a1505va-i5-l1341w-thumb-600x600.jpg', ' null', ' 30/10/2023', 2, 4, 1),
+(40, 'Lenovo Ideapad Slim 3 15IAH8 i5 12450H (83ER000EVN)', 1, 0, 0, ' /home/images/product/lenovo-ideapad-slim-3-15iah8-i5-83er00evn-thumb-600x600.jpg', ' null', ' 30/10/2023', 2, 5, 1),
+(41, 'MacBook Air 13 inch M2 2022 8-core GPU', 0, 0, 0, ' /home/images/product/apple-macbook-air-m2-2022-vang-600x600.jpg', ' null', ' 30/10/2023', 2, 2, 1),
+(42, 'Acer Nitro 5 Gaming AN515 57 5669 i5 11400H (NH.QEHSV.001)', 1, 0, 0, ' /home/images/product/acer-nitro-5-gaming-an515-57-5669-i5-11400h-8gb-512gb-144hz-4gb-gtx1650-win11-nhqehsv001-031221-100506-600x600.jpg', ' null', ' 30/10/2023', 2, 4, 1),
+(43, 'HP Pavilion 15 eg2081TU i5 1240P (7C0Q4PA)', 0, 0, 0, ' /home/images/product/hp-pavilion-15-eg2081tu-i5-7c0q4pa-thumb-600x600.jpg', ' null', ' 30/10/2023', 2, 1, 1),
+(44, 'Dell Vostro 3520 i3 1215U (V5I3614W1)', 1, 0, 0, ' /home/images/product/dell-vostro-3520-i3-v5i3614w1-thumb-600x600.jpg', ' null', ' 30/10/2023', 2, 3, 1),
+(45, 'Lenovo Ideapad 3 15ITL6 i3 1115G4 (82H803SFVN)', 0, 1, 0, ' /home/images/product/lenovo-ideapad-3-15itl6-i3-82h803sfvn-thumb-600x600.jpg', ' null', ' 30/10/2023', 2, 2, 1);
+/*!40000 ALTER TABLE `tblproduct` ENABLE KEYS */;
 
 --
 -- Definition of table `tblshop`
@@ -595,34 +623,6 @@ INSERT INTO `tblshop` (`shop_id`,`shop_name`,`shop_address`,`shop_status`,`shop_
  (4,'Kho Sun Group','14, Hạ Long , Bãi Cháy, Thành phố Hạ Long, Quảng Ninh.',1,4,NULL,NULL,'14/2/2023','23/12/2023',0,'/home/images/shop/storage03.jpg','',NULL,NULL),
  (5,'Kho PV Gas','36 Hoàng Cầu, Đống Đa, Hà Nội.',1,5,NULL,NULL,'3/4/2023','23/12/2023',0,'/home/images/shop/storage02.jpg','',NULL,NULL);
 /*!40000 ALTER TABLE `tblshop` ENABLE KEYS */;
-
-
---
--- Definition of table `tbltranspoter`
---
-
-DROP TABLE IF EXISTS `tbltranspoter`;
-CREATE TABLE `tbltranspoter` (
-  `transpoter_id` int(11) NOT NULL AUTO_INCREMENT,
-  `transpoter_name` varchar(100) CHARACTER SET utf8 NOT NULL COMMENT 'Tên nhà cung cấp',
-  `transpoter_notes` text CHARACTER SET utf8 COMMENT 'Mô tả ',
-  `transpoter_address` varchar(45) CHARACTER SET utf8 DEFAULT NULL COMMENT 'Địa chỉ',
-  PRIMARY KEY (`transpoter_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1 COMMENT='Bảng nhà cung cấp';
-
---
--- Dumping data for table `tbltranspoter`
---
-
-/*!40000 ALTER TABLE `tbltranspoter` DISABLE KEYS */;
-INSERT INTO `tbltranspoter` (`transpoter_id`,`transpoter_name`,`transpoter_notes`,`transpoter_address`) VALUES 
- (1,'Apple','Apple là m?t hãng công ngh? ?a d?ng n?i ti?ng v?i s?n ph?m máy tính và thi?t b? ?i?n t? sang tr?ng và hi?u su?t cao.','1 Infinite Loop, Cupertino, California 95014,'),
- (2,'Microsoft','Microsoft là m?t trong nh?ng tên tu?i hàng ??u trong l?nh v?c công ngh?, chuyên s?n xu?t các s?n ph?m và d?ch v? liên quan ??n máy tính và ph?n m?m.','1 Microsoft Way, Redmond, Washington 98052, H'),
- (3,'HP','HP (Hewlett-Packard) là m?t trong nh?ng th??ng hi?u n?i ti?ng trong ngành công nghi?p máy tính, chuyên s?n xu?t các s?n ph?m máy tính và máy in.','1501 Page Mill Road, Palo Alto, California 94'),
- (4,'Dell','Dell là m?t hãng máy tính toàn c?u n?i ti?ng v?i s? chuyên nghi?p trong vi?c s?n xu?t máy tính cá nhân, máy tính xách tay và các d?ch v? công ngh? liên quan.','1 Dell Way, Round Rock, Texas 78682, Hoa Kỳ.'),
- (5,'MSI','MSI (Micro-Star International) là m?t công ty chuyên s?n xu?t các s?n ph?m công ngh? ch?i game, bao g?m máy tính và linh ki?n ch?i game cao c?p.','69, Lide St., Zhonghe Dist., New Taipei City ');
-/*!40000 ALTER TABLE `tbltranspoter` ENABLE KEYS */;
-
 
 --
 -- Definition of table `tbluser`
