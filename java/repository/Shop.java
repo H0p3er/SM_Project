@@ -20,19 +20,27 @@ public interface Shop extends ShareControl{
 	
 	//Các phương thức, chức năng lấy thông tin nơi làm việc
 	public ArrayList<ResultSet> getShopById(String filter, int pagePos, byte pageLength, int id);
+	
+	/** 
+	 * Phương thức trả về bản ghi gian hàng theo Người dùng hiện tại
+	 * <br/>Cập nhật ngày 23/4/2024
+	 * @param currentUser :Người dùng hiện tại
+	 * @return ResultSet Danh sách bản ghi
+	 * 
+	 */
 	public ArrayList<ResultSet> getShopByUser(UserObject currentUser);
 	
 	
 	/** 
-	 * Phương thức trả về danh sách giao diện cho phần trình bày danh sách product
+	 * Phương thức trả về bản ghi nhiều gian hàng
+	 * <br/>Cập nhật ngày 23/4/2024
 	 * @param at :vị trí bản ghi
 	 * @param total :số lượng bản ghi/trang
-	 * @param total :số lượng bản ghi/trang
-	 * @param total :số lượng bản ghi/trang
-	 * @param total :số lượng bản ghi/trang
+	 * @param multiField :lấy thuộc tính theo tên trường
+	 * @param multiCondition :số lượng bản ghi/trang
+	 * @param multiSort :sắp xếp theo nhiều thuộc tính
 	 * @return ArrayList<ResultSet> Danh sách bản ghi
 	 * 
-	 * <br/>Cập nhật ngày 23/4/2024
 	 */
 	public ArrayList<ResultSet> getShops(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort);
 }

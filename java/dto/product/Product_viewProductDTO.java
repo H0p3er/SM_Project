@@ -1,23 +1,19 @@
-package dto.user;
+package dto.product;
 
-public class ShopProductDTO {
-    private int id;
+import java.util.Map;
+
+import dto.ProductShopDTO;
+import dto.pc.PC_DTO;
+
+public class Product_viewProductDTO {
     private String name;
     private byte status;
-    private int visited;
     private double price;
     private String images;
-    private String notes;
     private String last_modified;
-    private int quantity;
-    private ShopPCDTO pc_id;
-    
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
+    private PC_DTO pc;
+    private ProductShopDTO shop;
+    private Map<String,String> attribute;
 	public String getName() {
 		return name;
 	}
@@ -29,12 +25,6 @@ public class ShopProductDTO {
 	}
 	public void setStatus(byte status) {
 		this.status = status;
-	}
-	public int getVisited() {
-		return visited;
-	}
-	public void setVisited(int visited) {
-		this.visited = visited;
 	}
 	public double getPrice() {
 		return price;
@@ -48,29 +38,30 @@ public class ShopProductDTO {
 	public void setImages(String images) {
 		this.images = images;
 	}
-	public String getNotes() {
-		return notes;
-	}
-	public void setNotes(String notes) {
-		this.notes = notes;
-	}
 	public String getLast_modified() {
 		return last_modified;
 	}
 	public void setLast_modified(String last_modified) {
 		this.last_modified = last_modified;
 	}
-	public int getQuantity() {
-		return quantity;
+	public PC_DTO getPc() {
+		return pc;
 	}
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+	public void setPc(PC_DTO pc) {
+		this.pc = pc;
 	}
-	public ShopPCDTO getPc_id() {
-		return pc_id;
+	public ProductShopDTO getShop() {
+		return shop;
 	}
-	public void setPc_id(ShopPCDTO pc_id) {
-		this.pc_id = pc_id;
+	public void setShop(ProductShopDTO shop) {
+		this.shop = shop;
 	}
+	public Map<String, String> getAttribute() {
+		return attribute;
+	}
+	public void setAttribute(Map<String, String> attribute) {
+		this.attribute = attribute;
+	}
+    
     
 }

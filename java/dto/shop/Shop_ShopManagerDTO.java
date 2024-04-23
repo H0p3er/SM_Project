@@ -1,10 +1,11 @@
-package dto.seller;
+package dto.shop;
 
 import java.util.List;
 
+import dto.product.Product_ShopManagerDTO;
 import entity.ShopObject;
 
-public class SellerShopDTO {
+public class Shop_ShopManagerDTO {
 	private int id;
     private String name;
     private String address;
@@ -16,7 +17,7 @@ public class SellerShopDTO {
     private String notes;
 	private String phone;
     private String email;
-	private List<SellerShopProductDTO> storage;
+	private List<Product_ShopManagerDTO> storage;
 
 	public int getId() {
 		return this.id;
@@ -106,11 +107,11 @@ public class SellerShopDTO {
 		this.email = email;
 	}
 
-	public List<SellerShopProductDTO> getStorage() {
+	public List<Product_ShopManagerDTO> getStorage() {
 		return this.storage;
 	}
 
-	public void setStorage(List<SellerShopProductDTO> storage) {
+	public void setStorage(List<Product_ShopManagerDTO> storage) {
 		this.storage = storage;
 	}
 

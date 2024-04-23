@@ -247,10 +247,12 @@ public class ProductImpl extends BasicImpl implements Product {
 	}
 	
 	@Override
-	public ArrayList<ResultSet> getProductsByPC(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort, PCObject shopObject) {
+	public ArrayList<ResultSet> getProductsByPC(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort, PCObject pcObject) {
 		// TODO Auto-generated method stub
 		StringBuilder sql = new StringBuilder();
-		return null;
+		sql.append(getProductsByPCSQL(at, total, multiField, multiCondition, multiSort, pcObject));
+		sql.append(getProductsSizeByPCSQL(pcObject));
+		return this.getReList(sql.toString());
 	}
 	
 	@Override
@@ -355,8 +357,12 @@ public class ProductImpl extends BasicImpl implements Product {
 		sql.append("SELECT p.*, pc.pc_name FROM tblproduct p ");	
 		sql.append("LEFT JOIN tblpc pc ON p.product_pc_id = pc.pc_id ");
 		sql.append("INNER JOIN tblshop s ON p.product_shop_id = s.shop_id ");
-		sql.append("WHERE (p.product_shop_id="+object.getShop_id()+") AND (p.product_deleted=0); ");
-
+		sql.append("WHERE (p.product_shop_id="+object.getShop_id()+") AND (p.product_deleted=0) ");
+		if(total > 0) {
+			sql.append("LIMIT " + at + ", " + total + "; ");
+		} else {
+			sql.append(";");
+		}
 		return sql.toString();
 	}	
 	
@@ -385,6 +391,11 @@ public class ProductImpl extends BasicImpl implements Product {
 		sql.append("INNER JOIN tblpc pc ON p.product_pc_id = pc.pc_id ");
 		sql.append("WHERE (pc.pc_id="+object.getPc_id()+") AND (p.product_deleted=0) ");
 		sql.append("GROUP BY p.product_id, pc.pc_name; ");
+		if(total > 0) {
+			sql.append("LIMIT " + at + ", " + total + "; ");
+		} else {
+			sql.append(";");
+		}
 
 		return sql.toString();
 	}	

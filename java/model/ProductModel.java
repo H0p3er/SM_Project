@@ -4,7 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.Optional;
 
 import org.javatuples.Pair;
 import org.javatuples.Quintet;
@@ -12,7 +11,6 @@ import org.javatuples.Quintet;
 import connection.ConnectionPool;
 import constant.PRODUCT_EDIT_TYPE;
 import repository.*;
-import entity.PCObject;
 import entity.ProductObject;
 import utility.Utilities;
 
@@ -39,8 +37,6 @@ public class ProductModel {
 		this.pc.releaseCP();
 	}
 
-	// ***********************Chuyen huong dieu khien tu Product
-	// Impl*****************************************
 	public boolean addProduct(ProductObject item) {
 		return this.p.addProduct(item);
 	}
@@ -53,16 +49,12 @@ public class ProductModel {
 		return this.p.delProduct(item);
 	}
 
-	// ****************************************************************
 
 	public ProductObject getProductObject(int id) {
-		// Gan gia tri khoi tao cho doi tuong ProductObject
 		ProductObject item = null;
 
-		// Lay ban ghi
 		ResultSet rs = this.p.getProductById(id);
 
-		// Chuyen doi ban ghi thanh doi tuong
 		if (rs != null) {
 			try {
 				if (rs.next()) {
@@ -87,27 +79,18 @@ public class ProductModel {
 	}
 	
 
-	/**
-	 * Phương thức lấy về danh sách đối tượng và tổng số bản ghi
-	 * @param similar
-	 * @param page
-	 * @param pPerPage
-	 * @param type
-	 * @param isExport
-	 * @return
-	 * 		danh sách đối tượng<br/>
-	 * 		Tổng số bản ghi
-	 */
+
 	public Pair<ArrayList<ProductObject>, Integer> getProductObjects(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> infors) {
-		//Lay du lieu
+	
 		short page = infors.getValue0();
 		byte productPerPage = infors.getValue1();	
 		Map<String,String> multiField = infors.getValue2();
 		Map<String,String> multiCondition = infors.getValue3();
 		Map<String,String> multiSort = infors.getValue4();
+		
+		
 		ArrayList<ProductObject> items = new ArrayList<>();
 		ProductObject item = null;
-		// Lay ban ghi
 		int at = (page - 1) * productPerPage;
 		ArrayList<ResultSet> res = this.p.getProducts(at, productPerPage, multiField, multiCondition, multiSort);
 		ResultSet rs = res.get(0);

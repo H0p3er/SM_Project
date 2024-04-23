@@ -1,6 +1,6 @@
-package dto;
+package dto.pc;
 
-public class PCDTO {
+public class PC_DTO {
 	private String name;
 
 	public String getName() {

@@ -1,6 +1,6 @@
 package dto.user;
 
-public class ShopSellerDTO {
+public class User_viewShopDTO {
     private String user_fullname;
     private String user_images;
     

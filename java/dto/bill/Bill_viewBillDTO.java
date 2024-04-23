@@ -1,10 +1,10 @@
-package dto.user;
+package dto.bill;
 
 import java.util.List;
 
 import dto.BDDTO;
 
-public class UserBillDTO {
+public class Bill_viewBillDTO {
 	private int bill_id;
 	private String bill_code;
 	private String bill_created_date;

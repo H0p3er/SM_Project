@@ -16,12 +16,12 @@ import connection.*;
 import entity.*;
 import constant.*;
 import dto.*;
-import dto.seller.SellerShopDTO;
-import dto.seller.SellerShopProductDTO;
-import dto.seller.SellerShopStatisticDTO;
-import dto.user.ShopPCDTO;
-import dto.user.ShopProductDTO;
-import dto.user.ShopSellerDTO;
+import dto.pc.PC_ShopManagerDTO;
+import dto.product.Product_ShopManagerDTO;
+import dto.product.Product_ShopStatisticDTO;
+import dto.shop.Shop_ShopManagerDTO;
+import dto.shop.Shop_viewShopDTO;
+import dto.user.User_viewShopDTO;
 
 public class ShopModel {
 	
@@ -48,31 +48,31 @@ public class ShopModel {
 	}
 
 	//***********************Chuyen huong dieu khien tu Shop Impl*****************************************
-	public boolean addShop(ShopDTO shopDTO, UserObject currentUser) {
+	public boolean addShop(Shop_viewShopDTO shop_viewShopDTO, UserObject currentUser) {
 		ShopObject shopObject = new ShopObject();
-		shopDTO.applyToEntity(shopObject);
+		shop_viewShopDTO.applyToEntity(shopObject);
 		return this.shop.addShop(shopObject, currentUser);
 	}
 	
-	public boolean editShop(ShopDTO shopDTO, SHOP_EDIT_TYPE et, UserObject currentUser) {
+	public boolean editShop(Shop_viewShopDTO shop_viewShopDTO, SHOP_EDIT_TYPE et, UserObject currentUser) {
 		ShopObject shopObject = new ShopObject();
-		shopDTO.applyToEntity(shopObject);
+		shop_viewShopDTO.applyToEntity(shopObject);
 		return this.shop.editShop(shopObject, et, currentUser);
 	}
 	
-	public boolean delShop(ShopDTO shopDTO, UserObject currentUser) {
+	public boolean delShop(Shop_viewShopDTO shop_viewShopDTO, UserObject currentUser) {
 		ShopObject shopObject = new ShopObject();
-		shopDTO.applyToEntity(shopObject);
+		shop_viewShopDTO.applyToEntity(shopObject);
 		return this.shop.delShop(shopObject, currentUser);
 	}
 	
 	
 	//****************************************************************
 	
-	public ShopDTO getShopDTOById(Triplet<String, Short, Byte> infors, int id) {
+	public Shop_viewShopDTO getShopDTOById(Triplet<String, Short, Byte> infors, int id) {
 		//Khoi tao cac gia tri cua DTO
-		ShopDTO shopDTO = null ;
-		ShopSellerDTO shopUserDTO = null;
+		Shop_viewShopDTO shop_viewShopDTO = null ;
+		User_viewShopDTO shopUserDTO = null;
 		
 		String filter = infors.getValue0();
 		Short pagePos = infors.getValue1();
@@ -84,24 +84,24 @@ public class ShopModel {
 		if (rs!=null) {
 			try {
 				if (rs.next()) {
-					shopDTO = new ShopDTO();
-					shopDTO.setId(rs.getInt("shop_id"));
-					shopDTO.setName(rs.getString("shop_name"));
-					shopDTO.setAddress(rs.getString("shop_address"));
-					shopDTO.setImages(rs.getString("shop_images"));
-					shopDTO.setNotes(rs.getString("shop_notes"));
+					shop_viewShopDTO = new Shop_viewShopDTO();
+					shop_viewShopDTO.setId(rs.getInt("shop_id"));
+					shop_viewShopDTO.setName(rs.getString("shop_name"));
+					shop_viewShopDTO.setAddress(rs.getString("shop_address"));
+					shop_viewShopDTO.setImages(rs.getString("shop_images"));
+					shop_viewShopDTO.setNotes(rs.getString("shop_notes"));
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		return shopDTO;	
+		return shop_viewShopDTO;	
 	}
 	
 
-	public SellerShopStatisticDTO getShopStatisticDTO(ArrayList<ResultSet> productResultSets, SellerShopDTO sellerShopDTO) {	
-		SellerShopStatisticDTO sellerShopStatisticDTO = new SellerShopStatisticDTO();
+	public Product_ShopStatisticDTO getShopStatisticDTO(ArrayList<ResultSet> productResultSets, Shop_ShopManagerDTO shop_ShopManagerDTO) {	
+		Product_ShopStatisticDTO product_ShopStatisticDTO = new Product_ShopStatisticDTO();
 		
 		ResultSet rs = productResultSets.get(1);
 		
@@ -110,7 +110,7 @@ public class ShopModel {
 			try {
 				if (rs.next()) {
 					TotalProduct = rs.getInt("TotalProduct");
-					sellerShopStatisticDTO.setTotalProduct(TotalProduct);
+					product_ShopStatisticDTO.setTotalProduct(TotalProduct);
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -119,43 +119,43 @@ public class ShopModel {
 		}
 		
 		rs = productResultSets.get(0);
-		ShopPCDTO shopPCDTO = null;
+		PC_ShopManagerDTO pc_ShopManagerDTO = null;
 		int QuantityAllProduct = 0;
 		double PriceAllProduct = 0;
 		if (rs!=null) {
 			try {
 				while (rs.next()) {
-					SellerShopProductDTO sellerShopProductDTO = new SellerShopProductDTO();
-					sellerShopProductDTO.setId(rs.getInt("product_id"));
-					sellerShopProductDTO.setName(rs.getString("product_name"));
-					sellerShopProductDTO.setQuantity(rs.getInt("product_quantity"));
-					sellerShopProductDTO.setPrice(rs.getDouble("product_price"));
+					Product_ShopManagerDTO product_ShopManagerDTO = new Product_ShopManagerDTO();
+					product_ShopManagerDTO.setId(rs.getInt("product_id"));
+					product_ShopManagerDTO.setName(rs.getString("product_name"));
+					product_ShopManagerDTO.setQuantity(rs.getInt("product_quantity"));
+					product_ShopManagerDTO.setPrice(rs.getDouble("product_price"));
 					
 					QuantityAllProduct += rs.getInt("product_quantity");
 					PriceAllProduct += rs.getDouble("product_price");
 					
-					shopPCDTO = new ShopPCDTO();
-					shopPCDTO.setName(rs.getString("pc_name"));
-					sellerShopProductDTO.setPc(shopPCDTO);
-					sellerShopDTO.getStorage().add(sellerShopProductDTO);	
+					pc_ShopManagerDTO = new PC_ShopManagerDTO();
+					pc_ShopManagerDTO.setName(rs.getString("pc_name"));
+					product_ShopManagerDTO.setPc(pc_ShopManagerDTO);
+					shop_ShopManagerDTO.getStorage().add(product_ShopManagerDTO);	
 				}
 				
-				sellerShopStatisticDTO.setTotalPriceAllProduct(PriceAllProduct);
-				sellerShopStatisticDTO.setTotalQuantityAllProduct(QuantityAllProduct);
+				product_ShopStatisticDTO.setTotalPriceAllProduct(PriceAllProduct);
+				product_ShopStatisticDTO.setTotalQuantityAllProduct(QuantityAllProduct);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		
-		HashMap<Integer,Pair<SellerShopProductDTO, Double>> hashMap1 = new HashMap<Integer, Pair<SellerShopProductDTO,Double>>();
-		sellerShopStatisticDTO.setTotalSellingPricePerProduct(hashMap1);
-		HashMap<Integer,Pair<SellerShopProductDTO, Integer>> hashMap2 = new HashMap<Integer, Pair<SellerShopProductDTO,Integer>>();
-		sellerShopStatisticDTO.setTotalSellingQuantityPerProduct(hashMap2);
+		Map<Integer,Pair<Product_ShopManagerDTO, Double>> hashMap1 = new HashMap<Integer, Pair<Product_ShopManagerDTO,Double>>();
+		product_ShopStatisticDTO.setTotalSellingPricePerProduct(hashMap1);
+		Map<Integer,Pair<Product_ShopManagerDTO, Integer>> hashMap2 = new HashMap<Integer, Pair<Product_ShopManagerDTO,Integer>>();
+		product_ShopStatisticDTO.setTotalSellingQuantityPerProduct(hashMap2);
 		
 		/*
-		 * System.out.println(sellerShopDTO.getStatistic().getTotalSellingPerProduct());
-		 * System.out.println(sellerShopDTO.getStatistic().
+		 * System.out.println(shop_ShopManagerDTO.getStatistic().getTotalSellingPerProduct());
+		 * System.out.println(shop_ShopManagerDTO.getStatistic().
 		 * getTotalSellingQuantityPerProduct());
 		 */
 
@@ -165,27 +165,25 @@ public class ShopModel {
 			try {			
 				QuantityAllProduct = 0;
 				PriceAllProduct = 0;
-				int TotalSellingQuantityPerProduct = 0;
-				double TotalSellingPricePerProduct = 0;
 				while (rs.next()) {
 					int product_id =rs.getInt("product_id");
-					TotalSellingQuantityPerProduct = rs.getInt("TotalSellingQuantityPerProduct");
-					TotalSellingPricePerProduct = rs.getInt("TotalSellingPricePerProduct");
+					int TotalSellingQuantityPerProduct = rs.getInt("TotalSellingQuantityPerProduct");
+					double TotalSellingPricePerProduct = rs.getInt("TotalSellingPricePerProduct");
 					
 					QuantityAllProduct+=TotalSellingQuantityPerProduct;
 					PriceAllProduct+=TotalSellingPricePerProduct;
 					
-					SellerShopProductDTO sellerShopProductDTO = new SellerShopProductDTO();
-					sellerShopProductDTO.setId(rs.getInt("product_id"));
-					sellerShopProductDTO.setName(rs.getString("product_name"));
+					Product_ShopManagerDTO product_ShopManagerDTO = new Product_ShopManagerDTO();
+					product_ShopManagerDTO.setId(rs.getInt("product_id"));
+					product_ShopManagerDTO.setName(rs.getString("product_name"));
 					
-					sellerShopStatisticDTO.getTotalSellingQuantityPerProduct().put(product_id, new Pair<SellerShopProductDTO, Integer>(sellerShopProductDTO, TotalSellingQuantityPerProduct));
+					product_ShopStatisticDTO.getTotalSellingQuantityPerProduct().put(product_id, new Pair<Product_ShopManagerDTO, Integer>(product_ShopManagerDTO, TotalSellingQuantityPerProduct));
 					
-					sellerShopStatisticDTO.getTotalSellingPricePerProduct().put(product_id,
-							new Pair<SellerShopProductDTO, Double>(sellerShopProductDTO, TotalSellingPricePerProduct));
+					product_ShopStatisticDTO.getTotalSellingPricePerProduct().put(product_id,
+							new Pair<Product_ShopManagerDTO, Double>(product_ShopManagerDTO, TotalSellingPricePerProduct));
 					
-					sellerShopStatisticDTO.setTotalSellingPriceAllProduct(PriceAllProduct);
-					sellerShopStatisticDTO.setTotalSellingQuantityAllProduct(QuantityAllProduct);
+					product_ShopStatisticDTO.setTotalSellingPriceAllProduct(PriceAllProduct);
+					product_ShopStatisticDTO.setTotalSellingQuantityAllProduct(QuantityAllProduct);
 					
 				}
 			} catch (SQLException e) {
@@ -193,11 +191,12 @@ public class ShopModel {
 				e.printStackTrace();
 			}
 		}
-		return sellerShopStatisticDTO;
+		
+		return product_ShopStatisticDTO;
 	}
 
 	
-	public Pair<SellerShopDTO, SellerShopStatisticDTO> getShopDTOByUser(
+	public Pair<Shop_ShopManagerDTO, Product_ShopStatisticDTO> getShopDTOByUser(
 			Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, 
 			UserObject currentUser) {
 		//Lay ban ghi 
@@ -217,7 +216,7 @@ public class ShopModel {
 		//Gan gia tri khoi tao cho doi tuong ShopObject
 		
 		ShopObject shopObject = new ShopObject();
-		SellerShopDTO sellerShopDTO = new SellerShopDTO() ;
+		Shop_ShopManagerDTO shop_ShopManagerDTO = new Shop_ShopManagerDTO() ;
 
 		if (rs!=null) {
 			try {
@@ -234,14 +233,14 @@ public class ShopModel {
 			}
 		}
 		
-		sellerShopDTO.applyToEntity(shopObject);
-		sellerShopDTO.setStorage(new ArrayList<SellerShopProductDTO>());
+		shop_ShopManagerDTO.applyToEntity(shopObject);
+		shop_ShopManagerDTO.setStorage(new ArrayList<Product_ShopManagerDTO>());
 		
 		
 		ArrayList<ResultSet> productResultSets = this.product.getProductsByShop(recordPos,pageLength,multiField,multiCondition,multiSort,shopObject);
-		SellerShopStatisticDTO sellerShopStatisticDTO = getShopStatisticDTO(productResultSets,sellerShopDTO);
+		Product_ShopStatisticDTO product_ShopStatisticDTO = getShopStatisticDTO(productResultSets,shop_ShopManagerDTO);
 		
-		return new Pair<SellerShopDTO, SellerShopStatisticDTO>(sellerShopDTO,sellerShopStatisticDTO);	
+		return new Pair<Shop_ShopManagerDTO, Product_ShopStatisticDTO>(shop_ShopManagerDTO,product_ShopStatisticDTO);	
 	}
 	
 	public static void main(String[] args) {
@@ -262,7 +261,7 @@ public class ShopModel {
 		currentUser.setUser_id((byte)2);
 
 		//Lay tap ban ghi nguoi su dung
-		SellerShopStatisticDTO rs = u.getShopDTOByUser(new Quintet<Short, Byte, String ,String, String>((short) 0,(byte) 0, "", "", ""),currentUser).getValue1();
+		Product_ShopStatisticDTO rs = u.getShopDTOByUser(new Quintet<Short, Byte, String ,String, String>((short) 0,(byte) 0, "", "", ""),currentUser).getValue1();
 		
 		String row = null;
 		//Duyen va hien thi danh sach nguoi su dung
