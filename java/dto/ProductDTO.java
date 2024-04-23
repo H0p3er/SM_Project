@@ -9,5 +9,5 @@ public class ProductDTO {
     private PCDTO pc;
     private ProductShopDTO shop;
     
-    
+    private ProductAttributeDTO attribute;
 }

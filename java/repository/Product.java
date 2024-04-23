@@ -21,11 +21,11 @@ public interface Product extends ShareControl {
 	
 	public ResultSet getProductsByCreatedDate(Date date, Date date2);
 	
-	public ArrayList<ResultSet> getProducts(int at, byte total, String multiField, String multiCondition, String multiSort);
+	public ArrayList<ResultSet> getProducts(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort);
 
-	public ArrayList<ResultSet> getProductsByShop(int at, byte total, String multiField,  String multiCondition, String multiSort, ShopObject shopObject);
+	public ArrayList<ResultSet> getProductsByShop(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort, ShopObject shopObject);
 	
-	public ArrayList<ResultSet> getProductsByBill(int at, byte total, String multiField,  String multiCondition, String multiSort, BillObject shopObject);
+	public ArrayList<ResultSet> getProductsByBill(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort, BillObject billObject);
 	
-	public ArrayList<ResultSet> getProductsByPC(int at, byte total, String multiField,  String multiCondition, String multiSort, PCObject shopObject);
+	public ArrayList<ResultSet> getProductsByPC(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort, PCObject pcObject);
 }

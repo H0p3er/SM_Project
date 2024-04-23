@@ -219,26 +219,27 @@ public class ProductImpl extends BasicImpl implements Product {
 	// Phương thức này có thể thực hiện nhều câu lệnh cùng lúc
 	// similar là đối tượng tương tự
 	@Override
-	public ArrayList<ResultSet> getProducts(int at, byte total, String multiField, String multiCondition, String multiSort) {
+	public ArrayList<ResultSet> getProducts(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort) {
 		StringBuilder sql = new StringBuilder();
-		sql.append(getProductsSQL(multiCondition, at, total, multiField, multiSort));
+		sql.append(getProductsSQL(at, total, multiField, multiCondition ,multiSort));
 		sql.append(getProductsSizeSQL(multiCondition));		
+		System.out.println(sql.toString());
 		return this.getReList(sql.toString());
 	}
 	
 	@Override
-	public ArrayList<ResultSet> getProductsByShop(int at, byte total, String multiCondition, String multiField, String multiSort, ShopObject shopObject){
+	public ArrayList<ResultSet> getProductsByShop(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort, ShopObject shopObject){
 		StringBuilder sql = new StringBuilder();
 		sql.append(getProductByShopSQL(at, total, multiCondition, multiField, multiSort, shopObject));
 		sql.append(getProductsSizeByShopSQL(shopObject));
 		sql.append(getProductSoldByShopSQL(shopObject));
+		System.out.println(sql.toString());
 		return this.getReList(sql.toString());
 	}
 	
 	
 	@Override
-	public ArrayList<ResultSet> getProductsByBill(int at, byte total, String multiField, String multiCondition,
-			String multiSort, BillObject shopObject) {
+	public ArrayList<ResultSet> getProductsByBill(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort, BillObject shopObject) {
 		StringBuilder sql = new StringBuilder();
 		sql.append(getProductsByBillSQL(at, total, multiCondition, multiField, multiSort, shopObject));
 		sql.append(getProductsSizeByBillSQL(shopObject));
@@ -246,8 +247,7 @@ public class ProductImpl extends BasicImpl implements Product {
 	}
 	
 	@Override
-	public ArrayList<ResultSet> getProductsByPC(int at, byte total, String multiField, String multiCondition,
-			String multiSort, PCObject shopObject) {
+	public ArrayList<ResultSet> getProductsByPC(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort, PCObject shopObject) {
 		// TODO Auto-generated method stub
 		StringBuilder sql = new StringBuilder();
 		return null;
@@ -262,127 +262,75 @@ public class ProductImpl extends BasicImpl implements Product {
 	
 	private String SELECTConditions(String multiField) {
 		StringBuilder SELECT = new StringBuilder();
-
-		if (multiField!=null) {
-			if (!multiField.equalsIgnoreCase("")) {
-				Map<String,String> SortMap = new TreeMap<String,String>();
-				String[] Pair = multiField.trim().split(";");
-				for (int i=0; i<Pair.length;i++) {
-					String[] div = Pair[i].split(":");
-					SortMap.put(div[0], div[1]);
-				}			
-				SortMap.forEach((key,value)->{
-					switch (key) {			
-					case "name":
-						SELECT.append("product_name");
-						break;
-					case "address":
-						SELECT.append("product_address");
-						break;
-					case "last_modified":
-						SELECT.append("product_last_modified");
-						break;
-					default:
-						SELECT.append("product_id= ");
-					}			
-					SELECT.append(value);
-				});
-				
-				if(!SELECT.toString().equalsIgnoreCase("")) {
-					SELECT.insert(0, "WHERE  ");
-				}
-			}
-		}
 		return SELECT.toString();
 	}
-	
-	private String WHEREConditions(String multiCondition) {
+
+	private String WHEREConditions(Map<String,String> multiCondition) {
 		StringBuilder WHERE = new StringBuilder();
-		
-		if (multiCondition!=null) {
-			if (!multiCondition.equalsIgnoreCase("")) {
-				Map<String,String> SortMap = new TreeMap<String,String>();
-				String[] Pair = multiCondition.trim().split(";");
-				for (int i=0; i<Pair.length;i++) {
-					String[] div = Pair[i].split(":");
-					SortMap.put(div[0], div[1]);
-				}			
-
-				SortMap.forEach((key,value)->{
-					switch (key) {			
-					case "name":
-						WHERE.append("product_name");
-						break;
-					case "address":
-						WHERE.append("product_address");
-						break;
-					case "last_modified":
-						WHERE.append("product_last_modified");
-						break;
-					default:
-						WHERE.append("product_id= ");
-					}			
-					WHERE.append(value);
-				});
-				
-				if(!WHERE.toString().equalsIgnoreCase("")) {
-					WHERE.insert(0, "WHERE  ");
-				}
-			}
+		multiCondition.forEach((key,value)->{
+			switch (key) {
+			case "query":
+				WHERE.append("product_name=%"+value+" ");
+				WHERE.append("OR pc_name=%"+value);
+			case "id":
+				WHERE.append("product_=id");
+				break;
+			case "name":
+				WHERE.append("product_name=");
+				break;
+			case "address":
+				WHERE.append("product_address=");
+				break;
+			case "last_modified":
+				WHERE.append("product_last_modified="+value);
+				break;
+			default:
+				WHERE.append("product_name= "+value);
+			}			
+		});		
+		if(!WHERE.toString().equalsIgnoreCase("")) {
+			WHERE.insert(0, "WHERE ");
 		}
-
 		return WHERE.toString();
 	}
 	
-	private String ORDERConditions(String multiSort) {
+	private String ORDERConditions(Map<String,String> multiSort) {
 		StringBuilder ORDER = new StringBuilder();
-		if (multiSort!=null) {
-			if (!multiSort.equalsIgnoreCase("")) {
-				Map<String,String> SortMap = new TreeMap<String,String>();
-				
-				String[] Pair = multiSort.trim().split(";");
-				for (int i=0; i<Pair.length;i++) {
-					String[] div = Pair[i].split(":");
-					SortMap.put(div[0], div[1]);
-				}			
-
-				SortMap.forEach((key,value)->{
-					switch (key) {			
-					case "name":
-						ORDER.append("product_name");
-						break;
-					case "address":
-						ORDER.append("product_address");
-						break;
-					case "last_modified":
-						ORDER.append("product_last_modified");
-						break;
-					default:
-						ORDER.append("product_id ");
-					}			
-					switch (value) {
-					case "asc":
-						ORDER.append(" ASC;");
-						break;
-					case "desc":
-						ORDER.append(" DESC;");
-						break;
-					default:
-						ORDER.append(" ASC;");
-						break;
-					}
-				});
-				
-				
-				if(!ORDER.toString().equalsIgnoreCase("")) {
-					ORDER.insert(0, "ORDER BY ");
-				}
+		multiSort.forEach((key,value)->{
+			switch (key) {			
+			case "name":
+				ORDER.append("product_name");
+				break;
+			case "address":
+				ORDER.append("product_address");
+				break;
+			case "last_modified":
+				ORDER.append("product_last_modified");
+				break;
+			default:
+				ORDER.append("product_id ");
+			}			
+			switch (value) {
+			case "asc":
+				ORDER.append(" ASC;");
+				break;
+			case "desc":
+				ORDER.append(" DESC;");
+				break;
+			default:
+				ORDER.append(" ASC;");
+				break;
 			}
+		});
+		
+		
+		if(!ORDER.toString().equalsIgnoreCase("")) {
+			ORDER.insert(0, "ORDER BY ");
 		}
 		return ORDER.toString();
 	}
 	
-	private String getProductsSQL(String multiCondition, int at, byte total, String multiField, String multiSort) {
+	private String getProductsSQL(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT * FROM tblproduct ");
 		sql.append(this.WHEREConditions(multiCondition));
@@ -395,20 +343,19 @@ public class ProductImpl extends BasicImpl implements Product {
 		return sql.toString();
 	}
 	
-	private String getProductsSizeSQL(String multiCondition) {
+	private String getProductsSizeSQL(Map<String,String> multiCondition) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT COUNT(product_id) AS product_count FROM tblproduct; ");
 		sql.append(this.WHEREConditions(multiCondition));	
 		return sql.toString();
 	}
 	
-	private String getProductByShopSQL(int at, byte total, String multiCondition, String multiField, String multiSort, ShopObject object) {	
+	private String getProductByShopSQL(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort, ShopObject object) {	
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT p.*, pc.pc_name FROM tblproduct p ");	
 		sql.append("LEFT JOIN tblpc pc ON p.product_pc_id = pc.pc_id ");
 		sql.append("INNER JOIN tblshop s ON p.product_shop_id = s.shop_id ");
-		sql.append("WHERE (p.product_shop_id="+object.getShop_id()+") AND (p.product_deleted=0) ");
-		sql.append("GROUP BY p.product_id, pc.pc_name; ");
+		sql.append("WHERE (p.product_shop_id="+object.getShop_id()+") AND (p.product_deleted=0); ");
 
 		return sql.toString();
 	}	
@@ -416,9 +363,9 @@ public class ProductImpl extends BasicImpl implements Product {
 	private String getProductSoldByShopSQL(ShopObject object) {	
 		StringBuilder sql = new StringBuilder();
 		// Lấy sản phẩm bán được 
-		sql.append("SELECT p.*, SUM(bd_product_quantity) as TotalSellingQuantityPerProduct, SUM(p.product_price*bd_product_quantity) as TotalSellingPricePerProduct FROM tblproduct p ");
+		sql.append("SELECT p.*, SUM(bd.bd_product_quantity) as TotalSellingQuantityPerProduct, SUM(product_price*bd_product_quantity) as TotalSellingPricePerProduct FROM tblproduct p ");
 		sql.append("INNER JOIN tblbd bd ON p.product_id = bd.bd_product_id ");
-		sql.append("WHERE (p.product_shop_id="+object.getShop_id()+") AND (p.product_deleted=0)");
+		sql.append("WHERE ((p.product_shop_id="+object.getShop_id()+") AND (p.product_deleted=0)) ");
 		sql.append("GROUP BY p.product_id; ");
 		return sql.toString();
 	}
@@ -427,16 +374,16 @@ public class ProductImpl extends BasicImpl implements Product {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT COUNT(p.product_id) as TotalProduct FROM tblproduct p ");	
 		sql.append("INNER JOIN tblshop s ON p.product_shop_id = s.shop_id ");
-		sql.append("WHERE (p.product_shop_id="+object.getShop_id()+") AND (p.product_deleted=0); ");
+		sql.append("WHERE ((p.product_shop_id="+object.getShop_id()+") AND (p.product_deleted=0)); ");
 		return sql.toString();
 	}
 	
 	
-	private String getProductsByPCSQL(int at, byte total, String multiCondition, String multiField, String multiSort, PCObject object) {	
+	private String getProductsByPCSQL(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort, PCObject object) {	
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT p.*, pc.pc_name FROM tblproduct p ");	
 		sql.append("INNER JOIN tblpc pc ON p.product_pc_id = pc.pc_id ");
-		sql.append("WHERE (p.product_shop_id="+object.getPc_id()+") AND (p.product_deleted=0) ");
+		sql.append("WHERE (pc.pc_id="+object.getPc_id()+") AND (p.product_deleted=0) ");
 		sql.append("GROUP BY p.product_id, pc.pc_name; ");
 
 		return sql.toString();
@@ -447,21 +394,19 @@ public class ProductImpl extends BasicImpl implements Product {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT COUNT(p.product_id) as TotalProduct FROM tblproduct p ");	
 		sql.append("INNER JOIN tblpc pc ON p.product_pc_id = pc.pc_id ");
-		sql.append("WHERE (p.product_shop_id="+object.getPc_id()+") AND (p.product_deleted=0); ");
+		sql.append("WHERE (pc.pc_id="+object.getPc_id()+") AND (p.product_deleted=0); ");
 		return sql.toString();
 	}
 	
 	
-	private String getProductsByBillSQL(int at, byte total, String multiCondition, String multiField, String multiSort, BillObject object) {	
+	private String getProductsByBillSQL(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort, BillObject object) {	
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT p.*, pc.pc_name FROM tblproduct p ");	
+		sql.append("SELECT p.* FROM tblproduct p ");
 		sql.append("INNER JOIN tblbd bd ON bd.bd_product_id = p.product_id ");
 		sql.append("WHERE (p.product_shop_id="+object.getBill_id()+") AND (p.product_deleted=0) ");
-		sql.append("GROUP BY p.product_id, pc.pc_name; ");
-
+		sql.append("GROUP BY p.product_id; ");
 		return sql.toString();
 	}	
-	
 	
 	private String getProductsSizeByBillSQL(BillObject object) {	
 		StringBuilder sql = new StringBuilder();
@@ -470,4 +415,25 @@ public class ProductImpl extends BasicImpl implements Product {
 		sql.append("WHERE (p.product_shop_id="+object.getBill_id()+") AND (p.product_deleted=0); ");
 		return sql.toString();
 	}
+	
+	
+	private String getNewestProducts() {	
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT p.*, pc.pc_name FROM tblproduct p ");	
+		sql.append("INNER JOIN tblbd bd ON bd.bd_product_id = p.product_id ");
+		sql.append("LEFT JOIN tblpc pc ON p.product_pc_id = pc.pc_id ");
+		sql.append("WHERE (p.product_deleted=0) ");
+		sql.append("ORDER BY (product_created_date); ");
+		return sql.toString();
+	}
+	
+	private String getMostSoldProducts() {	
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT p.*, pc.pc_name FROM tblproduct p ");
+		sql.append("INNER JOIN tblbd bd ON bd.bd_product_id = p.product_id ");
+		sql.append("LEFT JOIN tblpc pc ON p.product_pc_id = pc.pc_id ");
+		sql.append("WHERE (p.product_deleted=0) ");
+		sql.append("ORDER BY (bd_product_quantity);");
+		return sql.toString();
+	}	
 }

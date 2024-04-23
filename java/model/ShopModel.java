@@ -198,16 +198,16 @@ public class ShopModel {
 
 	
 	public Pair<SellerShopDTO, SellerShopStatisticDTO> getShopDTOByUser(
-			Quintet<Short, Byte, String, String, String> productInfors, 
+			Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, 
 			UserObject currentUser) {
 		//Lay ban ghi 
-		
+
 		Short pagePos = productInfors.getValue0();
 		byte pageLength = productInfors.getValue1();
 		
-		String multiField = productInfors.getValue2();
-		String multiCondition = productInfors.getValue3();
-		String multiSort = productInfors.getValue4();
+		Map<String,String> multiField = productInfors.getValue2();
+		Map<String,String> multiCondition = productInfors.getValue3();
+		Map<String,String> multiSort = productInfors.getValue4();
 		int recordPos = (pagePos-1)*pageLength;
 		
 		ArrayList<ResultSet> shopResultSets = this.shop.getShopByUser(currentUser);		

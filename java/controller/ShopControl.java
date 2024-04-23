@@ -50,8 +50,8 @@ public class ShopControl {
 		ShopDTO shopDTO = this.shopModel.getShopDTOById(infors,id);
 		return ShopLibrary.viewShop(shopDTO);
 	}
-	
-	public Map<String,String> displaySellerShopProfile(Quintet<Short, Byte, String, String, String> productInfors, 
+
+	public Map<String,String> displaySellerShopProfile(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, 
 			UserObject currentUser){
 		Pair<SellerShopDTO,SellerShopStatisticDTO> userShopDTO = this.shopModel.getShopDTOByUser(productInfors,currentUser);
 		return ShopLibrary.viewSellerShopProfile(userShopDTO);

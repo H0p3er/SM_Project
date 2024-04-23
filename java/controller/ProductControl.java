@@ -56,21 +56,14 @@ public class ProductControl {
 	/**
 	 * Phương thức trả về tập các product theo infors truyền vào
 	 * @param infors các điều kiện để lấy dữ liệu
-	 * @return cặp giá trị danh sách product lấy được và tổng số bản ghi lấy được<br/>
+	 * @return cặp giá trị danh sách product lấy được và tổng số bản ghi lấy được
 	 * 
 	 * Cập nhật ngày 26/10/2023
 	 */
-	public Pair<ArrayList<ProductObject>,Integer> getProducts(Quintet<ProductObject, Short, Byte, PRODUCT_SORT_TYPE, Boolean> infors) {
-		//Lay du lieu
-		ProductObject similar = infors.getValue0();
-		short page = infors.getValue1();
-		byte total = infors.getValue2();
-		PRODUCT_SORT_TYPE pst = infors.getValue3();
-		
-		boolean isExport = infors.getValue4();
-				
-		return this.pm.getProductObjects(similar, page, total, pst, isExport);
+	public Pair<ArrayList<ProductObject>,Integer> getProducts(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> infors) {			
+		return this.pm.getProductObjects(infors);
 	}
+
 	
 	/** 
 	 * Phương thức trả về danh sách giao diện cho phần trình bày danh sách product
@@ -79,11 +72,11 @@ public class ProductControl {
 	 * 
 	 * <br/>Cập nhật ngày 26/10/2023
 	 */
-	public Map<String,String> viewProductsList(Quintet<Short, Byte, String, String, String> infors){
+	public Map<String,String> viewHomeProduct(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> infors){
 
 		Pair<ArrayList<ProductObject>,Integer> datas = this.pm.getProductObjects(infors);
 		
-		return ProductLibrary.viewProductList(datas, infors);
+		return ProductLibrary.viewHomeProduct(datas, infors);
 	}
 	
 }

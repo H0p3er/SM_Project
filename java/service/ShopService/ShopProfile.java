@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -80,11 +81,15 @@ public class ShopProfile extends HttpServlet {
 		} 
 
 		PrintWriter out = response.getWriter();
-		
+
 		// Xac dinh kieu noi dung xuat ve trinh khach
-		Quintet<Short, Byte, String, String, String> productInfors = 
-				new Quintet<Short, Byte, String, String, String>((short) 0,(byte) 0,"","","");
-		
+		Quintet<Short, Byte,  Map<String,String>,  Map<String,String>,  Map<String,String>> productInfors = 
+		new Quintet<>
+		((short) 0,(byte) 0, 
+				utility.Utilities.getMapParam(request, null), 
+				utility.Utilities.getMapParam(request, null),
+				utility.Utilities.getMapParam(request, null));
+
 		Map<String,String> data = shopControl.displaySellerShopProfile(productInfors,user);
 		
 		this.shopControl.releaseCP();

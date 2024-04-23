@@ -246,7 +246,7 @@ public class ShopImpl extends BasicImpl implements Shop {
 
 	@Override
 	public ArrayList<ResultSet> getShops(
-			int at, byte total, String multiField, String multiCondition, String multiSort) {
+			int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort) {
 		// TODO Auto-generated method stub
 		StringBuilder sql = new StringBuilder();			
 		return this.getReList(sql.toString());

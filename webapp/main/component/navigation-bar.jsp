@@ -35,12 +35,16 @@
                    <!-- ***** Menu Start ***** -->
                    <ul class="nav justify-content-between px-3 px-md-0">
               		<li class="ms-lg-5 col-8">
-                	<div class="input-group">
-                  <input type="text" class="form-control" placeholder="Tìm kiếm..."
-                    aria-labbel="Timkiem" aria-describedby="button-addon2">
-                  <button class="btn btn-dark" type="button" id="button-addon2"><i class="fa fa-search" aria-hidden="true"></i></button>
-                </div>
-              </li>
+              		<form action="/home/product/search" method="get">
+	               		<div class="input-group" >              			
+               				<input type="text" name="search" class="form-control" placeholder="Tìm kiếm..."
+		                    aria-labbel="Timkiem" aria-describedby="button-addon2">
+		                	<button class="btn btn-dark" type="button" id="button-addon2">
+		                		<i class="fa fa-search" aria-hidden="true"></i>
+		                	</button>               					                 
+	                	</div>
+                	</form>
+             	 </li>
 				<%	session = request.getSession(true); 
 					if (session.getAttribute("userLogined")!=null)
 					{ %>
