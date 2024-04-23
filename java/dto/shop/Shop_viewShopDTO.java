@@ -1,17 +1,17 @@
-package dto;
+package dto.shop;
 
 import java.util.List;
 
-import dto.user.ShopProductDTO;
-import dto.user.ShopSellerDTO;
+import dto.product.Product_ShopManagerDTO;
+import dto.user.User_viewShopDTO;
 import entity.ShopObject;
 
-public class ShopDTO {
+public class Shop_viewShopDTO {
     private int id;
     private String name;
     private String address;
     private byte status;
-    private ShopSellerDTO user;
+    private User_viewShopDTO user;
     private String website_link;
     private String address_link;
     private String created_date;
@@ -19,7 +19,7 @@ public class ShopDTO {
     private String notes;
 	private String phone;
     private String email;
-	private List<ShopProductDTO> storage;
+	private List<Product_ShopManagerDTO> storage;
 	
 	public int getId() {
 		return id;
@@ -110,11 +110,11 @@ public class ShopDTO {
 		this.email = email;
 	}
 
-	public List<ShopProductDTO> getStorage() {
+	public List<Product_ShopManagerDTO> getStorage() {
 		return storage;
 	}
 
-	public void setStorage(List<ShopProductDTO> storage) {
+	public void setStorage(List<Product_ShopManagerDTO> storage) {
 		this.storage = storage;
 	}
 
@@ -126,11 +126,11 @@ public class ShopDTO {
 		shopObject.setShop_email(images);
 	}
 
-	public ShopSellerDTO getUser() {
+	public User_viewShopDTO getUser() {
 		return user;
 	}
 
-	public void setUser(ShopSellerDTO user) {
+	public void setUser(User_viewShopDTO user) {
 		this.user = user;
 	}
 }

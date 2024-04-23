@@ -51,12 +51,7 @@ public class ProductSR extends HttpServlet {
 			// Ä‘ang á»Ÿ trong danh sÃ¡ch Ä‘Ã£ dá»«ng kinh doanh hay ko. Náº¿u á»Ÿ trong thÃ¬ lÃ  null
 			String isStopedCell = request.getParameter("s");
 			String isRestore = request.getParameter("r");
-			if(isRestore != null) {
-				sProduct.setStoped_sell(false);
-			} else {
-				sProduct.setStoped_sell(true);
-			}
-			
+
 			boolean result;
 			String status;
 			if(isStopedCell == null) {
@@ -64,7 +59,7 @@ public class ProductSR extends HttpServlet {
 				// Chuyá»ƒn Ä‘áº¿n danh sÃ¡ch sáº£n pháº©m Ä‘Ã£ ngá»«ng kinh doanh
 				url += "?sell";
 			} else {
-				result = pc.editProduct(sProduct, PRODUCT_EDIT_TYPE.ISSELL);
+				result = pc.editProduct(sProduct, PRODUCT_EDIT_TYPE.GENERAL);
 			}
 			pc.releaseConnection();
 			if(result) {

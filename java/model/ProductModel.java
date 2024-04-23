@@ -3,7 +3,7 @@ package model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Optional;
+import java.util.Map;
 
 import org.javatuples.Pair;
 import org.javatuples.Quintet;
@@ -16,13 +16,16 @@ import utility.Utilities;
 
 public class ProductModel {
 	private Product p;
+	private PC pc;
 
 	public ProductModel(ConnectionPool cp) {
 		this.p = new ProductImpl(cp);
+		this.pc = new PCImpl(cp);
 	}
 
 	protected void finalize() throws Throwable {
 		this.p = null;
+		this.pc = null;
 	}
 
 	public ConnectionPool getCP() {
@@ -31,10 +34,9 @@ public class ProductModel {
 
 	public void releaseConnection() {
 		this.p.releaseCP();
+		this.pc.releaseCP();
 	}
 
-	// ***********************Chuyen huong dieu khien tu Product
-	// Impl*****************************************
 	public boolean addProduct(ProductObject item) {
 		return this.p.addProduct(item);
 	}
@@ -47,16 +49,12 @@ public class ProductModel {
 		return this.p.delProduct(item);
 	}
 
-	// ****************************************************************
 
 	public ProductObject getProductObject(int id) {
-		// Gan gia tri khoi tao cho doi tuong ProductObject
 		ProductObject item = null;
 
-		// Lay ban ghi
 		ResultSet rs = this.p.getProductById(id);
 
-		// Chuyen doi ban ghi thanh doi tuong
 		if (rs != null) {
 			try {
 				if (rs.next()) {
@@ -79,36 +77,23 @@ public class ProductModel {
 		}
 		return item;
 	}
+	
 
-	/**
-	 * Phương thức lấy về danh sách đối tượng và tổng số bản ghi
-	 * @param similar
-	 * @param page
-	 * @param pPerPage
-	 * @param type
-	 * @param isExport
-	 * @return
-	 * 		danh sách đối tượng<br/>
-	 * 		Tổng số bản ghi
-	 */
-	public Pair<ArrayList<ProductObject>, Integer> getProductObjects(Quintet<Short, Byte, String, String, String> infors) {
-		//Lay du lieu
+
+	public Pair<ArrayList<ProductObject>, Integer> getProductObjects(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> infors) {
+	
 		short page = infors.getValue0();
-		byte productPerPage = infors.getValue1();
+		byte productPerPage = infors.getValue1();	
+		Map<String,String> multiField = infors.getValue2();
+		Map<String,String> multiCondition = infors.getValue3();
+		Map<String,String> multiSort = infors.getValue4();
 		
-		String multiField = infors.getValue2();
-		String multiCondition = infors.getValue3();
-		String multiSort = infors.getValue4();
-		// Gan gia tri khoi tao cho doi tuong ProductObject
+		
 		ArrayList<ProductObject> items = new ArrayList<>();
 		ProductObject item = null;
-
-		// Lay ban ghi
 		int at = (page - 1) * productPerPage;
 		ArrayList<ResultSet> res = this.p.getProducts(at, productPerPage, multiField, multiCondition, multiSort);
-
 		ResultSet rs = res.get(0);
-
 		// Chuyen doi ban ghi thanh doi tuong
 		if (rs != null) {
 			try {
@@ -124,7 +109,6 @@ public class ProductModel {
 					item.setProduct_pc_id(rs.getInt("product_pc_id"));
 					item.setProduct_shop_id(rs.getInt("product_shop_id"));
 					item.setProduct_quantity(rs.getInt("product_quantity"));
-
 					// Dua doi tuong vao tap hop
 					items.add(item);
 				}
@@ -134,13 +118,18 @@ public class ProductModel {
 			}
 		}
 
+		int product_count = getProductObjectsSize(rs);
+		return new Pair<>(items, product_count);
+	}
+	
+	
+	public int getProductObjectsSize(ResultSet rs) {
 		// Lay tong so ban ghi
-		int totalGlobal = 0;
-		rs = res.get(1);
+		int product_count = 0;
 		if (rs != null) {
 			try {
 				if (rs.next()) {
-					totalGlobal = rs.getInt("product_count");
+					product_count = rs.getInt("product_count");
 				}
 				rs.close();
 			} catch (SQLException e) {
@@ -148,6 +137,7 @@ public class ProductModel {
 				e.printStackTrace();
 			}
 		}
-		return new Pair<>(items, totalGlobal);
+		
+		return product_count;
 	}
 }

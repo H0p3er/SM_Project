@@ -40,23 +40,20 @@ public class Utilities {
 		return value;
 	}
 	
-	public static HashMap<Integer, Integer> getIntIntMapParam(ServletRequest request, String name) {
-		
+	public static Map<String, String> getMapParam(ServletRequest request, String name) {	
 		String str_value = request.getParameter(name);		
-		HashMap<Integer, Integer> map = new HashMap<>();
-		
+		Map<String, String> map = new TreeMap<>();	
 		if (str_value!=null && !str_value.equalsIgnoreCase("")) {
 	        String[] pairs = str_value.split(";");
 	        for (String pair : pairs) {
-	            String[] keyValue = pair.split(",");        
-	            int key = Integer.parseInt(keyValue[0]);
-	            int value = Integer.parseInt(keyValue[1]);
-	            map.put(key, value);
+	            String[] keyValue = pair.split(":");        
+	            map.put(keyValue[0], keyValue[1]);
 	        }	
 		}
 
 		return map;
 	}
+	
 	
 	// Lấy dữ liệu kiểu Boolean từ Para
 	public static boolean getBooleanParam(ServletRequest request, String name) {

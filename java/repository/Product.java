@@ -21,11 +21,22 @@ public interface Product extends ShareControl {
 	
 	public ResultSet getProductsByCreatedDate(Date date, Date date2);
 	
-	public ArrayList<ResultSet> getProducts(int at, byte total, String multiField, String multiCondition, String multiSort);
+	public ArrayList<ResultSet> getProducts(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort);
 
-	public ArrayList<ResultSet> getProductsByShop(int at, byte total, String multiField,  String multiCondition, String multiSort, ShopObject shopObject);
+	public ArrayList<ResultSet> getProductsByShop(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort, ShopObject shopObject);
 	
-	public ArrayList<ResultSet> getProductsByBill(int at, byte total, String multiField,  String multiCondition, String multiSort, BillObject shopObject);
+	public ArrayList<ResultSet> getProductsByBill(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort, BillObject billObject);
 	
-	public ArrayList<ResultSet> getProductsByPC(int at, byte total, String multiField,  String multiCondition, String multiSort, PCObject shopObject);
+	/** 
+	 * Phương thức trả về danh sách giao diện cho phần trình bày danh sách product
+	 * @param at :vị trí bản ghi
+	 * @param total :số lượng bản ghi/trang
+	 * @param multiField :lấy thuộc tính theo tên trường
+	 * @param multiCondition :số lượng bản ghi/trang
+	 * @param multiSort :sắp xếp theo nhiều thuộc tính
+	 * @return ArrayList<ResultSet> Danh sách bản ghi
+	 * 
+	 * <br/>Cập nhật ngày 23/4/2024
+	 */
+	public ArrayList<ResultSet> getProductsByPC(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort, PCObject pcObject);
 }

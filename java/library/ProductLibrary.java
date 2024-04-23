@@ -11,8 +11,8 @@ import org.javatuples.Quintet;
 import entity.ProductObject;
 
 public class ProductLibrary {
-	public static Map<String,String> viewProductList(Pair<ArrayList<ProductObject>, Integer> datas,
-			Quintet<Short, Byte, String, String, String> infors) {
+	public static Map<String,String> viewHomeProduct(Pair<ArrayList<ProductObject>, Integer> datas,
+			Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> infors) {
 		
 		Map<String,String> view = new HashMap<String,String>();
 		StringBuilder tmp = new StringBuilder();

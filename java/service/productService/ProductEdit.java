@@ -120,14 +120,7 @@ public class ProductEdit extends HttpServlet {
 			ProductObject editProduct = new ProductObject();
 			editProduct.setProduct_id(idForPost);
 			editProduct.setProduct_name(name);
-			editProduct.setProduct_bar_code(barcode);
-			editProduct.setPc_id(pcid);
-			editProduct.setProduct_import_price(importPrice);
-			editProduct.setProduct_sell_price(sellPrice);
-			editProduct.setMinInventory(minInventory);
-			editProduct.setMaxInventory(maxInventory);
 			editProduct.setProduct_images(updatePath + seperator+ imagePath.toString());
-			editProduct.setProduct_desc(utility.Utilities.encode(desc));
 			editProduct.setProduct_notes(utility.Utilities.encode(note));
 			
 			// Lưu thay đổi vào csdl

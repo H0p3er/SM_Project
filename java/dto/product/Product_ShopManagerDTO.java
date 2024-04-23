@@ -1,8 +1,8 @@
-package dto.seller;
+package dto.product;
 
-import dto.user.ShopPCDTO;
+import dto.pc.PC_ShopManagerDTO;
 
-public class SellerShopProductDTO {
+public class Product_ShopManagerDTO {
 	private int id;
     private String name;
     private byte status;
@@ -12,7 +12,7 @@ public class SellerShopProductDTO {
     private String notes;
     private String last_modified;
     private int quantity;
-    private ShopPCDTO pc;
+    private PC_ShopManagerDTO pc;
     private byte product_deleted;
     
 	public int getId() {
@@ -69,10 +69,10 @@ public class SellerShopProductDTO {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	public ShopPCDTO getPc() {
+	public PC_ShopManagerDTO getPc() {
 		return pc;
 	}
-	public void setPc(ShopPCDTO pc) {
+	public void setPc(PC_ShopManagerDTO pc) {
 		this.pc = pc;
 	}
 	public byte getProduct_deleted() {

@@ -1,14 +1,8 @@
 package utility;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.Map;
+import java.util.TreeMap;
 
-import org.javatuples.Pair;
-
-import entity.BillObject;
-import entity.EmployeeObject;
-import entity.UserObject;
 
 public class Utilities_data_type {
 
