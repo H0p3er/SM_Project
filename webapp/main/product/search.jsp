@@ -76,9 +76,9 @@
               <div class="item">
                 <a href="property-details.html"><img src="assets/images/manhinh.png" alt=""></a>
 
-                <h4 style="height: 92px" class="text-truncateline"><a href="property-details.html">Màn Hình Samsung
-                    Odyssey OLED G9 G92SC
-                    LS49CG 924SEX XVLS49CG92 4SEXXVLS49CG924SEXXV</a></h4>
+                <h4 style="height: 95px" class="text-truncateline"><a href="property-details.html">Màn Hình Samsung
+                    Odyssey OLED G9 G95SC
+                    LS49CG 954SEX XVLS49CG95 4SEXXVLS49CG954SEXXV</a></h4>
                 <h6 class="float-none mt-0 my-2">35,990,000đ</h6>
                 <ul class="item-list">
                   <li>Hãng: <span>Samsung</span></li>
@@ -97,7 +97,7 @@
               <div class="item">
                 <a href="property-details.html"><img src="assets/images/banphim.png" alt=""></a>
 
-                <h4 style="height: 92px" class="text-truncateline"><a href="property-details.html">Bàn Phím Cơ Không
+                <h4 style="height: 95px" class="text-truncateline"><a href="property-details.html">Bàn Phím Cơ Không
                     Dây FL-Esports CMK75 SAM
                     Lake
                     Placid Blue 3 Mode</a></h4>
@@ -118,7 +118,7 @@
               <div class="item">
                 <a href="property-details.html"><img src="assets/images/chuot.png" alt=""></a>
 
-                <h4 style="height: 92px" class="text-truncateline"><a href="property-details.html">Chuột Razer
+                <h4 style="height: 95px" class="text-truncateline"><a href="property-details.html">Chuột Razer
                     Basilisk V3 (RZ01-04000100-R3M1)</a></h4>
                 <h6 class="float-none mt-0 my-2">990,000đ</h6>
                 <ul class="item-list">
@@ -137,7 +137,7 @@
               <div class="item">
                 <a href="property-details.html"><img src="assets/images/tainghe.png" alt=""></a>
 
-                <h4 style="height: 92px" class="text-truncateline"><a href="property-details.html">Tai Nghe HyperX
+                <h4 style="height: 95px" class="text-truncateline"><a href="property-details.html">Tai Nghe HyperX
                     Cloud II Wireless (4P5K4AA)</a></h4>
                 <h6 class="float-none mt-0 my-2">3,390,000đ</h6>
                 <ul class="item-list">
@@ -155,12 +155,12 @@
               <div class="item">
                 <a href="property-details.html"><img src="assets/images/laptop.png" alt=""></a>
 
-                <h4 style="height: 92px" class="text-truncateline"><a href="property-details.html">Laptop Gaming
+                <h4 style="height: 95px" class="text-truncateline"><a href="property-details.html">Laptop Gaming
                     ASUS ROG Zephyrus Duo 16 GX650PZ NM031W</a></h4>
                 <h6 class="float-none mt-0 my-2">93,990,000₫</h6>
                 <ul class="item-list">
                   <li>Hãng: <span>Asus</span></li>
-                  <li>CPU: <span>R9 7925HX</span></li>
+                  <li>CPU: <span>R9 7955HX</span></li>
                   <li>VGA: <span>RTX 4080</span></li>
                   <li>Ram: <span>32GB DDR5</span></li>
                   <li>Màn hình: <span>16' MiniLED 240Hz</span></li>
@@ -174,7 +174,7 @@
             <div class="col-lg-4 col-md-6">
               <div class="item">
                 <a href="property-details.html"><img src="assets/images/pc.png" alt=""></a>
-                <h4 style="height: 92px" class="text-truncateline"><a href="property-details.html">Mini PC INTEL
+                <h4 style="height: 95px" class="text-truncateline"><a href="property-details.html">Mini PC INTEL
                     Tiger Canyon Core I3</a></h4>
                 <h6 class="float-none mt-0 my-2">6,990,000₫</h6>
                 <ul class="item-list">
@@ -193,8 +193,8 @@
               <div class="item">
                 <a href="property-details.html"><img src="assets/images/cpu.png" alt=""></a>
 
-                <h4 style="height: 92px" class="text-truncateline"><a href="property-details.html">CPU AMD Ryzen 9
-                    7920X3D</a></h4>
+                <h4 style="height: 95px" class="text-truncateline"><a href="property-details.html">CPU AMD Ryzen 9
+                    7950X3D</a></h4>
                 <h6 class="float-none mt-0 my-2">17,990,000₫</h6>
                 <ul class="item-list">
                   <li>Loại CPU: <span>AMD Ryzen 9</span></li>
@@ -211,7 +211,7 @@
               <div class="item">
                 <a href="property-details.html"><img src="assets/images/mainboard.png" alt=""></a>
 
-                <h4 style="height: 92px" class="text-truncateline"><a href="property-details.html">Mainboard Asus
+                <h4 style="height: 95px" class="text-truncateline"><a href="property-details.html">Mainboard Asus
                     ROG Strix B760-A Gaming Wifi D4</a></h4>
                 <h6 class="float-none mt-0 my-2">5,550,000đ</h6>
                 <ul class="item-list">
@@ -230,7 +230,7 @@
               <div class="item">
                 <a href="property-details.html"><img src="assets/images/ram.png" alt=""></a>
 
-                <h4 style="height: 92px" class="text-truncateline"><a href="property-details.html">Ram PC Corsair
+                <h4 style="height: 95px" class="text-truncateline"><a href="property-details.html">Ram PC Corsair
                     Dominator Platinum RGB DDR5 64GB 5600Mhz Black(2x
                     32GB)</a></h4>
                 <h6 class="float-none mt-0 my-2">7,190,000₫</h6>
@@ -250,7 +250,7 @@
               <div class="item">
                 <a href="property-details.html"><img src="assets/images/ssd.png" alt=""></a>
                 
-                <h4 style="height: 92px" class="text-truncateline"><a href="property-details.html">SSD Samsung 990
+                <h4 style="height: 95px" class="text-truncateline"><a href="property-details.html">SSD Samsung 990
                     Pro 2TB NVMe PCIe Gen4 X4</a></h4><h6 class="float-none mt-0 my-2">4,890,000₫</h6>
                 <ul class="item-list">
                   <li>Hãng: <span>Samsung</span></li>
@@ -268,7 +268,7 @@
               <div class="item">
                 <a href="property-details.html"><img src="assets/images/vga.png" alt=""></a>
                 
-                <h4 style="height: 92px" class="text-truncateline"><a href="property-details.html">Card Màn Hình
+                <h4 style="height: 95px" class="text-truncateline"><a href="property-details.html">Card Màn Hình
                     Gigabyte GeForce RTX 4070 Ti AORUS MASTER</a></h4><h6 class="float-none mt-0 my-2">32,990,000₫</h6>
                 <ul class="item-list">
                   <li>Hãng: <span>Gigabyte</span></li>
@@ -287,7 +287,7 @@
               <div class="item">
                 <a href="property-details.html"><img src="assets/images/psu.png" alt=""></a>
                 
-                <h4 style="height: 92px" class="text-truncateline"><a href="property-details.html">Nguồn Cooler
+                <h4 style="height: 95px" class="text-truncateline"><a href="property-details.html">Nguồn Cooler
                     Master MWE 1250 Gold V2</a></h4><h6 class="float-none mt-0 my-2">5,390,000₫</h6>
                 <ul class="item-list">
                   <li>Hãng: <span>Cooler Master</span></li>
@@ -305,7 +305,7 @@
               <div class="item">
                 <a href="property-details.html"><img src="assets/images/case.png" alt=""></a>
                 
-                <h4 style="height: 92px" class="text-truncateline"><a href="property-details.html">Case MSI MPG
+                <h4 style="height: 95px" class="text-truncateline"><a href="property-details.html">Case MSI MPG
                     Velox 100P AirFlow</a></h4><h6 class="float-none mt-0 my-2">3,490,000₫</h6>
                 <ul class="item-list">
                   <li>Hãng: <span>MSI</span></li>
@@ -321,7 +321,7 @@
               <div class="item">
                 <a href="property-details.html"><img src="assets/images/cooler.png" alt=""></a>
                 
-                <h4 style="height: 92px" class="text-truncateline"><a href="property-details.html">Tản Nhiệt Nước
+                <h4 style="height: 95px" class="text-truncateline"><a href="property-details.html">Tản Nhiệt Nước
                     Corsair H100 RGB</a></h4><h6 class="float-none mt-0 my-2">2,290,000₫</h6>
                 <ul class="item-list">
                   <li>Hãng: <span>Corsair</span></li>
@@ -337,7 +337,7 @@
             <div class="col-lg-4 col-md-6">
               <div class="item">
                 <a href="property-details.html"><img src="assets/images/usb.png" alt=""></a>
-                <h4 style="height: 92px" class="text-truncateline"><a href="property-details.html">USB 3.2 SanDisk
+                <h4 style="height: 95px" class="text-truncateline"><a href="property-details.html">USB 3.2 SanDisk
                     Extreme</a></h4>
                 <h6 class="float-none mt-0 my-2">$450.000</h6>
                 <ul class="item-list">
@@ -353,7 +353,7 @@
               <div class="item">
                 <a href="property-details.html"><img src="assets/images/property-06.jpg" alt=""></a>
 
-                <h4 style="height: 92px" class="text-truncateline"><a href="property-details.html">22 New Street
+                <h4 style="height: 95px" class="text-truncateline"><a href="property-details.html">22 New Street
                     Portland, OR 16540</a></h4>
                 <h6 class="float-none mt-0 my-2">$450.000</h6>
                 <ul class="item-list">
@@ -366,6 +366,16 @@
             </div>
 
           </div>
+          <div class="row">
+        <div class="col-lg-12">
+          <ul class="pagination">
+            <li><a href="#">1</a></li>
+            <li><a class="is_active" href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">>></a></li>
+          </ul>
+        </div>
+      </div>
         </div>
       </div>
 
