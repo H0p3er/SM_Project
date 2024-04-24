@@ -5,7 +5,7 @@ import java.util.Map;
 import dto.ProductShopDTO;
 import dto.pc.PC_DTO;
 
-public class Product_viewProductDTO {
+public class Product_viewProductDTO<T> {
     private String name;
     private byte status;
     private double price;
@@ -13,7 +13,7 @@ public class Product_viewProductDTO {
     private String last_modified;
     private PC_DTO pc;
     private ProductShopDTO shop;
-    private Map<String,String> attribute;
+    private T attribute;
 	public String getName() {
 		return name;
 	}
@@ -56,10 +56,10 @@ public class Product_viewProductDTO {
 	public void setShop(ProductShopDTO shop) {
 		this.shop = shop;
 	}
-	public Map<String, String> getAttribute() {
+	public T getAttribute() {
 		return attribute;
 	}
-	public void setAttribute(Map<String, String> attribute) {
+	public void setAttribute(T attribute) {
 		this.attribute = attribute;
 	}
     

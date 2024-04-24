@@ -27,15 +27,18 @@ public class ShopModel {
 	
 	private Shop shop;
 	private Product product;
+	private PC pc;
 	
 	public ShopModel(ConnectionPool cp) {
 		this.shop = new ShopImpl(cp);
 		this.product = new ProductImpl(cp);
+		this.pc = new PCImpl(cp);
 	}
 	
 	protected void finalize() throws Throwable{
 		this.shop=null;
 		this.product=null;
+		this.pc = null;
 	}
 	
 	public ConnectionPool getCP() {
@@ -45,6 +48,7 @@ public class ShopModel {
 	public void releaseCP() {
 		this.shop.releaseCP();
 		this.product.releaseCP();
+		this.pc.releaseCP();
 	}
 
 	//***********************Chuyen huong dieu khien tu Shop Impl*****************************************
@@ -261,8 +265,8 @@ public class ShopModel {
 		currentUser.setUser_id((byte)2);
 
 		//Lay tap ban ghi nguoi su dung
-		Product_ShopStatisticDTO rs = u.getShopDTOByUser(new Quintet<Short, Byte, String ,String, String>((short) 0,(byte) 0, "", "", ""),currentUser).getValue1();
-		
+		Product_ShopStatisticDTO rs = u.getShopDTOByUser(new Quintet<Short, Byte, Map<String, String> ,Map<String, String>, Map<String, String>>((short) 0,(byte) 0, new HashMap<String, String>(), new HashMap<String, String>(), new HashMap<String, String>()),currentUser).getValue1();
+		Shop_ShopManagerDTO rs1 = u.getShopDTOByUser(new Quintet<Short, Byte, Map<String, String> ,Map<String, String>, Map<String, String>>((short) 0,(byte) 0, new HashMap<String, String>(), new HashMap<String, String>(), new HashMap<String, String>()),currentUser).getValue0();
 		String row = null;
 		//Duyen va hien thi danh sach nguoi su dung
 		if (rs!=null) {
@@ -271,6 +275,15 @@ public class ShopModel {
 			System.out.println("quantity:"+rs.getTotalQuantityAllProduct());
 	
 		}
+		
+		if (rs1!=null) {
+			rs1.getStorage().forEach(product->{
+				System.out.println("object:"+product.);
+			});
+			
+	
+		}
+		
 
 	}
 		

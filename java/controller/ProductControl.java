@@ -72,6 +72,20 @@ public class ProductControl {
 	 * 
 	 * <br/>Cập nhật ngày 26/10/2023
 	 */
+	public Map<String,String> viewProductList(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> infors){
+
+		Pair<ArrayList<ProductObject>,Integer> datas = this.pm.getProductObjects(infors);
+		
+		return ProductLibrary.viewProductList(datas, infors);
+	}
+	
+	/** 
+	 * Phương thức trả về danh sách giao diện cho phần trình bày danh sách product cho trang home
+	 * @param infors các thông tin bổ sung
+	 * @return danh sách giao diện trình bày cho phần product
+	 * 
+	 * <br/>Cập nhật ngày 26/10/2023
+	 */
 	public Map<String,String> viewHomeProduct(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> infors){
 
 		Pair<ArrayList<ProductObject>,Integer> datas = this.pm.getProductObjects(infors);
