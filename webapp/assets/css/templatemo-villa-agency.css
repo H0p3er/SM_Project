@@ -130,11 +130,11 @@ body {
 }
 
 .section {
-  margin-top: 60px;
+  margin-top: 70px;
 }
 
 .section-heading {
-  margin-bottom: 70px;
+  margin-bottom: 0;
 }
 
 .section-heading h2 {
@@ -922,30 +922,30 @@ Featured Style
   padding: 35px 30px;
 }
 
-.featured .info-table ul li {
+.featured .info-table>ul>li {
   display: block;
   margin-bottom: 35px;
   padding-bottom: 35px;
   border-bottom: 1px solid #eee;
 }
 
-.featured .info-table ul li:last-child {
+.featured .info-table>ul>li:last-child {
   border-bottom: none;
   padding-bottom: 0;
   margin-bottom: 0;
 }
 
-.featured .info-table ul li img {
+.featured .info-table>ul>li img {
   float: left;
   margin-right: 25px;
 }
 
-.featured .info-table ul li h4 {
+.featured .info-table>ul>li h4 {
   font-size: 22px;
   font-weight: 600;
 }
 
-.featured .info-table ul li h4 span {
+.featured .info-table>ul>li h4 span {
   font-size: 15px;
   color: #aaa;
   font-weight: 400;
@@ -1105,7 +1105,7 @@ Best Deal Style
   padding: 35px 30px;
 }
 
-.best-deal .info-table ul li {
+.best-deal .info-table>ul>li {
   display: block;
   margin-bottom: 24px;
   padding-bottom: 24px;
@@ -1116,13 +1116,13 @@ Best Deal Style
   font-weight: 400;
 }
 
-.best-deal .info-table ul li:last-child {
+.best-deal .info-table>ul>li:last-child {
   border-bottom: none;
   padding-bottom: 0;
   margin-bottom: 0;
 }
 
-.best-deal .info-table ul li span {
+.best-deal .info-table>ul>li span {
   font-size: 20px;
   color: #1e1e1e;
   font-weight: 700;
@@ -1221,11 +1221,10 @@ Contact Style
 */
 
 .contact {
-  background-image: url(../images/contact-bg.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
-  padding: 100px 0px 250px 0px;
+  padding: 100px 0px 150px 0px;
   position: relative;
 }
 
@@ -1557,30 +1556,30 @@ Single Page Style
   margin-left: 60px;
 }
 
-.single-property .info-table ul li {
+.single-property .info-table>ul>li {
   display: block;
   margin-bottom: 35px;
   padding-bottom: 35px;
   border-bottom: 1px solid #eee;
 }
 
-.single-property .info-table ul li:last-child {
+.single-property .info-table>ul>li:last-child {
   border-bottom: none;
   padding-bottom: 0;
   margin-bottom: 0;
 }
 
-.single-property .info-table ul li img {
+.single-property .info-table>ul>li img {
   float: left;
   margin-right: 25px;
 }
 
-.single-property .info-table ul li h4 {
+.single-property .info-table>ul>li h4 {
   font-size: 22px;
   font-weight: 600;
 }
 
-.single-property .info-table ul li h4 span {
+.single-property .info-table>ul>li h4 span {
   font-size: 15px;
   color: #aaa;
   font-weight: 400;
@@ -1813,7 +1812,7 @@ body {
 }
 
 @media (max-width: 1200px) {
-  .best-deal .info-table ul li span {
+  .best-deal .info-table>ul>li span {
     float: none;
     width: 100%;
   }
