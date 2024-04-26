@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
-  <jsp:include page="../component/header.jsp" flush="true"></jsp:include>
-  <jsp:include page="../component/navigation-bar.jsp" flush="true"></jsp:include>
+  <jsp:include page="../component/user_header.jsp" flush="true"></jsp:include>
+  <jsp:include page="../component/user_navigation-bar.jsp" flush="true"></jsp:include>
   <div class="best-deal bg-white mt-2">
     <div class="container">
       <div class="row">
@@ -58,4 +58,4 @@
     </div>
   </div>
 
-  <jsp:include page="../component/footer.jsp" flush="true"></jsp:include>
+  <jsp:include page="../component/user_footer.jsp" flush="true"></jsp:include>
