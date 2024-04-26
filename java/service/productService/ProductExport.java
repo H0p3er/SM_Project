@@ -14,7 +14,6 @@ import org.javatuples.Pair;
 import org.javatuples.Quintet;
 
 import connection.ConnectionPool;
-import constant.PRODUCT_SORT_TYPE;
 import constant.USER_SORT_TYPE;
 import controller.ProductControl;
 import controller.UserControl;
@@ -66,11 +65,11 @@ public class ProductExport extends HttpServlet {
 		if (cp == null) {
 			getServletContext().setAttribute("CPool", pc.getCP());
 		}
-
-		Quintet<ProductObject, Short, Byte, PRODUCT_SORT_TYPE, Boolean> infors = new Quintet<>(null, (short) 1, (byte) 40,
-				PRODUCT_SORT_TYPE.MODIFIED, true);
-
-		Pair<ArrayList<ProductObject>, Integer> datas = pc.getProducts(infors);
+//
+//		Quintet<ProductObject, Short, Byte, PRODUCT_SORT_TYPE, Boolean> infors = new Quintet<>(null, (short) 1, (byte) 40,
+//				PRODUCT_SORT_TYPE.MODIFIED, true);
+//
+//		Pair<ArrayList<ProductObject>, Integer> datas = pc.getProducts(infors);
 
 		pc.releaseConnection();
 
@@ -80,13 +79,13 @@ public class ProductExport extends HttpServlet {
 
 		OutputStream os = response.getOutputStream();
 
-		boolean result = Utilities_file.writeProductExcel(os, datas.getValue0());
+//		boolean result = Utilities_file.writeProductExcel(os, datas.getValue0());
 
 		os.close();
 
-		if (!result) {
-			response.sendRedirect("/home/product/?err=efailed");
-		}
+//		if (!result) {
+//			response.sendRedirect("/home/product/?err=efailed");
+//		}
 	}
 
 }
