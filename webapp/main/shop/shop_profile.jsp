@@ -1,7 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<jsp:include page="../component/header.jsp" flush="true"></jsp:include>
-<jsp:include page="../component/navigation-bar.jsp" flush="true"></jsp:include>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+  <jsp:include page="../component/header.jsp" flush="true"></jsp:include>
+  <jsp:include page="../component/navigation-bar.jsp" flush="true"></jsp:include>
 
 
   <div class="best-deal bg-white mt-5">
@@ -45,7 +44,8 @@
                     </div>
                     <div class="col-12 mt-md-5">
                       <h4 class="mt-1">Extra Info About Shop</h4>
-                      <p> [note] Lorem ipsum dolor sit amet, consectetur adipiscing elit, do eiusmod tempor pack incididunt ut
+                      <p> [note] Lorem ipsum dolor sit amet, consectetur adipiscing elit, do eiusmod tempor pack
+                        incididunt ut
                         labore et dolore magna aliqua quised ipsum suspendisse.
                         <br><br>When you need free CSS templates, you can simply type TemplateMo in any search engine
                         website. In addition, you can type TemplateMo Portfolio, TemplateMo One Page Layouts, etc.
@@ -71,4 +71,4 @@
 
 
 
-<jsp:include page="../component/footer.jsp" flush="true"></jsp:include> 
+  <jsp:include page="../component/footer.jsp" flush="true"></jsp:include>

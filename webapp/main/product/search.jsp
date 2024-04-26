@@ -1,23 +1,22 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <jsp:include page="../component/header.jsp" flush="true"></jsp:include>
-<jsp:include page="../component/navigation-bar.jsp" flush="true"></jsp:include>
-		
-<div class="properties section">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+  <jsp:include page="../component/header.jsp" flush="true"></jsp:include>
+  <jsp:include page="../component/navigation-bar.jsp" flush="true"></jsp:include>
+
+  <div class="properties section">
     <div class="container">
       <nav aria-label="breadcrumb" class="ms-lg-5">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Library</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Data</li>
-          </ol>
-        </nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item"><a href="#">Library</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Data</li>
+        </ol>
+      </nav>
       <div class="row">
         <div class="col-3 d-lg-block d-none">
           <div class="best-deal p-0">
             <div class="info-table">
               <ul>
-                <li>Hãng sản xuất 
+                <li>Hãng sản xuất
                   <ul class="ms-4 mt-2">
                     <li><a class="text-black" href="">Acer</a></li>
                     <li><a class="text-black" href="">AOC</a></li>
@@ -34,7 +33,9 @@
                 </li>
                 <li>Kích thước
                   <ul class="ms-4 mt-2">
-                    <li><a href="" class="text-black"><19 inch</a></li>
+                    <li><a href="" class="text-black">
+                        <19 inch</a>
+                    </li>
                     <li><a href="" class="text-black">21.5 Inch</a></li>
                     <li><a href="" class="text-black">23.5 - 25 Inch</a></li>
                     <li><a href="" class="text-black">27 Inch</a></li>
@@ -249,9 +250,10 @@
             <div class="col-lg-4 col-md-6">
               <div class="item">
                 <a href="property-details.html"><img src="assets/images/ssd.png" alt=""></a>
-                
+
                 <h4 style="height: 95px" class="text-truncateline"><a href="property-details.html">SSD Samsung 990
-                    Pro 2TB NVMe PCIe Gen4 X4</a></h4><h6 class="float-none mt-0 my-2">4,890,000₫</h6>
+                    Pro 2TB NVMe PCIe Gen4 X4</a></h4>
+                <h6 class="float-none mt-0 my-2">4,890,000₫</h6>
                 <ul class="item-list">
                   <li>Hãng: <span>Samsung</span></li>
                   <li>Chuẩn: <span>NVME PCIe 2280</span></li>
@@ -267,9 +269,10 @@
             <div class="col-lg-4 col-md-6">
               <div class="item">
                 <a href="property-details.html"><img src="assets/images/vga.png" alt=""></a>
-                
+
                 <h4 style="height: 95px" class="text-truncateline"><a href="property-details.html">Card Màn Hình
-                    Gigabyte GeForce RTX 4070 Ti AORUS MASTER</a></h4><h6 class="float-none mt-0 my-2">32,990,000₫</h6>
+                    Gigabyte GeForce RTX 4070 Ti AORUS MASTER</a></h4>
+                <h6 class="float-none mt-0 my-2">32,990,000₫</h6>
                 <ul class="item-list">
                   <li>Hãng: <span>Gigabyte</span></li>
                   <li>Phiên bản: <span>RTX 4070 Ti</span></li>
@@ -286,9 +289,10 @@
             <div class="col-lg-4 col-md-6">
               <div class="item">
                 <a href="property-details.html"><img src="assets/images/psu.png" alt=""></a>
-                
+
                 <h4 style="height: 95px" class="text-truncateline"><a href="property-details.html">Nguồn Cooler
-                    Master MWE 1250 Gold V2</a></h4><h6 class="float-none mt-0 my-2">5,390,000₫</h6>
+                    Master MWE 1250 Gold V2</a></h4>
+                <h6 class="float-none mt-0 my-2">5,390,000₫</h6>
                 <ul class="item-list">
                   <li>Hãng: <span>Cooler Master</span></li>
                   <li>Chuẩn: <span>80Plus Gold</span></li>
@@ -304,9 +308,10 @@
             <div class="col-lg-4 col-md-6">
               <div class="item">
                 <a href="property-details.html"><img src="assets/images/case.png" alt=""></a>
-                
+
                 <h4 style="height: 95px" class="text-truncateline"><a href="property-details.html">Case MSI MPG
-                    Velox 100P AirFlow</a></h4><h6 class="float-none mt-0 my-2">3,490,000₫</h6>
+                    Velox 100P AirFlow</a></h4>
+                <h6 class="float-none mt-0 my-2">3,490,000₫</h6>
                 <ul class="item-list">
                   <li>Hãng: <span>MSI</span></li>
                   <li>Màu sắc: <span>Đen</span></li>
@@ -320,9 +325,10 @@
             <div class="col-lg-4 col-md-6">
               <div class="item">
                 <a href="property-details.html"><img src="assets/images/cooler.png" alt=""></a>
-                
+
                 <h4 style="height: 95px" class="text-truncateline"><a href="property-details.html">Tản Nhiệt Nước
-                    Corsair H100 RGB</a></h4><h6 class="float-none mt-0 my-2">2,290,000₫</h6>
+                    Corsair H100 RGB</a></h4>
+                <h6 class="float-none mt-0 my-2">2,290,000₫</h6>
                 <ul class="item-list">
                   <li>Hãng: <span>Corsair</span></li>
                   <li>Loại tản nhiệt: <span>Tản nhiệt nước</span></li>
@@ -367,15 +373,15 @@
 
           </div>
           <div class="row">
-        <div class="col-lg-12">
-          <ul class="pagination">
-            <li><a href="#">1</a></li>
-            <li><a class="is_active" href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">>></a></li>
-          </ul>
-        </div>
-      </div>
+            <div class="col-lg-12">
+              <ul class="pagination">
+                <li><a href="#">1</a></li>
+                <li><a class="is_active" href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">>></a></li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
 

@@ -1,9 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<jsp:include page="../component/header.jsp" flush="true"></jsp:include>
-<jsp:include page="../component/navigation-bar.jsp" flush="true"></jsp:include>
- 
-   <div class="best-deal mt-5">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+  <jsp:include page="../component/header.jsp" flush="true"></jsp:include>
+  <jsp:include page="../component/navigation-bar.jsp" flush="true"></jsp:include>
+
+  <div class="best-deal mt-5">
     <div class="container">
       <div class="row">
         <div class="col-lg-4 mb-5">
@@ -33,10 +32,11 @@
                       aria-selected="false">Đổi mật khẩu</button>
                   </li>
                 </ul>
-                
+
               </div>
               <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="userprofile" role="tabpanel" aria-labelledby="userprofile-tab">
+                <div class="tab-pane fade show active" id="userprofile" role="tabpanel"
+                  aria-labelledby="userprofile-tab">
                   <div class="row">
                     <div class="contact py-3">
                       <div class="container">
@@ -64,10 +64,11 @@
                     </div>
                     <div class="col-12 mt-md-5">
                       <h4 class="mt-1">Note</h4>
-                      <p> [note] Lorem ipsum dolor sit amet, consectetur adipiscing elit, do eiusmod tempor pack incididunt ut
+                      <p> [note] Lorem ipsum dolor sit amet, consectetur adipiscing elit, do eiusmod tempor pack
+                        incididunt ut
                         labore et dolore magna aliqua quised ipsum suspendisse.
                       </p>
-                      
+
                     </div>
                   </div>
                 </div>
@@ -92,19 +93,22 @@
                               <div class="col-lg-12">
                                 <fieldset>
                                   <label for="name">Họ và tên</label>
-                                  <input type="text" name="name" id="full" placeholder="Họ và tên" value="$fullname" maxlength="70">
+                                  <input type="text" name="name" id="full" placeholder="Họ và tên" value="$fullname"
+                                    maxlength="70">
                                 </fieldset>
                               </div>
                               <div class="col-lg-12">
                                 <fieldset>
                                   <label for="nickname">Nickname</label>
-                                  <input type="text" name="nickname" id="address" placeholder="Nickname" value="$nickname" maxlength="35" >
+                                  <input type="text" name="nickname" id="address" placeholder="Nickname"
+                                    value="$nickname" maxlength="35">
                                 </fieldset>
                               </div>
                               <div class="col-lg-8">
                                 <fieldset>
                                   <label for="birtday">Ngày sinh</label>
-                                  <input type="date" name="birthday" id="birtday" placeholder="Ngày sinh" value="$birthday">
+                                  <input type="date" name="birthday" id="birtday" placeholder="Ngày sinh"
+                                    value="$birthday">
                                 </fieldset>
                               </div>
                               <div class="col-lg-4">
@@ -114,19 +118,21 @@
                                     <option value="Nam" selected>Nam</option> //selected dựa trên database ?
                                     <option value="Nữ">Nữ</option>
                                   </select>
-                                  
+
                                 </fieldset>
                               </div>
                               <div class="col-lg-5">
                                 <fieldset>
                                   <label for="phone">Điện thoại</label>
-                                  <input type="text" name="phone" id="phone" placeholder="Điện thoại" value="$phonenumber" maxlength="12">
+                                  <input type="text" name="phone" id="phone" placeholder="Điện thoại"
+                                    value="$phonenumber" maxlength="12">
                                 </fieldset>
                               </div>
                               <div class="col-lg-7">
                                 <fieldset>
                                   <label for="email">Email</label>
-                                  <input type="email" name="email" id="email" placeholder="Email" value="$email" maxlength="50">
+                                  <input type="email" name="email" id="email" placeholder="Email" value="$email"
+                                    maxlength="50">
                                 </fieldset>
                               </div>
                               <div class="col-lg-12">
@@ -143,7 +149,8 @@
                               </div>
                               <div class="col-lg-12">
                                 <fieldset>
-                                  <button type="submit" id="form-submit" class="orange-button">Cập nhập thông tin</button>
+                                  <button type="submit" id="form-submit" class="orange-button">Cập nhập thông
+                                    tin</button>
                                 </fieldset>
                               </div>
                             </div>
@@ -153,7 +160,8 @@
                     </div>
                   </div>
                 </div>
-                <div class="tab-pane fade" id="changepasswordform" role="tabpanel" aria-labelledby="changepasswordform-tab">
+                <div class="tab-pane fade" id="changepasswordform" role="tabpanel"
+                  aria-labelledby="changepasswordform-tab">
                   <div class="contact py-3">
                     <div class="container">
                       <div class="row">
@@ -174,16 +182,18 @@
                               <div class="col-lg-12">
                                 <fieldset>
                                   <label for="currentpassword">Nhập mật khẩu cũ</label>
-                                  <input type="password" name="password" id="password" pattern="[^ @]*@[^ @]*" placeholder="Your current password" required >
+                                  <input type="password" name="password" id="password" pattern="[^ @]*@[^ @]*"
+                                    placeholder="Your current password" required>
                                 </fieldset>
                               </div>
                               <div class="col-lg-12">
                                 <fieldset>
                                   <label for="newpassword">Nhập mật khẩu mới</label>
-                                  <input type="password" name="newpassword" id="newpassword" pattern="[^ @]*@[^ @]*" placeholder="Your new password" required autocomplete="off" maxlength="20">
+                                  <input type="password" name="newpassword" id="newpassword" pattern="[^ @]*@[^ @]*"
+                                    placeholder="Your new password" required autocomplete="off" maxlength="20">
                                 </fieldset>
                               </div>
-                          
+
                               <div class="col-lg-12">
                                 <fieldset>
                                   <button type="submit" id="form-submit" class="orange-button">Đổi mật khẩu</button>
@@ -203,10 +213,10 @@
       </div>
     </div>
   </div>
- 
- 
- 
- 
- 
- 
-<jsp:include page="../component/footer.jsp" flush="true"></jsp:include> 
+
+
+
+
+
+
+  <jsp:include page="../component/footer.jsp" flush="true"></jsp:include>

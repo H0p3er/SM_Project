@@ -1,9 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<jsp:include page="../component/header.jsp" flush="true"></jsp:include>
-<jsp:include page="../component/navigation-bar.jsp" flush="true"></jsp:include>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+  <jsp:include page="../component/header.jsp" flush="true"></jsp:include>
+  <jsp:include page="../component/navigation-bar.jsp" flush="true"></jsp:include>
 
- <div class="contact py-3 mt-5">
+  <div class="contact py-3 mt-5">
     <div class="container">
       <div class="row">
         <div class="col-lg-6 offset-lg-3">
@@ -29,7 +28,8 @@
               <div class="col-lg-12">
                 <fieldset>
                   <label for="address">Địa chỉ cửa hàng</label>
-                  <input type="text" name="address" id="address" pattern="[^ @]*@[^ @]*" placeholder="Địa chỉ cửa hàng" required>
+                  <input type="text" name="address" id="address" pattern="[^ @]*@[^ @]*" placeholder="Địa chỉ cửa hàng"
+                    required>
                 </fieldset>
               </div>
               <div class="col-lg-4">
@@ -72,4 +72,4 @@
 
 
 
-<jsp:include page="../component/footer.jsp" flush="true"></jsp:include> 
+  <jsp:include page="../component/footer.jsp" flush="true"></jsp:include>
