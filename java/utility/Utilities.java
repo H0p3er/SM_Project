@@ -42,16 +42,19 @@ public class Utilities {
 	
 	public static Map<String, String> getMapParam(ServletRequest request, String name) {	
 		String str_value = request.getParameter(name);
+		String safe_value = 
+				(str_value!=null && !str_value.isBlank()
+				&& str_value.contains(":") && str_value.contains(";")) 
+				? str_value.trim() : "";
 		
 		Map<String, String> map = new TreeMap<>();			
-		if (str_value!=null && !str_value.equalsIgnoreCase("")) {
-	        String[] pairs = str_value.split(";");
+		if (safe_value!=null && !safe_value.equalsIgnoreCase("")) {
+	        String[] pairs = safe_value.split(";");
 	        for (String pair : pairs) {
 	            String[] keyValue = pair.split(":");        
 	            map.put(keyValue[0], keyValue[1]);
 	        }	
 		}
-
 		return map;
 	}
 	

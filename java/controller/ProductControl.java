@@ -77,10 +77,10 @@ public class ProductControl {
 	 * 
 	 * <br/>Cập nhật ngày 26/10/2023
 	 */
-	public Map<String,String> viewProductList(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> infors){
+	public Map<String,String> viewSearchProduct(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> infors, String url){
 
 		Pair<ArrayList<ProductObject>,Integer> datas = this.pm.getProductObjects(infors);		
-		return ProductLibrary.viewProductList(datas, infors);
+		return ProductLibrary.viewSearchProduct(datas, infors, url);
 	}
 	
 	/** 
@@ -90,11 +90,11 @@ public class ProductControl {
 	 * 
 	 * <br/>Cập nhật ngày 26/10/2023
 	 */
-	public Map<String,String> viewHomeProduct(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> infors){
+	public Map<String,String> viewHomeProduct(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> infors, String url){
 
 		Pair<ArrayList<ProductObject>,Integer> datas = this.pm.getProductObjects(infors);
 		
-		return ProductLibrary.viewHomeProduct(datas, infors);
+		return ProductLibrary.viewHomeProduct(datas, infors, url);
 	}
 	
 }

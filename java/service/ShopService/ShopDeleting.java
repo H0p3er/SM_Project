@@ -1,4 +1,4 @@
-package service.ShopService;
+package service.shopService;
 
 import java.io.IOException;
 import java.util.ArrayList;
