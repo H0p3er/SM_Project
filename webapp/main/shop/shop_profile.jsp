@@ -15,15 +15,14 @@
         <div class="col-lg-12">
           <div class="tabs-content">
             <div class="row">
+            <%session=request.getSession(true); if (session.getAttribute("userLogined")!=null) {%>
               <div class="nav-wrapper ">
                 <ul class="nav nav-tabs" role="tablist">
                   <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="appartment-tab" data-bs-toggle="tab"
-                      data-bs-target="#appartment" type="button" role="tab" aria-controls="appartment"
-                      aria-selected="true">Thông tin chung</button>
+                    <a href="/home/main/seller/shopmanage.jsp" class="nav-link active">Quản lý shop</a>
                   </li>
                 </ul>
-              </div>
+              </div> <%} %>
               <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="appartment" role="tabpanel" aria-labelledby="appartment-tab">
                   <div class="row">

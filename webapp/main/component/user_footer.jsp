@@ -21,7 +21,7 @@
   <script src="/home/assets/js/custom.js"></script>
 
 
-  <script src="/home/assets/js/main.js"></script>
+  <script src="/home/assets/js/adminmain.js"></script>
   </body>
 
   </html>

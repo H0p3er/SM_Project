@@ -61,7 +61,7 @@
                           href="/home/main/shop/shop_profile.jsp"><i class="fa-solid fa-store"></i> Gian hàng của bạn</a>
                       </li>
                       <li>
-                        <a class="dropdown-item p-0 bg-white text-black" href="/home/main/user/shop"><i class="fa-regular fa-id-card"></i> Thông
+                        <a class="dropdown-item p-0 bg-white text-black" href="/home/main/user/user_profile.jsp"><i class="fa-regular fa-id-card"></i> Thông
                           tin cá nhân</a>
                       </li>
                       <li>
