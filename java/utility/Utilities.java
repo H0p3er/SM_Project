@@ -41,8 +41,9 @@ public class Utilities {
 	}
 	
 	public static Map<String, String> getMapParam(ServletRequest request, String name) {	
-		String str_value = request.getParameter(name);		
-		Map<String, String> map = new TreeMap<>();	
+		String str_value = request.getParameter(name);
+		
+		Map<String, String> map = new TreeMap<>();			
 		if (str_value!=null && !str_value.equalsIgnoreCase("")) {
 	        String[] pairs = str_value.split(";");
 	        for (String pair : pairs) {

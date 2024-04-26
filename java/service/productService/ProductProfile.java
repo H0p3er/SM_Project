@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,8 +26,8 @@ import utility.Utilities;
 /**
  * Servlet implementation class ProductList
  */
-@WebServlet("/product/list")
-public class ProductList extends HttpServlet {
+@WebServlet("/product/profile")
+public class ProductProfile extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	// Định nghĩa kiểu nội dung xuất về trình khách
@@ -35,7 +36,7 @@ public class ProductList extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProductList() {
+    public ProductProfile() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -45,19 +46,13 @@ public class ProductList extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		UserObject user = (UserObject) request.getSession().getAttribute("userLogined");
-		if(user != null) {
-			view(request, response, user);
-		} else {
-			response.sendRedirect("/home/login?err=notlogin");
-		}
+		view(request, response, user);
 	}
 	
 	private void view(HttpServletRequest request, HttpServletResponse response, UserObject user) throws ServletException, IOException {
 		// Xác định kiểu nội dung xuất về trình khách
 		response.setContentType(CONTENT_TYPE);
 
-		// Tạo đối tượng thực hiện xuất nội dung
-		PrintWriter out = response.getWriter();
 		
 		// Thiết lập tập ký tự cần lấy. Việc thiết lập này cần xác định từ đầu
 		request.setCharacterEncoding("utf-8");
@@ -71,44 +66,17 @@ public class ProductList extends HttpServlet {
 		}
 		
 		// Lấy từ khóa tìm kiếm
-		String key = request.getParameter("key");
-		String saveKey = (key != null && !key.equalsIgnoreCase("")) ? key.trim() : "";
-		
-		// Lấy câu trúc
-		ProductObject similar = new ProductObject();
-		similar.setProduct_status(user.getUser_permission());
-		similar.setProduct_name(saveKey);
-		
-		// Tìm tham số xác định loại danh sách
-		String trash = request.getParameter("trash");
-		String title, pos;
+		int id = Utilities.getIntParam(request, "id");
 
-		short page = Utilities.getShortParam(request, "page");
-		if(page < 1) {
-			page = 1;
-		}
-		// Lấy cấu trúc
-		// Lấy cấu trúc
-		Quintet<Short, Byte,  Map<String,String>,  Map<String,String>,  Map<String,String>> infors 
-		= new Quintet<>( page, (byte) 6,
-				utility.Utilities.getMapParam(request, null), 
-				utility.Utilities.getMapParam(request, null),
-				utility.Utilities.getMapParam(request, null)
-				);
-
-		Map<String,String> viewProductsList = pc.viewProductList(infors);
+		Map<String,String> viewProduct= pc.getProductProfile(id);
 
 		// Trả về kết nối
 		pc.releaseConnection();
-		
-		Gson gson = new Gson();
-		
-	    String jsonData = gson.toJson(viewProductsList);
-		out.append(jsonData);
 		// Tạo đối tượng thực hiện xuất nội dung
-		out.flush();
-		
-		
+		request.setAttribute("product-profile", viewProduct);
+	    
+	    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/main/product/productprofile.jsp");
+	    requestDispatcher.forward(request, response);
 		
 	}
 

@@ -36,7 +36,6 @@ public class Home extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
-
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -89,12 +88,8 @@ public class Home extends HttpServlet {
 
 		// Trả về kết nối
 		pc.releaseConnection();
-		
-		Gson gson = new Gson();
-		
-	    String jsonData = gson.toJson(viewProductsList);
 	    
-	    request.setAttribute("home-page", jsonData);
+	    request.setAttribute("home-page", viewProductsList);
 	    
 	    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/main/home.jsp");
 	    requestDispatcher.forward(request, response);

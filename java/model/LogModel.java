@@ -33,7 +33,7 @@ public class LogModel {
 	}
 	
 	public void releaseConnection() {
-		this.w.releaseConnection();
+		this.w.releaseCP();
 	}
 
 	//***********************Chuyen huong dieu khien tu Log Impl*****************************************

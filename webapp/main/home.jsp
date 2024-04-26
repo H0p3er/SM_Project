@@ -18,9 +18,10 @@
       <div class="row" id="home_product_list">
       	<% 
 
-      		Gson gson = new Gson();
-      		Map<String,String> map = gson.fromJson((String) request.getAttribute("home-page"), Map.class);
-
+//      		Gson gson = new Gson();
+//       		Map<String,String> map = gson.fromJson((String) request.getAttribute("home-page"), Map.class);
+ 
+			Map<String,String> map = (Map<String,String>) request.getAttribute("home-page");
       		if (map!=null){
       			out.append(map.get("home_product_list"));
       		} else {
