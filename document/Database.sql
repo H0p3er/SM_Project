@@ -40,6 +40,19 @@ CREATE TABLE `tbl_cases` (
 --
 
 /*!40000 ALTER TABLE `tbl_cases` DISABLE KEYS */;
+INSERT INTO `tbl_cases` (`product_id`, `case_manufacturer`, `case _color`, `case_size`)
+VALUES
+(46, 'IDCooling', 'Black', 'Mid Tower'),
+(47, 'Corsair', 'White', 'Full Tower'),
+(48, 'MSI', 'Blue', 'Mini Tower'),
+(49, 'Gigabyte', 'Red', 'Micro Tower'),
+(50, 'Asus', 'Green', 'ATX'),
+(51, 'IDCooling', 'Yellow', 'Mini-ITX'),
+(52, 'Corsair', 'Purple', 'Micro ATX'),
+(53, 'MSI', 'Orange', 'E-ATX'),
+(54, 'Gigabyte', 'Pink', 'Slim Tower'),
+(55, 'Asus', 'Gray', 'Cube Case');
+
 /*!40000 ALTER TABLE `tbl_cases` ENABLE KEYS */;
 
 
@@ -63,6 +76,18 @@ CREATE TABLE `tbl_cooling` (
 --
 
 /*!40000 ALTER TABLE `tbl_cooling` DISABLE KEYS */;
+INSERT INTO `tbl_cooling` (`product_id`, `cooling_manufacturer`, `cooling_type`, `cooling_color`, `cooling_fan_size`)
+VALUES
+(56, 'Corsair', 'Liquid Cooler', 'Black', '120mm'),
+(57, 'IDCooling', 'Air Cooler', 'White', '140mm'),
+(58, 'Corsair', 'AIO Cooler', 'Red', '240mm'),
+(59, 'IDCooling', 'RGB Cooler', 'Blue', '120mm'),
+(60, 'Corsair', 'Low Profile Cooler', 'Gray', '80mm'),
+(61, 'IDCooling', 'Tower Cooler', 'Black', '120mm'),
+(62, 'Corsair', 'Liquid Cooler', 'White', '240mm'),
+(63, 'IDCooling', 'AIO Cooler', 'Green', '140mm'),
+(64, 'Corsair', 'Air Cooler', 'Blue', '120mm'),
+(65, 'IDCooling', 'RGB Cooler', 'Red', '240mm');
 /*!40000 ALTER TABLE `tbl_cooling` ENABLE KEYS */;
 
 
@@ -87,6 +112,18 @@ CREATE TABLE `tbl_cpus` (
 --
 
 /*!40000 ALTER TABLE `tbl_cpus` DISABLE KEYS */;
+INSERT INTO `tbl_cpus` (`product_id`, `cpu_collection`, `socket`, `cores`, `theats`, `speed`)
+VALUES
+(66, 'Intel Core i5', 'LGA1200', '6', '12', '3.6 GHz'),
+(67, 'AMD Ryzen 5', 'AM4', '6', '12', '3.8 GHz'),
+(68, 'Intel Core i5', 'LGA1151', '6', '12', '3.4 GHz'),
+(69, 'AMD Ryzen 5', 'AM4', '6', '12', '3.6 GHz'),
+(70, 'Intel Core i5', 'LGA1200', '6', '12', '3.2 GHz'),
+(71, 'AMD Ryzen 5', 'AM4', '6', '12', '3.5 GHz'),
+(72, 'Intel Core i5', 'LGA1151', '6', '12', '3.0 GHz'),
+(73, 'AMD Ryzen 5', 'AM4', '6', '12', '3.3 GHz'),
+(74, 'Intel Core i5', 'LGA1200', '6', '12', '2.8 GHz'),
+(75, 'AMD Ryzen 5', 'AM4', '6', '12', '3.1 GHz');
 /*!40000 ALTER TABLE `tbl_cpus` ENABLE KEYS */;
 
 
@@ -114,6 +151,18 @@ CREATE TABLE `tbl_desktops` (
 --
 
 /*!40000 ALTER TABLE `tbl_desktops` DISABLE KEYS */;
+INSERT INTO `tbl_desktops` (`product_id`, `desktop_manufacturer`, `desktop_type`, `desktop_cpu`, `desktop_gpu`, `desktop_ram_capacity`, `desktop_ram_type`, `desktop_storage`, `desktop_power_supply`)
+VALUES
+(76, 'MSI', 'Gaming Desktop', 'Intel Core i5', 'NVIDIA GeForce RTX 3060', '16GB', 'DDR4', '512GB SSD + 1TB HDD', '650W'),
+(77, 'Asus', 'Office Desktop', 'Intel Core i5', 'Integrated Intel UHD Graphics 630', '8GB', 'DDR4', '256GB SSD', '300W'),
+(78, 'Gigabyte', 'Gaming Desktop', 'AMD Ryzen 5', 'AMD Radeon RX 6700 XT', '32GB', 'DDR4', '1TB NVMe SSD', '750W'),
+(79, 'MSI', 'Gaming Desktop', 'Intel Core i5', 'NVIDIA GeForce GTX 1660 Ti', '16GB', 'DDR4', '512GB SSD', '550W'),
+(80, 'Asus', 'Office Desktop', 'Intel Core i5', 'Integrated Intel UHD Graphics 630', '8GB', 'DDR4', '512GB SSD', '300W'),
+(81, 'Gigabyte', 'Gaming Desktop', 'AMD Ryzen 5', 'AMD Radeon RX 6800', '32GB', 'DDR4', '2TB SSD', '800W'),
+(82, 'MSI', 'Gaming Desktop', 'Intel Core i5', 'NVIDIA GeForce RTX 3070', '16GB', 'DDR4', '1TB SSD + 1TB HDD', '700W'),
+(83, 'Asus', 'Office Desktop', 'Intel Core i5', 'Integrated Intel UHD Graphics 630', '8GB', 'DDR4', '256GB SSD', '300W'),
+(84, 'Gigabyte', 'Gaming Desktop', 'AMD Ryzen 5', 'AMD Radeon RX 6600 XT', '32GB', 'DDR4', '512GB SSD', '650W'),
+(85, 'MSI', 'Gaming Desktop', 'Intel Core i5', 'NVIDIA GeForce GTX 1650', '16GB', 'DDR4', '1TB SSD', '550W');
 /*!40000 ALTER TABLE `tbl_desktops` ENABLE KEYS */;
 
 
@@ -139,6 +188,18 @@ CREATE TABLE `tbl_graphics_cards` (
 --
 
 /*!40000 ALTER TABLE `tbl_graphics_cards` DISABLE KEYS */;
+INSERT INTO `tbl_graphics_cards` (`product_id`, `graphics_card_manufacturer`, `graphics_card_speed`, `graphics_card_cores`, `graphics_card_version`, `graphics_card_vram_capacity`, `graphics_card_require_psu`)
+VALUES
+(86, 'NVIDIA', '1800 MHz', '3584', 'RTX 3060', '12GB', '550W'),
+(87, 'AMD', '2105 MHz', '2560', 'RX 6700 XT', '12GB', '750W'),
+(88, 'NVIDIA', '1770 MHz', '2944', 'GTX 1660 Ti', '6GB', '500W'),
+(89, 'AMD', '2015 MHz', '3840', 'RX 6800', '16GB', '800W'),
+(90, 'NVIDIA', '1500 MHz', '5888', 'RTX 3070', '8GB', '650W'),
+(91, 'AMD', '2333 MHz', '2048', 'RX 6600 XT', '8GB', '650W'),
+(92, 'NVIDIA', '1590 MHz', '1280', 'GTX 1650', '4GB', '450W'),
+(93, 'AMD', '2424 MHz', '5120', 'RX 6600', '8GB', '650W'),
+(94, 'NVIDIA', '1410 MHz', '896', 'GT 1030', '2GB', '300W'),
+(95, 'AMD', '1905 MHz', '2048', 'RX 6500 XT', '4GB', '450W');
 /*!40000 ALTER TABLE `tbl_graphics_cards` ENABLE KEYS */;
 
 
@@ -162,6 +223,18 @@ CREATE TABLE `tbl_headphones_speakers` (
 --
 
 /*!40000 ALTER TABLE `tbl_headphones_speakers` DISABLE KEYS */;
+INSERT INTO `tbl_headphones_speakers` (`product_id`, `headphones_manufacturer`, `headphone_type`, `headphones_connection`, `headphones_connection_ports`)
+VALUES
+(96, 'Corsair', 'Over-ear Headphones', 'Wired', '3.5mm Jack'),
+(97, 'IDCooling', 'In-ear Earphones', 'Wireless', 'Bluetooth'),
+(98, 'Corsair', 'Gaming Headset', 'Wired', 'USB'),
+(99, 'IDCooling', 'Over-ear Headphones', 'Wireless', 'Bluetooth'),
+(100, 'Corsair', 'Wireless Earbuds', 'Wireless', 'Bluetooth'),
+(101, 'IDCooling', 'Gaming Headset', 'Wired', 'USB'),
+(102, 'Corsair', 'On-ear Headphones', 'Wired', '3.5mm Jack'),
+(103, 'IDCooling', 'In-ear Monitors', 'Wireless', 'Bluetooth'),
+(104, 'Corsair', 'Gaming Headphones', 'Wired', 'USB'),
+(105, 'IDCooling', 'Over-ear Headphones', 'Wireless', 'Bluetooth');
 /*!40000 ALTER TABLE `tbl_headphones_speakers` ENABLE KEYS */;
 
 
@@ -185,6 +258,18 @@ CREATE TABLE `tbl_keyboards` (
 --
 
 /*!40000 ALTER TABLE `tbl_keyboards` DISABLE KEYS */;
+INSERT INTO `tbl_keyboards` (`product_id`, `keyboard_type`, `keyboard_connection_type`, `keyboard_size_layout`, `keyboard_led_backlighting`)
+VALUES
+(106, 'Gaming', 'Wired', 'Full-size', 1),
+(107, 'Mechanical', 'Wired', 'Tenkeyless', 1),
+(108, 'Office', 'Wireless', 'Full-size', 0),
+(109, 'Gaming', 'Wired', 'Full-size', 1),
+(110, 'Mechanical', 'Wireless', 'Tenkeyless', 1),
+(111, 'Office', 'Wired', 'Full-size', 0),
+(112, 'Gaming', 'Wireless', 'Full-size', 1),
+(113, 'Mechanical', 'Wired', 'Tenkeyless', 1),
+(114, 'Office', 'Wireless', 'Full-size', 0),
+(115, 'Gaming', 'Wired', 'Full-size', 1);
 /*!40000 ALTER TABLE `tbl_keyboards` ENABLE KEYS */;
 
 
@@ -213,6 +298,18 @@ CREATE TABLE `tbl_laptops` (
 --
 
 /*!40000 ALTER TABLE `tbl_laptops` DISABLE KEYS */;
+INSERT INTO `tbl_laptops` (`product_id`, `laptop_manufacturer`, `laptop_cpu`, `laptop_ram`, `laptop_graphics_card`, `laptop_storage`, `laptop_screen_size`, `laptop_refresh_rate`, `laptop_resolution`, `laptop_type`)
+VALUES
+(116, 'MSI', 'Intel Core i5-1135G7', '16GB DDR4', 'NVIDIA GeForce GTX 1650', '512GB SSD', '15.6 inches', '60Hz', '1920x1080', 'Gaming Laptop'),
+(117, 'Asus', 'Intel Core i5-1135G7', '8GB DDR4', 'Integrated Intel Iris Xe Graphics', '256GB SSD', '14 inches', '60Hz', '1920x1080', 'Office Laptop'),
+(118, 'Gigabyte', 'AMD Ryzen 5 5600H', '32GB DDR4', 'AMD Radeon RX 6700M', '1TB NVMe SSD', '15.6 inches', '144Hz', '1920x1080', 'Gaming Laptop'),
+(119, 'MSI', 'Intel Core i5-1135G7', '16GB DDR4', 'NVIDIA GeForce MX450', '512GB SSD', '15.6 inches', '60Hz', '1920x1080', 'Gaming Laptop'),
+(120, 'Asus', 'Intel Core i5-1135G7', '8GB DDR4', 'Integrated Intel Iris Xe Graphics', '512GB SSD', '14 inches', '60Hz', '1920x1080', 'Office Laptop'),
+(121, 'Gigabyte', 'AMD Ryzen 5 5600H', '32GB DDR4', 'AMD Radeon RX 6800M', '2TB NVMe SSD', '15.6 inches', '165Hz', '2560x1440', 'Gaming Laptop'),
+(122, 'MSI', 'Intel Core i5-1135G7', '16GB DDR4', 'NVIDIA GeForce RTX 3050 Ti', '1TB SSD', '15.6 inches', '144Hz', '1920x1080', 'Gaming Laptop'),
+(123, 'Asus', 'Intel Core i5-1135G7', '8GB DDR4', 'Integrated Intel Iris Xe Graphics', '256GB SSD', '14 inches', '60Hz', '1920x1080', 'Office Laptop'),
+(124, 'Gigabyte', 'AMD Ryzen 5 5600H', '32GB DDR4', 'AMD Radeon RX 6600M', '512GB NVMe SSD', '15.6 inches', '144Hz', '1920x1080', 'Gaming Laptop'),
+(125, 'MSI', 'Intel Core i5-1135G7', '16GB DDR4', 'NVIDIA GeForce MX450', '1TB SSD', '15.6 inches', '60Hz', '1920x1080', 'Gaming Laptop');
 /*!40000 ALTER TABLE `tbl_laptops` ENABLE KEYS */;
 
 
@@ -237,6 +334,18 @@ CREATE TABLE `tbl_mice` (
 --
 
 /*!40000 ALTER TABLE `tbl_mice` DISABLE KEYS */;
+INSERT INTO `tbl_mice` (`product_id`, `mouse_manufacturer`, `mouse_type`, `mouse_connection_type`, `mouse_design`, `mouse_battery`)
+VALUES
+(126, 'Corsair', 'Gaming Mouse', 'Wired', 'Ergonomic', 'Rechargeable'),
+(127, 'IDCooling', 'Office Mouse', 'Wireless', 'Ambidextrous', 'Battery'),
+(128, 'Corsair', 'Wireless Mouse', 'Wireless', 'Ergonomic', 'Rechargeable'),
+(129, 'IDCooling', 'Gaming Mouse', 'Wired', 'Ambidextrous', 'Battery'),
+(130, 'Corsair', 'Gaming Mouse', 'Wired', 'Ergonomic', 'Rechargeable'),
+(131, 'IDCooling', 'Office Mouse', 'Wireless', 'Ambidextrous', 'Battery'),
+(132, 'Corsair', 'Wireless Mouse', 'Wireless', 'Ergonomic', 'Rechargeable'),
+(133, 'IDCooling', 'Gaming Mouse', 'Wired', 'Ambidextrous', 'Battery'),
+(134, 'Corsair', 'Gaming Mouse', 'Wired', 'Ergonomic', 'Rechargeable'),
+(135, 'IDCooling', 'Office Mouse', 'Wireless', 'Ambidextrous', 'Battery');
 /*!40000 ALTER TABLE `tbl_mice` ENABLE KEYS */;
 
 
@@ -264,6 +373,18 @@ CREATE TABLE `tbl_monitors` (
 --
 
 /*!40000 ALTER TABLE `tbl_monitors` DISABLE KEYS */;
+INSERT INTO `tbl_monitors` (`product_id`, `monitor_manufacturer`, `monitor_size`, `monitor_type`, `monitor_resolution`, `monitor_panel_type`, `monitor_refresh_rate`, `monitor_screen_type`, `monitor_response`)
+VALUES
+(136, 'MSI', '27 inches', 'Gaming', '2560x1440', 'IPS', '144Hz', '16:9', '1ms'),
+(137, 'Asus', '24 inches', 'Office', '1920x1080', 'IPS', '60Hz', '16:9', '5ms'),
+(138, 'Gigabyte', '32 inches', 'Gaming', '3840x2160', 'VA', '144Hz', '16:9', '1ms'),
+(139, 'MSI', '27 inches', 'Gaming', '2560x1440', 'IPS', '165Hz', '16:9', '1ms'),
+(140, 'Asus', '24 inches', 'Office', '1920x1080', 'IPS', '75Hz', '16:9', '5ms'),
+(141, 'Gigabyte', '32 inches', 'Gaming', '3840x2160', 'VA', '144Hz', '16:9', '1ms'),
+(142, 'MSI', '27 inches', 'Gaming', '2560x1440', 'IPS', '144Hz', '16:9', '1ms'),
+(143, 'Asus', '24 inches', 'Office', '1920x1080', 'IPS', '60Hz', '16:9', '5ms'),
+(144, 'Gigabyte', '32 inches', 'Gaming', '3840x2160', 'VA', '144Hz', '16:9', '1ms'),
+(145, 'MSI', '27 inches', 'Gaming', '2560x1440', 'IPS', '165Hz', '16:9', '1ms');
 /*!40000 ALTER TABLE `tbl_monitors` ENABLE KEYS */;
 
 
@@ -289,6 +410,18 @@ CREATE TABLE `tbl_motherboards` (
 --
 
 /*!40000 ALTER TABLE `tbl_motherboards` DISABLE KEYS */;
+INSERT INTO `tbl_motherboards` (`product_id`, `motherboard_manufacturer`, `motherboard_chipset`, `motherboard_socket`, `motherboard_size`, `motherboard_ram_support`, `motherboard_ram_slots`)
+VALUES
+(146, 'MSI', 'B460', 'LGA1200', 'ATX', 'DDR4', '4'),
+(147, 'Asus', 'Z590', 'LGA1200', 'ATX', 'DDR4', '4'),
+(148, 'Gigabyte', 'X570', 'AM4', 'ATX', 'DDR4', '4'),
+(149, 'MSI', 'H470', 'LGA1200', 'Micro ATX', 'DDR4', '4'),
+(150, 'Asus', 'B550', 'AM4', 'Micro ATX', 'DDR4', '4'),
+(151, 'Gigabyte', 'B450', 'AM4', 'Mini-ITX', 'DDR4', '2'),
+(152, 'MSI', 'B560', 'LGA1200', 'ATX', 'DDR4', '4'),
+(153, 'Asus', 'H510', 'LGA1200', 'Micro ATX', 'DDR4', '4'),
+(154, 'Gigabyte', 'B550', 'AM4', 'ATX', 'DDR4', '4'),
+(155, 'MSI', 'Z590', 'LGA1200', 'ATX', 'DDR4', '4');
 /*!40000 ALTER TABLE `tbl_motherboards` ENABLE KEYS */;
 
 
@@ -309,6 +442,18 @@ CREATE TABLE `tbl_other_accessories` (
 --
 
 /*!40000 ALTER TABLE `tbl_other_accessories` DISABLE KEYS */;
+INSERT INTO `tbl_other_accessories` (`product_id`, `description`)
+VALUES
+(156, 'External SSD 1TB'),
+(157, 'USB 3.0 Flash Drive 64GB'),
+(158, 'Wireless Charging Pad'),
+(159, 'Gaming Mouse Pad - Large'),
+(160, 'Portable Laptop Stand'),
+(161, 'Bluetooth Wireless Earbuds'),
+(162, 'Gaming Controller for PC'),
+(163, 'RGB LED Light Strip - 5m'),
+(164, 'Webcam Cover Slider'),
+(165, 'Anti-Static Wrist Strap');
 /*!40000 ALTER TABLE `tbl_other_accessories` ENABLE KEYS */;
 
 
@@ -333,6 +478,16 @@ CREATE TABLE `tbl_power_supply` (
 --
 
 /*!40000 ALTER TABLE `tbl_power_supply` DISABLE KEYS */;
+INSERT INTO `tbl_power_supply` (`product_id`, `psu_manufacturer`, `psu_certification`, `psu_cable_type`, `psu_size`, `psu_power_output`)
+VALUES
+(166, 'Corsair', '80 Plus Gold', 'Fully Modular', 'ATX', '750W'),
+(167, 'Corsair', '80 Plus Bronze', 'Semi-Modular', 'ATX', '650W'),
+(168, 'Seasonic', '80 Plus Platinum', 'Fully Modular', 'ATX', '850W'),
+(169, 'EVGA', '80 Plus Gold', 'Fully Modular', 'ATX', '850W'),
+(170, 'Thermaltake', '80 Plus Bronze', 'Non-Modular', 'ATX', '500W'),
+(171, 'NZXT', '80 Plus Gold', 'Fully Modular', 'ATX', '650W'),
+(172, 'Cooler Master', '80 Plus Bronze', 'Semi-Modular', 'ATX', '550W'),
+(173, 'Antec', '80 Plus Platinum', 'Fully Modular', 'ATX', '750W');
 /*!40000 ALTER TABLE `tbl_power_supply` ENABLE KEYS */;
 
 
@@ -357,6 +512,18 @@ CREATE TABLE `tbl_rams` (
 --
 
 /*!40000 ALTER TABLE `tbl_rams` DISABLE KEYS */;
+INSERT INTO `tbl_rams` (`product_id`, `ram_manufacturer`, `ram_type`, `ram_capacity`, `ram_bus_speed`, `ram_standard`)
+VALUES
+(174, 'Corsair', 'DDR4', '16GB', '3200 MHz', 'XMP 2.0'),
+(175, 'IDCooling', 'DDR4', '8GB', '2666 MHz', 'JEDEC'),
+(176, 'Corsair', 'DDR4', '32GB', '3600 MHz', 'XMP 2.0'),
+(177, 'IDCooling', 'DDR4', '16GB', '3000 MHz', 'JEDEC'),
+(178, 'Corsair', 'DDR4', '8GB', '3200 MHz', 'XMP 2.0'),
+(179, 'IDCooling', 'DDR4', '16GB', '2666 MHz', 'JEDEC'),
+(180, 'Corsair', 'DDR4', '32GB', '3600 MHz', 'XMP 2.0'),
+(181, 'IDCooling', 'DDR4', '8GB', '3000 MHz', 'JEDEC'),
+(182, 'Corsair', 'DDR4', '16GB', '3200 MHz', 'XMP 2.0'),
+(183, 'IDCooling', 'DDR4', '8GB', '2666 MHz', 'JEDEC');
 /*!40000 ALTER TABLE `tbl_rams` ENABLE KEYS */;
 
 
@@ -381,6 +548,18 @@ CREATE TABLE `tbl_storage` (
 --
 
 /*!40000 ALTER TABLE `tbl_storage` DISABLE KEYS */;
+INSERT INTO `tbl_storage` (`product_id`, `storage_manufacturer`, `storage_type`, `storage_capacity`, `storage_m2_pcie_type`, `storage_rpm`)
+VALUES
+(184, 'Samsung', 'SSD', '1TB', 'NVMe', NULL),
+(185, 'WDBlack', 'HDD', '2TB', NULL, 7200),
+(186, 'Samsung', 'SSD', '500GB', 'SATA', NULL),
+(187, 'WDBlack', 'HDD', '4TB', NULL, 7200),
+(188, 'Samsung', 'SSD', '2TB', 'NVMe', NULL),
+(189, 'WDBlack', 'SSD', '1TB', 'SATA', NULL),
+(190, 'Samsung', 'SSD', '500GB', 'NVMe', NULL),
+(191, 'WDBlack', 'HDD', '1TB', NULL, 7200),
+(192, 'Samsung', 'SSD', '1TB', 'SATA', NULL),
+(193, 'WDBlack', 'SSD', '2TB', 'NVMe', NULL);
 /*!40000 ALTER TABLE `tbl_storage` ENABLE KEYS */;
 
 
@@ -402,6 +581,18 @@ CREATE TABLE `tbl_usbs` (
 --
 
 /*!40000 ALTER TABLE `tbl_usbs` DISABLE KEYS */;
+INSERT INTO `tbl_usbs` (`product_id`, `usb_manufacturer`, `usb_capacity`)
+VALUES
+(194, 'Samsung', '128GB'),
+(195, 'WDBlack', '256GB'),
+(196, 'Samsung', '64GB'),
+(197, 'WDBlack', '512GB'),
+(198, 'Samsung', '256GB'),
+(199, 'WDBlack', '128GB'),
+(200, 'Samsung', '512GB'),
+(201, 'WDBlack', '32GB'),
+(202, 'Samsung', '256GB'),
+(203, 'WDBlack', '64GB');
 /*!40000 ALTER TABLE `tbl_usbs` ENABLE KEYS */;
 
 
@@ -875,23 +1066,22 @@ CREATE TABLE `tblpc` (
 
 /*!40000 ALTER TABLE `tblpc` DISABLE KEYS */;
 INSERT INTO `tblpc` (`pc_id`,`pc_name`,`pc_notes`,`pc_created_date`,`pc_image`,`pc_enable`,`pc_parent_id`,`pc_creator_id`) VALUES 
- (1,'Laptop - Tablet - Mobile','Danh m?c Laptop - Tablet - Mobile','','',0x00,0,0),
- (2,'Máy tính - Máy chủ','Danh m?c Máy tính - Máy ch?','','',0x00,0,0),
- (3,'Máy tính All-in-one','Danh m?c Máy tính All-in-one','','',0x00,0,0),
- (4,'PCAP Máy Tính An Phát','Danh m?c PCAP Máy Tính An Phát','','',0x00,0,0),
- (5,'Apple, đèn led','Danh m?c Apple','','',0x00,0,0),
- (6,'Máy in - TB Văn Phòng','Danh m?c Máy in - TB V?n Phòng','','',0x00,0,0),
- (7,'Linh Kiện Máy Tính','Danh m?c Linh Ki?n Máy Tính','','',0x00,0,0),
- (8,'Màn Hình Máy Tính','Danh m?c Màn Hình Máy Tính','','',0x00,0,0),
- (9,'Gaming Gear','Danh m?c Gaming Gear','','',0x00,0,0),
- (10,'Thiết bị lưu trữ, USB, thẻ nhớ','Danh m?c Thi?t b? l?u tr?, USB, th? nh?','','',0x00,0,0),
- (11,'Loa, Tai Nghe, Webcam, Tivi','Danh m?c Loa, Tai Nghe, Webcam, Tivi','','',0x00,0,0),
- (12,'Camera','Danh m?c Camera','','',0x00,0,0),
- (13,'Cooling, Tản nhiệt','Danh m?c Cooling, T?n nhi?t','','',0x00,0,0),
- (14,'Thiết Bị Mạng','Danh m?c Thi?t B? M?ng','','',0x00,0,0),
- (15,'Phụ Kiện Laptop, PC, Khác','Danh m?c Ph? Ki?n Laptop, PC, Khác','','',0x00,0,0),
- (16,'Xe Đạp Điện, Smart Home','Danh m?c Xe ??p ?i?n, Smart Home','','',0x00,0,0),
- (17,'Buồng Chơi Game Giả Lập','Danh m?c Bu?ng Ch?i Game Gi? L?p','','',0x00,0,0);
+ (1,'Màn hình','','','',0x00,0,0),
+ (2,'Bàn phím','','','',0x00,0,0),
+ (3,'Chuột','','','',0x00,0,0),
+ (4,'Tai nghe - Loa','','','',0x00,0,0),
+ (5,'Laptop','','','',0x00,0,0),
+ (6,'Desktop','','','',0x00,0,0),
+ (7,'CPU','','','',0x00,0,0),
+ (8,'Mainboard','','','',0x00,0,0),
+ (9,'Ram','','','',0x00,0,0),
+ (10,'Ổ cứng','','','',0x00,0,0),
+ (11,'VGA','','','',0x00,0,0),
+ (12,'PSU','','','',0x00,0,0),
+ (13,'Vỏ case','','','',0x00,0,0),
+ (14,'Tản nhiệt','','','',0x00,0,0),
+ (15,'USB','','','',0x00,0,0),
+ (16,'Thiết bị khác','','','',0x00,0,0);
 /*!40000 ALTER TABLE `tblpc` ENABLE KEYS */;
 
 
@@ -923,42 +1113,42 @@ CREATE TABLE `tblproduct` (
 
 /*!40000 ALTER TABLE `tblproduct` DISABLE KEYS */;
 INSERT INTO `tblproduct` (`product_id`,`product_name`,`product_status`,`product_deleted`,`product_visited`,`product_price`,`product_images`,`product_notes`,`product_created_date`,`product_last_modified`,`product_pc_id`,`product_shop_id`,`product_quantity`) VALUES 
- (6,'MacBook Air 13 inch M1 2020 7-core GPU',1,0,NULL,10000,' /home/images/product/macbook-air-m1-2020-gray-600x600.jpg',' null',NULL,' 30/10/2023',1,2,1),
- (7,'HP 15s fq5229TU i3 1215U (8U237PA)',0,0,NULL,123,' /home/images/product/hp-15s-fq5229tu-i3-8u237pa-thumb-600x600.png',' null',NULL,' 30/10/2023',2,2,2),
- (8,'Asus TUF Gaming F15 FX506HF i5 11400H (HN014W)',1,0,NULL,123,' /home/images/product/asus-tuf-gaming-f15-fx506hf-i5-hn014w-thumb-600x600.jpg',' null',NULL,' 30/10/2023',3,2,3),
- (9,'Acer Aspire 5 Gaming A515 58GM 51LB i5 13420H (NX.KQ4SV.002)',0,0,NULL,1231312,' /home/images/product/acer-aspire-5-a515-58gm-51lb-i5-nxkq4sv002-170923-015941-600x600.jpg',' null',NULL,' 30/10/2023',4,9,4),
+ (6,'MacBook Air 13 inch M1 2020 7-core GPU',1,0,NULL,10000,' /home/images/product/macbook-air-m1-2020-gray-600x600.jpg',' null',NULL,' 30/10/2023',5,2,1),
+ (7,'HP 15s fq5229TU i3 1215U (8U237PA)',0,0,NULL,123,' /home/images/product/hp-15s-fq5229tu-i3-8u237pa-thumb-600x600.png',' null',NULL,' 30/10/2023',5,2,2),
+ (8,'Asus TUF Gaming F15 FX506HF i5 11400H (HN014W)',1,0,NULL,123,' /home/images/product/asus-tuf-gaming-f15-fx506hf-i5-hn014w-thumb-600x600.jpg',' null',NULL,' 30/10/2023',5,2,3),
+ (9,'Acer Aspire 5 Gaming A515 58GM 51LB i5 13420H (NX.KQ4SV.002)',0,0,NULL,1231312,' /home/images/product/acer-aspire-5-a515-58gm-51lb-i5-nxkq4sv002-170923-015941-600x600.jpg',' null',NULL,' 30/10/2023',5,9,4),
  (10,'Asus Vivobook Go 15 E1504FA R5 7520U (NJ776W)',1,0,NULL,1231231,' /home/images/product/asus-vivobook-go-15-e1504fa-r5-nj776w-thumb-600x600.jpg',' null',NULL,' 30/10/2023',5,10,5),
- (12,'HP 240 G9 i3 1215U (6L1X7PA)',1,0,NULL,1231232,' /home/images/product/hp-240-g9-i3-6l1x7pa-thumb-600x600.jpg',' null',NULL,' 30/10/2023',7,11,12),
- (13,'Asus Vivobook 16 X1605VA i5 1335U (MB360W)',0,0,NULL,1231231,' /home/images/product/asus-vivobook-16-x1605va-i5-mb360w-thumb-laptop-600x600.jpg',' null',NULL,' 30/10/2023',7,12,5),
- (14,'HP 15s fq5162TU i5 1235U (7C134PA)',1,0,NULL,4321,' /home/images/product/hp-15s-fq5162tu-i5-7c134pa-thumb-600x600.jpg',' null',NULL,' 30/10/2023',7,13,12),
- (15,'Asus Vivobook 15 X1504ZA i3 1215U (NJ102W)',0,0,NULL,324234,' /home/images/product/asus-vivobook-15-x1504za-i3-nj102w-thumb-600x600.jpg',' null',NULL,' 30/10/2023',7,14,5),
- (16,'Asus Vivobook X515EA i3 1115G4 (EJ3948W)',1,0,NULL,2332,' /home/images/product/asus-vivobook-x515ea-i3-ej3948w-thumb-600x600.jpg',' null',NULL,' 30/10/2023',8,15,12),
- (17,'HP Pavilion 14 dv2074TU i5 1235U (7C0P3PA)',0,0,NULL,23423,' /home/images/product/hp-pavilion-14-dv2074tu-i5-7c0p3pa-thumb-600x600.jpg',' null',NULL,' 30/10/2023',8,16,5),
- (18,'Asus Vivobook X515EA i5 1135G7 (EJ4155W)',1,0,NULL,234234,' /home/images/product/asus-vivobook-x515ea-i5-ej4155w-thumb-600x600.jpg',' null',NULL,' 30/10/2023',16,17,1),
- (19,'Dell Vostro 15 3520 i3 1215U (5M2TT1)',0,0,NULL,234234,' /home/images/product/dell-vostro-15-3520-i3-5m2tt1-090823-041032-600x600.png',' null',NULL,' 30/10/2023',16,18,2),
- (20,'HP 14 ep0126TU i3 N305 (8U233PA)',1,0,NULL,234234,' /home/images/product/hp-14-ep0126tu-i3-8u233pa-thumb-600x600.jpg',' null',NULL,' 30/10/2023',16,19,35),
- (21,'Lenovo Ideapad 3 15ITL6 i3 1115G4 (82H803SGVN)',0,0,NULL,234234,' /home/images/product/lenovo-ideapad-3-15itl6-i3-82h803sgvn-thumb-600x600.jpg',' null',NULL,' 30/10/2023',16,20,23),
- (22,'Dell Inspiron 15 3520 i3 1215U (71003264)',1,0,NULL,23423,' /home/images/product/dell-inspiron-3520-i3-71003264-thumb-600x600.jpg',' null',NULL,' 30/10/2023',16,21,4),
- (23,'HP 15s fq2716TU i3 1115G4 (7C0X3PA)',0,0,NULL,23423,' /home/images/product/hp-15s-fq2716tu-i3-7c0x3pa-thumb-600x600.jpg',' null',NULL,' 30/10/2023',2,6,3),
- (24,'Asus Vivobook X415EA i3 1115G4 (EK2034W)',1,0,NULL,231,' /home/images/product/asus-vivobook-x415ea-i3-ek2034w-thumb-laptop-600x600.jpg',' null',NULL,' 30/10/2023',2,12,1),
- (26,'Dell Inspiron 15 3520 i5 1235U (N5I5122W1)',1,0,NULL,23423,' /home/images/product/dell-inspiron-15-3520-i5-n5i5122w1-191222-091429-600x600.jpg',' null',NULL,' 30/10/2023',17,8,3),
- (27,'Asus Vivobook 15 X1504VA i5 1335U (NJ025W)',0,0,NULL,23423,' /home/images/product/asus-vivobook-15-x1504va-i5-nj025w-thumb-600x600.jpg',' null',NULL,' 30/10/2023',17,9,1),
- (29,'Lenovo Ideapad 3 15IAU7 i3 1215U (82RK005LVN)',0,0,NULL,123,' /home/images/product/lenovo-ideapad-3-15iau7-i3-82rk005lvn-281122-051953-600x600.jpg',' null',NULL,' 30/10/2023',17,10,2),
- (30,'HP Pavilion 15 eg2082TU i5 1240P (7C0Q5PA)',1,0,NULL,123,' /home/images/product/hp-pavilion-15-eg2082tu-i5-7c0q5pa-thumb-600x600.jpg',' null',NULL,' 30/10/2023',17,9,12),
- (31,'Lenovo Ideapad 3 15ITL6 i5 1155G7 (82H803RRVN)',0,0,NULL,123,' /home/images/product/lenovo-ideapad-3-15itl6-i5-82h803rrvn-thumb-600x600.jpg',' null',NULL,' 30/10/2023',17,10,1),
- (32,'HP 240 G8 i3 1115G4 (6L1A1PA)',1,0,NULL,123,' /home/images/product/hp-240-g8-i3-6l1a1pa-210423-031503-600x600.jpg','null',NULL,' 30/10/2023',17,12,3),
- (33,'Asus TUF Gaming F15 FX506HE i7 11800H (HN378W)',0,0,NULL,123,' /home/images/product/asus-tuf-gaming-f15-fx506he-i7-hn378w-thumb-600x600.jpg','null',NULL,' 30/10/2023',2,7,1),
- (34,'HP 15s fq5147TU i7 1255U (7C133PA)',1,0,NULL,NULL,' /home/images/product/hp-15s-fq5147tu-i7-7c133pa-thumb-600x600.jpg','null',NULL,' 30/10/2023',2,8,3),
- (35,'Acer Aspire 3 A315 59 314F i3 1215U (NX.K6TSV.002)',0,0,NULL,NULL,' /home/images/product/acer-aspire-3-a315-59-314f-i3-nxk6tsv002-thumb-1-600x600.jpg',' null',NULL,' 30/10/2023',2,9,2),
- (36,'MSI Gaming GF63 Thin 11SC i5 11400H (664VN)',1,0,NULL,NULL,' /home/images/product/msi-gaming-gf63-thin-11sc-i5-664vn-glr-thumb-600x600.jpg',' null',NULL,' 30/10/2023',2,10,1),
- (38,'MSI Gaming GF63 Thin 11UC i7 11800H (1228VN)',1,0,NULL,NULL,' /home/images/product/msi-gaming-gf63-thin-11uc-i7-1228vn-thumb-600x600.jpg',' null',NULL,' 30/10/2023',2,10,1),
- (39,'Asus Vivobook 15 OLED A1505VA i5 13500H (L1341W)',0,1,NULL,NULL,' /home/images/product/asus-vivobook-15-oled-a1505va-i5-l1341w-thumb-600x600.jpg',' null',NULL,' 30/10/2023',2,10,1),
- (40,'Lenovo Ideapad Slim 3 15IAH8 i5 12450H (83ER000EVN)',1,0,NULL,NULL,' /home/images/product/lenovo-ideapad-slim-3-15iah8-i5-83er00evn-thumb-600x600.jpg',' null',NULL,' 30/10/2023',2,10,1),
- (41,'MacBook Air 13 inch M2 2022 8-core GPU',0,0,NULL,NULL,' /home/images/product/apple-macbook-air-m2-2022-vang-600x600.jpg',' null',NULL,' 30/10/2023',2,10,1),
- (42,'Acer Nitro 5 Gaming AN515 57 5669 i5 11400H (NH.QEHSV.001)',1,0,NULL,NULL,' /home/images/product/acer-nitro-5-gaming-an515-57-5669-i5-11400h-8gb-512gb-144hz-4gb-gtx1650-win11-nhqehsv001-031221-100506-600x600.jpg',' null',NULL,' 30/10/2023',2,10,1),
- (43,'HP Pavilion 15 eg2081TU i5 1240P (7C0Q4PA)',0,0,NULL,NULL,' /home/images/product/hp-pavilion-15-eg2081tu-i5-7c0q4pa-thumb-600x600.jpg',' null',NULL,' 30/10/2023',2,10,1),
- (44,'Dell Vostro 3520 i3 1215U (V5I3614W1)',1,0,NULL,NULL,' /home/images/product/dell-vostro-3520-i3-v5i3614w1-thumb-600x600.jpg',' null',NULL,' 30/10/2023',2,10,1),
- (45,'Lenovo Ideapad 3 15ITL6 i3 1115G4 (82H803SFVN)',0,1,NULL,NULL,' /home/images/product/lenovo-ideapad-3-15itl6-i3-82h803sfvn-thumb-600x600.jpg',' null',NULL,' 30/10/2023',2,10,1);
+ (12,'HP 240 G9 i3 1215U (6L1X7PA)',1,0,NULL,1231232,' /home/images/product/hp-240-g9-i3-6l1x7pa-thumb-600x600.jpg',' null',NULL,' 30/10/2023',5,11,12),
+ (13,'Asus Vivobook 16 X1605VA i5 1335U (MB360W)',0,0,NULL,1231231,' /home/images/product/asus-vivobook-16-x1605va-i5-mb360w-thumb-laptop-600x600.jpg',' null',NULL,' 30/10/2023',5,12,5),
+ (14,'HP 15s fq5162TU i5 1235U (7C134PA)',1,0,NULL,4321,' /home/images/product/hp-15s-fq5162tu-i5-7c134pa-thumb-600x600.jpg',' null',NULL,' 30/10/2023',5,13,12),
+ (15,'Asus Vivobook 15 X1504ZA i3 1215U (NJ102W)',0,0,NULL,324234,' /home/images/product/asus-vivobook-15-x1504za-i3-nj102w-thumb-600x600.jpg',' null',NULL,' 30/10/2023',5,14,5),
+ (16,'Asus Vivobook X515EA i3 1115G4 (EJ3948W)',1,0,NULL,2332,' /home/images/product/asus-vivobook-x515ea-i3-ej3948w-thumb-600x600.jpg',' null',NULL,' 30/10/2023',5,15,12),
+ (17,'HP Pavilion 14 dv2074TU i5 1235U (7C0P3PA)',0,0,NULL,23423,' /home/images/product/hp-pavilion-14-dv2074tu-i5-7c0p3pa-thumb-600x600.jpg',' null',NULL,' 30/10/2023',5,16,5),
+ (18,'Asus Vivobook X515EA i5 1135G7 (EJ4155W)',1,0,NULL,234234,' /home/images/product/asus-vivobook-x515ea-i5-ej4155w-thumb-600x600.jpg',' null',NULL,' 30/10/2023',5,17,1),
+ (19,'Dell Vostro 15 3520 i3 1215U (5M2TT1)',0,0,NULL,234234,' /home/images/product/dell-vostro-15-3520-i3-5m2tt1-090823-041032-600x600.png',' null',NULL,' 30/10/2023',5,18,2),
+ (20,'HP 14 ep0126TU i3 N305 (8U233PA)',1,0,NULL,234234,' /home/images/product/hp-14-ep0126tu-i3-8u233pa-thumb-600x600.jpg',' null',NULL,' 30/10/2023',5,19,35),
+ (21,'Lenovo Ideapad 3 15ITL6 i3 1115G4 (82H803SGVN)',0,0,NULL,234234,' /home/images/product/lenovo-ideapad-3-15itl6-i3-82h803sgvn-thumb-600x600.jpg',' null',NULL,' 30/10/2023',5,20,23),
+ (22,'Dell Inspiron 15 3520 i3 1215U (71003264)',1,0,NULL,23423,' /home/images/product/dell-inspiron-3520-i3-71003264-thumb-600x600.jpg',' null',NULL,' 30/10/2023',5,21,4),
+ (23,'HP 15s fq2716TU i3 1115G4 (7C0X3PA)',0,0,NULL,23423,' /home/images/product/hp-15s-fq2716tu-i3-7c0x3pa-thumb-600x600.jpg',' null',NULL,' 30/10/2023',5,6,3),
+ (24,'Asus Vivobook X415EA i3 1115G4 (EK2034W)',1,0,NULL,231,' /home/images/product/asus-vivobook-x415ea-i3-ek2034w-thumb-laptop-600x600.jpg',' null',NULL,' 30/10/2023',5,12,1),
+ (26,'Dell Inspiron 15 3520 i5 1235U (N5I5122W1)',1,0,NULL,23423,' /home/images/product/dell-inspiron-15-3520-i5-n5i5122w1-191222-091429-600x600.jpg',' null',NULL,' 30/10/2023',5,8,3),
+ (27,'Asus Vivobook 15 X1504VA i5 1335U (NJ025W)',0,0,NULL,23423,' /home/images/product/asus-vivobook-15-x1504va-i5-nj025w-thumb-600x600.jpg',' null',NULL,' 30/10/2023',5,9,1),
+ (29,'Lenovo Ideapad 3 15IAU7 i3 1215U (82RK005LVN)',0,0,NULL,123,' /home/images/product/lenovo-ideapad-3-15iau7-i3-82rk005lvn-281122-051953-600x600.jpg',' null',NULL,' 30/10/2023',5,10,2),
+ (30,'HP Pavilion 15 eg2082TU i5 1240P (7C0Q5PA)',1,0,NULL,123,' /home/images/product/hp-pavilion-15-eg2082tu-i5-7c0q5pa-thumb-600x600.jpg',' null',NULL,' 30/10/2023',5,9,12),
+ (31,'Lenovo Ideapad 3 15ITL6 i5 1155G7 (82H803RRVN)',0,0,NULL,123,' /home/images/product/lenovo-ideapad-3-15itl6-i5-82h803rrvn-thumb-600x600.jpg',' null',NULL,' 30/10/2023',5,10,1),
+ (32,'HP 240 G8 i3 1115G4 (6L1A1PA)',1,0,NULL,123,' /home/images/product/hp-240-g8-i3-6l1a1pa-210423-031503-600x600.jpg','null',NULL,' 30/10/2023',5,12,3),
+ (33,'Asus TUF Gaming F15 FX506HE i7 11800H (HN378W)',0,0,NULL,123,' /home/images/product/asus-tuf-gaming-f15-fx506he-i7-hn378w-thumb-600x600.jpg','null',NULL,' 30/10/2023',5,7,1),
+ (34,'HP 15s fq5147TU i7 1255U (7C133PA)',1,0,NULL,NULL,' /home/images/product/hp-15s-fq5147tu-i7-7c133pa-thumb-600x600.jpg','null',NULL,' 30/10/2023',5,8,3),
+ (35,'Acer Aspire 3 A315 59 314F i3 1215U (NX.K6TSV.002)',0,0,NULL,NULL,' /home/images/product/acer-aspire-3-a315-59-314f-i3-nxk6tsv002-thumb-1-600x600.jpg',' null',NULL,' 30/10/2023',5,9,2),
+ (36,'MSI Gaming GF63 Thin 11SC i5 11400H (664VN)',1,0,NULL,NULL,' /home/images/product/msi-gaming-gf63-thin-11sc-i5-664vn-glr-thumb-600x600.jpg',' null',NULL,' 30/10/2023',5,10,1),
+ (38,'MSI Gaming GF63 Thin 11UC i7 11800H (1228VN)',1,0,NULL,NULL,' /home/images/product/msi-gaming-gf63-thin-11uc-i7-1228vn-thumb-600x600.jpg',' null',NULL,' 30/10/2023',5,10,1),
+ (39,'Asus Vivobook 15 OLED A1505VA i5 13500H (L1341W)',0,1,NULL,NULL,' /home/images/product/asus-vivobook-15-oled-a1505va-i5-l1341w-thumb-600x600.jpg',' null',NULL,' 30/10/2023',5,10,1),
+ (40,'Lenovo Ideapad Slim 3 15IAH8 i5 12450H (83ER000EVN)',1,0,NULL,NULL,' /home/images/product/lenovo-ideapad-slim-3-15iah8-i5-83er00evn-thumb-600x600.jpg',' null',NULL,' 30/10/2023',5,10,1),
+ (41,'MacBook Air 13 inch M2 2022 8-core GPU',0,0,NULL,NULL,' /home/images/product/apple-macbook-air-m2-2022-vang-600x600.jpg',' null',NULL,' 30/10/2023',5,10,1),
+ (42,'Acer Nitro 5 Gaming AN515 57 5669 i5 11400H (NH.QEHSV.001)',1,0,NULL,NULL,' /home/images/product/acer-nitro-5-gaming-an515-57-5669-i5-11400h-8gb-512gb-144hz-4gb-gtx1650-win11-nhqehsv001-031221-100506-600x600.jpg',' null',NULL,' 30/10/2023',5,10,1),
+ (43,'HP Pavilion 15 eg2081TU i5 1240P (7C0Q4PA)',0,0,NULL,NULL,' /home/images/product/hp-pavilion-15-eg2081tu-i5-7c0q4pa-thumb-600x600.jpg',' null',NULL,' 30/10/2023',5,10,1),
+ (44,'Dell Vostro 3520 i3 1215U (V5I3614W1)',1,0,NULL,NULL,' /home/images/product/dell-vostro-3520-i3-v5i3614w1-thumb-600x600.jpg',' null',NULL,' 30/10/2023',5,10,1),
+ (45,'Lenovo Ideapad 3 15ITL6 i3 1115G4 (82H803SFVN)',0,1,NULL,NULL,' /home/images/product/lenovo-ideapad-3-15itl6-i3-82h803sfvn-thumb-600x600.jpg',' null',NULL,' 30/10/2023',5,10,1);
 /*!40000 ALTER TABLE `tblproduct` ENABLE KEYS */;
 
 
