@@ -57,7 +57,8 @@ document.addEventListener("DOMContentLoaded", function(){
 					
 					if (document.getElementById("product-list")!==null){
 						if (data.product_list===null || data.product_list===""){
-							$("#product-list").html("<p>Không tìm được dữ liệu</p>");
+							$("#product-list").parent().html("<p>Không có sản phẩm trong giỏ hàng</p>");
+							
 						} else {
 							$("#product-list").html(data.product_list); // Update content without reloading
 						}

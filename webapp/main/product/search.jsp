@@ -1,24 +1,22 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
-    <jsp:include page="../component/header.jsp" flush="true"></jsp:include>
-<jsp:include page="../component/navigation-bar.jsp" flush="true"></jsp:include>
-<%@ page import="java.util.*" %>
-		
-<div class="properties section">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+  <jsp:include page="../component/header.jsp" flush="true"></jsp:include>
+  <jsp:include page="../component/navigation-bar.jsp" flush="true"></jsp:include>
+
+  <div class="properties section">
     <div class="container">
       <nav aria-label="breadcrumb" class="ms-lg-5">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Library</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Data</li>
-          </ol>
-        </nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item"><a href="#">Library</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Data</li>
+        </ol>
+      </nav>
       <div class="row">
         <div class="col-3 d-lg-block d-none">
           <div class="best-deal p-0">
             <div class="info-table">
               <ul>
-                <li>Hãng sản xuất 
+                <li>Hãng sản xuất
                   <ul class="ms-4 mt-2">
                     <li><a class="text-black" href="">Acer</a></li>
                     <li><a class="text-black" href="">AOC</a></li>
@@ -35,7 +33,9 @@
                 </li>
                 <li>Kích thước
                   <ul class="ms-4 mt-2">
-                    <li><a href="" class="text-black"><19 inch</a></li>
+                    <li><a href="" class="text-black">
+                        <19 inch</a>
+                    </li>
                     <li><a href="" class="text-black">21.5 Inch</a></li>
                     <li><a href="" class="text-black">23.5 - 25 Inch</a></li>
                     <li><a href="" class="text-black">27 Inch</a></li>

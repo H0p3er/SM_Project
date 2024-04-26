@@ -10,13 +10,13 @@ public class total {
         private String user_images;
         private String user_email;
         private String user_notes;
+        private String User_birthday;
         private byte user_permission;     
         private byte user_gender;
         private String user_address;
         private String user_created_date;
         private boolean user_deleted;
         private String user_phone;
-        private String user_social_links;
         private long user_logined;
     }
 
