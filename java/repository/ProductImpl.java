@@ -314,7 +314,7 @@ public class ProductImpl extends BasicImpl implements Product {
 	
 	private String getProductsSizeByShopSQL(ShopObject object) {	
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT COUNT(p.product_id) as TotalProduct FROM tblproduct p ");	
+		sql.append("SELECT COUNT(p.product_id) as product_count FROM tblproduct p ");	
 		sql.append("INNER JOIN tblshop s ON p.product_shop_id = s.shop_id ");
 		sql.append("WHERE ((p.product_shop_id="+object.getShop_id()+") AND (p.product_deleted=0)); ");
 		return sql.toString();
@@ -339,7 +339,7 @@ public class ProductImpl extends BasicImpl implements Product {
 	
 	private String getProductsSizeByPCSQL(PCObject object) {	
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT COUNT(p.product_id) as TotalProduct FROM tblproduct p ");	
+		sql.append("SELECT COUNT(p.product_id) as product_count FROM tblproduct p ");	
 		sql.append("INNER JOIN tblpc pc ON p.product_pc_id = pc.pc_id ");
 		sql.append("WHERE (pc.pc_id="+object.getPc_id()+") AND (p.product_deleted=0); ");
 		return sql.toString();
@@ -357,7 +357,7 @@ public class ProductImpl extends BasicImpl implements Product {
 	
 	private String getProductsSizeByBillSQL(BillObject object) {	
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT COUNT(p.product_id) as TotalProduct FROM tblproduct p ");	
+		sql.append("SELECT COUNT(p.product_id) as product_count FROM tblproduct p ");	
 		sql.append("INNER JOIN tblbd bd ON bd.bd_product_id = p.product_id ");
 		sql.append("WHERE (p.product_shop_id="+object.getBill_id()+") AND (p.product_deleted=0); ");
 		return sql.toString();

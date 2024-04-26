@@ -69,8 +69,9 @@ public class ProductModel {
 		if (rs != null) {
 			try {
 				if (rs.next()) {
-					item = new ProductObject();
-					setProductObject(item, rs);
+					item = setProductObject(rs);;
+					
+					System.out.println(item.getProduct_id());
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -95,51 +96,8 @@ public class ProductModel {
 		if (rs != null) {
 			try {
 				while (rs.next()) {				
-					ProductObject item = null;
-					switch (rs.getInt("product_pc_id")) {
-					case 1:
-						item = getProduct_CaseDTO(rs);
-						break;						
-					case 2:
-						item = getProduct_CoolingDTO(rs);
-						break;					
-					case 3:
-						item = getProduct_CPUDTO(rs);		
-						break;					
-					case 4:
-						item = getProduct_DesktopDTO(rs);		
-						break;						
-					case 5:						
-						item = getProduct_GraphicsCardDTO(rs);		
-						break;						
-					case 6:					
-						item = getProduct_HeadphoneSpeakerDTO(rs);		
-						break;						
-					case 7:
-						item = getProduct_KeyboardDTO(rs);		
-						break;						
-					case 8:
-						item = getProduct_LaptopDTO(rs);		
-						break;						
-					case 9:					
-						item = getProduct_MiceDTO(rs);		
-						break;		
-					case 10:
-						item = getProduct_MonitorDTO(rs);		
-						break;				
-					case 11:						
-						item = getProduct_MotherboardDTO(rs);		
-						break;						
-					case 12:
-						item = getProduct_PowerSuppyDTO(rs);		
-						break;						
-					case 13:
-						item = getProduct_RamDTO(rs);		
-						break;				
-					case 14:
-						item = getProduct_StorageDTO(rs);		
-						break;	
-					}
+					ProductObject item = setProductObject(rs);
+					System.out.println(item.getProduct_id());
 					items.add(item);
 				}
 			} catch (SQLException e) {
@@ -152,7 +110,6 @@ public class ProductModel {
 	}
 
 	private int getProductObjectsSize(ResultSet rs) {
-		// Lay tong so ban ghi
 		int product_count = 0;
 		if (rs != null) {
 			try {
@@ -168,8 +125,53 @@ public class ProductModel {
 		return product_count;
 	}
 	
-	private void setProductObject(ProductObject item, ResultSet rs) {
-		try {
+	private ProductObject setProductObject(ResultSet rs) {
+		ProductObject item = new ProductObject();
+		try {	
+			switch (rs.getInt("product_pc_id")) {
+			case 1:
+				item = getProduct_CaseDTO(rs);
+				break;						
+			case 2:
+				item = getProduct_CoolingDTO(rs);
+				break;					
+			case 3:
+				item = getProduct_CPUDTO(rs);		
+				break;					
+			case 4:
+				item = getProduct_DesktopDTO(rs);		
+				break;						
+			case 5:						
+				item = getProduct_GraphicsCardDTO(rs);		
+				break;						
+			case 6:					
+				item = getProduct_HeadphoneSpeakerDTO(rs);		
+				break;						
+			case 7:
+				item = getProduct_KeyboardDTO(rs);		
+				break;						
+			case 8:
+				item = getProduct_LaptopDTO(rs);		
+				break;						
+			case 9:					
+				item = getProduct_MiceDTO(rs);		
+				break;		
+			case 10:
+				item = getProduct_MonitorDTO(rs);		
+				break;				
+			case 11:						
+				item = getProduct_MotherboardDTO(rs);		
+				break;						
+			case 12:
+				item = getProduct_PowerSuppyDTO(rs);		
+				break;						
+			case 13:
+				item = getProduct_RamDTO(rs);		
+				break;				
+			case 14:
+				item = getProduct_StorageDTO(rs);		
+				break;	
+			}
 			item.setProduct_id(rs.getInt("product_id"));
 			item.setProduct_name(Utilities.decode(rs.getString("product_name")));
 			item.setProduct_status(rs.getByte("product_status"));
@@ -179,16 +181,19 @@ public class ProductModel {
 			item.setProduct_last_modified(rs.getString("product_last_modified"));
 			item.setProduct_pc_id(rs.getInt("product_pc_id"));
 			item.setProduct_shop_id(rs.getInt("product_shop_id"));
-			item.setProduct_quantity(rs.getInt("product_quantity"));
+			item.setProduct_quantity(rs.getInt("product_quantity"));		
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		return item;
 	}
 	
 	private Product_CaseDTO getProduct_CaseDTO(ResultSet rs) throws SQLException {
-		Product_CaseDTO item = new Product_CaseDTO();		
-		setProductObject(item, rs);
+		Product_CaseDTO item = new Product_CaseDTO();
+		item.setProduct_pc_id(rs.getInt("product_pc_id"));
 		ResultSet attribute = this.pc.getPCByProduct(item);	
 		if (attribute.next()) {
 			((Product_CaseDTO) item).setCase_size(attribute.getString("case_size"));
@@ -199,8 +204,8 @@ public class ProductModel {
 	}
 	
 	private Product_CoolingDTO getProduct_CoolingDTO(ResultSet rs) throws SQLException {	
-		Product_CoolingDTO item = new Product_CoolingDTO();		
-		setProductObject(item, rs);
+		Product_CoolingDTO item = new Product_CoolingDTO();	
+		item.setProduct_pc_id(rs.getInt("product_pc_id"));
 		ResultSet attribute = this.pc.getPCByProduct(item);
 		if (attribute.next()) {
 			((Product_CoolingDTO) item).setCooling_color(attribute.getString("cooling_color"));
@@ -212,85 +217,86 @@ public class ProductModel {
 	}
 	
 	private Product_CPUDTO getProduct_CPUDTO(ResultSet rs) throws SQLException {	
-		Product_CPUDTO item = new Product_CPUDTO();		
-		setProductObject(item, rs);					
+		Product_CPUDTO item = new Product_CPUDTO();	
+		item.setProduct_pc_id(rs.getInt("product_pc_id"));
 		ResultSet attribute = this.pc.getPCByProduct(item);
 		return item;
 	}
 	
 	private Product_DesktopDTO getProduct_DesktopDTO(ResultSet rs) throws SQLException {	
-		Product_DesktopDTO item = new Product_DesktopDTO();		
-		setProductObject(item, rs);					
+		Product_DesktopDTO item = new Product_DesktopDTO();	
+		item.setProduct_pc_id(rs.getInt("product_pc_id"));
 		ResultSet attribute = this.pc.getPCByProduct(item);
 		return item;
 	}
 	
 	private Product_GraphicsCardDTO getProduct_GraphicsCardDTO(ResultSet rs) throws SQLException {	
-		Product_GraphicsCardDTO item = new Product_GraphicsCardDTO();		
-		setProductObject(item, rs);					
+		Product_GraphicsCardDTO item = new Product_GraphicsCardDTO();	
+		item.setProduct_pc_id(rs.getInt("product_pc_id"));
 		ResultSet attribute = this.pc.getPCByProduct(item);
+		
 		return item;
 	}
 	
 	private Product_HeadphoneSpeakerDTO getProduct_HeadphoneSpeakerDTO(ResultSet rs) throws SQLException {	
-		Product_HeadphoneSpeakerDTO item = new Product_HeadphoneSpeakerDTO();		
-		setProductObject(item, rs);					
+		Product_HeadphoneSpeakerDTO item = new Product_HeadphoneSpeakerDTO();
+		item.setProduct_pc_id(rs.getInt("product_pc_id"));
 		ResultSet attribute = this.pc.getPCByProduct(item);
 		return item;
 	}
 	
 	private Product_KeyboardDTO getProduct_KeyboardDTO(ResultSet rs) throws SQLException {	
-		Product_KeyboardDTO item = new Product_KeyboardDTO();		
-		setProductObject(item, rs);					
+		Product_KeyboardDTO item = new Product_KeyboardDTO();
+		item.setProduct_pc_id(rs.getInt("product_pc_id"));
 		ResultSet attribute = this.pc.getPCByProduct(item);
 		return item;
 	}
 	
 	private Product_LaptopDTO getProduct_LaptopDTO(ResultSet rs) throws SQLException {	
-		Product_LaptopDTO item = new Product_LaptopDTO();		
-		setProductObject(item, rs);					
+		Product_LaptopDTO item = new Product_LaptopDTO();
+		item.setProduct_pc_id(rs.getInt("product_pc_id"));
 		ResultSet attribute = this.pc.getPCByProduct(item);
 		return item;
 	}
 
 	private Product_StorageDTO getProduct_StorageDTO(ResultSet rs) throws SQLException {
-		Product_StorageDTO item = new Product_StorageDTO();		
-		setProductObject(item, rs);					
+		Product_StorageDTO item = new Product_StorageDTO();
+		item.setProduct_pc_id(rs.getInt("product_pc_id"));
 		ResultSet attribute = this.pc.getPCByProduct(item);
 		return item;
 	}
 
 	private Product_RamDTO getProduct_RamDTO(ResultSet rs)  throws SQLException{
-		Product_RamDTO item = new Product_RamDTO();		
-		setProductObject(item, rs);					
+		Product_RamDTO item = new Product_RamDTO();
+		item.setProduct_pc_id(rs.getInt("product_pc_id"));
 		ResultSet attribute = this.pc.getPCByProduct(item);
 		return item;
 	}
 
 	private Product_PowerSuppyDTO getProduct_PowerSuppyDTO(ResultSet rs)  throws SQLException{
-		Product_PowerSuppyDTO item = new Product_PowerSuppyDTO();		
-		setProductObject(item, rs);					
+		Product_PowerSuppyDTO item = new Product_PowerSuppyDTO();
+		item.setProduct_pc_id(rs.getInt("product_pc_id"));
 		ResultSet attribute = this.pc.getPCByProduct(item);
 		return item;
 	}
 
 	private Product_MotherboardDTO getProduct_MotherboardDTO(ResultSet rs)  throws SQLException{
-		Product_MotherboardDTO item = new Product_MotherboardDTO();		
-		setProductObject(item, rs);					
+		Product_MotherboardDTO item = new Product_MotherboardDTO();	
+		item.setProduct_pc_id(rs.getInt("product_pc_id"));
 		ResultSet attribute = this.pc.getPCByProduct(item);
 		return item;
 	}
 
 	private Product_MonitorDTO getProduct_MonitorDTO(ResultSet rs)  throws SQLException{
-		Product_MonitorDTO item = new Product_MonitorDTO();		
-		setProductObject(item, rs);					
+		Product_MonitorDTO item = new Product_MonitorDTO();
+		item.setProduct_pc_id(rs.getInt("product_pc_id"));
 		ResultSet attribute = this.pc.getPCByProduct(item);
 		return item;
 	}
 
 	private Product_MiceDTO getProduct_MiceDTO(ResultSet rs)  throws SQLException{
-		Product_MiceDTO item = new Product_MiceDTO();		
-		setProductObject(item, rs);					
+		Product_MiceDTO item = new Product_MiceDTO();	
+		item.setProduct_pc_id(rs.getInt("product_pc_id"));
 		ResultSet attribute = this.pc.getPCByProduct(item);
 		return item;
 	}

@@ -52,6 +52,11 @@ public class ProductControl {
 		return this.pm.getProductObject(id);
 	}
 	
+	public Map<String,String> getProductProfile(int id) {
+		ProductObject productObject = this.getProductObject(id);
+		return ProductLibrary.viewProductProfile(productObject);
+	}
+	
 
 	/**
 	 * Phương thức trả về tập các product theo infors truyền vào
@@ -63,7 +68,7 @@ public class ProductControl {
 	public Pair<ArrayList<ProductObject>,Integer> getProducts(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> infors) {			
 		return this.pm.getProductObjects(infors);
 	}
-
+	
 	
 	/** 
 	 * Phương thức trả về danh sách giao diện cho phần trình bày danh sách product
@@ -74,8 +79,7 @@ public class ProductControl {
 	 */
 	public Map<String,String> viewProductList(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> infors){
 
-		Pair<ArrayList<ProductObject>,Integer> datas = this.pm.getProductObjects(infors);
-		
+		Pair<ArrayList<ProductObject>,Integer> datas = this.pm.getProductObjects(infors);		
 		return ProductLibrary.viewProductList(datas, infors);
 	}
 	

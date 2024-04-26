@@ -11,7 +11,7 @@ public class Product_DesktopDTO extends ProductObject{
 	private int desktop_ram_capacity; 
 	private String desktop_ram_type; 
 	private int desktop_storage; 
-	private int desktop_power_supply;
+	private String desktop_power_supply;
 	public int getDesktop_id() {
 		return desktop_id;
 	}
@@ -60,10 +60,10 @@ public class Product_DesktopDTO extends ProductObject{
 	public void setDesktop_storage(int desktop_storage) {
 		this.desktop_storage = desktop_storage;
 	}
-	public int getDesktop_power_supply() {
+	public String getDesktop_power_supply() {
 		return desktop_power_supply;
 	}
-	public void setDesktop_power_supply(int desktop_power_supply) {
+	public void setDesktop_power_supply(String desktop_power_supply) {
 		this.desktop_power_supply = desktop_power_supply;
 	}
 	
