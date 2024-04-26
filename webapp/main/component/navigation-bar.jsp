@@ -37,9 +37,9 @@
               		<li class="ms-lg-5 col-8">
               		<form action="/home/product/search" method="get">
 	               		<div class="input-group" >              			
-               				<input type="text" name="search" class="form-control" placeholder="Tìm kiếm..."
+               				<input type="text" name="query" class="form-control" placeholder="Tìm kiếm..."
 		                    aria-labbel="Timkiem" aria-describedby="button-addon2">
-		                	<button class="btn btn-dark" type="button" id="button-addon2">
+		                	<button class="btn btn-dark" type="submit" id="button-addon2">
 		                		<i class="fa fa-search" aria-hidden="true"></i>
 		                	</button>               					                 
 	                	</div>

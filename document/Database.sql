@@ -30,7 +30,7 @@ CREATE TABLE `tbl_cases` (
   `case_id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
   `case_manufacturer` varchar(50) DEFAULT NULL,
-  `case _color` varchar(50) DEFAULT NULL COMMENT 'Color',
+  `case_color` varchar(50) DEFAULT NULL COMMENT 'Color',
   `case_size` varchar(50) DEFAULT NULL COMMENT 'Case Size',
   PRIMARY KEY (`case_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Cases Table';
@@ -75,10 +75,10 @@ CREATE TABLE `tbl_cpus` (
   `cpu_id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
   `cpu_collection` varchar(100) DEFAULT NULL COMMENT 'core i5/ryzen 5',
-  `socket` varchar(50) DEFAULT NULL COMMENT 'Socket',
-  `cores` varchar(50) DEFAULT NULL COMMENT 'Core',
-  `theats` varchar(50) DEFAULT NULL COMMENT 'Theats',
-  `speed` varchar(50) DEFAULT NULL COMMENT 'Speed',
+  `cpu_socket` int(11) unsigned DEFAULT NULL COMMENT 'Socket',
+  `cpu_cores` int(11) unsigned DEFAULT NULL COMMENT 'Core',
+  `cpu_theats` int(11) unsigned DEFAULT NULL COMMENT 'Theats',
+  `cpu_speed_ghz` int(11) unsigned DEFAULT NULL COMMENT 'Speed',
   PRIMARY KEY (`cpu_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='CPUs Table';
 
@@ -97,15 +97,15 @@ CREATE TABLE `tbl_cpus` (
 DROP TABLE IF EXISTS `tbl_desktops`;
 CREATE TABLE `tbl_desktops` (
   `desktop_id` int(11) NOT NULL AUTO_INCREMENT,
-  `product_id` int(11) NOT NULL,
-  `desktop_manufacturer` varchar(50) DEFAULT NULL,
-  `desktop_type` varchar(50) DEFAULT NULL COMMENT 'Type',
-  `desktop_cpu` varchar(100) DEFAULT NULL COMMENT 'CPU',
-  `desktop_gpu` varchar(100) DEFAULT NULL COMMENT 'GPU',
-  `desktop_ram_capacity` varchar(20) DEFAULT NULL COMMENT 'RAM Capacity',
+  `product_id` int(11) unsigned zerofill NOT NULL,
+  `desktop_manufacturer` varchar(20) DEFAULT NULL,
+  `desktop_type` smallint(1) unsigned DEFAULT '0' COMMENT '0-Old; 1-New',
+  `desktop_cpu` varchar(20) NOT NULL COMMENT 'CPU',
+  `desktop_gpu` varchar(20) DEFAULT NULL COMMENT 'GPU',
+  `desktop_ram_capacity` int(11) unsigned DEFAULT NULL COMMENT 'RAM Capacity',
   `desktop_ram_type` varchar(20) DEFAULT NULL COMMENT 'RAM Type',
-  `desktop_storage` varchar(100) DEFAULT NULL COMMENT 'Storage',
-  `desktop_power_supply` varchar(50) DEFAULT NULL,
+  `desktop_storage` int(11) unsigned NOT NULL COMMENT 'Storage',
+  `desktop_power_supply` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`desktop_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Desktops Table';
 
@@ -124,13 +124,13 @@ CREATE TABLE `tbl_desktops` (
 DROP TABLE IF EXISTS `tbl_graphics_cards`;
 CREATE TABLE `tbl_graphics_cards` (
   `graphics_card_id` int(11) NOT NULL AUTO_INCREMENT,
-  `product_id` int(11) NOT NULL,
+  `product_id` int(11) unsigned NOT NULL,
   `graphics_card_manufacturer` varchar(100) DEFAULT NULL COMMENT 'Manufacturer',
-  `graphics_card_speed` varchar(50) DEFAULT NULL,
-  `graphics_card_cores` varchar(50) DEFAULT NULL,
+  `graphics_card_speed` int(11) unsigned DEFAULT NULL,
+  `graphics_card_cores` int(11) unsigned DEFAULT NULL,
   `graphics_card_version` varchar(50) DEFAULT NULL COMMENT 'Version',
-  `graphics_card_vram_capacity` varchar(20) DEFAULT NULL COMMENT 'VRAM Capacity',
-  `graphics_card_require_psu` varchar(50) DEFAULT NULL,
+  `graphics_card_vram_capacity` int(11) unsigned DEFAULT NULL COMMENT 'VRAM Capacity',
+  `graphics_card_require_psu` int(11) unsigned DEFAULT NULL,
   PRIMARY KEY (`graphics_card_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Graphics Cards Table';
 
@@ -176,7 +176,7 @@ CREATE TABLE `tbl_keyboards` (
   `keyboard_type` varchar(100) DEFAULT NULL COMMENT 'Gaming/mechanical/Office',
   `keyboard_connection_type` varchar(50) DEFAULT NULL COMMENT 'Connection Type',
   `keyboard_size_layout` varchar(50) DEFAULT NULL COMMENT 'Size Layout',
-  `keyboard_led_backlighting` tinyint(1) DEFAULT NULL COMMENT 'LED Backlighting',
+  `keyboard_led_backlighting` varchar(50) DEFAULT NULL COMMENT 'LED Backlighting',
   PRIMARY KEY (`keyboard_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Keyboards Table';
 
@@ -197,14 +197,14 @@ CREATE TABLE `tbl_laptops` (
   `laptop_id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
   `laptop_manufacturer` varchar(100) DEFAULT NULL COMMENT 'Manufacturer',
-  `laptop_cpu` varchar(100) DEFAULT NULL COMMENT 'CPU',
-  `laptop_ram` varchar(100) DEFAULT NULL COMMENT 'RAM',
-  `laptop_graphics_card` varchar(100) DEFAULT NULL COMMENT 'Graphics Card',
-  `laptop_storage` varchar(100) DEFAULT NULL COMMENT 'Storage',
-  `laptop_screen_size` varchar(20) DEFAULT NULL COMMENT 'Screen Size',
-  `laptop_refresh_rate` varchar(50) DEFAULT NULL COMMENT 'Refresh Rate',
+  `laptop_cpu` int(11) unsigned DEFAULT NULL COMMENT 'CPU',
+  `laptop_ram` int(11) unsigned DEFAULT NULL COMMENT 'RAM',
+  `laptop_graphics_card` int(11) unsigned DEFAULT NULL COMMENT 'Graphics Card',
+  `laptop_storage` int(11) unsigned DEFAULT NULL COMMENT 'Storage',
+  `laptop_screen_size` int(11) unsigned DEFAULT NULL COMMENT 'Screen Size',
+  `laptop_refresh_rate` int(11) unsigned DEFAULT NULL COMMENT 'Refresh Rate',
   `laptop_resolution` varchar(20) DEFAULT NULL COMMENT 'Resolution',
-  `laptop_type` varchar(50) DEFAULT NULL COMMENT 'Type',
+  `laptop_type` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`laptop_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Laptops Table';
 
@@ -247,15 +247,15 @@ CREATE TABLE `tbl_mice` (
 DROP TABLE IF EXISTS `tbl_monitors`;
 CREATE TABLE `tbl_monitors` (
   `monitor_id` int(11) NOT NULL AUTO_INCREMENT,
-  `product_id` int(11) NOT NULL,
+  `product_id` int(11) unsigned NOT NULL,
   `monitor_manufacturer` varchar(100) DEFAULT NULL COMMENT 'Manufacturer',
   `monitor_size` varchar(50) DEFAULT NULL COMMENT 'Size',
   `monitor_type` varchar(100) DEFAULT NULL COMMENT 'Gaming/Office/Graphics',
   `monitor_resolution` varchar(50) DEFAULT NULL COMMENT 'Resolution',
   `monitor_panel_type` varchar(50) DEFAULT NULL COMMENT 'Panel Type',
-  `monitor_refresh_rate` varchar(50) DEFAULT NULL COMMENT 'Refresh Rate',
+  `monitor_refresh_rate` int(11) unsigned DEFAULT NULL COMMENT 'Refresh Rate',
   `monitor_screen_type` varchar(50) DEFAULT NULL COMMENT 'Shape/Ratio',
-  `monitor_response` varchar(50) DEFAULT NULL COMMENT 'Respone time',
+  `monitor_response` double DEFAULT NULL COMMENT 'Respone time',
   PRIMARY KEY (`monitor_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Monitors Table';
 
@@ -343,11 +343,11 @@ CREATE TABLE `tbl_power_supply` (
 DROP TABLE IF EXISTS `tbl_rams`;
 CREATE TABLE `tbl_rams` (
   `ram_id` int(11) NOT NULL AUTO_INCREMENT,
-  `product_id` int(11) NOT NULL,
+  `product_id` int(11) unsigned NOT NULL,
   `ram_manufacturer` varchar(50) DEFAULT NULL,
   `ram_type` varchar(50) DEFAULT NULL COMMENT 'RAM Type',
-  `ram_capacity` varchar(20) DEFAULT NULL COMMENT 'RAM Capacity',
-  `ram_bus_speed` varchar(20) DEFAULT NULL COMMENT 'RAM Bus Speed',
+  `ram_capacity` int(4) unsigned DEFAULT NULL COMMENT 'RAM Capacity',
+  `ram_bus_speed` int(11) unsigned DEFAULT NULL COMMENT 'RAM Bus Speed',
   `ram_standard` varchar(50) DEFAULT NULL COMMENT 'RAM Standard',
   PRIMARY KEY (`ram_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='RAMs Table';
@@ -370,9 +370,9 @@ CREATE TABLE `tbl_storage` (
   `product_id` int(11) NOT NULL,
   `storage_manufacturer` varchar(50) DEFAULT NULL,
   `storage_type` varchar(50) DEFAULT NULL COMMENT 'SSD/HDD',
-  `storage_capacity` varchar(20) DEFAULT NULL COMMENT 'Capacity',
+  `storage_capacity` int(11) unsigned DEFAULT NULL COMMENT 'Capacity',
   `storage_m2_pcie_type` varchar(50) DEFAULT NULL COMMENT 'M.2 PCIe type',
-  `storage_rpm` int(11) DEFAULT NULL COMMENT 'RPM',
+  `storage_rpm` int(11) unsigned DEFAULT NULL COMMENT 'RPM',
   PRIMARY KEY (`storage_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Storage Table';
 
@@ -391,9 +391,9 @@ CREATE TABLE `tbl_storage` (
 DROP TABLE IF EXISTS `tbl_usbs`;
 CREATE TABLE `tbl_usbs` (
   `usb_id` int(11) NOT NULL AUTO_INCREMENT,
-  `product_id` int(11) NOT NULL,
+  `product_id` int(11) unsigned NOT NULL,
   `usb_manufacturer` varchar(100) DEFAULT NULL COMMENT 'Manufacturer',
-  `usb_capacity` varchar(50) DEFAULT NULL,
+  `usb_capacity` int(11) unsigned DEFAULT NULL,
   PRIMARY KEY (`usb_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='USBs Table';
 
@@ -1059,7 +1059,7 @@ CREATE TABLE `tbluser` (
 /*!40000 ALTER TABLE `tbluser` DISABLE KEYS */;
 INSERT INTO `tbluser` (`user_id`,`user_nickname`,`user_fullname`,`user_images`,`user_email`,`user_notes`,`user_permission`,`user_last_modified_id`,`user_last_modified_date`,`user_gender`,`user_address`,`user_created_date`,`user_deleted`,`user_mobile_phone`,`user_office_phone`,`user_social_links`,`user_creator_id`,`user_logined`,`user_name`,`user_pass`) VALUES 
  (1,'Dog lover','John Wick','\\home\\images\\user\\01.jpg','doglover@gmail.com','Ng??i tiêu dùng',1,0,NULL,0,'7 Lê Duẩn, Quận 1, Thành phố Hồ Chí Minh.','01/12/2023',0,'0342312435','0456323456',NULL,5,0,'DogLoverr','NoDogNoLife3000'),
- (2,'Pé','Nguyễn Thị Ngọc Mai','\\home\\images\\user\\02.jpg','mai06071969@gmail.com','Không có thông tin',1,0,NULL,0,'46 Hòa Mã, Quận Ba Đình, Hà Nội.','02/12/2023',0,'0123423131','0563457123',NULL,4,52,'testing','ae2b1fca515949e5d54fb22b8ed95575'),
+ (2,'Pé','Nguyễn Thị Ngọc Mai','\\home\\images\\user\\02.jpg','mai06071969@gmail.com','Không có thông tin',1,0,NULL,0,'46 Hòa Mã, Quận Ba Đình, Hà Nội.','02/12/2023',0,'0123423131','0563457123',NULL,4,56,'testing','ae2b1fca515949e5d54fb22b8ed95575'),
  (3,'SKT Khánh','Mai Quốc Khánh','\\home\\images\\user\\03.jpg','faker123@gmail.com','Không có thông tin',1,0,NULL,1,'191 Lãng Yên, Quận Hà Đông, Hà Nội.','03/12/2023',0,'0257123423','0353412345',NULL,3,3,'SktKhanh','738a1eca9e15f674ff6fd7434ea1b965'),
  (4,'Cloudy Vân','Tô Văn Vân','\\home\\images\\user\\04.jpg','imhigh@gmail.com','Không có thông tin',1,0,NULL,1,'57 Trần Hưng Đạo, Hoàn Kiếm, Hà Nội.','04/12/2023',0,'0385175892','0653451234',NULL,2,0,'Cloudy999','VanCloud'),
  (5,'Tuấn White','Trần Tuấn Bạch','\\home\\images\\user\\05.jpg','maninblack@gmail.com','Không có thông tin',1,1,NULL,1,'27 Liễu Giai, Quận Ba Đình, Hà Nội.','05/12/2023',0,'0385174512','0578412345',NULL,1,0,'TuanWhite','TrangNhuOMO'),

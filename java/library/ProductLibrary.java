@@ -2,6 +2,7 @@ package library;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import org.javatuples.Pair;
@@ -17,11 +18,15 @@ import entity.ProductObject;
 
 public class ProductLibrary {
 	public static Map<String,String> viewHomeProduct(Pair<ArrayList<ProductObject>, Integer> datas,
-			Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> infors) {		
+			Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> infors, String url) {		
 		Map<String,String> view = new HashMap<String,String>();
-		StringBuilder tmp = new StringBuilder();	
-		ArrayList<ProductObject> productObjects = datas.getValue0();
-		productObjects.forEach(product->{
+		StringBuilder tmp = new StringBuilder();
+		
+		ArrayList<ProductObject> productObjects = datas.getValue0();	
+		Iterator<ProductObject> iterator =  datas.getValue0().iterator();
+		
+		while (iterator.hasNext()) {
+			ProductObject product = iterator.next();
 			tmp.append("<div class=\"col-lg-4 col-md-6\">");
 			tmp.append("<div class=\"item\">");
 			tmp.append("<a href=\"/home/product?id="+product.getProduct_id()+"\"><img src=\"assets/images/manhinh.png\" alt=\"\"></a>");
@@ -81,37 +86,52 @@ public class ProductLibrary {
 			tmp.append("</div>");
 			tmp.append("</div>");
 			tmp.append("</div>");
-		});	
-		view.put("home_product_list",tmp.toString());		
+		}
+
+		view.put("home_product_list",tmp.toString());
+		
+		tmp.setLength(0);
+		tmp.append(viewProductPagination(datas.getValue1(), infors.getValue0(), infors.getValue1(),url));
+		view.put("home-product-pagination", tmp.toString());
 		return view;
 	}
+
 	
-	public static Map<String,String> viewProductList(Pair<ArrayList<ProductObject>, Integer> datas,
-			Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> infors) {
+	public static Map<String,String> viewSearchProduct(Pair<ArrayList<ProductObject>, Integer> datas,
+			Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> infors, String url) {
 		
 		Map<String,String> view = new HashMap<String,String>();
 		StringBuilder tmp = new StringBuilder();
 		
 		ArrayList<ProductObject> productObjects = datas.getValue0();
 		
-
-		view.put("view_product_list",tmp.toString());
+		Iterator<ProductObject> iterator =  datas.getValue0().iterator();
+		
+		while (iterator.hasNext()) {
+			ProductObject product = iterator.next();
+			tmp.append("<div class=\"col-lg-4 col-md-6\">");
+			tmp.append("<div class=\"item\">");
+			tmp.append("<a href=\"property-details.html\"><img src=\"assets/images/banphim.png\" alt=\"\"></a>");
+			tmp.append("");
+			tmp.append("<h4 style=\"height: 95px\" class=\"text-truncateline\"><a href=\"property-details.html\">");
+			tmp.append(product.getProduct_name());
+			tmp.append("</a></h4>");
+			tmp.append("<h6 class=\"float-none mt-0 my-2\">"+product.getProduct_price()+"</h6>");
+			tmp.append("<ul class=\"item-list\">");
+			tmp.append(viewProductAttribute(product));
+			tmp.append("</ul>");
+			tmp.append("<div class=\"main-button\">");
+			tmp.append("<a href=\"/home/product/profile?"+product.getProduct_id()+"\">Xem chi tiết</a>");
+			tmp.append("</div>");
+			tmp.append("</div>");
+			tmp.append("</div>");
+		}	
+		view.put("product-search",tmp.toString());	
 		
 		
-		return view;
-	}
-	
-	
-	public static Map<String,String> viewProductDetail(Pair<ArrayList<ProductObject>, Integer> datas,
-			Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> infors) {
-		
-		Map<String,String> view = new HashMap<String,String>();
-		StringBuilder tmp = new StringBuilder();
-		
-		ArrayList<ProductObject> productObjects = datas.getValue0();	
-
-		view.put("view_product_list",tmp.toString());	
-		
+		tmp.setLength(0);
+		tmp.append(viewProductPagination(datas.getValue1(), infors.getValue0(), infors.getValue1(), url));
+		view.put("product-search-pagination", tmp.toString());
 		return view;
 	}
 	
@@ -151,6 +171,52 @@ public class ProductLibrary {
 		
 		return view;
 		
+	}
+	
+	
+	private static String viewProductPagination(int record_count, short current_page, byte record_per_page, String url) {
+		StringBuilder tmp = new StringBuilder();
+		short page_count = (short) (record_count/record_per_page);
+		
+		if (record_count%record_per_page!=0) page_count++;
+		if (current_page>page_count) current_page=page_count;
+		if (current_page<=0) current_page=1;
+		
+		if (page_count<3) {
+			if (current_page<3) {
+				tmp.append("<li><a href=\""+url+"?page=1\"><<</a></li>");
+			} else {
+				tmp.append("<li><a href=\""+url+"?page=1\"><<</a></li>");
+				tmp.append("<li><a href=\""+url+"?page="+(current_page-1)+"\"><</a></li>");
+				tmp.append("<li><a href=\""+url+"?page="+(current_page-1)+"\">"+(current_page-1)+"</a></li>");		
+			}
+
+		} else {
+			if (current_page<3) {
+				tmp.append("<li><a href=\""+url+"?page=1\"><<</a></li>");
+			} else {
+				tmp.append("<li><a href=\""+url+"?page=1\"><<</a></li>");
+				tmp.append("<li><a href=\""+url+"?page="+(current_page-1)+"\"><</a></li>");
+				tmp.append("<li><a href=\"\" disabled>...</a></li>");
+				tmp.append("<li><a href=\""+url+"?page="+(current_page-1)+"\">"+(current_page-1)+"</a></li>");			
+			}
+		}
+		
+		tmp.append("<li><a class=\"is_active\" href=\"#\" disabled>"+current_page+"</a></li>");
+		
+		if (page_count>3) {
+			
+		}
+		
+			
+			
+		tmp.append("<li><a href=\"\" disabled>...</a></li>");
+		tmp.append("<li><a href=\""+url+"?page="+(current_page+1)+"\">"+(current_page+1)+"</a></li>");
+		tmp.append("<li><a href=\""+url+"?page="+(current_page+1)+"\">></a></li>");
+		tmp.append("<li><a href=\""+url+"?page="+page_count+"\">>></a></li>");
+			
+		
+		return tmp.toString();
 	}
 	
 	
@@ -226,8 +292,7 @@ public class ProductLibrary {
 //			item = getProduct_StorageDTO(rs);		
 			break;	
 		
-		}
-		
+		}	
 		return tmp.toString();
 	}
 }

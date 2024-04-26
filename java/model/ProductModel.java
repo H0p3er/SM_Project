@@ -105,6 +105,7 @@ public class ProductModel {
 				e.printStackTrace();
 			}
 		}
+		rs = res.get(1);
 		int product_count = getProductObjectsSize(rs);
 		return new Pair<>(items, product_count);
 	}
@@ -181,8 +182,7 @@ public class ProductModel {
 			item.setProduct_last_modified(rs.getString("product_last_modified"));
 			item.setProduct_pc_id(rs.getInt("product_pc_id"));
 			item.setProduct_shop_id(rs.getInt("product_shop_id"));
-			item.setProduct_quantity(rs.getInt("product_quantity"));		
-			
+			item.setProduct_quantity(rs.getInt("product_quantity"));			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -84,7 +84,7 @@ public class Home extends HttpServlet {
 				utility.Utilities.getMapParam(request, null)
 				);
 
-		Map<String,String> viewProductsList = pc.viewHomeProduct(infors);
+		Map<String,String> viewProductsList = pc.viewHomeProduct(infors, request.getRequestURI());
 
 		// Trả về kết nối
 		pc.releaseConnection();
