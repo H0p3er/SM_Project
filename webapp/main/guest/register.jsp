@@ -43,23 +43,50 @@
           <form id="contact-form"  action="" method="post">
             <h1 class="my-5">Đăng ký</h1>
             <div class="row">
+            <div class="col-lg-12">
+                <fieldset>
+                  <label for="username">Tên tài khoản</label>
+                  <input type="text" name="username" id="username" placeholder="Username" required maxlength="30">
+                </fieldset>
+              </div>
               <div class="col-lg-12">
                 <fieldset>
                   <label for="name">Họ và tên</label>
-                  <input type="text" name="name" id="name" placeholder="Name" required>
+                  <input type="text" name="name" id="name" placeholder="Name" required maxlength="30">
                 </fieldset>
               </div>
-              <div class="col-lg-12">
-                <fieldset>
-                  <label for="username">Tên tài khoản</label>
-                  <input type="text" name="username" id="username" placeholder="Username" required>
+              <div class="col-lg-8">
+              	<fieldset>
+                	<label for="birtday">Ngày sinh</label>
+                    <input type="date" name="birthday" id="birtday" placeholder="Ngày sinh" value="$birthday">
+                </fieldset>
+               </div>
+              <div class="col-lg-4">
+              	<fieldset>
+                	<label for="gender">Giới tính</label>
+                    <select name="gender" id="gender">
+                    	<option value="Nam" selected>Nam</option>
+                        <option value="Nữ">Nữ</option>
+                    </select>              
                 </fieldset>
               </div>
+              <div class="col-lg-5">
+              	<fieldset>
+              		<label for="phone">Điện thoại</label>
+              		<input type="text" name="phone" id="phone" placeholder="Điện thoại" value="$phonenumber" maxlength="12">
+              	</fieldset>
+              </div>
+              <div class="col-lg-7">
+              	<fieldset>
+              		<label for="email">Email</label>
+              		<input type="email" name="email" id="email" placeholder="Email" value="$email" maxlength="60">
+              	</fieldset>
+              </div>
               <div class="col-lg-12">
-                <fieldset>
-                  <label for="email">Email</label>
-                  <input type="email" name="email" id="email" placeholder="Email" required>
-                </fieldset>
+                   <fieldset>
+                       <label for="address">Địa chỉ</label>
+                       <input type="text" name="address" id="address" placeholder="Địa chỉ" value="$address">
+                   </fieldset>
               </div>
               <div class="col-lg-12">
                 <fieldset>

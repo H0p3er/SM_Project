@@ -29,7 +29,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
 
 		// Xác định tài khoản làm việc
 		this.username = "root";
-		this.userpass = "Gamehacked0398435449";
+		this.userpass = "";
 
 		// Nạp trình điều khiển
 		this.loadDriver();
