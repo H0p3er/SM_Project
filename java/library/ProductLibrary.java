@@ -29,7 +29,7 @@ public class ProductLibrary {
 			ProductObject product = iterator.next();
 			tmp.append("<div class=\"col-lg-4 col-md-6\">");
 			tmp.append("<div class=\"item\">");
-			tmp.append("<a href=\"/home/product?id="+product.getProduct_id()+"\"><img src=\"assets/images/manhinh.png\" alt=\"\"></a>");
+			tmp.append("<a href=\"/home/product?id="+product.getProduct_id()+"\"><img src=\"/home/assets/images/product/monitor/manhinh.png\" alt=\"\"></a>");
 			switch (product.getProduct_pc_id()) {
 				case 1:
 					tmp.append("<span class=\"category\">Case</span>");
@@ -111,7 +111,7 @@ public class ProductLibrary {
 			ProductObject product = iterator.next();
 			tmp.append("<div class=\"col-lg-4 col-md-6\">");
 			tmp.append("<div class=\"item\">");
-			tmp.append("<a href=\"property-details.html\"><img src=\"assets/images/banphim.png\" alt=\"\"></a>");
+			tmp.append("<a href=\"property-details.html\"><img src=\"/home/assets/images/banphim.png\" alt=\"\"></a>");
 			tmp.append("");
 			tmp.append("<h4 style=\"height: 95px\" class=\"text-truncateline\"><a href=\"property-details.html\">");
 			tmp.append(product.getProduct_name());
