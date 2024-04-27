@@ -19,7 +19,7 @@ public interface Shop extends ShareControl{
 	public boolean delShop(ShopObject shopObjects, UserObject currentUser);
 	
 	//Các phương thức, chức năng lấy thông tin nơi làm việc
-	public ArrayList<ResultSet> getShopById(String filter, int pagePos, byte pageLength, int id);
+	public ArrayList<ResultSet> getShopById(int id);
 	
 	/** 
 	 * Phương thức trả về bản ghi gian hàng theo Người dùng hiện tại

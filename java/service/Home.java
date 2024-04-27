@@ -77,14 +77,8 @@ public class Home extends HttpServlet {
 			page = 1;
 		}
 		// Lấy cấu trúc
-		Quintet<Short, Byte,  Map<String,String>,  Map<String,String>,  Map<String,String>> infors 
-		= new Quintet<>( page, (byte) 6,
-				utility.Utilities.getMapParam(request, null), 
-				utility.Utilities.getMapParam(request, null),
-				utility.Utilities.getMapParam(request, null)
-				);
 
-		Map<String,String> viewProductsList = pc.viewHomeProduct(infors, request.getRequestURI());
+		Map<String,String> viewProductsList = pc.viewHomeProduct();
 
 		// Trả về kết nối
 		pc.releaseConnection();

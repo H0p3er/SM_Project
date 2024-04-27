@@ -73,57 +73,60 @@ public class PCImpl extends BasicImpl implements PC {
 		StringBuilder sql = new StringBuilder();
 		switch (productObject.getProduct_pc_id()) {
 			case 1:
-				sql.append("SELECT * FROM tbl_cases ");				
-				sql.append("WHERE product_id="+productObject.getProduct_id()+";");
+				sql.append("SELECT * FROM tbl_monitors ");				
+				sql.append("WHERE product_id="+productObject.getProduct_id()+";");	
 				break;
 				
 			case 2:
-				sql.append("SELECT * FROM tbl_cooling ");				
+				sql.append("SELECT * FROM tbl_keyboards ");				
 				sql.append("WHERE product_id="+productObject.getProduct_id()+";");
+
 				break;
 				
 			case 3:
-				sql.append("SELECT * FROM tbl_cpus ");				
+				sql.append("SELECT * FROM tbl_mice ");				
 				sql.append("WHERE product_id="+productObject.getProduct_id()+";");
+		
 				break;
 				
 			case 4:
-				sql.append("SELECT * FROM tbl_desktops ");				
-				sql.append("WHERE product_id="+productObject.getProduct_id()+";");
-				break;
-				
-			case 5:
-				sql.append("SELECT * FROM tbl_graphics_cards ");				
-				sql.append("WHERE product_id="+productObject.getProduct_id()+";");
-				break;
-				
-			case 6:
 				sql.append("SELECT * FROM tbl_headphones_speakers ");				
 				sql.append("WHERE product_id="+productObject.getProduct_id()+";");
 				break;
 				
+			case 5:
+				sql.append("SELECT * FROM tbl_laptops ");				
+				sql.append("WHERE product_id="+productObject.getProduct_id()+";");
+			
+				break;
+				
+			case 6:
+				sql.append("SELECT * FROM tbl_desktops ");				
+				sql.append("WHERE product_id="+productObject.getProduct_id()+";");
+				break;
+				
 			case 7:
-				sql.append("SELECT * FROM tbl_keyboards ");				
+				sql.append("SELECT * FROM tbl_cpus ");				
 				sql.append("WHERE product_id="+productObject.getProduct_id()+";");
 				break;
 				
 			case 8:
-				sql.append("SELECT * FROM tbl_laptops ");				
+				sql.append("SELECT * FROM tbl_motherboards ");				
 				sql.append("WHERE product_id="+productObject.getProduct_id()+";");
 				break;
 				
 			case 9:
-				sql.append("SELECT * FROM tbl_mice ");				
+				sql.append("SELECT * FROM tbl_rams ");				
 				sql.append("WHERE product_id="+productObject.getProduct_id()+";");
 				break;
 				
 			case 10:
-				sql.append("SELECT * FROM tbl_monitors ");				
+				sql.append("SELECT * FROM tbl_storage ");				
 				sql.append("WHERE product_id="+productObject.getProduct_id()+";");
 				break;
 				
 			case 11:
-				sql.append("SELECT * FROM tbl_motherboards ");				
+				sql.append("SELECT * FROM tbl_graphics_cards ");				
 				sql.append("WHERE product_id="+productObject.getProduct_id()+";");
 				break;
 				
@@ -133,12 +136,12 @@ public class PCImpl extends BasicImpl implements PC {
 				break;
 				
 			case 13:
-				sql.append("SELECT * FROM tbl_rams ");				
+				sql.append("SELECT * FROM tbl_cases ");				
 				sql.append("WHERE product_id="+productObject.getProduct_id()+";");
 				break;
 			
 			case 14:
-				sql.append("SELECT * FROM tbl_storage ");				
+				sql.append("SELECT * FROM tbl_cooling ");				
 				sql.append("WHERE product_id="+productObject.getProduct_id()+";");
 				break;
 		}

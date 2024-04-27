@@ -19,10 +19,12 @@ public interface Product extends ShareControl {
 
 	public ResultSet getProductById(int id);
 	
-	public ResultSet getProductsByCreatedDate(Date date, Date date2);
+	public ArrayList<ResultSet> getProductsByCreatedDate(Date date, Date date2);
 	
 	public ArrayList<ResultSet> getProducts(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort);
 
+	public ArrayList<ResultSet> getProducts();
+	
 	public ArrayList<ResultSet> getProductsByShop(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort, ShopObject shopObject);
 	
 	public ArrayList<ResultSet> getProductsByBill(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort, BillObject billObject);
@@ -39,4 +41,6 @@ public interface Product extends ShareControl {
 	 * <br/>Cập nhật ngày 23/4/2024
 	 */
 	public ArrayList<ResultSet> getProductsByPC(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort, PCObject pcObject);
+	
+
 }

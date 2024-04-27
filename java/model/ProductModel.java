@@ -28,7 +28,7 @@ import dto.productAttribute.Product_MotherboardDTO;
 import dto.productAttribute.Product_PowerSuppyDTO;
 import dto.productAttribute.Product_RamDTO;
 import dto.productAttribute.Product_StorageDTO;
-import dto.shop.Shop_ShopManagerDTO;
+import dto.shop.Shop_manageShopDTO;
 import repository.*;
 import entity.ProductObject;
 import entity.ShopObject;
@@ -109,6 +109,42 @@ public class ProductModel {
 		int product_count = getProductObjectsSize(rs);
 		return new Pair<>(items, product_count);
 	}
+	
+	public Pair<ArrayList<ProductObject>, ArrayList<ProductObject>> getProductObjects() {		
+		ArrayList<ProductObject> items1 = new ArrayList<>();
+		ArrayList<ResultSet> res = this.p.getProducts();
+		ResultSet rs = res.get(0);
+		// Chuyen doi ban ghi thanh doi tuong
+		if (rs != null) {
+			try {
+				while (rs.next()) {				
+					ProductObject item = setProductObject(rs);
+					items1.add(item);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		ArrayList<ProductObject> items2 = new ArrayList<>();
+		rs = res.get(1);
+		// Chuyen doi ban ghi thanh doi tuong
+		if (rs != null) {
+			try {
+				while (rs.next()) {				
+					ProductObject item = setProductObject(rs);
+					System.out.println(item.getProduct_id());
+					items2.add(item);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return new Pair<>(items1, items2);
+	}
+	
 
 	private int getProductObjectsSize(ResultSet rs) {
 		int product_count = 0;
@@ -131,46 +167,48 @@ public class ProductModel {
 		try {	
 			switch (rs.getInt("product_pc_id")) {
 			case 1:
-				item = getProduct_CaseDTO(rs);
+				item = getProduct_MonitorDTO(rs);	
 				break;						
 			case 2:
-				item = getProduct_CoolingDTO(rs);
+				item = getProduct_KeyboardDTO(rs);	
 				break;					
 			case 3:
-				item = getProduct_CPUDTO(rs);		
+				item = getProduct_MiceDTO(rs);	
+				
 				break;					
 			case 4:
+				item = getProduct_HeadphoneSpeakerDTO(rs);	
+				break;						
+			case 5:	
+				item = getProduct_LaptopDTO(rs);			
+				break;						
+			case 6:
 				item = getProduct_DesktopDTO(rs);		
 				break;						
-			case 5:						
-				item = getProduct_GraphicsCardDTO(rs);		
-				break;						
-			case 6:					
-				item = getProduct_HeadphoneSpeakerDTO(rs);		
-				break;						
-			case 7:
-				item = getProduct_KeyboardDTO(rs);		
+			case 7:	
+				item = getProduct_CPUDTO(rs);
 				break;						
 			case 8:
-				item = getProduct_LaptopDTO(rs);		
+				item = getProduct_MotherboardDTO(rs);
 				break;						
-			case 9:					
-				item = getProduct_MiceDTO(rs);		
+			case 9:	
+				item = getProduct_RamDTO(rs);					
 				break;		
 			case 10:
-				item = getProduct_MonitorDTO(rs);		
+				item = getProduct_StorageDTO(rs);	
 				break;				
-			case 11:						
-				item = getProduct_MotherboardDTO(rs);		
+			case 11:
+				item = getProduct_GraphicsCardDTO(rs);
 				break;						
 			case 12:
 				item = getProduct_PowerSuppyDTO(rs);		
 				break;						
 			case 13:
-				item = getProduct_RamDTO(rs);		
+				item = getProduct_CaseDTO(rs);	
 				break;				
 			case 14:
-				item = getProduct_StorageDTO(rs);		
+				item = getProduct_CoolingDTO(rs);
+					
 				break;	
 			}
 			item.setProduct_id(rs.getInt("product_id"));
@@ -256,6 +294,16 @@ public class ProductModel {
 		Product_LaptopDTO item = new Product_LaptopDTO();
 		item.setProduct_pc_id(rs.getInt("product_pc_id"));
 		ResultSet attribute = this.pc.getPCByProduct(item);
+		if (attribute.next()) {
+			((Product_LaptopDTO) item).setLaptop_manufacturer(attribute.getString("laptop_manufacturer"));
+			((Product_LaptopDTO) item).setLaptop_cpu(attribute.getString("laptop_cpu"));
+			((Product_LaptopDTO) item).setLaptop_ram(attribute.getInt("laptop_ram"));
+		
+			((Product_LaptopDTO) item).setLaptop_storage(attribute.getInt("laptop_storage"));
+			((Product_LaptopDTO) item).setLaptop_screen_size(attribute.getInt("laptop_screen_size"));
+			((Product_LaptopDTO) item).setLaptop_resolution(attribute.getString("laptop_resolution"));
+			((Product_LaptopDTO) item).setLaptop_type(attribute.getString("laptop_type"));
+		}		
 		return item;
 	}
 

@@ -1,19 +1,17 @@
 package dto.product;
 
-import java.util.Map;
 
-import dto.ProductShopDTO;
 import dto.pc.PC_DTO;
+import dto.shop.Shop_viewProductDTO;
 
-public class Product_viewProductDTO<T> {
+public class Product_viewProductDTO {
     private String name;
     private byte status;
     private double price;
     private String images;
     private String last_modified;
     private PC_DTO pc;
-    private ProductShopDTO shop;
-    private T attribute;
+    private Shop_viewProductDTO shop;
 	public String getName() {
 		return name;
 	}
@@ -50,18 +48,13 @@ public class Product_viewProductDTO<T> {
 	public void setPc(PC_DTO pc) {
 		this.pc = pc;
 	}
-	public ProductShopDTO getShop() {
+	public Shop_viewProductDTO getShop() {
 		return shop;
 	}
-	public void setShop(ProductShopDTO shop) {
+	public void setShop(Shop_viewProductDTO shop) {
 		this.shop = shop;
 	}
-	public T getAttribute() {
-		return attribute;
-	}
-	public void setAttribute(T attribute) {
-		this.attribute = attribute;
-	}
+
     
     
 }

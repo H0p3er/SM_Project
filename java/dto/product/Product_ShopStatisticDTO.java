@@ -1,96 +1,60 @@
 package dto.product;
 
+import java.util.List;
 import java.util.Map;
 
-import org.javatuples.Pair;
+
 
 public class Product_ShopStatisticDTO {
-	private Map<Integer,Pair<Product_ShopManagerDTO,Integer>> TotalSellingQuantityPerProduct;
-	private Map<Integer,Pair<Product_ShopManagerDTO,Double>> TotalSellingPricePerProduct;
-	private int TotalSellingQuantityAllProduct;
-	private double TotalSellingPriceAllProduct;
 	
-	private Map<Integer,Pair<Product_ShopManagerDTO,Integer>> TotalQuantityPerProduct;
-	private Map<Integer,Pair<Product_ShopManagerDTO,Double>> TotalPricePerProduct;
+	private Map<String,Integer> count_bill_last_month;
+	private Map<String,Integer> count_bill_current_month;
 	
-	private int TotalQuantityAllProduct;
-	private double TotalPriceAllProduct;
+	private Map<String,Double> sold_price_last_month;
+	private Map<String,Double> sold_price_current_month;	
 	
-	private int TotalProduct;
+	private List<Product_manageShopDTO> most_sold_price_product;
 
-	public Map<Integer, Pair<Product_ShopManagerDTO, Integer>> getTotalSellingQuantityPerProduct() {
-		return this.TotalSellingQuantityPerProduct;
+	public Map<String, Integer> getCount_bill_last_month() {
+		return count_bill_last_month;
 	}
 
-	public void setTotalSellingQuantityPerProduct(
-			Map<Integer, Pair<Product_ShopManagerDTO, Integer>> totalSellingQuantityPerProduct) {
-		this.TotalSellingQuantityPerProduct = totalSellingQuantityPerProduct;
+	public void setCount_bill_last_month(Map<String, Integer> count_bill_last_month) {
+		this.count_bill_last_month = count_bill_last_month;
 	}
 
-	public Map<Integer, Pair<Product_ShopManagerDTO, Double>> getTotalSellingPricePerProduct() {
-		return this.TotalSellingPricePerProduct;
+	public Map<String, Integer> getCount_bill_current_month() {
+		return count_bill_current_month;
 	}
 
-	public void setTotalSellingPricePerProduct(
-			Map<Integer, Pair<Product_ShopManagerDTO, Double>> totalSellingPricePerProduct) {
-		this.TotalSellingPricePerProduct = totalSellingPricePerProduct;
+	public void setCount_bill_current_month(Map<String, Integer> count_bill_current_month) {
+		this.count_bill_current_month = count_bill_current_month;
 	}
 
-	public int getTotalSellingQuantityAllProduct() {
-		return this.TotalSellingQuantityAllProduct;
+	public Map<String, Double> getSold_price_last_month() {
+		return sold_price_last_month;
 	}
 
-	public void setTotalSellingQuantityAllProduct(int totalSellingQuantityAllProduct) {
-		this.TotalSellingQuantityAllProduct = totalSellingQuantityAllProduct;
+	public void setSold_price_last_month(Map<String, Double> sold_price_last_month) {
+		this.sold_price_last_month = sold_price_last_month;
 	}
 
-	public double getTotalSellingPriceAllProduct() {
-		return this.TotalSellingPriceAllProduct;
+	public Map<String, Double> getSold_price_current_month() {
+		return sold_price_current_month;
 	}
 
-	public void setTotalSellingPriceAllProduct(double totalSellingPriceAllProduct) {
-		this.TotalSellingPriceAllProduct = totalSellingPriceAllProduct;
+	public void setSold_price_current_month(Map<String, Double> sold_price_current_month) {
+		this.sold_price_current_month = sold_price_current_month;
 	}
 
-	public Map<Integer, Pair<Product_ShopManagerDTO, Integer>> getTotalQuantityPerProduct() {
-		return this.TotalQuantityPerProduct;
+	public List<Product_manageShopDTO> getMost_sold_price_product() {
+		return most_sold_price_product;
 	}
 
-	public void setTotalQuantityPerProduct(Map<Integer, Pair<Product_ShopManagerDTO, Integer>> totalQuantityPerProduct) {
-		this.TotalQuantityPerProduct = totalQuantityPerProduct;
+	public void setMost_sold_price_product(List<Product_manageShopDTO> most_sold_price_product) {
+		this.most_sold_price_product = most_sold_price_product;
 	}
-
-	public Map<Integer, Pair<Product_ShopManagerDTO, Double>> getTotalPricePerProduct() {
-		return this.TotalPricePerProduct;
-	}
-
-	public void setTotalPricePerProduct(Map<Integer, Pair<Product_ShopManagerDTO, Double>> totalPricePerProduct) {
-		this.TotalPricePerProduct = totalPricePerProduct;
-	}
-
-	public int getTotalQuantityAllProduct() {
-		return this.TotalQuantityAllProduct;
-	}
-
-	public void setTotalQuantityAllProduct(int totalQuantityAllProduct) {
-		this.TotalQuantityAllProduct = totalQuantityAllProduct;
-	}
-
-	public double getTotalPriceAllProduct() {
-		return this.TotalPriceAllProduct;
-	}
-
-	public void setTotalPriceAllProduct(double totalPriceAllProduct) {
-		this.TotalPriceAllProduct = totalPriceAllProduct;
-	}
-
-	public int getTotalProduct() {
-		return this.TotalProduct;
-	}
-
-	public void setTotalProduct(int totalProduct) {
-		this.TotalProduct = totalProduct;
-	}
-
 	
+	
+
 }
