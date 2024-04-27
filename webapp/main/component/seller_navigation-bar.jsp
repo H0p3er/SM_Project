@@ -137,20 +137,20 @@
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
-                <a class="nav-link " href="/home/main/seller/shopmanage.jsp">
+                <a class="nav-link collapsed" href="/home/main/seller/shopmanage.jsp">
                     <i class="bi bi-bar-chart"></i>
                     <span>Thống kê</span>
                 </a>
             </li><!-- End Dashboard Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-menu-button-wide"></i><span>Sản phẩm</span></i>
+                <a class="nav-link collapsed" href="/home/main/seller/shop_products.jsp">
+                    <i class="bi bi-menu-button-wide"></i><span>Sản phẩm</span>
                 </a>
             </li><!-- End Components Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+                <a class="nav-link collapsed"  href="/home/main/seller/shop_bills.jsp">
                     <i class="bi bi-journal-text"></i><span>Đơn hàng</span>
                 </a>
             </li><!-- End Forms Nav -->

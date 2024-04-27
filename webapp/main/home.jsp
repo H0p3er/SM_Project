@@ -250,7 +250,7 @@
       </div>
     </div>
 
-    <div class="container">
+    <div class="container mt-5">
       <div class="row">
         <div class="section-heading">
           <h6 class="fs-2">| Sản phẩm mới</h6>
