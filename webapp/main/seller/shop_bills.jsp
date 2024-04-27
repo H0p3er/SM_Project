@@ -6,6 +6,19 @@
      
     <main id="main" class="main">
     
+    
+    <div class="pagetitle">
+      <h1>Đơn hàng</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/home/main/seller/shopmanage.jsp">Shop</a></li>
+          <li class="breadcrumb-item active">Đơn hàng</li>
+        </ol>
+      	</nav>
+    	</div><!-- End Page Title -->
+    	
+    	
+    	
     </main><!-- End #main -->
     
 <jsp:include page="../component/seller_footer.jsp" flush="true"></jsp:include>

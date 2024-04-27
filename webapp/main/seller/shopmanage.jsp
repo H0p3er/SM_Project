@@ -4,8 +4,18 @@
   <jsp:include page="../component/seller_navigation-bar.jsp" flush="true"></jsp:include>
    <main id="main" class="main">
 
-    <!-- End Page Title -->
 
+	<div class="pagetitle">
+      <h1>Thống kê</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/home/main/seller/shopmanage.jsp">Shop</a></li>
+          <li class="breadcrumb-item active">Thống kê</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+    
+    
     <section class="section dashboard">
       <div class="row">
 

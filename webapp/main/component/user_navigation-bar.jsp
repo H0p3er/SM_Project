@@ -56,9 +56,8 @@
                         <a class="dropdown-item p-0 bg-white text-black"
                           href="/home/main/user/cart.jsp"><i class="fa-solid fa-cart-shopping"></i> Giỏ hàng</a>
                       </li>
-                      <li>
-                        <a class="dropdown-item p-0 bg-white text-black"
-                          href="/home/main/shop/shop_profile.jsp"><i class="fa-solid fa-store"></i> Gian hàng của bạn</a>
+                      <li> <!-- /home/main/user/shop_create.jsp -->
+                        <a class="dropdown-item p-0 bg-white text-black"  href="/home/main/shop/shop_profile.jsp"><i class="fa-solid fa-store"></i> Gian hàng của bạn</a>
                       </li>
                       <li>
                         <a class="dropdown-item p-0 bg-white text-black" href="/home/main/user/user_profile.jsp"><i class="fa-regular fa-id-card"></i> Thông
