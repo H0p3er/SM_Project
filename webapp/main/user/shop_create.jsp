@@ -22,7 +22,7 @@
               <div class="col-lg-12">
                 <fieldset>
                   <label for="name">Tên cửa hàng</label>
-                  <input type="text" name="name" id="name" placeholder="Tên shop" required maxlength="70">
+                  <input type="text" name="name" id="name" placeholder="Tên shop" required maxlength="120">
                 </fieldset>
               </div>
               <div class="col-lg-12">
@@ -35,13 +35,19 @@
               <div class="col-lg-4">
                 <fieldset>
                   <label for="phone">Số điện thoại cửa hàng</label>
-                  <input type="text" name="phone" id="phone" placeholder="SDT" maxlength="12">
+                  <input type="text" name="phone" id="phone" placeholder="SDT" maxlength="12" required>
                 </fieldset>
               </div>
               <div class="col-lg-8">
                 <fieldset>
                   <label for="email">Email cửa hàng</label>
                   <input type="email" name="email" id="email" placeholder="Email" maxlength="50">
+                </fieldset>
+              </div>
+              <div class="col-lg-12">
+                <fieldset>
+                  <label for="websitelink">Link website cửa hàng</label>
+                  <input type="text" name="websitelink" id="websitelink" placeholder="Website link">
                 </fieldset>
               </div>
               <div class="col-lg-12">

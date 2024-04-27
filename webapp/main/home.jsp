@@ -42,7 +42,7 @@
               <div class="row">
                 <div class="col-lg-4 col-md-6">
                   <div class="item">
-                    <a href="property-details.html"><img src="assets/images/manhinh.png" alt=""></a>
+                    <a href="property-details.html"><img src="/home/assets/images/product/monitor/manhinh.png" alt=""></a>
                     <span class="category">Màn hình</span>
                     <h6>35,990,000đ</h6>
                     <h4 style="height: 72px" class="text-truncateline"><a href="property-details.html">Màn Hình Samsung
@@ -64,7 +64,7 @@
                 </div>
                 <div class="col-lg-4 col-md-6">
                   <div class="item">
-                    <a href="property-details.html"><img src="assets/images/banphim.png" alt=""></a>
+                    <a href="property-details.html"><img src="/home/assets/images/product/keyboard/banphim.png" alt=""></a>
                     <span class="category">Bàn phím</span>
                     <h6>2,090,000đ</h6>
                     <h4 style="height: 72px" class="text-truncateline"><a href="property-details.html">Bàn Phím Cơ Không
@@ -85,7 +85,7 @@
                 </div>
                 <div class="col-lg-4 col-md-6">
                   <div class="item">
-                    <a href="property-details.html"><img src="assets/images/chuot.png" alt=""></a>
+                    <a href="property-details.html"><img src="/home/assets/images/product/mouse/chuot.png" alt=""></a>
                     <span class="category">Chuột</span>
                     <h6>990,000đ</h6>
                     <h4 style="height: 72px" class="text-truncateline"><a href="property-details.html">Chuột Razer
@@ -111,7 +111,7 @@
             <div class="row">
               <div class="col-lg-4 col-md-6">
                 <div class="item">
-                  <a href="property-details.html"><img src="assets/images/tainghe.png" alt=""></a>
+                  <a href="property-details.html"><img src="/home/assets/images/product/headphones/tainghe.png" alt=""></a>
                   <span class="category">Tai nghe/Loa</span>
                   <h6>3,390,000đ</h6>
                   <h4 style="height: 72px" class="text-truncateline"><a href="property-details.html">Tai Nghe HyperX
@@ -131,7 +131,7 @@
               </div>
               <div class="col-lg-4 col-md-6">
                 <div class="item">
-                  <a href="property-details.html"><img src="assets/images/laptop.png" alt=""></a>
+                  <a href="property-details.html"><img src="/home/assets/images/product/laptop/laptop.png" alt=""></a>
                   <span class="category">Laptop</span>
                   <h6>93,990,000₫</h6>
                   <h4 style="height: 72px" class="text-truncateline"><a href="property-details.html">Laptop Gaming
@@ -152,7 +152,7 @@
               </div>
               <div class="col-lg-4 col-md-6">
                 <div class="item">
-                  <a href="property-details.html"><img src="assets/images/pc.png" alt=""></a>
+                  <a href="property-details.html"><img src="/home/assets/images/product/pc.png" alt=""></a>
                   <span class="category">Desktop</span>
                   <h6>6,990,000₫</h6>
                   <h4 style="height: 72px" class="text-truncateline"><a href="property-details.html">Mini PC INTEL
@@ -177,7 +177,7 @@
             <div class="row">
               <div class="col-lg-4 col-md-6">
                 <div class="item">
-                  <a href="property-details.html"><img src="assets/images/cpu.png" alt=""></a>
+                  <a href="property-details.html"><img src="/home/assets/images/product/cpu/cpu.png" alt=""></a>
                   <span class="category">CPU</span>
                   <h6>17,990,000₫</h6>
                   <h4 style="height: 72px" class="text-truncateline"><a href="property-details.html">CPU AMD Ryzen 9
@@ -195,7 +195,7 @@
               </div>
               <div class="col-lg-4 col-md-6">
                 <div class="item">
-                  <a href="property-details.html"><img src="assets/images/mainboard.png" alt=""></a>
+                  <a href="property-details.html"><img src="/home/assets/images/product/mainboard/mainboard.png" alt=""></a>
                   <span class="category">Mainboard</span>
                   <h6>5,550,000đ</h6>
                   <h4 style="height: 72px" class="text-truncateline"><a href="property-details.html">Mainboard Asus
@@ -216,7 +216,7 @@
               </div>
               <div class="col-lg-4 col-md-6">
                 <div class="item">
-                  <a href="property-details.html"><img src="assets/images/ram.png" alt=""></a>
+                  <a href="property-details.html"><img src="/home/assets/images/product/ram/ram.png" alt=""></a>
                   <span class="category">Ram</span>
                   <h6>7,190,000₫</h6>
                   <h4 style="height: 72px" class="text-truncateline"><a href="property-details.html">Ram PC Corsair
@@ -252,7 +252,7 @@
       </div>
     </div>
 
-    <div class="container">
+    <div class="container mt-5">
       <div class="row">
         <div class="section-heading">
           <h6 class="fs-2">| Sản phẩm mới</h6>

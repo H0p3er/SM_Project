@@ -10,6 +10,8 @@
           <div class="section-heading">
             <h6>| Gian hàng</h6>
             <h2>@shopname</h2>
+            <div class="d-flex align-items-center"><span class="me-3 fs-2 text-success">●</span> <h5>Đang hoạt động</h5></div>
+            <div class="d-flex align-items-center"><span class="me-3 fs-2 text-danger">●</span> <h5>Tạm dừng hoạt động</h5></div>
           </div>
         </div>
         <div class="col-lg-12">
