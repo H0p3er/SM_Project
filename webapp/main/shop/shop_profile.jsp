@@ -27,7 +27,7 @@
                 <div class="tab-pane fade show active" id="appartment" role="tabpanel" aria-labelledby="appartment-tab">
                   <div class="row">
                     <div class="col-lg-4">
-                      <img src="assets/images/deal-01.jpg" alt="">
+                      <img src="/home/assets/images/deal-01.jpg" alt="">
                     </div>
                     <div class="col-lg-8">
                       <div class="info-table">

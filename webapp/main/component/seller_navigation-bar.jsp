@@ -3,7 +3,7 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
 
         <div class="d-flex align-items-center justify-content-between">
-            <a href="index.html" class="logo d-flex align-items-center">
+            <a href="/home/main/seller/shopmanage.jsp" class="logo d-flex align-items-center">
                 <img src="/home/assets/images/sm.png" alt="" style="height:50px; max-height:50px">
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -117,7 +117,7 @@
                         </li>
 
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
+                            <a class="dropdown-item d-flex align-items-center" href="/home/main/shop/shop_profile.jsp">
                                 <i class="bi bi-box-arrow-right"></i>
                                 <span>Trở lại trang web chính</span>
                             </a>
@@ -137,7 +137,7 @@
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
-                <a class="nav-link " href="index.html">
+                <a class="nav-link " href="/home/main/seller/shopmanage.jsp">
                     <i class="bi bi-bar-chart"></i>
                     <span>Thống kê</span>
                 </a>
