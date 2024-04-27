@@ -24,13 +24,13 @@ import file.StorageService;
 /**
  * Servlet implementation class ProductEdit
  */
-@WebServlet("/product/edit")
+@WebServlet("/product/add")
 @MultipartConfig(
 		fileSizeThreshold   = 1024 * 2,
         maxFileSize         = 1024 * 1024 * 200,
         maxRequestSize      = 1024 * 1024 * 215
 )
-public class ProductEdit extends HttpServlet {
+public class ProductAdd extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	// Định nghĩa kiểu nội dung xuất về trình khách
 	private static final String CONTENT_TYPE = "text/html; charset=utf-8";
@@ -41,7 +41,7 @@ public class ProductEdit extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProductEdit() {
+    public ProductAdd() {
         super();
         storeService = new StorageService();
     }
