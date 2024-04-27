@@ -182,47 +182,56 @@ public class ProductLibrary {
 		if (current_page>page_count) current_page=page_count;
 		if (current_page<=0) current_page=1;
 		
-		if (page_count<2) {
-			if (current_page<2) {
-				tmp.append("<li><a href=\""+url+"?page=1\"><<</a></li>");
-			} else {
+		if (page_count<=3) {
+			if (current_page == 1) {
+				
+			}
+			
+			if (current_page == 2) {
+				tmp.append("<li><a href=\""+url+"?page="+(current_page-1)+"\"><</a></li>");
+			}
+			
+			if (current_page==3) {
 				tmp.append("<li><a href=\""+url+"?page=1\"><<</a></li>");
 				tmp.append("<li><a href=\""+url+"?page="+(current_page-1)+"\"><</a></li>");
-				tmp.append("<li><a href=\""+url+"?page="+(current_page-1)+"\">"+(current_page-1)+"</a></li>");		
+				tmp.append("<li><a href=\""+url+"?page="+(current_page-1)+"\">"+(current_page-1)+"</a></li>");	
 			}
 
 		} else {
-			if (current_page<2) {
-				tmp.append("<li><a href=\""+url+"?page=1\"><<</a></li>");
-			} else {
+			if (current_page == 1) {
+				
+			}
+			
+			if (current_page == 2) {
+				tmp.append("<li><a href=\""+url+"?page="+(current_page-1)+"\"><</a></li>");
+				tmp.append("<li><a href=\""+url+"?page="+(current_page-1)+"\">"+(current_page-1)+"</a></li>");	
+			}
+			if (current_page>=3) {
 				tmp.append("<li><a href=\""+url+"?page=1\"><<</a></li>");
 				tmp.append("<li><a href=\""+url+"?page="+(current_page-1)+"\"><</a></li>");
-				tmp.append("<li><a href=\"\" disabled>...</a></li>");
-				tmp.append("<li><a href=\""+url+"?page="+(current_page-1)+"\">"+(current_page-1)+"</a></li>");			
+				tmp.append("<li><a class=\"disabled\" tabindex=\"-1\" href=\"\"  role=\"button\" aria-disabled=\"true\" >...</a></li>");
+				tmp.append("<li><a href=\""+url+"?page="+(current_page-1)+"\">"+(current_page-1)+"</a></li>");	
 			}
 		}
 		
 		tmp.append("<li><a class=\"is_active\" href=\"#\" disabled>"+current_page+"</a></li>");
 		
-		if (page_count<2) {
-			if (current_page<2) {
+		if (page_count<=3) {
 			
-			} else {
+			
+			if (current_page<page_count) {
 				tmp.append("<li><a href=\""+url+"?page="+(current_page+1)+"\">"+(current_page+1)+"</a></li>");
 				tmp.append("<li><a href=\""+url+"?page="+(current_page+1)+"\">></a></li>");
 				tmp.append("<li><a href=\""+url+"?page="+page_count+"\">>></a></li>");	
 			}
 		} else {
-			if (current_page<2) {
-				tmp.append("<li><a href=\"\" disabled>...</a></li>");
-				tmp.append("<li><a href=\""+url+"?page="+page_count+"\">>></a></li>");
-			} else {
+			if (current_page<page_count) {
 				tmp.append("<li><a href=\""+url+"?page="+(current_page+1)+"\">"+(current_page+1)+"</a></li>");
-				tmp.append("<li><a href=\"\" disabled>...</a></li>");
-				
+				tmp.append("<li><a  class=\"disabled\" tabindex=\"-1\" href=\"\" role=\"button\" aria-disabled=\"true\">...</a></li>");			
 				tmp.append("<li><a href=\""+url+"?page="+(current_page+1)+"\">></a></li>");
 				tmp.append("<li><a href=\""+url+"?page="+page_count+"\">>></a></li>");	
-			}
+			} 
+
 		}
 
 			
