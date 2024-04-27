@@ -2,7 +2,7 @@ package dto.product;
 
 import dto.pc.PC_ShopManagerDTO;
 
-public class Product_ShopManagerDTO {
+public class Product_manageShopDTO {
 	private int id;
     private String name;
     private byte status;

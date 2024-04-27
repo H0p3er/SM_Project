@@ -7,7 +7,7 @@ import org.javatuples.*;
 import connection.*;
 import constant.SHOP_EDIT_TYPE;
 import dto.product.Product_ShopStatisticDTO;
-import dto.shop.Shop_ShopManagerDTO;
+import dto.shop.Shop_manageShopDTO;
 import dto.shop.Shop_viewShopDTO;
 import entity.UserObject;
 import entity.ProductObject;
@@ -46,15 +46,15 @@ public class ShopControl {
 	}
 
 	
-	public ArrayList<String> displayShopProfile(Triplet<String, Short, Byte> infors, int id){
-		Shop_viewShopDTO shopDTO = this.shopModel.getShopDTOById(infors,id);
-		return ShopLibrary.viewShop(shopDTO);
+	public ArrayList<String> displayShop_Profile(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, int id){
+		Shop_viewShopDTO shopDTO = this.shopModel.getShopDTOById(productInfors,id);
+		return ShopLibrary.viewShop_Profile(shopDTO);
 	}
 
-	public Map<String,String> displaySellerShopProfile(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, 
+	public Map<String,String> displaySeller_manageShop(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, 
 			UserObject currentUser){
-		Pair<Shop_ShopManagerDTO,Product_ShopStatisticDTO> userShopDTO = this.shopModel.getShopDTOByUser(productInfors,currentUser);
-		return ShopLibrary.viewSellerShopProfile(userShopDTO);
+		Shop_manageShopDTO userShopDTO = this.shopModel.getShopDTOByUser(productInfors,currentUser);
+		return ShopLibrary.viewSeller_manageShop(userShopDTO);
 	}
 
 }

@@ -90,11 +90,11 @@ public class ProductControl {
 	 * 
 	 * <br/>Cập nhật ngày 26/10/2023
 	 */
-	public Map<String,String> viewHomeProduct(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> infors, String url){
+	public Map<String,String> viewHomeProduct(){
 
-		Pair<ArrayList<ProductObject>,Integer> datas = this.pm.getProductObjects(infors);
+		Pair<ArrayList<ProductObject>,ArrayList<ProductObject>> datas = this.pm.getProductObjects();
 		
-		return ProductLibrary.viewHomeProduct(datas, infors, url);
+		return ProductLibrary.viewHomeProduct(datas);
 	}
 	
 }

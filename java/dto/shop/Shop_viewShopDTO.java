@@ -2,7 +2,8 @@ package dto.shop;
 
 import java.util.List;
 
-import dto.product.Product_ShopManagerDTO;
+import dto.product.Product_ShopStatisticDTO;
+import dto.product.Product_manageShopDTO;
 import dto.user.User_viewShopDTO;
 import entity.ShopObject;
 
@@ -19,7 +20,8 @@ public class Shop_viewShopDTO {
     private String notes;
 	private String phone;
     private String email;
-	private List<Product_ShopManagerDTO> storage;
+	private List<Product_manageShopDTO> storage;
+	private Product_ShopStatisticDTO statistic;
 	
 	public int getId() {
 		return id;
@@ -110,11 +112,11 @@ public class Shop_viewShopDTO {
 		this.email = email;
 	}
 
-	public List<Product_ShopManagerDTO> getStorage() {
+	public List<Product_manageShopDTO> getStorage() {
 		return storage;
 	}
 
-	public void setStorage(List<Product_ShopManagerDTO> storage) {
+	public void setStorage(List<Product_manageShopDTO> storage) {
 		this.storage = storage;
 	}
 
@@ -132,5 +134,13 @@ public class Shop_viewShopDTO {
 
 	public void setUser(User_viewShopDTO user) {
 		this.user = user;
+	}
+
+	public Product_ShopStatisticDTO getStatistic() {
+		return statistic;
+	}
+
+	public void setStatistic(Product_ShopStatisticDTO statistic) {
+		this.statistic = statistic;
 	}
 }

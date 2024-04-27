@@ -222,9 +222,10 @@ public class ShopImpl extends BasicImpl implements Shop {
 	}
 
 	@Override
-	public ArrayList<ResultSet> getShopById(String filter,int recordPos, byte pageLength, int id) {
+	public ArrayList<ResultSet> getShopById(int id) {
 		// TODO Auto-generated method stub
 		StringBuilder sql = new StringBuilder();
+		sql.append(getShopByIdSQL(id));
 		return this.getReList(sql.toString());
 	}
 	
@@ -244,6 +245,19 @@ public class ShopImpl extends BasicImpl implements Shop {
 		StringBuilder sql = new StringBuilder();			
 		return this.getReList(sql.toString());
 	}
+	
+	private String getShopByIdSQL(int id) {	
+		return "SELECT * FROM tblshop s WHERE (s.shop_id="+id+") AND (s.shop_deleted=0); ";
+	}
+	
+	private String getShopByUserSQL(UserObject user) {	
+		return "SELECT * FROM tblshop s WHERE (s.shop_user_id="+user.getUser_id()+") AND (s.shop_deleted=0); ";
+	}
+	
+	private String getShopsSQL() {	
+		return "SELECT * FROM tblshop;";
+	}
+
 	
 	private String SELECTCondition(String filter, UserObject currentUser) {
 		 StringBuilder conds = new StringBuilder();
@@ -291,15 +305,6 @@ public class ShopImpl extends BasicImpl implements Shop {
 		 return conds.toString();
 	}
 	
-	
-	private String getShopByUserSQL(UserObject user) {	
-		return "SELECT * FROM tblshop s WHERE (s.shop_user_id="+user.getUser_id()+") AND (s.shop_deleted=0); ";
-	}
-	
-	private String getShopsSQL() {	
-		return "SELECT * FROM tblshop;";
-	}
-
 	
 	public static void main(String[] args) {
 		//Khoi tao bo quan li ket noi

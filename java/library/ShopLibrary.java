@@ -5,60 +5,41 @@ import java.util.*;
 import org.javatuples.*;
 
 import dto.product.Product_ShopStatisticDTO;
-import dto.shop.Shop_ShopManagerDTO;
+import dto.shop.Shop_manageShopDTO;
 import dto.shop.Shop_viewShopDTO;
 
 public class ShopLibrary {
-	public static ArrayList<String> viewShop(Shop_viewShopDTO shopDTO){
+	public static ArrayList<String> viewShop_Profile(Shop_viewShopDTO shopDTO){
 		ArrayList<String> view = new ArrayList<String>();		
 		StringBuilder tmp = new StringBuilder();	
 		return view;
 	}
 	
-	public static Map<String,String> viewSellerShopProfile(
-			Pair<Shop_ShopManagerDTO,Product_ShopStatisticDTO> infors)
+	public static Map<String,String> viewSeller_manageShop(
+			Shop_manageShopDTO infors)
 	{
 		Map<String,String> view = new HashMap<String,String>();
 		StringBuilder tmp = new StringBuilder();
-		
-		Shop_ShopManagerDTO sellerShopDTO = infors.getValue0();
-		Product_ShopStatisticDTO sellerShopStatisticDTO = infors.getValue1();
-		
-		tmp.append(sellerShopDTO.getName());
-		view.put("shop_name",tmp.toString());
-		
-		tmp.setLength(0);
-		tmp.append("<img src=\""+sellerShopDTO.getImages()+"\" alt=\"\">");
-		view.put("shop_image",tmp.toString());
-		
-		tmp.setLength(0);
-		tmp.append(sellerShopDTO.getNotes());
-		view.put("shop_note",tmp.toString());
-		
-		viewSellerShopChartStatistic(sellerShopDTO,sellerShopStatisticDTO,view, tmp);
-		viewSellerShopProduct(sellerShopDTO,view, tmp);
-		
+
 		return view; 
 	}
 	
-	private static void viewSellerShopChartStatistic(Shop_ShopManagerDTO sellerShopDTO,
-			Product_ShopStatisticDTO sellerShopStatisticDTO, 	
+	private static void viewSeller_manageShopStatistic(Shop_manageShopDTO shop_manageShopDTO, 	
 			Map<String,String> view, StringBuilder tmp){
 		tmp.setLength(0);
 		StringBuilder label = new StringBuilder();
 		StringBuilder series = new StringBuilder();
 		
-		sellerShopStatisticDTO.getTotalSellingPricePerProduct().forEach((id,product)->{
+		shop_manageShopDTO.getStatistic().getSold_price_current_month().forEach((date,price)->{
 			if (!label.isEmpty()&&!label.toString().isBlank()) {
 				label.append(",");
 				series.append(",");
 			}
-			label.append("\""+product.getValue0().getName()+"\"");	
-			double demical = (double)product.getValue1()*100/sellerShopStatisticDTO.getTotalSellingPriceAllProduct();
-			series.append(""+demical+"");
+			label.append("\""+date+"\"");	
+			series.append(""+price+"");
 		});
 		
-		sellerShopDTO.getStorage().sort((o1,o2)->{
+		shop_manageShopDTO.getStorage().sort((o1,o2)->{
 			return o1.getName().compareTo(o2.getName());
 		});
 		
@@ -70,15 +51,13 @@ public class ShopLibrary {
 		view.put("series",series.toString());
 		tmp.setLength(0);
 		
-		tmp.append("<ul>");
-		tmp.append("<li>Số sản phẩm còn lại <span>"+sellerShopStatisticDTO.getTotalProduct()+"</span></li>");
-		tmp.append("<li>Số sản phẩm đã bán ra <span>"+sellerShopStatisticDTO.getTotalQuantityAllProduct()+"</span></li>");
-		tmp.append("<li>Lợi nhuận<span>"+utility.Utilities_currency.toVND(sellerShopStatisticDTO.getTotalSellingPriceAllProduct())+"</span></li>");
-		tmp.append("</ul>");
-		view.put("statistic_overview",tmp.toString());
+
+		view.put("product_sold_this_month",tmp.toString());
+		
+		view.put("product_sold_this_month",tmp.toString());
 	}
 	
-	private static void viewSellerShopProduct(Shop_ShopManagerDTO UserShopDTO, Map<String,String> view, StringBuilder tmp){
+	private static void viewSeller_manageShopProduct(Shop_manageShopDTO UserShopDTO, Map<String,String> view, StringBuilder tmp){
 		tmp.setLength(0);
 		UserShopDTO.getStorage().forEach(product->{
 			tmp.append("<tr>");

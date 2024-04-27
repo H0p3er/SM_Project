@@ -1,6 +1,6 @@
-package dto;
+package dto.shop;
 
-public class ProductShopDTO {
+public class Shop_viewProductDTO {
 	private String name;
 	private String image;
 	public String getName() {
