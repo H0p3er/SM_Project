@@ -30,6 +30,8 @@
                             </tr>
                           </thead>
                           <tbody id="product-list">
+                          
+                          
                           </tbody>
 
                         </table>

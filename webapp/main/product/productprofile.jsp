@@ -57,7 +57,8 @@
                                     <!-- seller-name -->
                                     <%=map.get("seller-name") %>
 
-                                      <button type="button" class="btn btn-dark col-4">Xem trang</button>
+									<!-- product-shop -->
+                                   <%=map.get("product-shop") %>
 
                                       <br></br>
 

@@ -12,6 +12,7 @@ import org.javatuples.Sextet;
 import org.javatuples.Triplet;
 
 import repository.*;
+import utility.Utilities;
 import connection.*;
 import entity.*;
 import constant.*;
@@ -28,17 +29,20 @@ public class ShopModel {
 	private Shop shop;
 	private Product product;
 	private PC pc;
+	private User user;
 	
 	public ShopModel(ConnectionPool cp) {
 		this.shop = new ShopImpl(cp);
 		this.product = new ProductImpl(cp);
 		this.pc = new PCImpl(cp);
+		this.user = new UserImpl(cp);
 	}
 	
 	protected void finalize() throws Throwable{
 		this.shop=null;
 		this.product=null;
 		this.pc = null;
+		this.user = null;
 	}
 	
 	public ConnectionPool getCP() {
@@ -49,6 +53,7 @@ public class ShopModel {
 		this.shop.releaseCP();
 		this.product.releaseCP();
 		this.pc.releaseCP();
+		this.user.releaseCP();
 	}
 
 	//***********************Chuyen huong dieu khien tu Shop Impl*****************************************
@@ -71,7 +76,6 @@ public class ShopModel {
 	}
 	
 	public Shop_viewShopDTO getShopDTOById(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors,int id) {
-		ShopObject shopObject = new ShopObject();
 		Shop_viewShopDTO shop_viewShopDTO = new Shop_viewShopDTO() ;
 		
 		Short pagePos = productInfors.getValue0();
@@ -88,20 +92,31 @@ public class ShopModel {
 		if (rs!=null) {
 			try {
 				if (rs.next()) {
-					shopObject.setShop_id(rs.getInt("shop_id"));
-					shopObject.setShop_name(rs.getString("shop_name"));
-					shopObject.setShop_address(rs.getString("shop_address"));
-					shopObject.setShop_images(rs.getString("shop_images"));
-					shopObject.setShop_notes(rs.getString("shop_notes"));			
+					shop_viewShopDTO.setId(rs.getInt("shop_id"));
+					shop_viewShopDTO.setName(rs.getString("shop_name"));
+					shop_viewShopDTO.setAddress(rs.getString("shop_address"));
+					shop_viewShopDTO.setImages(rs.getString("shop_images"));
+					shop_viewShopDTO.setNotes(rs.getString("shop_notes"));
+					shop_viewShopDTO.setCreated_date(rs.getString("shop_created_date"));
+					shop_viewShopDTO.setEmail(rs.getString("shop_email"));
+					shop_viewShopDTO.setPhone(rs.getString("shop_phone"));
+					
+					ResultSet userResultSets = this.user.getUser(rs.getInt("shop_user_id"));
+					shop_viewShopDTO.setUser(getSeller(userResultSets));
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		
+		ShopObject shopObject = new ShopObject();
+		shopObject.setShop_id(shop_viewShopDTO.getId());
 		ArrayList<ResultSet> productResultSets = this.product.getProductsByShop(recordPos,pageLength,multiField,multiCondition,multiSort,shopObject);
 		shop_viewShopDTO.setStorage(getShopStorage(productResultSets.get(0)));
+		
+		
+		
+		
 		return shop_viewShopDTO;
 	}
 	
@@ -226,9 +241,29 @@ public class ShopModel {
 				e.printStackTrace();
 			}
 		}
-		
 		return product_manageShopDTOs;
 	}
+	
+	private User_viewShopDTO getSeller(ResultSet rs) {
+		//Gan gia tri khoi tao cho doi tuong UserObject
+		User_viewShopDTO item = new User_viewShopDTO() ;		
+		
+		//Chuyen doi ban ghi thanh doi tuong
+		if (rs!=null) {
+			try {
+				if (rs.next()) {
+					item.setUser_fullname(Utilities.decode(rs.getString("user_fullname")));
+					if (rs.getBlob("user_images")!=null) {
+						item.setUser_images(rs.getString("user_images"));
+					}					
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return item;
+	}	
 
 	
 	public static void main(String[] args) {

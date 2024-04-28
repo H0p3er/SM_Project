@@ -16,6 +16,7 @@ import dto.productAttribute.Product_DesktopDTO;
 import dto.productAttribute.Product_GraphicsCardDTO;
 import dto.productAttribute.Product_LaptopDTO;
 import entity.ProductObject;
+import repository.Product;
 
 public class ProductLibrary {
 	public static Map<String,String> viewHomeProduct(Pair<ArrayList<ProductObject>, ArrayList<ProductObject>> datas) {		
@@ -209,7 +210,7 @@ public class ProductLibrary {
 		
 		StringBuilder tmp = new StringBuilder();
 		
-		tmp.append("<img src=\"/home/assets/images/manhinh.png\" alt=\"\" style=\"max-height: 430px;\">");
+		tmp.append("<img src=\""+productObject.getProduct_images()+"\" alt=\"\" style=\"max-height: 430px;\">");
 		view.put("product-image", tmp.toString());
 		tmp.setLength(0);	
 		
@@ -223,7 +224,7 @@ public class ProductLibrary {
 
 		tmp.append("<h6 style=\"color: #f35525;\" class=\"fs-4 my-4\">"+productObject.getProduct_price()+"</h6>");
 		view.put("product-price",tmp.toString());
-		tmp.setLength(0);	
+		tmp.setLength(0);
 
 		tmp.append("<div class=\"col-3\">Số lượng: <span>"+productObject.getProduct_quantity()+"</span></div>");
 		view.put("product-left",tmp.toString());
@@ -237,6 +238,9 @@ public class ProductLibrary {
 		view.put("product-notes",tmp.toString());
 		tmp.setLength(0);
 		
+		tmp.append("<a class=\"btn btn-dark col-4\" href=\"/home/shop/profile?id="+productObject.getProduct_shop_id()+"\">Xem gian hàng</a>");
+		view.put("product-shop",tmp.toString());
+		tmp.setLength(0);	
 		return view;
 		
 	}

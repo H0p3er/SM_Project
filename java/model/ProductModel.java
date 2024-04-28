@@ -70,7 +70,6 @@ public class ProductModel {
 			try {
 				if (rs.next()) {
 					item = setProductObject(rs);;
-
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block

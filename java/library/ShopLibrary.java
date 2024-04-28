@@ -9,9 +9,35 @@ import dto.shop.Shop_manageShopDTO;
 import dto.shop.Shop_viewShopDTO;
 
 public class ShopLibrary {
-	public static ArrayList<String> viewShop_Profile(Shop_viewShopDTO shopDTO){
-		ArrayList<String> view = new ArrayList<String>();		
-		StringBuilder tmp = new StringBuilder();	
+	public static Map<String,String> viewShop_Profile(Shop_viewShopDTO shopDTO){
+		Map<String,String> view = new HashMap<String,String>();		
+		StringBuilder tmp = new StringBuilder();
+		tmp.append("<h2>"+shopDTO.getName()+"</h2>");
+		view.put("shop-name",tmp.toString());
+		tmp.setLength(0);
+		
+		if (shopDTO.getStatus()==0) {
+			tmp.append("<div class=\"d-flex align-items-center\"><span class=\"me-3 fs-2 text-danger\">●</span> <h5>Tạm dừng hoạt động</h5></div>");
+		} else {
+			tmp.append("<div class=\"d-flex align-items-center\"><span class=\"me-3 fs-2 text-success\">●</span> <h5>Đang hoạt động</h5></div>");
+		}
+		view.put("shop-status",tmp.toString());
+		tmp.setLength(0);
+		
+		
+		tmp.append("<li>Tổng sản phẩm <span>185</span></li>");
+		tmp.append("<li>Ngày tham gia <span>"+shopDTO.getCreated_date()+"</span></li>");
+		tmp.append("<li>Khu vực <span>Hanoi</span></li>");
+		tmp.append("<li>Địa chỉ <span>Yes</span></li>");
+		tmp.append("<li>Điện thoại <span>"+shopDTO.getPhone()+"</span></li>");
+		tmp.append("<li>Email <span>"+shopDTO.getEmail()+"</span></li>");
+		view.put("shop-attribute",tmp.toString());
+		tmp.setLength(0);
+		
+		
+		view.put("shop-note",tmp.toString());
+		tmp.setLength(0);
+		
 		return view;
 	}
 	

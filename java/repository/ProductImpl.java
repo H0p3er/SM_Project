@@ -247,8 +247,8 @@ public class ProductImpl extends BasicImpl implements Product {
 		StringBuilder sql = new StringBuilder();
 		sql.append(getProductsByShopSQL(at, total, multiCondition, multiField, multiSort, shopObject));
 		sql.append(getProductsSizeByShopSQL(shopObject));
-		sql.append(getProductsMostSoldLastMonthByShopSQL(shopObject));
-		sql.append(getProductsMostSoldCurrentMonthByShopSQL(shopObject));
+//		sql.append(getProductsMostSoldLastMonthByShopSQL(shopObject));
+//		sql.append(getProductsMostSoldCurrentMonthByShopSQL(shopObject));
 		System.out.println(sql.toString());
 		return this.getReList(sql.toString());
 	}
