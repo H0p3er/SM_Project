@@ -21,7 +21,7 @@
               <div class="col-lg-12">
                 <fieldset>
                   <label for="name">Tên đăng nhập</label>
-                  <input type="text" name="txtname" id="txtname" placeholder="Username" autocomplete="on" required>
+                  <input type="text" name="txtname" id="txtname" placeholder="Username" autocomplete="on" required maxlength="30">
                 </fieldset>
               </div>
               <div class="col-lg-12">

@@ -124,8 +124,8 @@
                               <div class="col-lg-5">
                                 <fieldset>
                                   <label for="phone">Điện thoại</label>
-                                  <input type="text" name="phone" id="phone" placeholder="Điện thoại"
-                                    value="$phonenumber" maxlength="12">
+                                  <input type="tel" name="phone" id="phone" placeholder="Điện thoại"
+                                    value="$phonenumber" inputmode="numeric" minlength="10" maxlength="12">
                                 </fieldset>
                               </div>
                               <div class="col-lg-7">
@@ -183,7 +183,7 @@
                                 <fieldset>
                                   <label for="currentpassword">Nhập mật khẩu cũ</label>
                                   <input type="password" name="password" id="password" pattern="[^ @]*@[^ @]*"
-                                    placeholder="Your current password" required>
+                                    placeholder="Your current password" required maxlength="20">
                                 </fieldset>
                               </div>
                               <div class="col-lg-12">
