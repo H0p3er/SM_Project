@@ -58,7 +58,7 @@
               <div class="col-lg-8">
               	<fieldset>
                 	<label for="birtday">Ngày sinh</label>
-                    <input type="date" name="birthday" id="birtday" placeholder="Ngày sinh" value="$birthday">
+                    <input type="date" class="datefield" name="birthday" id="birtday" placeholder="Ngày sinh" >
                 </fieldset>
                </div>
               <div class="col-lg-4">
@@ -73,33 +73,33 @@
               <div class="col-lg-5">
               	<fieldset>
               		<label for="phone">Điện thoại</label>
-              		<input type="text" name="phone" id="phone" placeholder="Điện thoại" value="$phonenumber" maxlength="12">
+              		<input type="text" name="tel" id="phone" placeholder="Điện thoại" inputmode="numeric" minlength="10" maxlength="12" required>
               	</fieldset>
               </div>
               <div class="col-lg-7">
               	<fieldset>
               		<label for="email">Email</label>
-              		<input type="email" name="email" id="email" placeholder="Email" value="$email" maxlength="60">
+              		<input type="email" name="email" id="email" placeholder="Email" maxlength="60" required>
               	</fieldset>
               </div>
               <div class="col-lg-12">
                    <fieldset>
                        <label for="address">Địa chỉ</label>
-                       <input type="text" name="address" id="address" placeholder="Địa chỉ" value="$address">
+                       <input type="text" name="address" id="address" placeholder="Địa chỉ"  required>
                    </fieldset>
               </div>
               <div class="col-lg-12">
                 <fieldset>
                   <label for="password">Mật khẩu</label>
-                  <input type="password" name="password" id="password" pattern="[^ @]*@[^ @]*" placeholder="Password"
-                    required>
+                  <input type="password" name="password" id="password" placeholder="Password"
+                    required maxlength="20" autocomplete="no">
                 </fieldset>
               </div>
               <div class="col-lg-12">
                 <fieldset>
                   <label for="cfpassword">Xác nhận mật khẩu</label>
-                  <input type="password" name="cfpassword" id="retypepassword" pattern="[^ @]*@[^ @]*" placeholder="Re-type Password"
-                    required>
+                  <input type="password" name="cfpassword" id="retypepassword" placeholder="Re-type Password"
+                    required maxlength="20" autocomplete="no">
                 </fieldset>
               </div>
               <div class="col-lg-12">

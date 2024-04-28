@@ -19,8 +19,6 @@
   <script src="/home/assets/js/owl-carousel.js"></script>
   <script src="/home/assets/js/counter.js"></script>
   <script src="/home/assets/js/custom.js"></script>
-
-
   <script src="/home/assets/js/adminmain.js"></script>
   </body>
 
