@@ -88,8 +88,6 @@ public class ProductLibrary {
 			
 			if (i%3 == 0) {	
 				view.put("home_most_sold_carousel_"+((int)i/3)+"",tmp.toString());
-				System.out.println(tmp.toString());
-				System.out.println(((int)i/3));
 				tmp.setLength(0);
 			}
 				

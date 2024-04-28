@@ -74,7 +74,7 @@ public class ProductSearch extends HttpServlet {
 		Quintet<Short, Byte,  Map<String,String>,  Map<String,String>,  Map<String,String>> infors 
 		= new Quintet<>( page, (byte) 6,
 				utility.Utilities.getMapParam(request, null), 
-				utility.Utilities.getMapParam(request, "query"),
+				utility.Utilities.getMapParam(request, "search"),
 				utility.Utilities.getMapParam(request, "orderby")
 				);
 

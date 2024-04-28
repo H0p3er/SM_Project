@@ -237,7 +237,6 @@ public class ProductImpl extends BasicImpl implements Product {
 		StringBuilder sql = new StringBuilder();
 		sql.append(getProductsNewestSQL());
 		sql.append(getProductsMostSoldSQL());
-		System.out.println(sql.toString());
 		return this.getReList(sql.toString());
 	}
 	
@@ -294,8 +293,9 @@ public class ProductImpl extends BasicImpl implements Product {
 	
 	private String getProductsSizeSQL(Map<String,String> multiCondition) {
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT COUNT(product_id) AS product_count FROM tblproduct; ");
+		sql.append("SELECT COUNT(product_id) AS product_count FROM tblproduct ");
 		sql.append(this.WHEREConditions(multiCondition));	
+		sql.append(";");
 		return sql.toString();
 	}
 	
@@ -422,29 +422,34 @@ public class ProductImpl extends BasicImpl implements Product {
 	private String WHEREConditions(Map<String,String> multiCondition) {
 		StringBuilder WHERE = new StringBuilder();
 		multiCondition.forEach((key,value)->{
+			if (!WHERE.isEmpty() && !WHERE.toString().isBlank()) {
+				WHERE.append("AND ");
+			}
 			switch (key) {
-			case "query":
-				WHERE.append("product_name=%"+value+" ");
-				WHERE.append("OR pc_name=%"+value);
+			case "search":
+				WHERE.append("product_name LIKE '%"+value+"%' ");
+				break;
 			case "id":
-				WHERE.append("product_=id");
+				WHERE.append("product_id= ");
 				break;
 			case "name":
-				WHERE.append("product_name=");
+				WHERE.append("product_name= ");
 				break;
 			case "address":
-				WHERE.append("product_address=");
+				WHERE.append("product_address= ");
 				break;
 			case "last_modified":
 				WHERE.append("product_last_modified="+value);
 				break;
 			default:
-				WHERE.append("product_name= "+value);
+				WHERE.append("product_name LIKE '%"+value+"%'");
 			}			
 		});		
 		if(!WHERE.toString().equalsIgnoreCase("")) {
 			WHERE.insert(0, "WHERE ");
 		}
+		
+		System.out.println(multiCondition);
 		return WHERE.toString();
 	}
 	

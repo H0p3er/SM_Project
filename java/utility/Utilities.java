@@ -42,6 +42,7 @@ public class Utilities {
 	
 	public static Map<String, String> getMapParam(ServletRequest request, String name) {	
 		String str_value = request.getParameter(name);
+	
 		String safe_value = 
 				(str_value!=null && !str_value.isBlank()
 				&& str_value.contains(":") && str_value.contains(";")) 
@@ -55,6 +56,8 @@ public class Utilities {
 	            map.put(keyValue[0], keyValue[1]);
 	        }	
 		}
+		
+		System.out.println(map);
 		return map;
 	}
 	

@@ -22,4 +22,12 @@ document.addEventListener("DOMContentLoaded", function(){
 	});
 });
 	
-  
+let search_element = document.getElementById("search");
+let search_button_element = document.getElementById("search-button");
+
+if (search_element!=null && search_button_element!=null){
+	search_element.addEventListener("change",()=>{
+		console.log(search_element.value);
+		search_element.value = "search:"+search_element.value+";";
+	});
+}
