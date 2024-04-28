@@ -70,8 +70,7 @@ public class ProductModel {
 			try {
 				if (rs.next()) {
 					item = setProductObject(rs);;
-					
-					System.out.println(item.getProduct_id());
+
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -97,7 +96,6 @@ public class ProductModel {
 			try {
 				while (rs.next()) {				
 					ProductObject item = setProductObject(rs);
-					System.out.println(item.getProduct_id());
 					items.add(item);
 				}
 			} catch (SQLException e) {
@@ -133,8 +131,7 @@ public class ProductModel {
 		if (rs != null) {
 			try {
 				while (rs.next()) {				
-					ProductObject item = setProductObject(rs);
-					System.out.println(item.getProduct_id());
+					ProductObject item = setProductObject(rs);	
 					items2.add(item);
 				}
 			} catch (SQLException e) {
@@ -174,13 +171,12 @@ public class ProductModel {
 				break;					
 			case 3:
 				item = getProduct_MiceDTO(rs);	
-				
 				break;					
 			case 4:
 				item = getProduct_HeadphoneSpeakerDTO(rs);	
 				break;						
 			case 5:	
-				item = getProduct_LaptopDTO(rs);			
+				item = getProduct_LaptopDTO(rs);
 				break;						
 			case 6:
 				item = getProduct_DesktopDTO(rs);		
@@ -232,6 +228,7 @@ public class ProductModel {
 	private Product_CaseDTO getProduct_CaseDTO(ResultSet rs) throws SQLException {
 		Product_CaseDTO item = new Product_CaseDTO();
 		item.setProduct_pc_id(rs.getInt("product_pc_id"));
+		item.setProduct_id(rs.getInt("product_id"));
 		ResultSet attribute = this.pc.getPCByProduct(item);	
 		if (attribute.next()) {
 			((Product_CaseDTO) item).setCase_size(attribute.getString("case_size"));
@@ -244,6 +241,7 @@ public class ProductModel {
 	private Product_CoolingDTO getProduct_CoolingDTO(ResultSet rs) throws SQLException {	
 		Product_CoolingDTO item = new Product_CoolingDTO();	
 		item.setProduct_pc_id(rs.getInt("product_pc_id"));
+		item.setProduct_id(rs.getInt("product_id"));
 		ResultSet attribute = this.pc.getPCByProduct(item);
 		if (attribute.next()) {
 			((Product_CoolingDTO) item).setCooling_color(attribute.getString("cooling_color"));
@@ -286,6 +284,7 @@ public class ProductModel {
 	private Product_KeyboardDTO getProduct_KeyboardDTO(ResultSet rs) throws SQLException {	
 		Product_KeyboardDTO item = new Product_KeyboardDTO();
 		item.setProduct_pc_id(rs.getInt("product_pc_id"));
+		item.setProduct_id(rs.getInt("product_id"));
 		ResultSet attribute = this.pc.getPCByProduct(item);
 		return item;
 	}
@@ -293,17 +292,19 @@ public class ProductModel {
 	private Product_LaptopDTO getProduct_LaptopDTO(ResultSet rs) throws SQLException {	
 		Product_LaptopDTO item = new Product_LaptopDTO();
 		item.setProduct_pc_id(rs.getInt("product_pc_id"));
+		item.setProduct_id(rs.getInt("product_id"));
 		ResultSet attribute = this.pc.getPCByProduct(item);
 		if (attribute.next()) {
-			((Product_LaptopDTO) item).setLaptop_manufacturer(attribute.getString("laptop_manufacturer"));
-			((Product_LaptopDTO) item).setLaptop_cpu(attribute.getString("laptop_cpu"));
-			((Product_LaptopDTO) item).setLaptop_ram(attribute.getInt("laptop_ram"));
+			item.setLaptop_manufacturer(attribute.getString("laptop_manufacturer"));
+			item.setLaptop_cpu(attribute.getString("laptop_cpu"));
+			item.setLaptop_ram(attribute.getInt("laptop_ram"));
 		
-			((Product_LaptopDTO) item).setLaptop_storage(attribute.getInt("laptop_storage"));
-			((Product_LaptopDTO) item).setLaptop_screen_size(attribute.getInt("laptop_screen_size"));
-			((Product_LaptopDTO) item).setLaptop_resolution(attribute.getString("laptop_resolution"));
-			((Product_LaptopDTO) item).setLaptop_type(attribute.getString("laptop_type"));
-		}		
+			item.setLaptop_storage(attribute.getInt("laptop_storage"));
+			item.setLaptop_screen_size(attribute.getInt("laptop_screen_size"));
+			item.setLaptop_resolution(attribute.getString("laptop_resolution"));
+			item.setLaptop_type(attribute.getString("laptop_type"));
+		}
+		
 		return item;
 	}
 

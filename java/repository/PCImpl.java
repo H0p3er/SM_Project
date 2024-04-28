@@ -80,7 +80,6 @@ public class PCImpl extends BasicImpl implements PC {
 			case 2:
 				sql.append("SELECT * FROM tbl_keyboards ");				
 				sql.append("WHERE product_id="+productObject.getProduct_id()+";");
-
 				break;
 				
 			case 3:

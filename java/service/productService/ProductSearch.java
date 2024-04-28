@@ -64,14 +64,7 @@ public class ProductSearch extends HttpServlet {
 			getServletContext().setAttribute("CPool", pc.getCP());
 		}
 		
-		// Lấy từ khóa tìm kiếm
-		String key = request.getParameter("query");
-		String saveKey = (key != null && !key.equalsIgnoreCase("")) ? key.trim() : "";
-		
-		// Lấy câu trúc
-		ProductObject similar = new ProductObject();
-		similar.setProduct_name(saveKey);
-
+		// Lấy từ khóa tìm kiếm;
 		short page = Utilities.getShortParam(request, "page");
 		if(page < 1) {
 			page = 1;
@@ -81,7 +74,7 @@ public class ProductSearch extends HttpServlet {
 		Quintet<Short, Byte,  Map<String,String>,  Map<String,String>,  Map<String,String>> infors 
 		= new Quintet<>( page, (byte) 6,
 				utility.Utilities.getMapParam(request, null), 
-				utility.Utilities.getMapParam(request, key),
+				utility.Utilities.getMapParam(request, "query"),
 				utility.Utilities.getMapParam(request, "orderby")
 				);
 

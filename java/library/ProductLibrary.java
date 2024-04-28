@@ -22,58 +22,58 @@ public class ProductLibrary {
 		Map<String,String> view = new HashMap<String,String>();
 		StringBuilder tmp = new StringBuilder();
 		
-		Iterator<ProductObject> iterator =  datas.getValue0().iterator();
-		while (iterator.hasNext()) {
-			ProductObject product = iterator.next();
+		ArrayList<ProductObject> productObjects =  datas.getValue0();
+		for (int i = 1; i <= productObjects.size(); i++) {
+			ProductObject product = productObjects.get(i-1);
 			tmp.append("<div class=\"col-lg-4 col-md-6\">");
 			tmp.append("<div class=\"item\">");
-			tmp.append("<a href=\"/home/product?id="+product.getProduct_id()+"\"><img src=\"/home/assets/images/product/monitor/manhinh.png\" alt=\"\"></a>");
+			tmp.append("<a href=\"/home/product/profile?id="+product.getProduct_id()+"\"><img src=\""+product.getProduct_images()+"\" alt=\"\"></a>");
 			switch (product.getProduct_pc_id()) {
 				case 1:
-					tmp.append("<span class=\"category\">Case</span>");
+					tmp.append("<span class=\"category\">Màn hình</span>");
 					break;		
 				case 2:
-					tmp.append("<span class=\"category\">Quạt tản nhiệt</span>");
+					tmp.append("<span class=\"category\">Bàn phím</span>");			
 					break;					
 				case 3:
-					tmp.append("<span class=\"category\">CPU</span>");	
+					tmp.append("<span class=\"category\">Chuột</span>");
 					break;					
 				case 4:
-					tmp.append("<span class=\"category\">Desktop</span>");	
-					break;						
-				case 5:
-					tmp.append("<span class=\"category\">GPU</span>");		
-					break;						
-				case 6:	
 					tmp.append("<span class=\"category\">Tai nghe</span>");	
 					break;						
-				case 7:
-					tmp.append("<span class=\"category\">Bàn phím</span>");			
-					break;						
-				case 8:
+				case 5:
 					tmp.append("<span class=\"category\">Laptop</span>");	
 					break;						
-				case 9:		
-					tmp.append("<span class=\"category\">Chuột</span>");		
+				case 6:	
+					tmp.append("<span class=\"category\">Desktop</span>");	
+					break;						
+				case 7:
+					tmp.append("<span class=\"category\">CPU</span>");
+					break;						
+				case 8:
+					tmp.append("<span class=\"category\">Bo mạch chủ</span>");				
+					break;						
+				case 9:	
+					tmp.append("<span class=\"category\">RAM</span>");					
 					break;		
 				case 10:
-					tmp.append("<span class=\"category\">Màn hình</span>");
+					tmp.append("<span class=\"category\">Ổ cứng</span>");			
 					break;				
 				case 11:
-					tmp.append("<span class=\"category\">Bo mạch chủ</span>");	
+					tmp.append("<span class=\"category\">VGA</span>");	
 					break;						
 				case 12:
 					tmp.append("<span class=\"category\">Nguồn</span>");			
 					break;						
 				case 13:
-					tmp.append("<span class=\"category\">RAM</span>");		
+					tmp.append("<span class=\"category\">Case</span>");		
 					break;				
 				case 14:
-					tmp.append("<span class=\"category\">Ổ cứng</span>");			
+					tmp.append("<span class=\"category\">Bộ tản nhiệt</span>");
 					break;					
 			}	
 			tmp.append("<h6>"+product.getProduct_price()+"</h6>");
-			tmp.append("<h4 style=\"height: 72px\" class=\"text-truncateline\"><a href=\"/home/product?id="+product.getProduct_id()+"\">"+product.getProduct_name()+"</a></h4>");
+			tmp.append("<h4 style=\"height: 72px\" class=\"text-truncateline\"><a href=\"/home/product/profile?id="+product.getProduct_id()+"\">"+product.getProduct_name()+"</a></h4>");
 			tmp.append("<ul class=\"item-list\">");
 			
 			tmp.append(viewProductAttribute(product));
@@ -84,63 +84,71 @@ public class ProductLibrary {
 			tmp.append("</div>");
 			tmp.append("</div>");
 			tmp.append("</div>");
+			
+			if (i%3 == 0) {	
+				view.put("home_most_sold_carousel_"+((int)i/3)+"",tmp.toString());
+				System.out.println(tmp.toString());
+				System.out.println(((int)i/3));
+				tmp.setLength(0);
+			}
+				
 		}
 
-		view.put("home_most_sold_product",tmp.toString());
+	
+		
 		tmp.setLength(0);
-
-		iterator =  datas.getValue1().iterator();
+		Iterator<ProductObject> iterator =  datas.getValue1().iterator();
 		while (iterator.hasNext()) {
 			ProductObject product = iterator.next();
 			tmp.append("<div class=\"col-lg-4 col-md-6\">");
 			tmp.append("<div class=\"item\">");
-			tmp.append("<a href=\"/home/product?id="+product.getProduct_id()+"\"><img src=\"/home/assets/images/product/monitor/manhinh.png\" alt=\"\"></a>");
+			tmp.append("<a href=\"/home/product/profile?id="+product.getProduct_id()+"\"><img src=\""+product.getProduct_images()+"\" alt=\"\"></a>");
 			switch (product.getProduct_pc_id()) {
-				case 1:
-					tmp.append("<span class=\"category\">Case</span>");
-					break;		
-				case 2:
-					tmp.append("<span class=\"category\">Quạt tản nhiệt</span>");
-					break;					
-				case 3:
-					tmp.append("<span class=\"category\">CPU</span>");	
-					break;					
-				case 4:
-					tmp.append("<span class=\"category\">Desktop</span>");	
-					break;						
-				case 5:
-					tmp.append("<span class=\"category\">GPU</span>");		
-					break;						
-				case 6:	
-					tmp.append("<span class=\"category\">Tai nghe</span>");	
-					break;						
-				case 7:
-					tmp.append("<span class=\"category\">Bàn phím</span>");			
-					break;						
-				case 8:
-					tmp.append("<span class=\"category\">Laptop</span>");	
-					break;						
-				case 9:		
-					tmp.append("<span class=\"category\">Chuột</span>");		
-					break;		
-				case 10:
-					tmp.append("<span class=\"category\">Màn hình</span>");
-					break;				
-				case 11:
-					tmp.append("<span class=\"category\">Bo mạch chủ</span>");	
-					break;						
-				case 12:
-					tmp.append("<span class=\"category\">Nguồn</span>");			
-					break;						
-				case 13:
-					tmp.append("<span class=\"category\">RAM</span>");		
-					break;				
-				case 14:
-					tmp.append("<span class=\"category\">Ổ cứng</span>");			
-					break;					
-			}	
+			case 1:
+				tmp.append("<span class=\"category\">Màn hình</span>");
+				break;		
+			case 2:
+				tmp.append("<span class=\"category\">Bàn phím</span>");			
+				break;					
+			case 3:
+				tmp.append("<span class=\"category\">Chuột</span>");
+				break;					
+			case 4:
+				tmp.append("<span class=\"category\">Tai nghe</span>");	
+				break;						
+			case 5:
+				tmp.append("<span class=\"category\">Laptop</span>");	
+				break;						
+			case 6:	
+				tmp.append("<span class=\"category\">Desktop</span>");	
+				break;						
+			case 7:
+				tmp.append("<span class=\"category\">CPU</span>");
+				break;						
+			case 8:
+				tmp.append("<span class=\"category\">Bo mạch chủ</span>");				
+				break;						
+			case 9:	
+				tmp.append("<span class=\"category\">RAM</span>");					
+				break;		
+			case 10:
+				tmp.append("<span class=\"category\">Ổ cứng</span>");			
+				break;				
+			case 11:
+				tmp.append("<span class=\"category\">VGA</span>");	
+				break;						
+			case 12:
+				tmp.append("<span class=\"category\">Nguồn</span>");			
+				break;						
+			case 13:
+				tmp.append("<span class=\"category\">Case</span>");		
+				break;				
+			case 14:
+				tmp.append("<span class=\"category\">Bộ tản nhiệt</span>");
+				break;					
+		}	
 			tmp.append("<h6>"+product.getProduct_price()+"</h6>");
-			tmp.append("<h4 style=\"height: 72px\" class=\"text-truncateline\"><a href=\"/home/product?id="+product.getProduct_id()+"\">"+product.getProduct_name()+"</a></h4>");
+			tmp.append("<h4 style=\"height: 72px\" class=\"text-truncateline\"><a href=\"/home/product/profile?id="+product.getProduct_id()+"\">"+product.getProduct_name()+"</a></h4>");
 			tmp.append("<ul class=\"item-list\">");
 			
 			tmp.append(viewProductAttribute(product));
@@ -171,7 +179,7 @@ public class ProductLibrary {
 			ProductObject product = iterator.next();
 			tmp.append("<div class=\"col-lg-4 col-md-6\">");
 			tmp.append("<div class=\"item\">");
-			tmp.append("<a href=\"property-details.html\"><img src=\"/home/assets/images/banphim.png\" alt=\"\"></a>");
+			tmp.append("<a href=\"property-details.html\"><img src=\""+product.getProduct_images()+"\" alt=\"\"></a>");
 			tmp.append("");
 			tmp.append("<h4 style=\"height: 95px\" class=\"text-truncateline\"><a href=\"property-details.html\">");
 			tmp.append(product.getProduct_name());
