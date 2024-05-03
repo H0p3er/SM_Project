@@ -332,18 +332,18 @@ public class UserImpl extends BasicImpl implements User {
 		}
 		System.out.println(new_user.getUser_id());
 		
-		boolean resultEdit = u.editUser(new_user, USER_EDIT_TYPE.GENERAL);
-		if (resultEdit) {
-			System.out.println("ok2");
-		} else {
-			System.out.println("FAILED2");
-		}
-		boolean resultDel = u.delUser(new_user);
-		if (resultDel) {
-			System.out.println("ok3");
-		} else {
-			System.out.println("FAILED3");
-		}
+//		boolean resultEdit = u.editUser(new_user, USER_EDIT_TYPE.GENERAL);
+//		if (resultEdit) {
+//			System.out.println("ok2");
+//		} else {
+//			System.out.println("FAILED2");
+//		}
+//		boolean resultDel = u.delUser(new_user);
+//		if (resultDel) {
+//			System.out.println("ok3");
+//		} else {
+//			System.out.println("FAILED3");
+//		}
 		ArrayList<ResultSet> res = u.getUsers(null, 0, (byte) 25, USER_SORT_TYPE.NAME);
 
 		ResultSet rs = res.get(0);

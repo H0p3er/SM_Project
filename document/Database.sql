@@ -1413,6 +1413,7 @@ CREATE TABLE `tbluser` (
   `user_permission` smallint(6) NOT NULL DEFAULT '0' COMMENT 'Quyền trong hệ thống',
   `user_gender` smallint(1) NOT NULL DEFAULT '0' COMMENT 'Giới tính',
   `user_address` varchar(100) CHARACTER SET utf8 DEFAULT NULL COMMENT 'Địa chỉ',
+  `user_created_date` varchar(15) DEFAULT NULL COMMENT 'Thời gian khởi tạo',
   `user_deleted` smallint(6) DEFAULT '0' COMMENT 'Trạng thái xóa ',
   `user_phone` varchar(15) DEFAULT NULL COMMENT 'Số điện thoại',
   `user_social_links` varchar(100) DEFAULT NULL COMMENT 'Liên hệ',
@@ -1427,27 +1428,27 @@ CREATE TABLE `tbluser` (
 --
 
 /*!40000 ALTER TABLE `tbluser` DISABLE KEYS */;
-INSERT INTO `tbluser` (`user_id`, `user_nickname`, `user_fullname`, `user_images`, `user_email`, `user_notes`, `user_permission`, `user_gender`, `user_address`, `user_deleted`, `user_phone`, `user_social_links`, `user_logined`, `user_name`, `user_pass`) VALUES
-(1, 'Dog lover', 'John Wick', '\\home\\images\\user\\01.jpg', 'doglover@gmail.com', 'Ng??i tiêu dùng', 1, 0, '7 Lê Duẩn, Quận 1, Thành phố Hồ Chí Minh.', 0, '0342312435', NULL, 0, 'DogLoverr', 'NoDogNoLife3000'),
-(2, 'Pé', 'Nguyễn Thị Ngọc Mai', '\\home\\images\\user\\02.jpg', 'mai06071969@gmail.com', 'Không có thông tin', 1, 0, '46 Hòa Mã, Quận Ba Đình, Hà Nội.', 0, '0123423131', NULL, 0, 'Pé', 'Pe060769'),
-(3, 'SKT Khánh', 'Mai Quốc Khánh', '\\home\\images\\user\\03.jpg', 'faker123@gmail.com', 'Không có thông tin', 1, 1, '191 Lãng Yên, Quận Hà Đông, Hà Nội.', 0, '0257123423', NULL, 3, 'SktKhanh', '738a1eca9e15f674ff6fd7434ea1b965'),
-(4, 'Cloudy Vân', 'Tô Văn Vân', '\\home\\images\\user\\04.jpg', 'imhigh@gmail.com', 'Không có thông tin', 1, 1, '57 Trần Hưng Đạo, Hoàn Kiếm, Hà Nội.', 0, '0385175892', NULL, 0, 'Cloudy999', 'VanCloud'),
-(5, 'Tuấn White', 'Trần Tuấn Bạch', '\\home\\images\\user\\05.jpg', 'maninblack@gmail.com', 'Không có thông tin', 1, 1, '27 Liễu Giai, Quận Ba Đình, Hà Nội.', 0, '0385174512', NULL, 0, 'TuanWhite', 'TrangNhuOMO'),
-(6, 'Donald Trump', 'Đỗ Nam Trung', '\\home\\images\\user\06.jpg', 'greatagain999@gmail.com', 'Qu?n lý t?i chi nhánh Lâm ??ng', 4, 1, '51 Nguyễn Du, Quận Hai Bà Trưng, Hà Nội.', 0, '08967912345', NULL, 575, 'admin@gmail.com', '75d23af433e0cea4c0e45a56dba18b30'),
-(7, 'Janua', 'Trường', '\\home\\images\\user\\07.jpg', 'janua@gmail.com', 'Không có thông tin', 1, 0, '47 Đào Duy Từ, quận Hoàn Kiếm', 0, '0912334253', NULL, 1, 'January3', 'Xy#7pLz!'),
-(8, 'Februa', 'Kỳ', '\\home\\images\\user\\08.jpg', 'februa@gmail.com', 'Không có thông tin', 2, 1, '24 Hàng Bồ, quận Hoàn Kiếm', 0, '0875643865', NULL, 1, 'February1', 'qRt2$yZa'),
-(9, 'March', 'Kháng', '\\home\\images\\user\\09.jpg', 'march@gmail.com', 'Không có thông tin', 3, 0, '49 Bát Đàn, quận Hoàn Kiếm ', 0, '0864479754', NULL, 1, 'March7th', '9b#6sPxY'),
-(10, 'April', 'Chiến', '\\home\\images\\user\\10.jpg', 'april@gmail.com', 'Không có thông tin', 4, 1, '235B Thụy Khuê, quận Tây Hồ', 0, '0654312675', NULL, 1, 'UrLieInApril', 'dF!4a2tZ'),
-(11, 'May', 'Nhất', '\\home\\images\\user\\11.jpg', 'may@gmail.com', 'Không có thông tin', 5, 0, '36 Tạm Thương, quận Hoàn Kiếm', 0, '0321498765', NULL, 1, 'AuntMay<3', '8m%1pQxW'),
-(12, 'June', 'Định', '\\home\\images\\user\\12.jpg', 'june@gmail.com', 'Không có thông tin', 1, 1, '61 Đinh Tiên Hoàng, quận Hoàn Kiếm', 0, '0124465899', NULL, 1, 'JuneJune', 'J!0zYx#7'),
-(13, 'July', 'Thắng', '\\home\\images\\user\\13.jpg', 'july@gmail.com', 'Không có thông tin', 2, 0, '10 Lý Quốc Sư, quận Hoàn Kiếm', 0, '0535567843', NULL, 1, 'Julyette', 'cA2!vL8x'),
-(14, 'August', 'Lợi', '\\home\\images\\user\\14.jpg', 'august@gmail.com', 'Không có thông tin', 3, 1, '43 Nguyễn Siêu, quận Hoàn Kiếm', 0, '0298846558', NULL, 1, 'August2', 'K5!a7yRz'),
-(15, 'Septem', 'Nguyễn Hoàng Đức', '\\home\\images\\user\\15.jpg', 'septem@gmail.com', 'Không có thông tin', 4, 0, '66 Tô Hiến Thành, quận Hoàn Kiếm', 0, '0321635289', NULL, 1, 'Septemvaotu', 'g3xYt#P!'),
-(16, 'Octo', 'Nguyễn Đức Chiến', '\\home\\images\\user\\16.jpg', 'octo@gmail.com', 'Không có thông tin', 5, 1, '29A Nguyễn Thiếp, quận Hoàn Kiếm', 0, '0859986589', NULL, 1, 'Octopuss', 'dZ9!o5xQ'),
-(17, 'Novem', 'Trương Tiến Anh', '\\home\\images\\user\\17.jpg', 'novem@gmail.com', 'Không có thông tin', 1, 1, 'Ngã 3 Cao Thắng, quận Hoàn Kiếm', 0, '0614585455', NULL, 1, 'NNNovember', 'b7!2rWtX'),
-(18, 'Decem', 'Khuất Văn Khang', '\\home\\images\\user\\18.jpg', 'decem@gmail.com', 'Không có thông tin', 2, 0, '47 Mã Mây, quận Hoàn Kiếm', 0, '0898745654', NULL, 1, 'DDDecember', 'Hx!Y3zL9'),
-(19, 'AlphaMail', 'Nguyễn Quang Hải', '\\home\\images\\user\\19.jpg', 'alphamail@gmail.com', 'Ng??i tiêu dùng', 3, 0, '1 Hàng Mành, quận Hoàn Kiếm', 0, '0356865325', NULL, 1, '1stAlphaMail', '6o!z1WpL'),
-(20, 'GigaChat', 'Phạm Văn Luân', '\\home\\images\\user\\20.jpg', 'gigachat@gmail.com', 'Ng??i tiêu dùng', 4, 1, '48 Cầu Gỗ, quận Hoàn Kiếm', 0, '0468532568', NULL, 1, 'GigachartGaren', 'T#8x5y!A');
+INSERT INTO `tbluser` (`user_id`, `user_nickname`, `user_fullname`, `user_images`, `user_email`, `user_notes`, `user_permission`, `user_gender`, `user_address`, `user_created_date`, `user_deleted`, `user_phone`, `user_social_links`, `user_logined`, `user_name`, `user_pass`) VALUES
+(1, 'Dog lover', 'John Wick', '\\home\\images\\user\\01.jpg', 'doglover@gmail.com', 'Ng??i tiêu dùng', 1, 0, '7 Lê Duẩn, Quận 1, Thành phố Hồ Chí Minh.','01/12/2023', 0, '0342312435', NULL, 0, 'DogLoverr', 'NoDogNoLife3000'),
+(2, 'Pé', 'Nguyễn Thị Ngọc Mai', '\\home\\images\\user\\02.jpg', 'mai06071969@gmail.com', 'Không có thông tin', 1, 0, '46 Hòa Mã, Quận Ba Đình, Hà Nội.','01/12/2023', 0, '0123423131', NULL, 0, 'Pé', 'Pe060769'),
+(3, 'SKT Khánh', 'Mai Quốc Khánh', '\\home\\images\\user\\03.jpg', 'faker123@gmail.com', 'Không có thông tin', 1, 1, '191 Lãng Yên, Quận Hà Đông, Hà Nội.','01/12/2023', 0, '0257123423', NULL, 3, 'SktKhanh', '738a1eca9e15f674ff6fd7434ea1b965'),
+(4, 'Cloudy Vân', 'Tô Văn Vân', '\\home\\images\\user\\04.jpg', 'imhigh@gmail.com', 'Không có thông tin', 1, 1, '57 Trần Hưng Đạo, Hoàn Kiếm, Hà Nội.','01/12/2023', 0, '0385175892', NULL, 0, 'Cloudy999', 'VanCloud'),
+(5, 'Tuấn White', 'Trần Tuấn Bạch', '\\home\\images\\user\\05.jpg', 'maninblack@gmail.com', 'Không có thông tin', 1, 1, '27 Liễu Giai, Quận Ba Đình, Hà Nội.','01/12/2023', 0, '0385174512', NULL, 0, 'TuanWhite', 'TrangNhuOMO'),
+(6, 'Donald Trump', 'Đỗ Nam Trung', '\\home\\images\\user\06.jpg', 'greatagain999@gmail.com', 'Qu?n lý t?i chi nhánh Lâm ??ng', 4, 1, '51 Nguyễn Du, Quận Hai Bà Trưng, Hà Nội.','01/12/2023', 0, '08967912345', NULL, 575, 'admin@gmail.com', '75d23af433e0cea4c0e45a56dba18b30'),
+(7, 'Janua', 'Trường', '\\home\\images\\user\\07.jpg', 'janua@gmail.com', 'Không có thông tin', 1, 0, '47 Đào Duy Từ, quận Hoàn Kiếm','01/12/2023', 0, '0912334253', NULL, 1, 'January3', 'Xy#7pLz!'),
+(8, 'Februa', 'Kỳ', '\\home\\images\\user\\08.jpg', 'februa@gmail.com', 'Không có thông tin', 2, 1, '24 Hàng Bồ, quận Hoàn Kiếm','01/12/2023', 0, '0875643865', NULL, 1, 'February1', 'qRt2$yZa'),
+(9, 'March', 'Kháng', '\\home\\images\\user\\09.jpg', 'march@gmail.com', 'Không có thông tin', 3, 0, '49 Bát Đàn, quận Hoàn Kiếm ','01/12/2023', 0, '0864479754', NULL, 1, 'March7th', '9b#6sPxY'),
+(10, 'April', 'Chiến', '\\home\\images\\user\\10.jpg', 'april@gmail.com', 'Không có thông tin', 4, 1, '235B Thụy Khuê, quận Tây Hồ','01/12/2023', 0, '0654312675', NULL, 1, 'UrLieInApril', 'dF!4a2tZ'),
+(11, 'May', 'Nhất', '\\home\\images\\user\\11.jpg', 'may@gmail.com', 'Không có thông tin', 5, 0, '36 Tạm Thương, quận Hoàn Kiếm','01/12/2023', 0, '0321498765', NULL, 1, 'AuntMay<3', '8m%1pQxW'),
+(12, 'June', 'Định', '\\home\\images\\user\\12.jpg', 'june@gmail.com', 'Không có thông tin', 1, 1, '61 Đinh Tiên Hoàng, quận Hoàn Kiếm','01/12/2023', 0, '0124465899', NULL, 1, 'JuneJune', 'J!0zYx#7'),
+(13, 'July', 'Thắng', '\\home\\images\\user\\13.jpg', 'july@gmail.com', 'Không có thông tin', 2, 0, '10 Lý Quốc Sư, quận Hoàn Kiếm','01/12/2023', 0, '0535567843', NULL, 1, 'Julyette', 'cA2!vL8x'),
+(14, 'August', 'Lợi', '\\home\\images\\user\\14.jpg', 'august@gmail.com', 'Không có thông tin', 3, 1, '43 Nguyễn Siêu, quận Hoàn Kiếm','01/12/2023', 0, '0298846558', NULL, 1, 'August2', 'K5!a7yRz'),
+(15, 'Septem', 'Nguyễn Hoàng Đức', '\\home\\images\\user\\15.jpg', 'septem@gmail.com', 'Không có thông tin', 4, 0, '66 Tô Hiến Thành, quận Hoàn Kiếm','01/12/2023', 0, '0321635289', NULL, 1, 'Septemvaotu', 'g3xYt#P!'),
+(16, 'Octo', 'Nguyễn Đức Chiến', '\\home\\images\\user\\16.jpg', 'octo@gmail.com', 'Không có thông tin', 5, 1, '29A Nguyễn Thiếp, quận Hoàn Kiếm','01/12/2023', 0, '0859986589', NULL, 1, 'Octopuss', 'dZ9!o5xQ'),
+(17, 'Novem', 'Trương Tiến Anh', '\\home\\images\\user\\17.jpg', 'novem@gmail.com', 'Không có thông tin', 1, 1, 'Ngã 3 Cao Thắng, quận Hoàn Kiếm','01/12/2023', 0, '0614585455', NULL, 1, 'NNNovember', 'b7!2rWtX'),
+(18, 'Decem', 'Khuất Văn Khang', '\\home\\images\\user\\18.jpg', 'decem@gmail.com', 'Không có thông tin', 2, 0, '47 Mã Mây, quận Hoàn Kiếm','01/12/2023', 0, '0898745654', NULL, 1, 'DDDecember', 'Hx!Y3zL9'),
+(19, 'AlphaMail', 'Nguyễn Quang Hải', '\\home\\images\\user\\19.jpg', 'alphamail@gmail.com', 'Ng??i tiêu dùng', 3, 0, '1 Hàng Mành, quận Hoàn Kiếm','01/12/2023', 0, '0356865325', NULL, 1, '1stAlphaMail', '6o!z1WpL'),
+(20, 'GigaChat', 'Phạm Văn Luân', '\\home\\images\\user\\20.jpg', 'gigachat@gmail.com', 'Ng??i tiêu dùng', 4, 1, '48 Cầu Gỗ, quận Hoàn Kiếm','01/12/2023', 0, '0468532568', NULL, 1, 'GigachartGaren', 'T#8x5y!A');
 /*!40000 ALTER TABLE `tbluser` ENABLE KEYS */;
 
 
