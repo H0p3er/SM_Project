@@ -1,6 +1,8 @@
-package service;
+package service.productService;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -15,30 +17,30 @@ import org.javatuples.Quintet;
 
 import com.google.gson.Gson;
 
-import connection.ConnectionPool;
+import connection.*;
 import controller.ProductControl;
 import dto.product.Product_DTO;
 import entity.UserObject;
 import utility.Utilities;
 
 /**
- * Servlet implementation class Home
+ * Servlet implementation class ProductList
  */
-@WebServlet("/homepage")
-public class Home extends HttpServlet {
+@WebServlet("/product/order")
+public class ProductOrder extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+
 	// Định nghĩa kiểu nội dung xuất về trình khách
-	private static final String CONTENT_TYPE = "text/html; charset=utf-8"; 
+	private static final String CONTENT_TYPE = "text/html; charset=utf-8";
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Home() {
+    public ProductOrder() {
         super();
         // TODO Auto-generated constructor stub
     }
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -50,10 +52,14 @@ public class Home extends HttpServlet {
 	private void view(HttpServletRequest request, HttpServletResponse response, UserObject user) throws ServletException, IOException {
 		// Xác định kiểu nội dung xuất về trình khách
 		response.setContentType(CONTENT_TYPE);
+
 		
 		// Thiết lập tập ký tự cần lấy. Việc thiết lập này cần xác định từ đầu
 		request.setCharacterEncoding("utf-8");
 
+		
+		PrintWriter out = response.getWriter();
+		
 		// Tìm bộ quản lý kết nối
 		ConnectionPool cp = (ConnectionPool) getServletContext().getAttribute("CPool");
 		// Tạo đối tượng thực thi chức năng
@@ -63,30 +69,16 @@ public class Home extends HttpServlet {
 		}
 		
 		// Lấy từ khóa tìm kiếm
-		String key = request.getParameter("key");
-		String saveKey = (key != null && !key.equalsIgnoreCase("")) ? key.trim() : "";
-		
-		// Lấy câu trúc
-		Product_DTO similar = new Product_DTO();
-		similar.setProduct_name(saveKey);
-		
-		// Tìm tham số xác định loại danh sách
+		int id = Utilities.getIntParam(request, "id");
 
-		short page = Utilities.getShortParam(request, "page");
-		if(page < 1) {
-			page = 1;
-		}
-		// Lấy cấu trúc
-
-		Map<String,String> viewProductsList = pc.viewHomeProduct();
+		Map<String,String> viewProduct= pc.getProductProfile(id);
 
 		// Trả về kết nối
 		pc.releaseConnection();
+		// Tạo đối tượng thực hiện xuất nội dung
+		request.setAttribute("product-profile", viewProduct);
 	    
-	    request.setAttribute("home-page", viewProductsList);
-	    
-	    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/main/home.jsp");
-	    requestDispatcher.forward(request, response);
+		
 		
 	}
 

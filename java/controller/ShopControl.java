@@ -6,11 +6,11 @@ import org.apache.tomcat.jni.Library;
 import org.javatuples.*;
 import connection.*;
 import constant.SHOP_EDIT_TYPE;
+import dto.product.Product_DTO;
 import dto.product.Product_ShopStatisticDTO;
 import dto.shop.Shop_manageShopDTO;
 import dto.shop.Shop_viewShopDTO;
 import entity.UserObject;
-import entity.ProductObject;
 import entity.ShopObject;
 import library.*;
 import model.ShopModel;
@@ -46,15 +46,15 @@ public class ShopControl {
 	}
 
 	
-	public ArrayList<String> displayShop_Profile(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, int id){
+	public Map<String,String> displayShop_Profile(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, int id){
 		Shop_viewShopDTO shopDTO = this.shopModel.getShopDTOById(productInfors,id);
 		return ShopLibrary.viewShop_Profile(shopDTO);
 	}
 
 	public Map<String,String> displaySeller_manageShop(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, 
 			UserObject currentUser){
-		Shop_manageShopDTO userShopDTO = this.shopModel.getShopDTOByUser(productInfors,currentUser);
-		return ShopLibrary.viewSeller_manageShop(userShopDTO);
+		Shop_manageShopDTO shopDTO = this.shopModel.getShopDTOByUser(productInfors,currentUser);
+		return ShopLibrary.viewSeller_manageShop(shopDTO);
 	}
 
 }

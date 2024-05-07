@@ -1,20 +1,16 @@
 package dto.shop;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.javatuples.Pair;
-
-import dto.product.Product_viewShopDTO;
-import dto.user.User_viewShopDTO;
+import dto.product.Product_ShopStatisticDTO;
+import dto.product.Product_manageShopDTO;
 import entity.ShopObject;
 
-public class Shop_viewShopDTO {
-    private int id;
+public class Shop_DTO {
+	private int id;
     private String name;
     private String address;
     private byte status;
-    private User_viewShopDTO user;
     private String website_link;
     private String address_link;
     private String created_date;
@@ -22,10 +18,11 @@ public class Shop_viewShopDTO {
     private String notes;
 	private String phone;
     private String email;
-	private Pair<ArrayList<Product_viewShopDTO>,Integer> storage;
+	private List<Product_manageShopDTO> storage;
+	private Product_ShopStatisticDTO statistic;
 	
 	public int getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(int id) {
@@ -33,7 +30,7 @@ public class Shop_viewShopDTO {
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public void setName(String name) {
@@ -41,7 +38,7 @@ public class Shop_viewShopDTO {
 	}
 
 	public String getAddress() {
-		return address;
+		return this.address;
 	}
 
 	public void setAddress(String address) {
@@ -49,16 +46,15 @@ public class Shop_viewShopDTO {
 	}
 
 	public byte getStatus() {
-		return status;
+		return this.status;
 	}
 
 	public void setStatus(byte status) {
 		this.status = status;
 	}
 
-
 	public String getWebsite_link() {
-		return website_link;
+		return this.website_link;
 	}
 
 	public void setWebsite_link(String website_link) {
@@ -66,7 +62,7 @@ public class Shop_viewShopDTO {
 	}
 
 	public String getAddress_link() {
-		return address_link;
+		return this.address_link;
 	}
 
 	public void setAddress_link(String address_link) {
@@ -82,7 +78,7 @@ public class Shop_viewShopDTO {
 	}
 
 	public String getImages() {
-		return images;
+		return this.images;
 	}
 
 	public void setImages(String images) {
@@ -90,7 +86,7 @@ public class Shop_viewShopDTO {
 	}
 
 	public String getNotes() {
-		return notes;
+		return this.notes;
 	}
 
 	public void setNotes(String notes) {
@@ -98,7 +94,7 @@ public class Shop_viewShopDTO {
 	}
 
 	public String getPhone() {
-		return phone;
+		return this.phone;
 	}
 
 	public void setPhone(String phone) {
@@ -106,35 +102,39 @@ public class Shop_viewShopDTO {
 	}
 
 	public String getEmail() {
-		return email;
+		return this.email;
 	}
 
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
-	public Pair<ArrayList<Product_viewShopDTO>,Integer> getStorage() {
-		return storage;
+	public List<Product_manageShopDTO> getStorage() {
+		return this.storage;
 	}
 
-	public void setStorage(Pair<ArrayList<Product_viewShopDTO>,Integer> storage) {
+	public void setStorage(List<Product_manageShopDTO> storage) {
 		this.storage = storage;
 	}
+
 
 	public void applyToEntity(ShopObject shopObject) {
 		shopObject.setShop_name(this.name);
 		shopObject.setShop_address(address);
 		shopObject.setShop_address_link(address_link);
 		shopObject.setShop_images(images);
-		shopObject.setShop_email(images);
+		shopObject.setShop_email(email);
+		shopObject.setShop_notes(notes);
 	}
 
-	public User_viewShopDTO getUser() {
-		return user;
+	public Product_ShopStatisticDTO getStatistic() {
+		return statistic;
 	}
 
-	public void setUser(User_viewShopDTO user) {
-		this.user = user;
+	public void setStatistic(Product_ShopStatisticDTO statistic) {
+		this.statistic = statistic;
 	}
 
 }
+    
+

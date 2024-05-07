@@ -16,7 +16,7 @@ import javax.servlet.http.Part;
 import connection.ConnectionPool;
 import controller.ProductControl;
 import controller.UserControl;
-import entity.ProductObject;
+import dto.product.Product_DTO;
 import entity.UserObject;
 import utility.Utilities_file;
 
@@ -67,7 +67,7 @@ public class ProductImport extends HttpServlet {
 		ArrayList<Object> result = Utilities_file.readExcelFile(buffer,"product");
 		
 		result.forEach(object->{
-			ProductObject product = (ProductObject) object;
+			Product_DTO product = (Product_DTO) object;
 			pc.addProduct(product);
 		}); 
 		

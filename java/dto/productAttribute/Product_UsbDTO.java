@@ -1,8 +1,8 @@
 package dto.productAttribute;
 
-import entity.ProductObject;
+import dto.product.Product_DTO;
 
-public class Product_UsbDTO extends ProductObject{
+public class Product_UsbDTO extends Product_DTO{
 	private int usb_id; 
 	private String usb_manufacturer; 
 	private int usb_capacity;

@@ -16,8 +16,9 @@ import entity.ShopObject;
 import entity.UserObject;
 import basic.BasicImpl;
 
-public class ProductImpl extends BasicImpl implements Product {
 
+public class ProductImpl extends BasicImpl implements Product{
+	
 	public static void main(String[] args) {
 		int id = 1;
 		ConnectionPool cp = new ConnectionPoolImpl();
@@ -66,7 +67,7 @@ public class ProductImpl extends BasicImpl implements Product {
 		sql.append("INSERT INTO tblproduct(");
 		sql.append("product_name, product_images, product_notes, product_created_date, ");
 		sql.append("product_pc_id, product_shop_id, product_quantity, product_price) ");
-		sql.append("VALUE (?,?,?,?,?,?,?,?)");
+		sql.append("VALUE (?,?,?,?,?,?,?,?);");
 
 		// Biên dịch
 		try {
@@ -237,7 +238,6 @@ public class ProductImpl extends BasicImpl implements Product {
 		StringBuilder sql = new StringBuilder();
 		sql.append(getProductsNewestSQL());
 		sql.append(getProductsMostSoldSQL());
-		System.out.println(sql.toString());
 		return this.getReList(sql.toString());
 	}
 	
@@ -247,8 +247,8 @@ public class ProductImpl extends BasicImpl implements Product {
 		StringBuilder sql = new StringBuilder();
 		sql.append(getProductsByShopSQL(at, total, multiCondition, multiField, multiSort, shopObject));
 		sql.append(getProductsSizeByShopSQL(shopObject));
-		sql.append(getProductsMostSoldLastMonthByShopSQL(shopObject));
-		sql.append(getProductsMostSoldCurrentMonthByShopSQL(shopObject));
+//		sql.append(getProductsMostSoldLastMonthByShopSQL(shopObject));
+//		sql.append(getProductsMostSoldCurrentMonthByShopSQL(shopObject));
 		System.out.println(sql.toString());
 		return this.getReList(sql.toString());
 	}
@@ -294,8 +294,9 @@ public class ProductImpl extends BasicImpl implements Product {
 	
 	private String getProductsSizeSQL(Map<String,String> multiCondition) {
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT COUNT(product_id) AS product_count FROM tblproduct; ");
+		sql.append("SELECT COUNT(product_id) AS product_count FROM tblproduct ");
 		sql.append(this.WHEREConditions(multiCondition));	
+		sql.append(";");
 		return sql.toString();
 	}
 	
@@ -347,9 +348,7 @@ public class ProductImpl extends BasicImpl implements Product {
 		sql.append("HAVING MONTH(date) = MONTH(CURRENT_DATE()) ");
 		sql.append("ORDER BY STR_TO_DATE(bill_created_date, '%e/%c/%Y') ASC;");
 		return sql.toString();
-	}
-	
-	
+	}	
 	
 	private String getProductsByPCSQL(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort, PCObject object) {	
 		StringBuilder sql = new StringBuilder();
@@ -365,7 +364,6 @@ public class ProductImpl extends BasicImpl implements Product {
 
 		return sql.toString();
 	}	
-	
 	
 	private String getProductsSizeByPCSQL(PCObject object) {	
 		StringBuilder sql = new StringBuilder();
@@ -422,29 +420,33 @@ public class ProductImpl extends BasicImpl implements Product {
 	private String WHEREConditions(Map<String,String> multiCondition) {
 		StringBuilder WHERE = new StringBuilder();
 		multiCondition.forEach((key,value)->{
+			if (!WHERE.isEmpty() && !WHERE.toString().isBlank()) {
+				WHERE.append("AND ");
+			}
 			switch (key) {
-			case "query":
-				WHERE.append("product_name=%"+value+" ");
-				WHERE.append("OR pc_name=%"+value);
+			case "search":
+				WHERE.append("product_name LIKE '%"+value+"%' ");
+				break;
 			case "id":
-				WHERE.append("product_=id");
+				WHERE.append("product_id= ");
 				break;
 			case "name":
-				WHERE.append("product_name=");
+				WHERE.append("product_name= ");
 				break;
 			case "address":
-				WHERE.append("product_address=");
+				WHERE.append("product_address= ");
 				break;
 			case "last_modified":
 				WHERE.append("product_last_modified="+value);
 				break;
 			default:
-				WHERE.append("product_name= "+value);
+				WHERE.append("product_name LIKE '%"+value+"%'");
 			}			
 		});		
 		if(!WHERE.toString().equalsIgnoreCase("")) {
 			WHERE.insert(0, "WHERE ");
 		}
+		
 		return WHERE.toString();
 	}
 	
@@ -462,7 +464,7 @@ public class ProductImpl extends BasicImpl implements Product {
 				ORDER.append("product_last_modified");
 				break;
 			default:
-				ORDER.append("product_id ");
+				ORDER.append("product_id");
 			}			
 			switch (value) {
 			case "asc":

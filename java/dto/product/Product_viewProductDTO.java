@@ -7,7 +7,7 @@ import dto.shop.Shop_viewProductDTO;
 public class Product_viewProductDTO {
     private String name;
     private byte status;
-    private double price;
+    private String price;
     private String images;
     private String last_modified;
     private PC_DTO pc;
@@ -24,11 +24,11 @@ public class Product_viewProductDTO {
 	public void setStatus(byte status) {
 		this.status = status;
 	}
-	public double getPrice() {
+	public String getPrice() {
 		return price;
 	}
 	public void setPrice(double price) {
-		this.price = price;
+		this.price = utility.Utilities_currency.toVND(price);
 	}
 	public String getImages() {
 		return images;

@@ -17,7 +17,7 @@ import connection.ConnectionPool;
 import constant.USER_SORT_TYPE;
 import controller.ProductControl;
 import controller.UserControl;
-import entity.ProductObject;
+import dto.product.Product_DTO;
 import entity.UserObject;
 import utility.Utilities_file;
 
@@ -56,7 +56,7 @@ public class ProductExport extends HttpServlet {
 		String ekey = request.getParameter("ekey");
 		String saveKey = (ekey != null && !ekey.equalsIgnoreCase("")) ? ekey.trim() : "";
 
-		ProductObject similar = new ProductObject();
+		Product_DTO similar = new Product_DTO();
 
 		ConnectionPool cp = (ConnectionPool) getServletContext().getAttribute("CPool");
 

@@ -1,8 +1,8 @@
 package dto.productAttribute;
 
-import entity.ProductObject;
+import dto.product.Product_DTO;
 
-public class Product_MonitorDTO extends ProductObject{
+public class Product_MonitorDTO extends Product_DTO{
 	private int monitor_id;
 	private String monitor_manufacturer; 
 	private String monitor_size;

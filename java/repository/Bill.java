@@ -22,6 +22,8 @@ public interface Bill extends ShareControl{
 	public ResultSet getBillByCreatedDate(Date start, Date end);
 	
 	public ArrayList<ResultSet> getBillByUser(int at, byte total, String multiField,  String multiCondition, String multiSort, UserObject userObject);
+	public ArrayList<ResultSet> getOrderByUser(int at, byte total, String multiField,  String multiCondition, String multiSort, UserObject userObject);
+	
 	public ArrayList<ResultSet> getBillByShop(int at, byte total, String multiField,  String multiCondition, String multiSort, ShopObject shopObject);
-
+	public ArrayList<ResultSet> getOrderByShop(int at, byte total, String multiField,  String multiCondition, String multiSort, ShopObject shopObject);
 }

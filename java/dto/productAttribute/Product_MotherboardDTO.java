@@ -1,8 +1,8 @@
 package dto.productAttribute;
 
-import entity.ProductObject;
+import dto.product.Product_DTO;
 
-public class Product_MotherboardDTO extends ProductObject {
+public class Product_MotherboardDTO extends Product_DTO {
 	private int motherboard_id;
 	private String motherboard_manufacturer;
 	private String motherboard_chipset;

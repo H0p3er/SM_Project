@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import connection.ConnectionPool;
 import constant.PRODUCT_EDIT_TYPE;
 import controller.ProductControl;
-import entity.ProductObject;
+import dto.product.Product_DTO;
 import entity.UserObject;
 import utility.Utilities_date;
 
@@ -51,7 +51,7 @@ public class ProductDR extends HttpServlet {
 
 			ConnectionPool cp = (ConnectionPool) getServletContext().getAttribute("CPool");
 			ProductControl pc = new ProductControl(cp);
-			ProductObject sProduct = new ProductObject();
+			Product_DTO sProduct = new Product_DTO();
 			sProduct.setProduct_id(id);
 			sProduct.setProduct_last_modified(Utilities_date.getCurrentDate());
 			

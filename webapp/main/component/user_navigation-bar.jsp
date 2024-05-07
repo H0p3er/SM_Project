@@ -36,9 +36,9 @@
                 <li class="ms-lg-5 col-8">
                   <form action="/home/product/search" method="get">
                     <div class="input-group">
-                      <input type="text" name="search" class="form-control" placeholder="Tìm kiếm..."
+                      <input type="text" name="search" id="search" class="form-control" placeholder="Tìm kiếm..."
                         aria-labbel="Timkiem" aria-describedby="button-addon2">
-                      <button class="btn btn-dark" type="submit" id="button-addon2">
+                      <button class="btn btn-dark" type="submit" id="search-button">
                         <i class="fa fa-search" aria-hidden="true"></i>
                       </button>
                     </div>
@@ -64,7 +64,7 @@
                         <a class="dropdown-item p-0 bg-white text-black" href="/home/main/user/order.jsp"><i class="fa-solid fa-box me-1"></i> Đơn hàng</a>
                       </li>
                       <li> <!-- /home/main/user/shop_create.jsp -->
-                        <a class="dropdown-item p-0 bg-white text-black"  href="/home/main/shop/shop_profile.jsp"><i class="fa-solid fa-store"></i> Gian hàng của bạn</a>
+                        <a class="dropdown-item p-0 bg-white text-black"  href="/home/shop/profile?id=<%=user.getUser_id()%>"><i class="fa-solid fa-store"></i> Gian hàng của bạn</a>
                       </li>
                       
                       <li>

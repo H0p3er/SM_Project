@@ -2,6 +2,9 @@ package basic;
 
 import java.sql.*;
 import java.util.*;
+
+import org.javatuples.Pair;
+
 import connection.*;
 
 //Thua ke tu ShareControl, thay doi ShareControl o BasicImpl
@@ -17,10 +20,10 @@ public interface Basic extends ShareControl{
 	public ResultSet gets(String sql);
 	public ArrayList<ResultSet> getReList(String multiSelect);
 	
-	public Map<String,ResultSet> getReListV1(Map<String,String> multiSelect);
+	public ArrayList<ResultSet> getReListV1(PreparedStatement pre);
 	
-	public boolean addList(PreparedStatement pre);	
-	public boolean editList(PreparedStatement pre);	
-	public boolean delList(PreparedStatement pre);	
+	public Pair<Boolean, Integer> addList(PreparedStatement pre);	
+	public Pair<Boolean, Integer> editList(PreparedStatement pre);	
+	public Pair<Boolean, Integer> delList(PreparedStatement pre);	
 	
 }

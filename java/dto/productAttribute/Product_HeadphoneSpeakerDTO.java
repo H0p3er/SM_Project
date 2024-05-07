@@ -1,8 +1,8 @@
 package dto.productAttribute;
 
-import entity.ProductObject;
+import dto.product.Product_DTO;
 
-public class Product_HeadphoneSpeakerDTO extends ProductObject{
+public class Product_HeadphoneSpeakerDTO extends Product_DTO{
 	private int headphones_speakers_id; 
 	private String headphones_manufacturer;
 	private String headphone_type;

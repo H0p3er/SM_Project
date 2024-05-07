@@ -1,8 +1,8 @@
 package dto.productAttribute;
 
-import entity.ProductObject;
+import dto.product.Product_DTO;
 
-public class Product_PowerSuppyDTO extends ProductObject{
+public class Product_PowerSuppyDTO extends Product_DTO{
 	private int psu_id;
 	private String psu_manufacturer;
 	private String psu_certification;

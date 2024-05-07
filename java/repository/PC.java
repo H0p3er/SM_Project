@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import connection.ShareControl;
+import dto.product.Product_DTO;
 import entity.PCObject;
 import entity.ProductObject;
 
@@ -14,5 +15,5 @@ public interface PC extends ShareControl{
 	
 	public ResultSet getPCById(int id);
 	
-	public ResultSet getPCByProduct(ProductObject productObject);
+	public ResultSet getProductAttribute(ProductObject productObject);
 }

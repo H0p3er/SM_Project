@@ -23,7 +23,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import connection.ConnectionPool;
 import connection.ConnectionPoolImpl;
 import controller.ProductControl;
-import entity.ProductObject;
+import dto.product.Product_DTO;
 import repository.ProductService;
 import repository.ProductServiceImpl;
 import utility.Utilities;
@@ -39,7 +39,7 @@ public class Crawl extends HttpServlet {
 		super();
 	}
 	public static void main(String[] args) {
-		ArrayList<ProductObject> productList = new ArrayList<>();
+		ArrayList<Product_DTO> productList = new ArrayList<>();
 		System.setProperty("webdriver.chrome.driver", "D:\\setup\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe");
 		
 		WebDriver driver = new ChromeDriver();
@@ -65,7 +65,7 @@ public class Crawl extends HttpServlet {
 	        	WebElement h3 = e.findElement(By.cssSelector("h3"));
 	        	WebElement img = e.findElement(By.cssSelector(".thumb"));
 	        	WebElement price = e.findElement(By.cssSelector(".price"));
-	        	ProductObject product = new ProductObject();
+	        	Product_DTO product = new Product_DTO();
 	        	product.setProduct_name(h3.getText());
 	        	product.setProduct_category_id((short)rd.nextInt(20));
 	        	product.setProduct_price(convertPriceStringToInt(price.getText()));

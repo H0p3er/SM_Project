@@ -21,8 +21,8 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.javatuples.Pair;
 
+import dto.product.Product_DTO;
 import entity.EmployeeObject;
-import entity.ProductObject;
 import entity.UserObject;
 import objects.*;
 
@@ -197,7 +197,7 @@ public class Utilities_file extends HttpServlet {
 							data.add(eitem);
 							break;
 						case "product":
-							ProductObject pitem = new ProductObject();
+							Product_DTO pitem = new Product_DTO();
 							
 							data.add(pitem);
 							break;
@@ -552,7 +552,7 @@ public class Utilities_file extends HttpServlet {
 		return false;
 	}
 	
-	public static boolean writeProductExcel(OutputStream os, ArrayList<ProductObject> datas) {
+	public static boolean writeProductExcel(OutputStream os, ArrayList<Product_DTO> datas) {
 		try (// Blank workbook
 			XSSFWorkbook workbook = new XSSFWorkbook();	
 					) {
@@ -575,9 +575,9 @@ public class Utilities_file extends HttpServlet {
 //					firstRow.createCell(propertiesName.indexOf(name)).setCellValue(name);
 //				});
 				idx = 0;
-				Iterator<ProductObject> iCellVal = datas.iterator();
+				Iterator<Product_DTO> iCellVal = datas.iterator();
 				while(iCellVal.hasNext()) {
-					ProductObject product = iCellVal.next();
+					Product_DTO product = iCellVal.next();
 					Row row = sheet.createRow((int) datas.indexOf(product)+1);	
 					
 					

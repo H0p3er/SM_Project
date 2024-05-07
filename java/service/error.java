@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import entity.EmployeeObject;
+import entity.UserObject;
 
 /**
  * Servlet implementation class error
@@ -31,7 +32,7 @@ public class error extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		//Tìm thông tin đăng nhập
-		EmployeeObject user = (EmployeeObject) request.getSession().getAttribute("userLogined");
+		UserObject user = (UserObject) request.getSession().getAttribute("userLogined");
 		
 		if (user!=null) {
 			view(request, response, user);
@@ -40,7 +41,7 @@ public class error extends HttpServlet {
 		}
 	}
 	
-	protected void view(HttpServletRequest request, HttpServletResponse response, EmployeeObject currentUser) throws ServletException, IOException {
+	protected void view(HttpServletRequest request, HttpServletResponse response, UserObject currentUser) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
 	

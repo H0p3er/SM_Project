@@ -46,6 +46,7 @@ public class ShopProfile extends HttpServlet {
 	protected void finalize() throws Throwable {
 		// TODO Auto-generated method stub
 		this.shopControl.releaseCP();
+		this.productControl.releaseConnection();
 	}
 
 	/**
@@ -57,12 +58,7 @@ public class ShopProfile extends HttpServlet {
 		// TODO Auto-generated method stub
 		// Tìm thông tin đăng nhập
 		UserObject user = (UserObject) request.getSession().getAttribute("userLogined");
-		
-		 if (user!=null) { 
-			 view(request, response, user);
-		 } else {;
-			 response.sendRedirect("/home/main/home.jsp"); 
-		 }
+		view(request, response, user);
 	}
 
 	protected void view(HttpServletRequest request, HttpServletResponse response, UserObject user)
@@ -90,16 +86,15 @@ public class ShopProfile extends HttpServlet {
 				utility.Utilities.getMapParam(request, null),
 				utility.Utilities.getMapParam(request, null));
 
-		Map<String,String> data = shopControl.displaySellerShopProfile(productInfors,user);
+		Map<String,String> data = shopControl.displayShop_Profile(productInfors,utility.Utilities.getIntParam(request, "id"));
 		
 		this.shopControl.releaseCP();
 		
-		Gson gson = new Gson();
-		
-	    String jsonData = gson.toJson(data);
-		out.append(jsonData);
+		request.setAttribute("shop-profile", data);
+	    
+	    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/main/shop/shop_profile.jsp");
 		// Tạo đối tượng thực hiện xuất nội dung
-		out.flush();
+	    requestDispatcher.forward(request, response);
 		
 	}
 

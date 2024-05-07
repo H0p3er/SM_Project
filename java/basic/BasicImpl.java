@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.javatuples.Pair;
+
 import connection.*;
 
 public class BasicImpl implements Basic {
@@ -212,6 +214,35 @@ public class BasicImpl implements Basic {
 	}
 	
 	@Override
+	public ArrayList<ResultSet> getReListV1(PreparedStatement pre) {
+		// TODO Auto-generated method stub
+		ArrayList<ResultSet> res = new ArrayList<>();
+		try {
+			boolean result = pre.execute();		
+			do {
+				res.add(pre.getResultSet());
+				
+
+				result = pre.getMoreResults(Statement.KEEP_CURRENT_RESULT);
+			} while (result);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+			try {
+				this.con.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}	
+		return res;
+	}
+	
+	
+	
+	@Override
 	public ConnectionPool getCP() {
 		// TODO Auto-generated method stub
 		return this.cp;// chia se bo quan li ket noi voi nhau
@@ -230,7 +261,7 @@ public class BasicImpl implements Basic {
 		
 	}
 	
-	private synchronized boolean exeList(PreparedStatement pre) {	
+	private synchronized Pair<Boolean, Integer> exeList(PreparedStatement pre) {	
 		try {	
 			this.con.setAutoCommit(false);
 			
@@ -239,12 +270,12 @@ public class BasicImpl implements Basic {
 			if (results.length==0) {
 				//Tro lai trang thai an toan neu ko tim duoc 
 				this.con.rollback();
-				return false;				
+				return new Pair<>(false,0);				
 			}
 			
 			//Xac nhan Execute
 			this.con.commit();
-			return true;
+			return new Pair<>(false,results.length);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -255,62 +286,25 @@ public class BasicImpl implements Basic {
 				e1.printStackTrace();
 			}
 		}		
-		return false;
+		return new Pair<>(false,0);
 	}
 	
 	@Override
-	public boolean addList(PreparedStatement pre) {
+	public Pair<Boolean, Integer> addList(PreparedStatement pre) {
 		// TODO Auto-generated method stub
 		return this.exeList(pre);
 	}
 	
 	@Override
-	public boolean editList(PreparedStatement pre) {
+	public Pair<Boolean, Integer> editList(PreparedStatement pre) {
 		// TODO Auto-generated method stub
 		return this.exeList(pre);
 	}
 	
 	@Override
-	public boolean delList(PreparedStatement pre) {
+	public Pair<Boolean, Integer> delList(PreparedStatement pre) {
 		// TODO Auto-generated method stub
 		return this.exeList(pre);
-	}
-
-	@Override
-	public Map<String, ResultSet> getReListV1(Map<String, String> multiSelect) {
-		// TODO Auto-generated method stub
-		Map<String, ResultSet> res = new HashMap<String, ResultSet>();
-
-		try {
-			StringBuilder builder = new StringBuilder();
-			multiSelect.forEach((key,sql)->{
-				builder.append(sql);
-				res.put(key, null);
-			});
-			PreparedStatement pre = this.con.prepareStatement(builder.toString());
-			boolean result = pre.execute();
-			
-			do {
-				res.put(objectName, pre.getResultSet());
-				
-				//getMoreResults: Lay resultSet tiep theo, 
-				//Statement.Keep_current_result: giu cho resultSet hien tai khong bi do'ng, de su dung truy van cho nhung lan khac
-				result = pre.getMoreResults(Statement.KEEP_CURRENT_RESULT);
-			} while (result);
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			
-			try {
-				this.con.rollback();
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-		
-		return res;
 	}
 	
 }
