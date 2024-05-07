@@ -1,8 +1,8 @@
 package dto.productAttribute;
 
-import entity.ProductObject;
+import dto.product.Product_DTO;
 
-public class Product_LaptopDTO extends ProductObject{
+public class Product_LaptopDTO extends Product_DTO {
 	private int laptop_id; 
 	private String laptop_manufacturer; 
 	private String laptop_type;
@@ -10,7 +10,7 @@ public class Product_LaptopDTO extends ProductObject{
 	private int laptop_ram;
 	private String laptop_graphics_card;
 	private int laptop_storage;
-	private int laptop_screen_size;
+	private String laptop_screen_size;
 	private int laptop_refresh_rate; 
 	private String laptop_resolution;
 	public int getLaptop_id() {
@@ -55,10 +55,10 @@ public class Product_LaptopDTO extends ProductObject{
 	public void setLaptop_storage(int laptop_storage) {
 		this.laptop_storage = laptop_storage;
 	}
-	public int getLaptop_screen_size() {
+	public String getLaptop_screen_size() {
 		return laptop_screen_size;
 	}
-	public void setLaptop_screen_size(int laptop_screen_size) {
+	public void setLaptop_screen_size(String laptop_screen_size) {
 		this.laptop_screen_size = laptop_screen_size;
 	}
 	public int getLaptop_refresh_rate() {

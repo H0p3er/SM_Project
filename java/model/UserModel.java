@@ -3,6 +3,7 @@ package model;
 import connection.*;
 import constant.USER_EDIT_TYPE;
 import constant.USER_SORT_TYPE;
+import dto.user.User_viewShopDTO;
 import entity.UserObject;
 import repository.User;
 import repository.UserImpl;
@@ -16,35 +17,35 @@ import org.javatuples.Pair;
 import java.sql.*;
 
 public class UserModel {
-	private User u;
+	private User user;
 	
 	public UserModel(ConnectionPool cp) {
-		this.u= new UserImpl(cp);
+		this.user= new UserImpl(cp);
 	}
 	
 	protected void finalize()throws Throwable{
-		this.u=null;
+		this.user=null;
 	}
 	
 	public ConnectionPool getCP() {
-		return this.u.getCP();
+		return this.user.getCP();
 	}
 	
-	public void releaseConnection() {
-		this.u.releaseCP();
+	public void releaseCP() {
+		this.user.releaseCP();
 	}
 
 	//***********************Chuyen huong dieu khien tu User Impl*****************************************
 	public boolean addUser(UserObject item) {
-		return this.u.addUser(item);
+		return this.user.addUser(item);
 	}
 	
 	public boolean editUser(UserObject item, USER_EDIT_TYPE et) {
-		return this.u.editUser(item, et);
+		return this.user.editUser(item, et);
 	}
 	
 	public boolean delUser(UserObject item) {
-		return this.u.delUser(item);
+		return this.user.delUser(item);
 	}
 	
 	
@@ -55,7 +56,7 @@ public class UserModel {
 		UserObject item = null ;
 		
 		//Lay ban ghi 
-		ResultSet rs = this.u.getUser(id);
+		ResultSet rs = this.user.getUserById(id);
 		
 		
 		//Chuyen doi ban ghi thanh doi tuong
@@ -88,7 +89,7 @@ public class UserModel {
 		UserObject item = null ;
 		
 		//Lay ban ghi 
-		ResultSet rs = this.u.getUser(username, userpass);
+		ResultSet rs = this.user.getUser(username, userpass);
 		
 		
 		//Chuyen doi ban ghi thanh doi tuong
@@ -125,7 +126,7 @@ public class UserModel {
 		
 		//Lay ban ghi 
 		int at = (page-1)*uPerPage;
-		ArrayList<ResultSet> res = this.u.getUsers(similar, at, uPerPage, type);
+		ArrayList<ResultSet> res = this.user.getUsers(similar, at, uPerPage, type);
 		
 		ResultSet rs = res.get(0);
 		
@@ -179,6 +180,28 @@ public class UserModel {
 		}
 		return new Pair<>(items,totalGlobal);
 	}
+	
+	public User_viewShopDTO getSellerById(int id) {
+		//Gan gia tri khoi tao cho doi tuong UserObject
+		User_viewShopDTO item = new User_viewShopDTO() ;				
+		ResultSet rs = this.user.getUserById(id);		
+		//Chuyen doi ban ghi thanh doi tuong
+		if (rs!=null) {
+			try {
+				if (rs.next()) {
+					item.setUser_fullname(Utilities.decode(rs.getString("user_fullname")));
+					if (rs.getBlob("user_images")!=null) {
+						item.setUser_images(rs.getString("user_images"));
+					}					
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return item;
+	}	
+	
 	
 	public static void main(String[] args) {
 		ConnectionPool cp = new ConnectionPoolImpl();

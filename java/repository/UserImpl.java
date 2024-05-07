@@ -203,7 +203,7 @@ public class UserImpl extends BasicImpl implements User {
 	}
 
 	@Override
-	public ResultSet getUser(int id) {
+	public ResultSet getUserById(int id) {
 		// TODO Auto-generated method stub
 		String sql = "SELECT * FROM tbluser WHERE (user_id=?) AND (user_deleted=0); ";
 		return this.get(sql, id);

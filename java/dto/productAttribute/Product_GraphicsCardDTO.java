@@ -1,8 +1,8 @@
 package dto.productAttribute;
 
-import entity.ProductObject;
+import dto.product.Product_DTO;
 
-public class Product_GraphicsCardDTO extends ProductObject{
+public class Product_GraphicsCardDTO extends Product_DTO{
 	
 	private int graphics_card_id;
 	private String graphics_card_manufacturer;

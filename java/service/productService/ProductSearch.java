@@ -19,7 +19,7 @@ import com.google.gson.Gson;
 
 import connection.*;
 import controller.ProductControl;
-import entity.ProductObject;
+import dto.product.Product_DTO;
 import entity.UserObject;
 import utility.Utilities;
 

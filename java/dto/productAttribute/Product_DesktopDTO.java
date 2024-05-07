@@ -1,8 +1,8 @@
 package dto.productAttribute;
 
-import entity.ProductObject;
+import dto.product.Product_DTO;
 
-public class Product_DesktopDTO extends ProductObject{
+public class Product_DesktopDTO extends Product_DTO{
 	private int desktop_id; 
 	private String desktop_manufacturer; 
 	private String desktop_type; 

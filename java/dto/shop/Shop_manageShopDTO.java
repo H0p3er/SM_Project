@@ -1,7 +1,7 @@
 package dto.shop;
 
-import java.util.List;
-
+import java.util.ArrayList;
+import org.javatuples.Pair;
 import dto.product.Product_ShopStatisticDTO;
 import dto.product.Product_manageShopDTO;
 import entity.ShopObject;
@@ -18,7 +18,7 @@ public class Shop_manageShopDTO {
     private String notes;
 	private String phone;
     private String email;
-	private List<Product_manageShopDTO> storage;
+	private Pair<ArrayList<Product_manageShopDTO>,Integer> storage;
 	private Product_ShopStatisticDTO statistic;
 	
 	public int getId() {
@@ -109,11 +109,11 @@ public class Shop_manageShopDTO {
 		this.email = email;
 	}
 
-	public List<Product_manageShopDTO> getStorage() {
+	public Pair<ArrayList<Product_manageShopDTO>,Integer> getStorage() {
 		return this.storage;
 	}
 
-	public void setStorage(List<Product_manageShopDTO> storage) {
+	public void setStorage(Pair<ArrayList<Product_manageShopDTO>,Integer> storage) {
 		this.storage = storage;
 	}
 

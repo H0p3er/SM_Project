@@ -1,7 +1,7 @@
 package dto.pc;
 
 public class PC_ShopManagerDTO {
-	  private String name;
+	 private String name;
 
 	public String getName() {
 		return name;

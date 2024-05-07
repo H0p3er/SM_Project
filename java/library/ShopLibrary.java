@@ -65,7 +65,7 @@ public class ShopLibrary {
 			series.append(""+price+"");
 		});
 		
-		shop_manageShopDTO.getStorage().sort((o1,o2)->{
+		shop_manageShopDTO.getStorage().getValue0().sort((o1,o2)->{
 			return o1.getName().compareTo(o2.getName());
 		});
 		
@@ -85,7 +85,7 @@ public class ShopLibrary {
 	
 	private static void viewSeller_manageShopProduct(Shop_manageShopDTO UserShopDTO, Map<String,String> view, StringBuilder tmp){
 		tmp.setLength(0);
-		UserShopDTO.getStorage().forEach(product->{
+		UserShopDTO.getStorage().getValue0().forEach(product->{
 			tmp.append("<tr>");
 			tmp.append("<th scope=\"row\">"+product.getId()+"</th>");
 			tmp.append("<td>"+product.getName()+"</td>");

@@ -8,7 +8,7 @@ import org.javatuples.*;
 
 import connection.ShareControl;
 import constant.SHOP_EDIT_TYPE;
-import entity.ProductObject;
+import dto.product.Product_DTO;
 import entity.ShopObject;
 import entity.UserObject;
 

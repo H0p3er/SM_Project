@@ -1,8 +1,8 @@
 package dto.productAttribute;
 
-import entity.ProductObject;
+import dto.product.Product_DTO;
 
-public class Product_StorageDTO extends ProductObject{
+public class Product_StorageDTO extends Product_DTO{
 	private int storage_id;
 	private String storage_manufacturer; 
 	private String storage_type;

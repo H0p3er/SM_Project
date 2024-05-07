@@ -1,8 +1,8 @@
 package dto.productAttribute;
 
-import entity.ProductObject;
+import dto.product.Product_DTO;
 
-public class Product_CoolingDTO extends ProductObject{
+public class Product_CoolingDTO extends Product_DTO{
 	private int cooling_id;
 	private String cooling_manufacturer; 
 	private int cooling_type;

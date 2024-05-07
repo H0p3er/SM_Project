@@ -1,8 +1,8 @@
 package dto.productAttribute;
 
-import entity.ProductObject;
+import dto.product.Product_DTO;
 
-public class Product_CaseDTO extends ProductObject {
+public class Product_CaseDTO extends Product_DTO {
 	private int case_id;
 	private String case_manufacturer;
 	private String case_color; 

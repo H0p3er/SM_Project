@@ -16,8 +16,9 @@ import entity.ShopObject;
 import entity.UserObject;
 import basic.BasicImpl;
 
-public class ProductImpl extends BasicImpl implements Product {
 
+public class ProductImpl extends BasicImpl implements Product{
+	
 	public static void main(String[] args) {
 		int id = 1;
 		ConnectionPool cp = new ConnectionPoolImpl();
@@ -66,7 +67,7 @@ public class ProductImpl extends BasicImpl implements Product {
 		sql.append("INSERT INTO tblproduct(");
 		sql.append("product_name, product_images, product_notes, product_created_date, ");
 		sql.append("product_pc_id, product_shop_id, product_quantity, product_price) ");
-		sql.append("VALUE (?,?,?,?,?,?,?,?)");
+		sql.append("VALUE (?,?,?,?,?,?,?,?);");
 
 		// Biên dịch
 		try {
@@ -347,9 +348,7 @@ public class ProductImpl extends BasicImpl implements Product {
 		sql.append("HAVING MONTH(date) = MONTH(CURRENT_DATE()) ");
 		sql.append("ORDER BY STR_TO_DATE(bill_created_date, '%e/%c/%Y') ASC;");
 		return sql.toString();
-	}
-	
-	
+	}	
 	
 	private String getProductsByPCSQL(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort, PCObject object) {	
 		StringBuilder sql = new StringBuilder();
@@ -365,7 +364,6 @@ public class ProductImpl extends BasicImpl implements Product {
 
 		return sql.toString();
 	}	
-	
 	
 	private String getProductsSizeByPCSQL(PCObject object) {	
 		StringBuilder sql = new StringBuilder();
@@ -449,7 +447,6 @@ public class ProductImpl extends BasicImpl implements Product {
 			WHERE.insert(0, "WHERE ");
 		}
 		
-		System.out.println(multiCondition);
 		return WHERE.toString();
 	}
 	
@@ -467,7 +464,7 @@ public class ProductImpl extends BasicImpl implements Product {
 				ORDER.append("product_last_modified");
 				break;
 			default:
-				ORDER.append("product_id ");
+				ORDER.append("product_id");
 			}			
 			switch (value) {
 			case "asc":

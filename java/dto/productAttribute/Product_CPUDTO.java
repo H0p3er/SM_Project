@@ -1,8 +1,8 @@
 package dto.productAttribute;
 
-import entity.ProductObject;
+import dto.product.Product_DTO;
 
-public class Product_CPUDTO extends ProductObject{
+public class Product_CPUDTO extends Product_DTO{
 	private int cpu_id; 
 	private String cpu_collection; 
 	private byte cpu_socket; 

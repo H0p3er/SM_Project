@@ -23,7 +23,7 @@ public class UserControl {
 	}
 	
 	public void releaseConnection() {
-		this.um.releaseConnection();
+		this.um.releaseCP();
 	}
 
 	

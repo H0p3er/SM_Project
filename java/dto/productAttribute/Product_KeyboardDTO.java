@@ -1,8 +1,8 @@
 package dto.productAttribute;
 
-import entity.ProductObject;
+import dto.product.Product_DTO;
 
-public class Product_KeyboardDTO extends ProductObject{
+public class Product_KeyboardDTO extends Product_DTO{
 	private int keyboard_id; 
 	private byte keyboard_type;
 	private String keyboard_connection_type;

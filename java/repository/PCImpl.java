@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import basic.BasicImpl;
 import connection.ConnectionPool;
 import connection.ConnectionPoolImpl;
+import dto.product.Product_DTO;
 import entity.PCObject;
 import entity.ProductObject;
 
@@ -69,8 +70,9 @@ public class PCImpl extends BasicImpl implements PC {
 	}
 
 	@Override
-	public ResultSet getPCByProduct(ProductObject productObject) {
+	public ResultSet getProductAttribute(ProductObject productObject) {
 		StringBuilder sql = new StringBuilder();
+		
 		switch (productObject.getProduct_pc_id()) {
 			case 1:
 				sql.append("SELECT * FROM tbl_monitors ");				
@@ -130,7 +132,7 @@ public class PCImpl extends BasicImpl implements PC {
 				break;
 				
 			case 12:
-				sql.append("SELECT * FROM tbl_power_supplys ");				
+				sql.append("SELECT * FROM tbl_power_supply ");				
 				sql.append("WHERE product_id="+productObject.getProduct_id()+";");
 				break;
 				

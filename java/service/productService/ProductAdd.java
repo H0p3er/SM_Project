@@ -18,7 +18,7 @@ import javax.servlet.http.Part;
 import connection.ConnectionPool;
 import constant.PRODUCT_EDIT_TYPE;
 import controller.ProductControl;
-import entity.ProductObject;
+import dto.product.Product_DTO;
 import file.StorageService;
 
 /**
@@ -114,7 +114,7 @@ public class ProductAdd extends HttpServlet {
 			storeService.delFiles(oldPath, updatePath, applicationPath);
 			
 			System.out.println(updatePath + seperator+ imagePath.toString());
-			ProductObject editProduct = new ProductObject();
+			Product_DTO editProduct = new Product_DTO();
 			editProduct.setProduct_id(idForPost);
 			editProduct.setProduct_name(name);
 			editProduct.setProduct_images(updatePath + seperator+ imagePath.toString());

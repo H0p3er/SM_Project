@@ -17,7 +17,7 @@ import com.google.gson.Gson;
 
 import connection.ConnectionPool;
 import controller.ProductControl;
-import entity.ProductObject;
+import dto.product.Product_DTO;
 import entity.UserObject;
 import utility.Utilities;
 
@@ -67,7 +67,7 @@ public class Home extends HttpServlet {
 		String saveKey = (key != null && !key.equalsIgnoreCase("")) ? key.trim() : "";
 		
 		// Lấy câu trúc
-		ProductObject similar = new ProductObject();
+		Product_DTO similar = new Product_DTO();
 		similar.setProduct_name(saveKey);
 		
 		// Tìm tham số xác định loại danh sách

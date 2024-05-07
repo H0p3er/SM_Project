@@ -1,8 +1,8 @@
 package dto.productAttribute;
 
-import entity.ProductObject;
+import dto.product.Product_DTO;
 
-public class Product_MiceDTO extends ProductObject{
+public class Product_MiceDTO extends Product_DTO{
 	private int mouse_id; 
 	private String mouse_manufacturer; 
 	private String mouse_type;

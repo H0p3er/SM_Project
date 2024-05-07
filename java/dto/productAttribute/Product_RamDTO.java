@@ -1,8 +1,8 @@
 package dto.productAttribute;
 
-import entity.ProductObject;
+import dto.product.Product_DTO;
 
-public class Product_RamDTO extends ProductObject{
+public class Product_RamDTO extends Product_DTO{
 	private int ram_id; 
 	private String ram_manufacturer; 
 	private String ram_type; 

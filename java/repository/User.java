@@ -16,7 +16,7 @@ public interface User extends ShareControl{
 	public boolean delUser(UserObject item);
 	
 	//Cac phuong thuc/ chuc nang lay thong tin Nguoi su dung
-	public ResultSet getUser(int id);
+	public ResultSet getUserById(int id);
 	public ResultSet getUser(String username, String userpass);
 	public ArrayList<ResultSet> getUsers(UserObject similar, int at, byte total, USER_SORT_TYPE type);
 	

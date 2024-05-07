@@ -9,7 +9,7 @@ import org.javatuples.Quintet;
 
 import connection.ConnectionPool;
 import constant.PRODUCT_EDIT_TYPE;
-import entity.ProductObject;
+import dto.product.Product_DTO;
 import library.ProductLibrary;
 import model.ProductModel;
 
@@ -26,19 +26,19 @@ public class ProductControl {
 	}
 	
 	public void releaseConnection() {
-		this.pm.releaseConnection();
+		this.pm.releaseCP();
 	}
 
 	
-	public boolean addProduct(ProductObject item) {
+	public boolean addProduct(Product_DTO item) {
 		return this.pm.addProduct(item);
 	}
 	
-	public boolean editProduct(ProductObject item, PRODUCT_EDIT_TYPE type) {
+	public boolean editProduct(Product_DTO item, PRODUCT_EDIT_TYPE type) {
 		return this.pm.editProduct(item, type);
 	}
 	
-	public boolean delProduct(ProductObject item) {
+	public boolean delProduct(Product_DTO item) {
 		return this.pm.delProduct(item);
 	}
 	
@@ -48,12 +48,12 @@ public class ProductControl {
 	 * @return sản phẩm cần lấy nếu tìm được
 	 * Cập nhật ngày 26/10/2023
 	 */
-	public ProductObject getProductObject(int id) {
-		return this.pm.getProductObject(id);
+	public Product_DTO getProductObject(int id) {
+		return this.pm.getProductDTO(id);
 	}
 	
 	public Map<String,String> getProductProfile(int id) {
-		ProductObject productObject = this.getProductObject(id);
+		Product_DTO productObject = this.getProductObject(id);
 		return ProductLibrary.viewProductProfile(productObject);
 	}
 	
@@ -65,7 +65,7 @@ public class ProductControl {
 	 * 
 	 * Cập nhật ngày 26/10/2023
 	 */
-	public Pair<ArrayList<ProductObject>,Integer> getProducts(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> infors) {			
+	public Pair<ArrayList<Product_DTO>,Integer> getProducts(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> infors) {			
 		return this.pm.getProductObjects(infors);
 	}
 	
@@ -79,7 +79,7 @@ public class ProductControl {
 	 */
 	public Map<String,String> viewSearchProduct(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> infors, String url){
 
-		Pair<ArrayList<ProductObject>,Integer> datas = this.pm.getProductObjects(infors);		
+		Pair<ArrayList<Product_DTO>,Integer> datas = this.pm.getProductObjects(infors);		
 		return ProductLibrary.viewSearchProduct(datas, infors, url);
 	}
 	
@@ -92,7 +92,7 @@ public class ProductControl {
 	 */
 	public Map<String,String> viewHomeProduct(){
 
-		Pair<ArrayList<ProductObject>,ArrayList<ProductObject>> datas = this.pm.getProductObjects();
+		Pair<ArrayList<Product_DTO>,ArrayList<Product_DTO>> datas = this.pm.getProductObjects();
 		
 		return ProductLibrary.viewHomeProduct(datas);
 	}
