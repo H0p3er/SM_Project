@@ -1430,7 +1430,7 @@ CREATE TABLE `tbluser` (
 /*!40000 ALTER TABLE `tbluser` DISABLE KEYS */;
 INSERT INTO `tbluser` (`user_id`, `user_nickname`, `user_fullname`, `user_images`, `user_email`, `user_notes`, `user_permission`, `user_gender`, `user_address`, `user_created_date`, `user_deleted`, `user_phone`, `user_social_links`, `user_logined`, `user_name`, `user_pass`) VALUES
 (1, 'Dog lover', 'John Wick', '\\home\\images\\user\\01.jpg', 'doglover@gmail.com', 'Ng??i tiêu dùng', 1, 0, '7 Lê Duẩn, Quận 1, Thành phố Hồ Chí Minh.','01/12/2023', 0, '0342312435', NULL, 0, 'DogLoverr', 'NoDogNoLife3000'),
-(2, 'Pé', 'Nguyễn Thị Ngọc Mai', '\\home\\images\\user\\02.jpg', 'mai06071969@gmail.com', 'Không có thông tin', 1, 0, '46 Hòa Mã, Quận Ba Đình, Hà Nội.','01/12/2023', 0, '0123423131', NULL, 0, 'Pé', 'Pe060769'),
+(2, 'Pé', 'Nguyễn Thị Ngọc Mai', '\\home\\images\\user\\02.jpg', 'mai06071969@gmail.com', 'Không có thông tin', 1, 0, '46 Hòa Mã, Quận Ba Đình, Hà Nội.','01/12/2023', 0, '0123423131', NULL, 0, 'testing','ae2b1fca515949e5d54fb22b8ed95575'),
 (3, 'SKT Khánh', 'Mai Quốc Khánh', '\\home\\images\\user\\03.jpg', 'faker123@gmail.com', 'Không có thông tin', 1, 1, '191 Lãng Yên, Quận Hà Đông, Hà Nội.','01/12/2023', 0, '0257123423', NULL, 3, 'SktKhanh', '738a1eca9e15f674ff6fd7434ea1b965'),
 (4, 'Cloudy Vân', 'Tô Văn Vân', '\\home\\images\\user\\04.jpg', 'imhigh@gmail.com', 'Không có thông tin', 1, 1, '57 Trần Hưng Đạo, Hoàn Kiếm, Hà Nội.','01/12/2023', 0, '0385175892', NULL, 0, 'Cloudy999', 'VanCloud'),
 (5, 'Tuấn White', 'Trần Tuấn Bạch', '\\home\\images\\user\\05.jpg', 'maninblack@gmail.com', 'Không có thông tin', 1, 1, '27 Liễu Giai, Quận Ba Đình, Hà Nội.','01/12/2023', 0, '0385174512', NULL, 0, 'TuanWhite', 'TrangNhuOMO'),
