@@ -20,7 +20,7 @@
                     <div class="tab-pane fade show active" id="appartment" role="tabpanel"
                       aria-labelledby="appartment-tab">
                       <div class="row">
-                        <div class="col-md-5">
+                        <div class="col-md-4">
 
                           <!-- product-image -->
                           <%=map.get("product-image") %>
@@ -34,7 +34,7 @@
                               </div>
                             </div>
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-md-8">
                           <div class="contact-page">
                             <div class="item email p-4">
                               <!-- product-name -->

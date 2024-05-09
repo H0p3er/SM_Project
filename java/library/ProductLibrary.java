@@ -75,7 +75,7 @@ public class ProductLibrary {
 					break;					
 			}	
 			tmp.append("<h6>"+product.getProduct_price()+"</h6>");
-			tmp.append("<h4 style=\"height: 72px\" class=\"text-truncateline\"><a href=\"/home/product/profile?id="+product.getProduct_id()+"\">"+product.getProduct_name()+"</a></h4>");
+			tmp.append("<h4 style=\"height: 44px\" class=\"text-truncateline my-2\"><a href=\"/home/product/profile?id="+product.getProduct_id()+"\">"+product.getProduct_name()+"</a></h4>");
 			tmp.append("<ul class=\"item-list\">");
 			
 			tmp.append(viewProductAttribute(product));
@@ -145,7 +145,7 @@ public class ProductLibrary {
 				break;					
 		}	
 			tmp.append("<h6>"+product.getProduct_price()+"</h6>");
-			tmp.append("<h4 style=\"height: 72px\" class=\"text-truncateline\"><a href=\"/home/product/profile?id="+product.getProduct_id()+"\">"+product.getProduct_name()+"</a></h4>");
+			tmp.append("<h4 style=\"height: 44px\" class=\"text-truncateline my-2\"><a href=\"/home/product/profile?id="+product.getProduct_id()+"\">"+product.getProduct_name()+"</a></h4>");
 			tmp.append("<ul class=\"item-list\">");
 			
 			tmp.append(viewProductAttribute(product));
@@ -177,7 +177,7 @@ public class ProductLibrary {
 			tmp.append("<div class=\"item\">");
 			tmp.append("<a href=\"property-details.html\"><img src=\""+product.getProduct_images()+"\" alt=\"\"></a>");
 			tmp.append("");
-			tmp.append("<h4 style=\"height: 95px\" class=\"text-truncateline\"><a href=\"property-details.html\">");
+			tmp.append("<h4 style=\"height: 45px\" class=\"text-truncateline my-2\"><a href=\"property-details.html\">");
 			tmp.append(product.getProduct_name());
 			tmp.append("</a></h4>");
 			tmp.append("<h6 class=\"float-none mt-0 my-2\">"+product.getProduct_price()+"</h6>");
@@ -217,7 +217,7 @@ public class ProductLibrary {
 		view.put("product-name",tmp.toString());
 		tmp.setLength(0);	
 
-		tmp.append("<h6 style=\"color: #f35525;\" class=\"fs-4 my-4\">"+productObject.getProduct_price()+"</h6>");
+		tmp.append("<h6 style=\"color: #f35525;\" class=\"fs-3 my-4\">"+productObject.getProduct_price()+"</h6>");
 		view.put("product-price",tmp.toString());
 		tmp.setLength(0);
 
