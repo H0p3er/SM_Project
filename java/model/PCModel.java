@@ -84,9 +84,9 @@ public class PCModel {
 		ResultSet attribute = this.pc.getProductAttribute(productObject);
 		Product_CoolingDTO product_CoolingDTO = new Product_CoolingDTO();
 		if (attribute.next()) {
-			((Product_CoolingDTO) product_DTO).setCooling_color(attribute.getString("cooling_color"));
-			((Product_CoolingDTO) product_DTO).setCooling_fan_size(attribute.getString("cooling_fan_size"));
-			((Product_CoolingDTO) product_DTO).setCooling_manufacturer(attribute.getString("cooling_manufacturer"));
+			product_CoolingDTO.setCooling_color(attribute.getString("cooling_color"));
+			product_CoolingDTO.setCooling_fan_size(attribute.getString("cooling_fan_size"));
+			product_CoolingDTO.setCooling_manufacturer(attribute.getString("cooling_manufacturer"));
 		}
 	
 		return product_CoolingDTO;
@@ -132,8 +132,10 @@ public class PCModel {
 		ProductObject productObject = new ProductObject();
 		product_DTO.ApplyToEntity(productObject);
 		ResultSet attribute = this.pc.getProductAttribute(productObject);
-		
 		Product_KeyboardDTO product_KeyboardDTO = new Product_KeyboardDTO();
+		if (attribute.next()) {
+
+		}
 		return product_KeyboardDTO;
 	}
 	
@@ -145,14 +147,12 @@ public class PCModel {
 		if (attribute.next()) {
 			product_LaptopDTO.setLaptop_manufacturer(attribute.getString("laptop_manufacturer"));
 			product_LaptopDTO.setLaptop_cpu(attribute.getString("laptop_cpu"));
-			product_LaptopDTO.setLaptop_ram(attribute.getInt("laptop_ram"));
-		
-			product_LaptopDTO.setLaptop_storage(attribute.getInt("laptop_storage"));
+			product_LaptopDTO.setLaptop_ram(attribute.getString("laptop_ram"));
+			product_LaptopDTO.setLaptop_storage(attribute.getString("laptop_storage"));
 			product_LaptopDTO.setLaptop_screen_size(attribute.getString("laptop_screen_size"));
 			product_LaptopDTO.setLaptop_resolution(attribute.getString("laptop_resolution"));
 			product_LaptopDTO.setLaptop_type(attribute.getString("laptop_type"));
 		}
-		
 		return product_LaptopDTO;
 	}
 
@@ -168,8 +168,7 @@ public class PCModel {
 	public Product_RamDTO getProduct_RamDTO(Product_DTO product_DTO)  throws SQLException{
 		ProductObject productObject = new ProductObject();
 		product_DTO.ApplyToEntity(productObject);
-		ResultSet attribute = this.pc.getProductAttribute(productObject);
-		
+		ResultSet attribute = this.pc.getProductAttribute(productObject);	
 		Product_RamDTO product_RamDTO = new Product_RamDTO();
 		return product_RamDTO;
 	}
@@ -178,7 +177,6 @@ public class PCModel {
 		ProductObject productObject = new ProductObject();
 		product_DTO.ApplyToEntity(productObject);
 		ResultSet attribute = this.pc.getProductAttribute(productObject);
-		
 		Product_PowerSuppyDTO product_PowerSuppyDTO = new Product_PowerSuppyDTO();
 		return product_PowerSuppyDTO;
 	}

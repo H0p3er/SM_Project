@@ -1,28 +1,12 @@
 package utility;
 
+import java.text.DecimalFormat;
+import java.util.Locale;
+
 public class Utilities_currency {
 	public static String toVND(double price) {
-		StringBuilder builder = new StringBuilder();
-		if (price<999999) {
-			builder.append(toThounsandVND(price));
-			builder.append(" Nghìn Đồng");
-			return builder.toString();
-		}
-		
-		if (price<999999999) {
-			builder.append(toMillionVND(price));
-			builder.append(" Triệu Đồng");
-			return builder.toString();
-		}
-		
-		if (price>=1000000000) {
-			builder.append(toBillionVND(price));
-			builder.append(" Tỉ Đồng");
-			return builder.toString();
-		}
-		
-		builder.append(" Đồng");
-		return builder.toString();
+		DecimalFormat df = new DecimalFormat("#,### VND");
+		return df.format(price);
 	}
 	
 	public static double toBillionVND(double price) {	

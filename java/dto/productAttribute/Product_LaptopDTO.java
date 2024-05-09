@@ -7,11 +7,11 @@ public class Product_LaptopDTO extends Product_DTO {
 	private String laptop_manufacturer; 
 	private String laptop_type;
 	private String laptop_cpu;
-	private int laptop_ram;
+	private String laptop_ram;
 	private String laptop_graphics_card;
-	private int laptop_storage;
+	private String laptop_storage;
 	private String laptop_screen_size;
-	private int laptop_refresh_rate; 
+	private String laptop_refresh_rate; 
 	private String laptop_resolution;
 	public int getLaptop_id() {
 		return laptop_id;
@@ -37,10 +37,10 @@ public class Product_LaptopDTO extends Product_DTO {
 	public void setLaptop_cpu(String laptop_cpu) {
 		this.laptop_cpu = laptop_cpu;
 	}
-	public int getLaptop_ram() {
+	public String getLaptop_ram() {
 		return laptop_ram;
 	}
-	public void setLaptop_ram(int laptop_ram) {
+	public void setLaptop_ram(String laptop_ram) {
 		this.laptop_ram = laptop_ram;
 	}
 	public String getLaptop_graphics_card() {
@@ -49,10 +49,10 @@ public class Product_LaptopDTO extends Product_DTO {
 	public void setLaptop_graphics_card(String laptop_graphics_card) {
 		this.laptop_graphics_card = laptop_graphics_card;
 	}
-	public int getLaptop_storage() {
+	public String getLaptop_storage() {
 		return laptop_storage;
 	}
-	public void setLaptop_storage(int laptop_storage) {
+	public void setLaptop_storage(String laptop_storage) {
 		this.laptop_storage = laptop_storage;
 	}
 	public String getLaptop_screen_size() {
@@ -61,10 +61,10 @@ public class Product_LaptopDTO extends Product_DTO {
 	public void setLaptop_screen_size(String laptop_screen_size) {
 		this.laptop_screen_size = laptop_screen_size;
 	}
-	public int getLaptop_refresh_rate() {
+	public String getLaptop_refresh_rate() {
 		return laptop_refresh_rate;
 	}
-	public void setLaptop_refresh_rate(int laptop_refresh_rate) {
+	public void setLaptop_refresh_rate(String laptop_refresh_rate) {
 		this.laptop_refresh_rate = laptop_refresh_rate;
 	}
 	public String getLaptop_resolution() {
@@ -73,6 +73,7 @@ public class Product_LaptopDTO extends Product_DTO {
 	public void setLaptop_resolution(String laptop_resolution) {
 		this.laptop_resolution = laptop_resolution;
 	}
+
 	
 	
 }

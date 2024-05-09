@@ -204,8 +204,9 @@ public class ProductModel {
 	}	
 	
 	private Product_DTO setProductAttribute(ResultSet rs) {
-		Product_DTO item = new Product_DTO();
 		try {	
+			Product_DTO item = new Product_DTO();
+			item.setProduct_id(rs.getInt("product_id"));
 			item.setProduct_pc(new PC_DTO(rs.getInt("product_pc_id")));
 			switch (rs.getInt("product_pc_id")) {
 			case 1:
@@ -260,13 +261,15 @@ public class ProductModel {
 			item.setProduct_notes(rs.getString("product_notes"));
 			item.setProduct_last_modified(rs.getString("product_last_modified"));
 			item.setProduct_shop_id(rs.getInt("product_shop_id"));
-			item.setProduct_quantity(rs.getInt("product_quantity"));			
+			item.setProduct_quantity(rs.getInt("product_quantity"));
+			
+			return item;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		return item;
+		return null;
 	}
 	
 
@@ -312,6 +315,10 @@ public class ProductModel {
 			rs1.forEach(product->{
 				if (product instanceof Product_CaseDTO) {
 					System.out.println("object:"+((Product_CaseDTO) product).getProduct_name());
+				}
+				
+				if (product instanceof Product_LaptopDTO) {
+					System.out.println("object:"+((Product_LaptopDTO) product).getLaptop_ram());
 				}
 				
 				if (product instanceof Product_CoolingDTO) {

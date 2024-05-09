@@ -39,7 +39,6 @@ public class ShopProfile extends HttpServlet {
 		super();
 	}
 
-
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
@@ -85,8 +84,7 @@ public class ShopProfile extends HttpServlet {
 	    
 	    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/main/shop/shop_profile.jsp");
 		// Tạo đối tượng thực hiện xuất nội dung
-	    requestDispatcher.forward(request, response);
-		
+	    requestDispatcher.forward(request, response);		
 	}
 
 	/**
