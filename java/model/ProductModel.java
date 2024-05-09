@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.javatuples.Pair;
 import org.javatuples.Quintet;
+import org.javatuples.Triplet;
 
 import connection.ConnectionPool;
 import connection.ConnectionPoolImpl;
@@ -142,7 +143,7 @@ public class ProductModel {
 		return new Pair<>(items1, items2);
 	}	
 
-	public Pair<ArrayList<Product_manageShopDTO>,Integer> getProduct_manageShopDTOs(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, ShopObject shopObject) {
+	public Pair<Pair<ArrayList<Product_manageShopDTO>,Integer>, Product_ShopStatisticDTO> getProduct_manageShopDTOs(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, ShopObject shopObject) {
 		Short pagePos = productInfors.getValue0();
 		byte pageLength = productInfors.getValue1();	
 		Map<String,String> multiField = productInfors.getValue2();
@@ -170,8 +171,46 @@ public class ProductModel {
 		}
 		rs = resultSets.get(1);
 		int count_product = getProductSize(rs);
-		return new Pair<>(product_manageShopDTOs,count_product);
+		return new Pair<>(new Pair<>(product_manageShopDTOs,count_product), this.getShopStatisticDTO(resultSets));
 	}
+	
+
+
+	private Product_ShopStatisticDTO getShopStatisticDTO(ArrayList<ResultSet> productResultSets) {	
+		Product_ShopStatisticDTO product_ShopStatisticDTO = new Product_ShopStatisticDTO();	
+		ResultSet rs = productResultSets.get(2);
+		
+		Map<String, Double> sold_price_by_date = new HashMap<String, Double>();
+		if (rs!=null) {
+			try {			
+				while (rs.next()) {			
+					sold_price_by_date.put(rs.getString("bill_created_date"), rs.getDouble("sold_price_by_month"));
+					product_ShopStatisticDTO.setSold_price_current_month(sold_price_by_date);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+				
+		rs = productResultSets.get(3);
+		sold_price_by_date = new HashMap<String, Double>();
+		if (rs!=null) {
+			try {			
+				while (rs.next()) {
+					sold_price_by_date.put(rs.getString("bill_created_date"), rs.getDouble("sold_price_by_month"));
+					product_ShopStatisticDTO.setSold_price_last_month(sold_price_by_date);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		
+		return product_ShopStatisticDTO;
+	}
+
 	
 	public Pair<ArrayList<Product_viewShopDTO>,Integer> getProduct_viewShopDTO(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, ShopObject shopObject) {
 		Short pagePos = productInfors.getValue0();
