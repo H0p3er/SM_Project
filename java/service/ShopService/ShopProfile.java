@@ -32,22 +32,13 @@ import entity.ShopObject;
 public class ShopProfile extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String CONTENT_TYPE = "application/json; charset=utf-8";
-	private ShopControl shopControl;
-	private ProductControl productControl;
-	private ConnectionPool connectionPool;
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public ShopProfile() {
 		super();
 	}
-	
-	@Override
-	protected void finalize() throws Throwable {
-		// TODO Auto-generated method stub
-		this.shopControl.releaseCP();
-		this.productControl.releaseConnection();
-	}
+
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
@@ -69,11 +60,11 @@ public class ShopProfile extends HttpServlet {
 		/* EmployeeObject similar = new EmployeeObject(); */
 		ShopObject similar = new ShopObject();
 
-		this.connectionPool = (ConnectionPool) getServletContext().getAttribute("CPool");
-		this.shopControl = new ShopControl(connectionPool);
+		ConnectionPool connectionPool= (ConnectionPool) getServletContext().getAttribute("CPool");
+		ShopControl shopControl = new ShopControl(connectionPool);
 		// TODO Auto-generated constructor stub
 		if (connectionPool == null) {
-			getServletContext().setAttribute("CPool", this.shopControl.getCP());
+			getServletContext().setAttribute("CPool", shopControl.getCP());
 		} 
 
 		PrintWriter out = response.getWriter();
@@ -88,7 +79,7 @@ public class ShopProfile extends HttpServlet {
 
 		Map<String,String> data = shopControl.displayShop_Profile(productInfors,utility.Utilities.getIntParam(request, "id"));
 		
-		this.shopControl.releaseCP();
+		shopControl.releaseCP();
 		
 		request.setAttribute("shop-profile", data);
 	    

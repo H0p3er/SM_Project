@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-  <%@ page import="connection.*, entity.*" %>
+<%@ page import="connection.*, entity.*" %>
+ 
+ 
     <div class="sub-header">
       <div class="container">
         <div class="row">
@@ -34,11 +36,11 @@
               <!-- ***** Menu Start ***** -->
               <ul class="nav justify-content-between px-3 px-md-0">
                 <li class="ms-lg-5 col-8">
-                  <form action="/home/product/search" method="get">
+                  <form action="/home/product/search" method="get" id="search-form">
                     <div class="input-group">
                       <input type="text" name="search" id="search" class="form-control" placeholder="Tìm kiếm..."
-                        aria-labbel="Timkiem" aria-describedby="button-addon2">
-                      <button class="btn btn-dark" type="submit" id="search-button">
+                        aria-labbel="Timkiem" aria-describedby="button-addon2" value="<%= request.getAttribute("product-name")!=null ? request.getAttribute("product-name"):"" %>">
+                      <button class="btn btn-dark" type="submit">
                         <i class="fa fa-search" aria-hidden="true"></i>
                       </button>
                     </div>

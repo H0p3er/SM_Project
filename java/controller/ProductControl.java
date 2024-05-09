@@ -66,7 +66,7 @@ public class ProductControl {
 	 * Cập nhật ngày 26/10/2023
 	 */
 	public Pair<ArrayList<Product_DTO>,Integer> getProducts(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> infors) {			
-		return this.pm.getProductObjects(infors);
+		return this.pm.getProductDTO(infors);
 	}
 	
 	
@@ -77,9 +77,11 @@ public class ProductControl {
 	 * 
 	 * <br/>Cập nhật ngày 26/10/2023
 	 */
-	public Map<String,String> viewSearchProduct(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> infors, String url){
+	public Map<String,String> viewSearchProduct(
+			Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> infors, 
+			String url){
 
-		Pair<ArrayList<Product_DTO>,Integer> datas = this.pm.getProductObjects(infors);		
+		Pair<ArrayList<Product_DTO>,Integer> datas = this.pm.getProductDTO(infors);		
 		return ProductLibrary.viewSearchProduct(datas, infors, url);
 	}
 	

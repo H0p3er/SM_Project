@@ -84,14 +84,13 @@ public class ProductModel {
 		return item;
 	}
 	
-	public Pair<ArrayList<Product_DTO>, Integer> getProductObjects(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> infors) {	
+	public Pair<ArrayList<Product_DTO>, Integer> getProductDTO(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> infors) {	
 		short page = infors.getValue0();
 		byte productPerPage = infors.getValue1();	
 		Map<String,String> multiField = infors.getValue2();
 		Map<String,String> multiCondition = infors.getValue3();
 		Map<String,String> multiSort = infors.getValue4();		
 		ArrayList<Product_DTO> items = new ArrayList<>();
-
 		int at = (page - 1) * productPerPage;
 		ArrayList<ResultSet> res = this.product.getProducts(at, productPerPage, multiField, multiCondition, multiSort);
 		ResultSet rs = res.get(0);
@@ -116,7 +115,6 @@ public class ProductModel {
 		ArrayList<Product_DTO> items1 = new ArrayList<>();
 		ArrayList<ResultSet> res = this.product.getProducts();
 		ResultSet rs = res.get(0);
-		// Chuyen doi ban ghi thanh doi tuong
 		if (rs != null) {
 			try {
 				while (rs.next()) {				
@@ -127,11 +125,9 @@ public class ProductModel {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
-		
+		}		
 		ArrayList<Product_DTO> items2 = new ArrayList<>();
 		rs = res.get(1);
-		// Chuyen doi ban ghi thanh doi tuong
 		if (rs != null) {
 			try {
 				while (rs.next()) {				
@@ -148,17 +144,13 @@ public class ProductModel {
 
 	public Pair<ArrayList<Product_manageShopDTO>,Integer> getProduct_manageShopDTOs(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, ShopObject shopObject) {
 		Short pagePos = productInfors.getValue0();
-		byte pageLength = productInfors.getValue1();
-		
+		byte pageLength = productInfors.getValue1();	
 		Map<String,String> multiField = productInfors.getValue2();
 		Map<String,String> multiCondition = productInfors.getValue3();
 		Map<String,String> multiSort = productInfors.getValue4();
-		int recordPos = (pagePos-1)*pageLength;
-		
-		ArrayList<Product_manageShopDTO> product_manageShopDTOs = new ArrayList<Product_manageShopDTO>();
-		
-		ArrayList<ResultSet> resultSets = this.product.getProductsByShop(recordPos,pageLength,multiField,multiCondition,multiSort,shopObject);
-		
+		int recordPos = (pagePos-1)*pageLength;	
+		ArrayList<Product_manageShopDTO> product_manageShopDTOs = new ArrayList<Product_manageShopDTO>();	
+		ArrayList<ResultSet> resultSets = this.product.getProductsByShop(recordPos,pageLength,multiField,multiCondition,multiSort,shopObject);	
 		ResultSet rs = resultSets.get(0);
 		if (rs!=null) {
 			try {
@@ -183,17 +175,13 @@ public class ProductModel {
 	
 	public Pair<ArrayList<Product_viewShopDTO>,Integer> getProduct_viewShopDTO(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, ShopObject shopObject) {
 		Short pagePos = productInfors.getValue0();
-		byte pageLength = productInfors.getValue1();
-		
+		byte pageLength = productInfors.getValue1();	
 		Map<String,String> multiField = productInfors.getValue2();
 		Map<String,String> multiCondition = productInfors.getValue3();
 		Map<String,String> multiSort = productInfors.getValue4();
-		int recordPos = (pagePos-1)*pageLength;
-		
-		ArrayList<Product_viewShopDTO> product_manageShopDTOs = new ArrayList<Product_viewShopDTO>();
-		
-		ArrayList<ResultSet> resultSets = this.product.getProductsByShop(recordPos,pageLength,multiField,multiCondition,multiSort,shopObject);
-		
+		int recordPos = (pagePos-1)*pageLength;	
+		ArrayList<Product_viewShopDTO> product_viewShopDTOs = new ArrayList<Product_viewShopDTO>();	
+		ArrayList<ResultSet> resultSets = this.product.getProductsByShop(recordPos,pageLength,multiField,multiCondition,multiSort,shopObject);	
 		ResultSet rs = resultSets.get(0);
 		if (rs!=null) {
 			try {
@@ -203,9 +191,8 @@ public class ProductModel {
 					product_viewShopDTO.setName(rs.getString("product_name"));
 					product_viewShopDTO.setQuantity(rs.getInt("product_quantity"));
 					product_viewShopDTO.setPrice(rs.getDouble("product_price"));
-					product_manageShopDTOs.add(product_viewShopDTO);
-				}
-				
+					product_viewShopDTOs.add(product_viewShopDTO);
+				}	
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -213,7 +200,7 @@ public class ProductModel {
 		}
 		rs = resultSets.get(1);
 		int count_product = getProductSize(rs);
-		return new Pair<>(product_manageShopDTOs,count_product);
+		return new Pair<>(product_viewShopDTOs,count_product);
 	}	
 	
 	private Product_DTO setProductAttribute(ResultSet rs) {
@@ -255,7 +242,7 @@ public class ProductModel {
 				item = this.pc.getProduct_GraphicsCardDTO(item);
 				break;						
 			case 12:
-				item = this.pc.getProduct_PowerSuppyDTO( item);		
+				item = this.pc.getProduct_PowerSuppyDTO(item);		
 				break;						
 			case 13:
 				item = this.pc.getProduct_CaseDTO(item);	
@@ -282,8 +269,6 @@ public class ProductModel {
 		return item;
 	}
 	
-	
-	//****************************************************************
 
 	private int getProductSize(ResultSet rs) {
 		int count_product = 0;
@@ -296,8 +281,7 @@ public class ProductModel {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
-		
+		}	
 		return count_product;
 	}
 	
@@ -321,7 +305,7 @@ public class ProductModel {
 
 		//Lay tap ban ghi nguoi su dung
 
-		ArrayList<Product_DTO> rs1 = u.getProductObjects(new Quintet<Short, Byte, Map<String, String> ,Map<String, String>, Map<String, String>>((short) 0,(byte) 0, new HashMap<String, String>(), new HashMap<String, String>(), new HashMap<String, String>())).getValue0();
+		ArrayList<Product_DTO> rs1 = u.getProductDTO(new Quintet<Short, Byte, Map<String, String> ,Map<String, String>, Map<String, String>>((short) 0,(byte) 0, new HashMap<String, String>(), new HashMap<String, String>(), new HashMap<String, String>())).getValue0();
 		String row = null;
 
 		if (rs1!=null) {

@@ -90,11 +90,8 @@ public class ProductLibrary {
 			if (i%3 == 0) {	
 				view.put("home_most_sold_carousel_"+((int)i/3)+"",tmp.toString());
 				tmp.setLength(0);
-			}
-				
+			}				
 		}
-
-	
 		
 		tmp.setLength(0);
 		Iterator<Product_DTO> iterator =  datas.getValue1().iterator();
@@ -166,13 +163,12 @@ public class ProductLibrary {
 
 	
 	public static Map<String,String> viewSearchProduct(Pair<ArrayList<Product_DTO>, Integer> datas,
-			Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> infors, String url) {
+			Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> infors, 
+			String url) {
 		
 		Map<String,String> view = new HashMap<String,String>();
 		StringBuilder tmp = new StringBuilder();
-		
 		ArrayList<Product_DTO> productObjects = datas.getValue0();
-		
 		Iterator<Product_DTO> iterator =  datas.getValue0().iterator();
 		
 		while (iterator.hasNext()) {
@@ -198,7 +194,7 @@ public class ProductLibrary {
 		
 		
 		tmp.setLength(0);
-		tmp.append(viewProductPagination(datas.getValue1(), infors.getValue0(), infors.getValue1(), url));
+		tmp.append(viewProductPagination(datas.getValue1(), infors.getValue0(), infors.getValue1(), infors.getValue3(), url));
 		view.put("product-search-pagination", tmp.toString());
 		return view;
 	}
@@ -245,68 +241,62 @@ public class ProductLibrary {
 	}
 	
 	
-	private static String viewProductPagination(int record_count, short current_page, byte record_per_page, String url) {
+	private static String viewProductPagination(int record_count, short current_page, byte record_per_page, Map<String,String> multiCondition, String url) {
 		StringBuilder tmp = new StringBuilder();
-		short page_count = (short) (record_count/record_per_page);
+		short page_count = (short) (record_count/record_per_page);		
+		String page_parameter = utility.Utilities.toParam(multiCondition);
+		if (page_parameter.isBlank() || page_parameter==null) {
+			page_parameter+="?page=";
+		} else {
+			page_parameter+="&page=";
+		}
 		
 		if (record_count%record_per_page!=0) page_count++;
 		if (current_page>page_count) current_page=page_count;
-		if (current_page<=0) current_page=1;
-		
+		if (current_page<=0) current_page=1;	
 		if (page_count<=3) {
 			if (current_page == 1) {
 				
-			}
-			
+			}		
 			if (current_page == 2) {
-				tmp.append("<li><a href=\""+url+"?page="+(current_page-1)+"\"><</a></li>");
-			}
-			
+				tmp.append("<li><a href=\""+url+page_parameter+(current_page-1)+"\"><</a></li>");
+			}	
 			if (current_page==3) {
-				tmp.append("<li><a href=\""+url+"?page=1\"><<</a></li>");
-				tmp.append("<li><a href=\""+url+"?page="+(current_page-1)+"\"><</a></li>");
-				tmp.append("<li><a href=\""+url+"?page="+(current_page-1)+"\">"+(current_page-1)+"</a></li>");	
+				tmp.append("<li><a href=\""+url+page_parameter+"1\"><<</a></li>");
+				tmp.append("<li><a href=\""+url+page_parameter+(current_page-1)+"\"><</a></li>");
+				tmp.append("<li><a href=\""+url+page_parameter+(current_page-1)+"\">"+(current_page-1)+"</a></li>");	
 			}
-
 		} else {
 			if (current_page == 1) {
 				
-			}
-			
+			}		
 			if (current_page == 2) {
-				tmp.append("<li><a href=\""+url+"?page="+(current_page-1)+"\"><</a></li>");
-				tmp.append("<li><a href=\""+url+"?page="+(current_page-1)+"\">"+(current_page-1)+"</a></li>");	
+				tmp.append("<li><a href=\""+url+page_parameter+(current_page-1)+"\"><</a></li>");
+				tmp.append("<li><a href=\""+url+page_parameter+(current_page-1)+"\">"+(current_page-1)+"</a></li>");	
 			}
 			if (current_page>=3) {
-				tmp.append("<li><a href=\""+url+"?page=1\"><<</a></li>");
-				tmp.append("<li><a href=\""+url+"?page="+(current_page-1)+"\"><</a></li>");
+				tmp.append("<li><a href=\""+url+page_parameter+"1\"><<</a></li>");
+				tmp.append("<li><a href=\""+url+page_parameter+(current_page-1)+"\"><</a></li>");
 				tmp.append("<li><a class=\"disabled\" tabindex=\"-1\" href=\"\"  role=\"button\" aria-disabled=\"true\" >...</a></li>");
-				tmp.append("<li><a href=\""+url+"?page="+(current_page-1)+"\">"+(current_page-1)+"</a></li>");	
+				tmp.append("<li><a href=\""+url+page_parameter+(current_page-1)+"\">"+(current_page-1)+"</a></li>");	
 			}
-		}
-		
-		tmp.append("<li><a class=\"is_active\" href=\"#\" disabled>"+current_page+"</a></li>");
-		
-		if (page_count<=3) {
-			
-			
+		}		
+		tmp.append("<li><a class=\"is_active\" href=\"#\" disabled>"+current_page+"</a></li>");	
+		if (page_count<=3) {			
 			if (current_page<page_count) {
-				tmp.append("<li><a href=\""+url+"?page="+(current_page+1)+"\">"+(current_page+1)+"</a></li>");
-				tmp.append("<li><a href=\""+url+"?page="+(current_page+1)+"\">></a></li>");
-				tmp.append("<li><a href=\""+url+"?page="+page_count+"\">>></a></li>");	
+				tmp.append("<li><a href=\""+url+page_parameter+(current_page+1)+"\">"+(current_page+1)+"</a></li>");
+				tmp.append("<li><a href=\""+url+page_parameter+(current_page+1)+"\">></a></li>");
+				tmp.append("<li><a href=\""+url+page_parameter+page_count+"\">>></a></li>");	
 			}
 		} else {
 			if (current_page<page_count) {
-				tmp.append("<li><a href=\""+url+"?page="+(current_page+1)+"\">"+(current_page+1)+"</a></li>");
+				tmp.append("<li><a href=\""+url+page_parameter+(current_page+1)+"\">"+(current_page+1)+"</a></li>");
 				tmp.append("<li><a  class=\"disabled\" tabindex=\"-1\" href=\"\" role=\"button\" aria-disabled=\"true\">...</a></li>");			
-				tmp.append("<li><a href=\""+url+"?page="+(current_page+1)+"\">></a></li>");
-				tmp.append("<li><a href=\""+url+"?page="+page_count+"\">>></a></li>");	
+				tmp.append("<li><a href=\""+url+page_parameter+(current_page+1)+"\">></a></li>");
+				tmp.append("<li><a href=\""+url+page_parameter+page_count+"\">>></a></li>");	
 			} 
 
-		}
-
-			
-		
+		}	
 		return tmp.toString();
 	}
 	

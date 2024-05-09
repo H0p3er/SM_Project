@@ -30,8 +30,7 @@ public class Utilities {
 	}
 	
 	public static int getIntParam(ServletRequest request, String name) {
-		int value = -1;
-		
+		int value = -1;	
 		String str_value = request.getParameter(name);
 		
 		if (str_value!=null && !str_value.equalsIgnoreCase("")) {
@@ -40,24 +39,72 @@ public class Utilities {
 		return value;
 	}
 	
+	public static double getDoubleParam(ServletRequest request, String name) {
+		double value = -1;	
+		String str_value = request.getParameter(name);
+		
+		if (str_value!=null && !str_value.equalsIgnoreCase("")) {
+			value = Double.parseDouble(str_value);
+		}
+		return value;
+	}	
+	
+	public static String getStringParam(ServletRequest request, String name) {
+		String str_value = request.getParameter(name);
+		return (str_value!=null && !str_value.isBlank())? str_value.trim() : "";
+	}
+	
+	public static String toParam(Map<String, String> map) {
+		StringBuilder parameter = new StringBuilder();
+		map.forEach((key,value) -> {
+			if (!parameter.isEmpty() && !parameter.toString().isBlank()) {
+				parameter.append("&");
+			}
+			switch (key) {
+			case "name":
+				parameter.append("search=");
+				parameter.append(value);
+				break;
+			case "pc":
+				parameter.append("pc=");
+				parameter.append(value);
+				break;
+			case "max":
+				parameter.append("max=");
+				parameter.append(value);
+				break;			
+			case "min":
+				parameter.append("min=");
+				parameter.append(value);
+				break;
+			}
+		});
+		
+		if (!parameter.isEmpty() && !parameter.toString().isBlank()) {
+			parameter.insert(0, "?");
+		}
+		
+		return parameter.toString();
+		
+	}
+	
 	public static Map<String, String> getMapParam(ServletRequest request, String name) {	
 		String str_value = request.getParameter(name);
 	
 		String safe_value = 
 				(str_value!=null && !str_value.isBlank()
-				&& str_value.contains(":") && str_value.contains(";")) 
+				&& str_value.contains(":") && str_value.contains(",")) 
 				? str_value.trim() : "";
-		
 		Map<String, String> map = new TreeMap<>();			
 		if (safe_value!=null && !safe_value.equalsIgnoreCase("")) {
-	        String[] pairs = safe_value.split(";");
+	        String[] pairs = safe_value.split(",");
 	        for (String pair : pairs) {
 	            String[] keyValue = pair.split(":");        
 	            map.put(keyValue[0], keyValue[1]);
 	        }	
 		}
 		
-		System.out.println(map);
+//		System.out.println(map);
 		return map;
 	}
 	

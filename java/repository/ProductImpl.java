@@ -424,20 +424,20 @@ public class ProductImpl extends BasicImpl implements Product{
 				WHERE.append("AND ");
 			}
 			switch (key) {
-			case "search":
+			case "name":
 				WHERE.append("product_name LIKE '%"+value+"%' ");
 				break;
 			case "id":
 				WHERE.append("product_id= ");
-				break;
-			case "name":
-				WHERE.append("product_name= ");
 				break;
 			case "address":
 				WHERE.append("product_address= ");
 				break;
 			case "last_modified":
 				WHERE.append("product_last_modified="+value);
+				break;
+			case "pc":
+				WHERE.append("product_pc_id= ");
 				break;
 			default:
 				WHERE.append("product_name LIKE '%"+value+"%'");

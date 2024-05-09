@@ -3,12 +3,13 @@ document.addEventListener("DOMContentLoaded", function(){
 
 	    function fetchData() {
 	        $.ajax({
-	            url: "/home/shop/order",
+				
+	            url: "/home/product/",
 	            method: "GET",
 	            dataType: "json",
 	            success: function(response) {
 					let data = response;
-								
+							
 	            }
 	        });
 			
@@ -21,13 +22,6 @@ document.addEventListener("DOMContentLoaded", function(){
 	    setInterval(fetchData, 300000); // 30 seconds
 	});
 });
-	
-let search_element = document.getElementById("search");
-let search_button_element = document.getElementById("search-button");
 
-if (search_element!=null && search_button_element!=null){
-	search_element.addEventListener("change",()=>{
-		console.log(search_element.value);
-		search_element.value = "search:"+search_element.value+";";
-	});
-}
+
+
