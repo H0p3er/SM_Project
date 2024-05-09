@@ -46,6 +46,9 @@ public class ShopModel {
 	}
 	
 	public ConnectionPool getCP() {
+		this.product.releaseCP();
+		this.pc.releaseCP();
+		this.user.releaseCP();
 		return this.shop.getCP();
 	}
 	
@@ -145,53 +148,11 @@ public class ShopModel {
 				e.printStackTrace();
 			}
 		}		
-		shop_ShopManagerDTO.setStorage(this.product.getProduct_manageShopDTOs(productInfors,shopObject));
-//		shop_ShopManagerDTO.setStatistic(getShopStatisticDTO(productResultSets));
-		
+		Pair<Pair<ArrayList<Product_manageShopDTO>,Integer>, Product_ShopStatisticDTO> productResultSets = this.product.getProduct_manageShopDTOs(productInfors,shopObject);
+		shop_ShopManagerDTO.setStorage(productResultSets.getValue0());
+		shop_ShopManagerDTO.setStatistic(productResultSets.getValue1());
 		return shop_ShopManagerDTO;	
 	}
-
-
-
-	private Product_ShopStatisticDTO getShopStatisticDTO(ArrayList<ResultSet> productResultSets) {	
-		Product_ShopStatisticDTO product_ShopStatisticDTO = new Product_ShopStatisticDTO();	
-		ResultSet rs = productResultSets.get(2);
-		
-		Map<String, Double> sold_price_by_date = new HashMap<String, Double>();
-		if (rs!=null) {
-			try {			
-				while (rs.next()) {			
-					sold_price_by_date.put(rs.getString("bill_created_date"), rs.getDouble("sold_price_by_month"));
-					product_ShopStatisticDTO.setSold_price_current_month(sold_price_by_date);
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-			
-		
-		rs = productResultSets.get(3);
-		sold_price_by_date = new HashMap<String, Double>();
-		if (rs!=null) {
-			try {			
-				while (rs.next()) {
-					sold_price_by_date.put(rs.getString("bill_created_date"), rs.getDouble("sold_price_by_month"));
-					product_ShopStatisticDTO.setSold_price_last_month(sold_price_by_date);
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		
-		return product_ShopStatisticDTO;
-	}
-
-	
-
-
 	
 	public static void main(String[] args) {
 		//Khoi tao bo quan li ket noi
