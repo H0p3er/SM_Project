@@ -3,12 +3,12 @@ package dto.productAttribute;
 import dto.product.Product_DTO;
 
 public class Product_StorageDTO extends Product_DTO{
-	private int storage_id;
-	private String storage_manufacturer; 
-	private String storage_type;
-	private int storage_capacity;
-	private String storage_m2_pcie_type;
-	private int storage_rpm;
+    private int storage_id;
+    private String storage_manufacturer;
+    private String storage_type;
+    private String storage_capacity;
+    private String storage_m2_pcie_type;
+    private String storage_rpm;
 	public int getStorage_id() {
 		return storage_id;
 	}
@@ -27,10 +27,10 @@ public class Product_StorageDTO extends Product_DTO{
 	public void setStorage_type(String storage_type) {
 		this.storage_type = storage_type;
 	}
-	public int getStorage_capacity() {
+	public String getStorage_capacity() {
 		return storage_capacity;
 	}
-	public void setStorage_capacity(int storage_capacity) {
+	public void setStorage_capacity(String storage_capacity) {
 		this.storage_capacity = storage_capacity;
 	}
 	public String getStorage_m2_pcie_type() {
@@ -39,12 +39,11 @@ public class Product_StorageDTO extends Product_DTO{
 	public void setStorage_m2_pcie_type(String storage_m2_pcie_type) {
 		this.storage_m2_pcie_type = storage_m2_pcie_type;
 	}
-	public int getStorage_rpm() {
+	public String getStorage_rpm() {
 		return storage_rpm;
 	}
-	public void setStorage_rpm(int storage_rpm) {
+	public void setStorage_rpm(String storage_rpm) {
 		this.storage_rpm = storage_rpm;
 	}
-	
 	
 }

@@ -15,8 +15,16 @@ import dto.productAttribute.Product_CaseDTO;
 import dto.productAttribute.Product_CoolingDTO;
 import dto.productAttribute.Product_DesktopDTO;
 import dto.productAttribute.Product_GraphicsCardDTO;
+import dto.productAttribute.Product_HeadphoneSpeakerDTO;
+import dto.productAttribute.Product_KeyboardDTO;
 import dto.productAttribute.Product_LaptopDTO;
+import dto.productAttribute.Product_MiceDTO;
 import dto.productAttribute.Product_MonitorDTO;
+import dto.productAttribute.Product_MotherboardDTO;
+import dto.productAttribute.Product_PowerSuppyDTO;
+import dto.productAttribute.Product_RamDTO;
+import dto.productAttribute.Product_StorageDTO;
+import dto.productAttribute.Product_UsbDTO;
 import repository.Product;
 
 public class ProductLibrary {
@@ -310,20 +318,35 @@ public class ProductLibrary {
 			tmp.append("<li>Dòng: <span>"+((Product_MonitorDTO)product).getMonitor_type()+"</span></li>");
 			tmp.append("<li>Độ phân giải: <span>"+((Product_MonitorDTO)product).getMonitor_resolution()+"</span></li>");
 			tmp.append("<li>Tấm nền: <span>"+((Product_MonitorDTO)product).getMonitor_panel_type()+"</span></li>");
-			tmp.append("<li>Tần số quét: <span>"+((Product_MonitorDTO)product).getMonitor_refresh_rate()+"</span></li>");
+			tmp.append("<li>Tần số quét: <span>"+((Product_MonitorDTO)product).getMonitor_refresh_rate()+"Hz</span></li>");
 			tmp.append("<li>Kiểu màn hình: <span>"+((Product_MonitorDTO)product).getMonitor_screen_type()+"</span></li>");
+			tmp.append("<li>Tốc độ phản hồi: <span>"+((Product_MonitorDTO)product).getMonitor_response()+"ms</span></li>");
 			break;		
 		case 2:
 			//Keyboard
+			tmp.append("<li>Loại: <span>"+((Product_KeyboardDTO)product).getKeyboard_type()+"</span></li>");
+			tmp.append("<li>Kiểu kết nối: <span>"+((Product_KeyboardDTO)product).getKeyboard_connection_type()+"</span></li>");
+			tmp.append("<li>kích thước: <span>"+((Product_KeyboardDTO)product).getKeyboard_size_layout()+"</span></li>");
+			tmp.append("<li>Led: <span>"+((Product_KeyboardDTO)product).getKeyboard_led_backlighting()+"</span></li>");
 			break;					
 		case 3:
 			//Mouse
+			tmp.append("<li>Hãng: <span>"+((Product_MiceDTO)product).getMouse_manufacturer()+"</span></li>");
+			tmp.append("<li>Loại: <span>"+((Product_MiceDTO)product).getMouse_type()+"</span></li>");
+			tmp.append("<li>Kiểu kết nối: <span>"+((Product_MiceDTO)product).getMouse_connection_type()+"</span></li>");
+			tmp.append("<li>Thiết kế: <span>"+((Product_MiceDTO)product).getMouse_design()+"</span></li>");
+			tmp.append("<li>Pin: <span>"+((Product_MiceDTO)product).getMouse_battery()+"</span></li>");
 			break;					
 		case 4:
 			//Headphone
+			tmp.append("<li>Hãng: <span>"+((Product_HeadphoneSpeakerDTO)product).getHeadphones_manufacturer()+"</span></li>");
+			tmp.append("<li>Loại: <span>"+((Product_HeadphoneSpeakerDTO)product).getHeadphone_type()+"</span></li>");
+			tmp.append("<li>Kiểu kết nối: <span>"+((Product_HeadphoneSpeakerDTO)product).getHeadphones_connection()+"</span></li>");
+			tmp.append("<li>Cổng: <span>"+((Product_HeadphoneSpeakerDTO)product).getHeadphones_connection_ports()+"</span></li>");
 			break;	
 			
 		case 5:	
+			//laptop
 			tmp.append("<li>Hãng: <span>"+((Product_LaptopDTO)product).getLaptop_manufacturer()+"</span></li>");
 			tmp.append("<li>Dòng: <span>"+((Product_LaptopDTO)product).getLaptop_type()+"</span></li>");
 			tmp.append("<li>Kích thước màn: <span>"+((Product_LaptopDTO)product).getLaptop_screen_size()+"</span></li>");
@@ -332,57 +355,82 @@ public class ProductLibrary {
 			tmp.append("<li>Bộ nhớ: <span>"+((Product_LaptopDTO)product).getLaptop_storage()+"</span></li>");		
 			break;						
 		case 6:
+			//desktop
 			tmp.append("<li>Hãng: <span>"+((Product_DesktopDTO)product).getDesktop_manufacturer()+"</span></li>");
 			tmp.append("<li>Dòng: <span>"+((Product_DesktopDTO)product).getDesktop_type()+"</span></li>");
 			tmp.append("<li>CPU: <span>"+((Product_DesktopDTO)product).getDesktop_cpu()+"</span></li>");
 			tmp.append("<li>GPU: <span>"+((Product_DesktopDTO)product).getDesktop_gpu()+"</span></li>");
 			tmp.append("<li>RAM: <span>"+((Product_DesktopDTO)product).getDesktop_ram_capacity()+" "+((Product_DesktopDTO)product).getDesktop_ram_type()+"</span></li>");
 			tmp.append("<li>Bộ nhớ: <span>"+((Product_DesktopDTO)product).getDesktop_storage()+"</span></li>");		
-
+			tmp.append("<li>Nguồn: <span>"+((Product_DesktopDTO)product).getDesktop_power_supply()+"</span></li>");
 			break;						
 		case 7:
+			//cpu
 			tmp.append("<li>Bộ: <span>"+((Product_CPUDTO)product).getCpu_collection()+"</span></li>");
 			tmp.append("<li>Socket: <span>"+((Product_CPUDTO)product).getCpu_socket()+"</span></li>");
 			tmp.append("<li>Số nhân: <span>"+((Product_CPUDTO)product).getCpu_cores()+"</span></li>");
-			tmp.append("<li>Số luồng: <span>"+((Product_CPUDTO)product).getCpu_theats()+"</span></li>");
+			tmp.append("<li>Số luồng: <span>"+((Product_CPUDTO)product).getCpu_threads()+"</span></li>");
 			tmp.append("<li>Xung nhịp: <span>"+((Product_CPUDTO)product).getCpu_speed_ghz()+"</span></li>");
-	
 			break;						
 		case 8:
 			//Mainboard
+			tmp.append("<li>Hãng: <span>"+((Product_MotherboardDTO)product).getMotherboard_manufacturer()+"</span></li>");
+			tmp.append("<li>Chipset: <span>"+((Product_MotherboardDTO)product).getMotherboard_chipset()+"</span></li>");
+			tmp.append("<li>Socket: <span>"+((Product_MotherboardDTO)product).getMotherboard_socket()+"</span></li>");
+			tmp.append("<li>Kích thước: <span>"+((Product_MotherboardDTO)product).getMotherboard_size()+"</span></li>");
+			tmp.append("<li>Loại RAM hỗ trợ: <span>"+((Product_MotherboardDTO)product).getMotherboard_ram_support()+"</span></li>");
+			tmp.append("<li>Số khe RAM: <span>"+((Product_MotherboardDTO)product).getMotherboard_ram_slots()+"</span></li>");
 			break;						
-		case 9:					
-			//CPU
+		case 9:			
+			//RAM
+			tmp.append("<li>Hãng: <span>"+((Product_RamDTO)product).getRam_manufacturer()+"</span></li>");
+			tmp.append("<li>Loại: <span>"+((Product_RamDTO)product).getRam_type()+"</span></li>");
+			tmp.append("<li>Dung lượng: <span>"+((Product_RamDTO)product).getRam_capacity()+"</span></li>");
+			tmp.append("<li>Tốc độ: <span>"+((Product_RamDTO)product).getRam_bus_speed()+"</span></li>");
+			tmp.append("<li>Hỗ trợ: <span>"+((Product_RamDTO)product).getRam_standard()+"</span></li>");		
 			break;		
 		case 10:
-			tmp.append("<li>Hãng: <span>Samsung</span></li>");
-			tmp.append("<li>Kích thước: <span>49 inch</span></li>");
-			tmp.append("<li>Độ phân giải: <span>5120x1440</span></li>");
-			tmp.append("<li>Tấm nền: <span>OLED</span></li>");
-			tmp.append("<li>Tần số quét: <span>3</span></li>");
-			tmp.append("<li>Tốc độ phản hồi: <span>0.03 ms</span></li>");
+			//storage
+			tmp.append("<li>Hãng: <span>"+((Product_StorageDTO)product).getStorage_manufacturer()+"</span></li>");
+			tmp.append("<li>Loại: <span>"+((Product_StorageDTO)product).getStorage_type()+"</span></li>");
+			tmp.append("<li>Dung lượng: <span>"+((Product_StorageDTO)product).getStorage_capacity()+"</span></li>");
+			tmp.append("<li>Kiểu: <span>"+((Product_StorageDTO)product).getStorage_m2_pcie_type()+"</span></li>");
+			tmp.append("<li>Tốc độ: <span>"+((Product_StorageDTO)product).getStorage_rpm()+"</span></li>");		
 			break;				
-		case 11:						
+		case 11:	
+			//vga
 			tmp.append("<li>Hãng: <span>"+((Product_GraphicsCardDTO)product).getGraphics_card_manufacturer()+"</span></li>");
+			tmp.append("<li>Phiên bản: <span>"+((Product_GraphicsCardDTO)product).getGraphics_card_version()+"</span></li>");
 			tmp.append("<li>Xung nhịp: <span>"+((Product_GraphicsCardDTO)product).getGraphics_card_speed()+"</span></li>");
 			tmp.append("<li>Số nhân: <span>"+((Product_GraphicsCardDTO)product).getGraphics_card_cores()+"</span></li>");
-			tmp.append("<li>Phiên bản: <span>"+((Product_GraphicsCardDTO)product).getGraphics_card_version()+"</span></li>");
 			tmp.append("<li>Dung lượng VRAM: <span>"+((Product_GraphicsCardDTO)product).getGraphics_card_vram_capacity()+"</span></li>");
 			tmp.append("<li>Bộ nguồn khuyến nghị: <span>"+((Product_GraphicsCardDTO)product).getGraphics_card_require_psu()+"</span></li>");	
 			break;						
 		case 12:
-			
+			//PSU
+			tmp.append("<li>Hãng: <span>"+((Product_PowerSuppyDTO)product).getPsu_manufacturer()+"</span></li>");
+			tmp.append("<li>Chứng nhận: <span>"+((Product_PowerSuppyDTO)product).getPsu_certification()+"</span></li>");
+			tmp.append("<li>Loại cap: <span>"+((Product_PowerSuppyDTO)product).getPsu_cable_type()+"</span></li>");
+			tmp.append("<li>Kích thước: <span>"+((Product_PowerSuppyDTO)product).getPsu_size()+"</span></li>");	
+			tmp.append("<li>Công suất: <span>"+((Product_PowerSuppyDTO)product).getPsu_power_output()+"</span></li>");	
 			break;						
 		case 13:
-			tmp.append("<li>Hãng:<span>"+((Product_CaseDTO)product).getCase_manufacturer()+"</span></li>");
-			tmp.append("<li>Kích thước:<span>"+((Product_CaseDTO)product).getCase_manufacturer()+"</span></li>");
-			tmp.append("<li>Màu sắc <span>"+((Product_CaseDTO)product).getCase_color()+"</span></li>");	
+			//case
+			tmp.append("<li>Hãng: <span>"+((Product_CaseDTO)product).getCase_manufacturer()+"</span></li>");
+			tmp.append("<li>Kích thước: <span>"+((Product_CaseDTO)product).getCase_size()+"</span></li>");
+			tmp.append("<li>Màu sắc: <span>"+((Product_CaseDTO)product).getCase_color()+"</span></li>");	
 			break;				
 		case 14:
+			//cooling
 			tmp.append("<li>Hãng: <span>"+((Product_CoolingDTO)product).getCooling_manufacturer()+"</span></li>");
 			tmp.append("<li>Phân loại: <span>"+((Product_CoolingDTO)product).getCooling_type()+"</span></li>");
 			tmp.append("<li>Màu sắc: <span>"+((Product_CoolingDTO)product).getCooling_color()+"</span></li>");
 			tmp.append("<li>Kích thước: <span>"+((Product_CoolingDTO)product).getCooling_fan_size()+"</span></li>");	
+			break;	
+		case 15:
+			//usb
+			tmp.append("<li>Hãng: <span>"+((Product_UsbDTO)product).getUsb_manufacturer()+"</span></li>");
+			tmp.append("<li>Dung lượng: <span>"+((Product_UsbDTO)product).getUsb_capacity()+"</span></li>");	
 			break;	
 		
 		}	

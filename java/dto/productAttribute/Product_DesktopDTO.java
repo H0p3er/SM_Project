@@ -3,15 +3,15 @@ package dto.productAttribute;
 import dto.product.Product_DTO;
 
 public class Product_DesktopDTO extends Product_DTO{
-	private int desktop_id; 
-	private String desktop_manufacturer; 
-	private String desktop_type; 
-	private String desktop_cpu; 
-	private String desktop_gpu; 
-	private int desktop_ram_capacity; 
-	private String desktop_ram_type; 
-	private int desktop_storage; 
-	private String desktop_power_supply;
+    private int desktop_id;
+    private String desktop_manufacturer;
+    private String desktop_type;
+    private String desktop_cpu;
+    private String desktop_gpu;
+    private String desktop_ram_capacity;
+    private String desktop_ram_type;
+    private String desktop_storage;
+    private String desktop_power_supply;
 	public int getDesktop_id() {
 		return desktop_id;
 	}
@@ -42,10 +42,10 @@ public class Product_DesktopDTO extends Product_DTO{
 	public void setDesktop_gpu(String desktop_gpu) {
 		this.desktop_gpu = desktop_gpu;
 	}
-	public int getDesktop_ram_capacity() {
+	public String getDesktop_ram_capacity() {
 		return desktop_ram_capacity;
 	}
-	public void setDesktop_ram_capacity(int desktop_ram_capacity) {
+	public void setDesktop_ram_capacity(String desktop_ram_capacity) {
 		this.desktop_ram_capacity = desktop_ram_capacity;
 	}
 	public String getDesktop_ram_type() {
@@ -54,10 +54,10 @@ public class Product_DesktopDTO extends Product_DTO{
 	public void setDesktop_ram_type(String desktop_ram_type) {
 		this.desktop_ram_type = desktop_ram_type;
 	}
-	public int getDesktop_storage() {
+	public String getDesktop_storage() {
 		return desktop_storage;
 	}
-	public void setDesktop_storage(int desktop_storage) {
+	public void setDesktop_storage(String desktop_storage) {
 		this.desktop_storage = desktop_storage;
 	}
 	public String getDesktop_power_supply() {
@@ -66,6 +66,5 @@ public class Product_DesktopDTO extends Product_DTO{
 	public void setDesktop_power_supply(String desktop_power_supply) {
 		this.desktop_power_supply = desktop_power_supply;
 	}
-	
-	
+
 }
