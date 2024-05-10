@@ -4,6 +4,7 @@ import connection.*;
 import constant.USER_EDIT_TYPE;
 import constant.USER_SORT_TYPE;
 import dto.user.User_viewShopDTO;
+import entity.ShopObject;
 import entity.UserObject;
 import repository.User;
 import repository.UserImpl;
@@ -179,6 +180,11 @@ public class UserModel {
 			}
 		}
 		return new Pair<>(items,totalGlobal);
+	}
+	
+	public double getUserStatisticByShop(ShopObject shopObject) {
+		return 0;
+		
 	}
 	
 	public User_viewShopDTO getSellerById(int id) {

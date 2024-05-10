@@ -282,7 +282,16 @@ public class ProductImpl extends BasicImpl implements Product{
 		StringBuilder sql = new StringBuilder();
 		sql.append(getProductsByShopSQL(at, total, multiCondition, multiField, multiSort, shopObject));
 		sql.append(getProductsSizeByShopSQL(shopObject));
-		sql.append(getProductsMostSoldLastMonthByShopSQL(shopObject));
+	
+//		sql.append(getIncomeLastMonthByShopSQL(shopObject));
+//		sql.append(getIncomeCurrentMonthByShopSQL(shopObject));
+//		
+//		sql.append(getOrderLastMonthByShopSQL(shopObject));
+//		sql.append(getOrderCurrentMonthByShopSQL(shopObject));
+//		
+//		sql.append(getCustomerLastMonthByShopSQL(shopObject));
+//		sql.append(getCustomerCurrentMonthByShopSQL(shopObject));
+		
 		sql.append(getProductsMostSoldCurrentMonthByShopSQL(shopObject));
 		System.out.println(sql.toString());
 		return this.getReList(sql.toString());
@@ -310,30 +319,19 @@ public class ProductImpl extends BasicImpl implements Product{
 		sql.append("WHERE ((p.product_shop_id="+object.getShop_id()+") AND (p.product_deleted=0)); ");
 		return sql.toString();
 	}
+
 	
-	
-	private String getProductsMostSoldLastMonthByShopSQL(ShopObject object) {	
+	private static String getProductsMostSoldCurrentMonthByShopSQL(ShopObject object) {	
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT bill_created_date, SUM(product_price*bd_product_quantity) AS sold_price_by_month FROM tblproduct p ");
+		sql.append("SELECT p.*, SUM(product_price*bd_product_quantity) AS most_sold_product_by_month FROM tblproduct p ");
 		sql.append("INNER JOIN tblbd bd ON p.product_id = bd.bd_product_id ");
 		sql.append("INNER JOIN tblbill b ON b.bill_id = bd.bd_bill_id ");
 		sql.append("WHERE ((p.product_shop_id="+object.getShop_id()+") AND (p.product_deleted=0) AND MONTH(STR_TO_DATE(bill_created_date, '%e/%c/%Y')) = (MONTH(CURRENT_DATE())) ) ");
-		sql.append("GROUP BY bill_created_date ");
-		sql.append("ORDER BY STR_TO_DATE(bill_created_date, '%e/%c/%Y') ASC;");
-		return sql.toString();
-	}
-	
-	
-	private String getProductsMostSoldCurrentMonthByShopSQL(ShopObject object) {	
-		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT bill_created_date, SUM(product_price*bd_product_quantity) AS sold_price_by_month FROM tblproduct p ");
-		sql.append("INNER JOIN tblbd bd ON p.product_id = bd.bd_product_id ");
-		sql.append("INNER JOIN tblbill b ON b.bill_id = bd.bd_bill_id ");
-		sql.append("WHERE ((p.product_shop_id="+object.getShop_id()+") AND (p.product_deleted=0) AND MONTH(STR_TO_DATE(bill_created_date, '%e/%c/%Y')) = (MONTH(CURRENT_DATE())) ) ");
-		sql.append("GROUP BY bill_created_date ");
-		sql.append("ORDER BY STR_TO_DATE(bill_created_date, '%e/%c/%Y') ASC;");
+		sql.append("GROUP BY product_id ");
+		sql.append("ORDER BY most_sold_product_by_month ASC;");
 		return sql.toString();
 	}	
+	
 	
 	@Override
 	public ArrayList<ResultSet> getProductsByPC(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort, PCObject pcObject) {
@@ -392,10 +390,6 @@ public class ProductImpl extends BasicImpl implements Product{
 		return sql.toString();
 	}	
 	
-	private String SELECTConditions(String multiField) {
-		StringBuilder SELECT = new StringBuilder();
-		return SELECT.toString();
-	}
 
 	private String WHEREConditions(Map<String,String> multiCondition) {
 		StringBuilder WHERE = new StringBuilder();

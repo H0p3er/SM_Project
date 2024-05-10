@@ -4,8 +4,8 @@ import java.util.*;
 
 import org.javatuples.*;
 
-import dto.product.Product_ShopStatisticDTO;
 import dto.shop.Shop_manageShopDTO;
+import dto.shop.Shop_statisticDTO;
 import dto.shop.Shop_viewShopDTO;
 
 public class ShopLibrary {
@@ -41,12 +41,12 @@ public class ShopLibrary {
 		return view;
 	}
 	
-	public static Map<String,String> viewSeller_manageShop(
+	public static Map<String,String> viewSeller_ShopStatistic(
 			Shop_manageShopDTO infors)
 	{
 		Map<String,String> view = new HashMap<String,String>();
 		StringBuilder tmp = new StringBuilder();
-
+		viewSeller_manageShopStatistic(infors, view, tmp);
 		return view; 
 	}
 	
@@ -76,7 +76,6 @@ public class ShopLibrary {
 		view.put("label", label.toString());
 		view.put("series",series.toString());
 		tmp.setLength(0);
-		
 
 		view.put("product_sold_this_month",tmp.toString());
 		

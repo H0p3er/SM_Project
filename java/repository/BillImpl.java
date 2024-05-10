@@ -30,30 +30,12 @@ public class BillImpl extends BasicImpl implements Bill {
 		super(cp, objectName);
 		// TODO Auto-generated constructor stub
 	}
-
-	private boolean isExisting(BillObject item) {
-		boolean flag = false;
-		String sql = "SELECT bill_id FROM tblbill WHERE (bill_id='"+item.getBill_id()+"'); ";
-		ResultSet rs = this.gets(sql);
-		try {
-			if (rs.next()) {
-				flag = true;
-			}
-			rs.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return flag;
-	}
 	
 	@Override
 	public boolean addBill(BillObject item, ArrayList<BDObject> bdObjects) {
-		
 		if (this.isExisting(item)) {
 			return false;
-		}
-		
+		}	
 		StringBuilder getIdSql = new StringBuilder();
 		getIdSql.append("SELECT AUTO_INCREMENT ");
 		getIdSql.append("FROM information_schema.TABLES ");
@@ -120,6 +102,22 @@ public class BillImpl extends BasicImpl implements Bill {
 		return false;
 	}
 	
+
+	private boolean isExisting(BillObject item) {
+		boolean flag = false;
+		String sql = "SELECT bill_id FROM tblbill WHERE (bill_id='"+item.getBill_id()+"'); ";
+		ResultSet rs = this.gets(sql);
+		try {
+			if (rs.next()) {
+				flag = true;
+			}
+			rs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return flag;
+	}
 	
 
 	@Override
@@ -165,7 +163,6 @@ public class BillImpl extends BasicImpl implements Bill {
 		}
 		return false;
 	}
-
 	//Phương thức kiểm tra tồn tại
 	private boolean isEmpty(BillObject item) {
 		boolean flag = true;
@@ -196,10 +193,8 @@ public class BillImpl extends BasicImpl implements Bill {
 		
 		if (!this.isEmpty(item)) {
 			return false;
-		}
-		
-		String sql = "DELETE FROM tblbill WHERE (bill_id=?);";
-		
+		}		
+		String sql = "DELETE FROM tblbill WHERE (bill_id=?);";	
 		try {
 			PreparedStatement pre = this.con.prepareStatement(sql);
 			pre.setInt(1, item.getBill_id());
@@ -214,8 +209,7 @@ public class BillImpl extends BasicImpl implements Bill {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-		}
-		
+		}		
 		return false;
 	}
 
@@ -225,50 +219,6 @@ public class BillImpl extends BasicImpl implements Bill {
 		String sql = "SELECT * FROM tblbill WHERE (bill_id=?) AND (bill_deleted=0); ";
 		return this.get(sql, id);
 	}
-	
-	private String createCondition(UserObject similar) {
-		 StringBuilder conds = new StringBuilder();
-		 
-		 if (similar!=null) {
-			 byte permis = similar.getUser_permission();// Tài khoản đăng nhập truyên cho
-			 
-			 //Phân tầng quản trị
-			 conds.append("(user_permission<=").append(permis).append(") ");
-			 
-			 if (permis<4) {
-				 int id = similar.getUser_id();
-				 
-				 if (id>0) {
-					 conds.append("AND ( (user_parent_id=").append(id).append(") OR (user_id=").append(id).append(") )") ;
-				 }
-			 }
-			 
-			 
-			 //Xử lí từ khóa tìm kiếm
-			 String key = similar.getUser_fullname();
-			 if (key!=null && !key.equalsIgnoreCase("")) {
-				 conds.append(" AND (");
-				 conds.append("(user_fullname LIKE '%"+key+"%') OR ");
-				 conds.append("(user_address LIKE '%"+key+"%') OR ");
-				 conds.append("(user_email LIKE '%"+key+"%')");
-				 conds.append(") ");
-			 }
-			 
-			 //Kiểm tra tồn tại
-			 if (similar.isUser_deleted()) {
-				 conds.append("AND (user_deleted=1)");
-			 } else {
-				 conds.append("AND (user_deleted=0)");
-			 }
-		 }
-		 
-		 if (!conds.toString().equalsIgnoreCase("")) {
-			 conds.insert(0,"WHERE ");
-		 }
-		 
-		 return conds.toString();
-	}
-
 
 	@Override
 	public ResultSet getBillByCreatedDate(Date start, Date end) {
@@ -279,58 +229,138 @@ public class BillImpl extends BasicImpl implements Bill {
 	@Override
 	public ArrayList<ResultSet> getBillByUser(int at, byte total, String multiField,  String multiCondition, String multiSort, UserObject userObject) {
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT * FROM tblbill b ");	 
-		sql.append("LEFT JOIN tblbd bd ON b.bill_id=bd.bd_id ");
-		sql.append(this.ORDERConditions(multiSort));
-		sql.append("LIMIT "+at+"," +total+"; ") ;
-
-		
-		sql.append("SELECT COUNT(bill_id) AS total FROM tblbill");
-		sql.append("; ");
+		sql.append(getBillByUserSQL(at, total, multiField, multiCondition, multiSort, userObject));
+		sql.append(getBillSizeByUserSQL(multiCondition, userObject));
 		System.out.print(sql.toString());
 		return this.getReList(sql.toString());
 	}
+	
+	private static String getBillByUserSQL(int at, byte total, String multiField,  String multiCondition, String multiSort, UserObject userObject) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT * FROM tblbill b ");	 
+		sql.append("LEFT JOIN tblbd bd ON b.bill_id=bd.bd_id ");
+		sql.append(ORDERConditions(multiSort));
+		sql.append("LIMIT "+at+"," +total+"; ") ;
+		System.out.print(sql.toString());
+		return sql.toString();
+	}
+	
+	private static String getBillSizeByUserSQL(String multiCondition, UserObject userObject) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT COUNT(bill_id) AS total FROM tblbill b");
+		sql.append("WHERE b.bill_creator_id="+userObject.getUser_id()+"");
+		sql.append("; ");
+		return sql.toString();
+	}
+
 	
 	@Override
 	public ArrayList<ResultSet> getBillByShop(int at, byte total, String multiField,  String multiCondition, String multiSort, ShopObject shopObject) {
 		StringBuilder sql = new StringBuilder();
 		sql.append(getBillByShopSQL(at, total, multiField, multiCondition, multiSort,shopObject));
-		sql.append(getBillByShopSQL(at, total, multiField, multiCondition, multiSort, shopObject));
+		sql.append(getBillSizeByShopSQL(multiCondition, shopObject));
 		System.out.print(sql.toString());
 		return this.getReList(sql.toString());
 	}
 	
-	private String getBillByShopSQL(int at, byte total, String multiField, String multiCondition, String multiSort, ShopObject shopObject) {
+	private static String getBillByShopSQL(int at, byte total, String multiField, String multiCondition, String multiSort, ShopObject shopObject) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT * FROM tblbill b ");	 
 		sql.append("LEFT JOIN tblbd bd ON b.bill_id=bd.bd_id ");
 		sql.append("WHERE b.bill_shop_id="+shopObject.getShop_id()+"");
-		sql.append(this.ORDERConditions(multiSort));
+		sql.append(ORDERConditions(multiSort));
 		sql.append("LIMIT "+at+"," +total+"; ") ;
 		return sql.toString();
 	}
 	
-	private String getBillSizeByShopSQL(String multiCondition, ShopObject shopObject) {
+	private static String getBillSizeByShopSQL(String multiCondition, ShopObject shopObject) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT COUNT(bill_id) AS total FROM tblbill b");
-		sql.append("WHERE b.bill_shop_id="+shopObject.getShop_id()+"");
+		sql.append("WHERE b.bill_creator_id="+shopObject.getShop_id()+"");
+		sql.append("; ");
+		return sql.toString();
+	}
+
+
+	@Override
+	public ArrayList<ResultSet> getOrderByUser(int at, byte total, String multiField, String multiCondition,
+			String multiSort, UserObject userObject) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<ResultSet> getOrderByShop(int at, byte total, String multiField, String multiCondition,
+			String multiSort, ShopObject shopObject) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<ResultSet> getOrderStatisticByShop(ShopObject shopObject, int month) {
+		StringBuilder sql = new StringBuilder();
+		sql.append(getOrderCurrentMonthByShopSQL(shopObject, month));
+		return this.getReList(sql.toString());
+	}
+	
+	private static String getOrderCurrentMonthByShopSQL(ShopObject shopObject, int month) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT bill_created_date, COUNT(bill_id) AS order_current_month FROM tblproduct p ");
+		sql.append("INNER JOIN tblbd bd ON p.product_id = bd.bd_product_id ");
+		sql.append("INNER JOIN tblbill b ON b.bill_id = bd.bd_bill_id ");
+		sql.append("WHERE ((p.product_shop_id="+shopObject.getShop_id()+") AND (p.product_deleted=0) AND MONTH(STR_TO_DATE(bill_created_date, '%e/%c/%Y')) = (MONTH(CURRENT_DATE())) ) ");
+		sql.append("GROUP BY bill_created_date ");
+		sql.append("ORDER BY STR_TO_DATE(bill_created_date, '%e/%c/%Y') ASC;");
+		return sql.toString();
+	}
+
+	@Override
+	public ArrayList<ResultSet> getIncomeStatisticByShop(ShopObject shopObject, int month) {
+		StringBuilder sql = new StringBuilder();
+		sql.append(getIncomeByShopAndMonthSQL(shopObject, month));
+		sql.append(getSumIncomeByShopAndMonthSQL(shopObject, month));
+		sql.append(getSumIncomeByShopAndMonthSQL(shopObject, month-1));
+		return this.getReList(sql.toString());
+	}
+	
+	private static String getIncomeByShopAndMonthSQL(ShopObject shopObject, int month) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT bill_created_date, SUM(product_price*bd_product_quantity) AS income_by_month FROM tblproduct p ");
+		sql.append("INNER JOIN tblbd bd ON p.product_id = bd.bd_product_id ");
+		sql.append("INNER JOIN tblbill b ON b.bill_id = bd.bd_bill_id ");
+		sql.append("WHERE ((p.product_shop_id="+shopObject.getShop_id()+") AND (p.product_deleted=0) AND MONTH(STR_TO_DATE(bill_created_date, '%e/%c/%Y')) = ("+month+") ) ");
+		sql.append("GROUP BY bill_created_date ");
+		sql.append("ORDER BY STR_TO_DATE(bill_created_date, '%e/%c/%Y') ASC;");
 		return sql.toString();
 	}
 	
-	private String SELECTConditions(String multiField) {
-		StringBuilder SELECT = new StringBuilder();
-
-	
-		return SELECT.toString();
+	private static String getSumIncomeByShopAndMonthSQL(ShopObject shopObject, int month) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT SUM(product_price*bd_product_quantity) AS sum_income_by_month FROM tblproduct p ");
+		sql.append("INNER JOIN tblbd bd ON p.product_id = bd.bd_product_id ");
+		sql.append("INNER JOIN tblbill b ON b.bill_id = bd.bd_bill_id ");
+		sql.append("WHERE ((p.product_shop_id="+shopObject.getShop_id()+") AND (p.product_deleted=0) AND MONTH(STR_TO_DATE(bill_created_date, '%e/%c/%Y')) = ("+month+") ) ");
+		sql.append("ORDER BY STR_TO_DATE(bill_created_date, '%e/%c/%Y') ASC;");
+		return sql.toString();
 	}
-	
-	private String WHEREConditions(String multiCondition) {
-		StringBuilder WHERE = new StringBuilder();
 
-		return WHERE.toString();
-	}
-	
-	private String ORDERConditions(String multiSort) {
+
+//	
+//	private String SELECTConditions(String multiField) {
+//		StringBuilder SELECT = new StringBuilder();
+//
+//	
+//		return SELECT.toString();
+//	}
+//	
+//	private String WHEREConditions(String multiCondition) {
+//		StringBuilder WHERE = new StringBuilder();
+//
+//		return WHERE.toString();
+//	}
+//	
+
+	private static String ORDERConditions(String multiSort) {
 		StringBuilder ORDER = new StringBuilder();
 		if (multiSort!=null) {
 			if (!multiSort.equalsIgnoreCase("")) {
@@ -450,5 +480,7 @@ public class BillImpl extends BasicImpl implements Bill {
 		}
 		
 	}
+
+
 
 }
