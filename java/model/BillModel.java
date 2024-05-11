@@ -17,7 +17,6 @@ import entity.BDObject;
 import entity.BillObject;
 import entity.EmployeeObject;
 import entity.ShopObject;
-import objects.*;
 import repository.Bill;
 import repository.BillImpl;
 import utility.Utilities;
@@ -130,6 +129,47 @@ public class BillModel {
 			}
 		}
 		return new Triplet<>(income_current_month,sum_income_current_month, sum_income_last_month);
+	}
+	
+	public Triplet<Map<String,Integer>,Integer,Integer> getOrderStatisticByShop(ShopObject shopObject) {
+		ArrayList<ResultSet> res = this.bill.getOrderStatisticByShop(shopObject, java.time.LocalDateTime.now().getMonth().getValue());	
+		ResultSet rs = res.get(0);
+		Map<String,Integer> order_current_month = new HashMap<String, Integer>();
+		if (rs!=null) {
+			try {
+				while (rs.next()) {
+					order_current_month.put(rs.getString("bill_created_date"), rs.getInt("order_by_month"));
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}		
+		rs = res.get(1);
+		int count_order_current_month = 0;
+		if (rs!=null) {
+			try {
+				if (rs.next()) {
+					count_order_current_month = rs.getInt("count_order_by_month");		
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}	
+		int count_order_last_month = 0;
+		rs = res.get(2);
+		if (rs!=null) {
+			try {
+				if (rs.next()) {
+					count_order_last_month = rs.getInt("count_order_by_month");
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return new Triplet<>(order_current_month, count_order_current_month, count_order_last_month);
 	}
 		
 	public ArrayList<BillObject> getBillObjects(Sextet<	EmployeeObject, 

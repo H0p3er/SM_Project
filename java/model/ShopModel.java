@@ -139,10 +139,20 @@ public class ShopModel {
 		shop_StatisticDTO.setMost_sold_product_current_month(most_sold_product_current_month);
 		
 		Triplet<Map<String,Double>, Double, Double> income_statistic = this.bill.getIncomeStatisticByShop(shopObject);
-//		Triplet<Map<String,Double>, Double, Double> customer_statistic = this.user.getUserStatisticByShop(shopObject);
+		Triplet<Map<String,Integer>,Integer,Integer> order_statistic = this.bill.getOrderStatisticByShop(shopObject);
+		Triplet<Map<String,Integer>,Integer,Integer> customer_statistic = this.user.getCustomerStatisticByShop(shopObject);
+		
 		shop_StatisticDTO.setIncome_current_month(income_statistic.getValue0());
 		shop_StatisticDTO.setSum_income_current_month(income_statistic.getValue1());
 		shop_StatisticDTO.setSum_income_last_month(income_statistic.getValue2());
+		
+		shop_StatisticDTO.setOrder_current_month(order_statistic.getValue0());
+		shop_StatisticDTO.setCount_order_current_month(order_statistic.getValue1());
+		shop_StatisticDTO.setCount_order_last_month(order_statistic.getValue2());
+		
+		shop_StatisticDTO.setCustomer_current_month(customer_statistic.getValue0());
+		shop_StatisticDTO.setCount_customer_current_month(customer_statistic.getValue1());
+		shop_StatisticDTO.setCount_customer_last_month(customer_statistic.getValue2());
 		return shop_StatisticDTO;
 	}
 	

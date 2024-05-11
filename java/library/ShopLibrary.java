@@ -46,41 +46,63 @@ public class ShopLibrary {
 	{
 		Map<String,String> view = new HashMap<String,String>();
 		StringBuilder tmp = new StringBuilder();
-		viewSeller_manageShopStatistic(infors, view, tmp);
+		viewSeller_manageShopStatistic(infors, view);
 		return view; 
 	}
 	
 	private static void viewSeller_manageShopStatistic(Shop_manageShopDTO shop_manageShopDTO, 	
-			Map<String,String> view, StringBuilder tmp){
-		tmp.setLength(0);
-		StringBuilder label = new StringBuilder();
-		StringBuilder series = new StringBuilder();
+			Map<String,String> view){
+	
+		StringBuilder datetime_data = new StringBuilder();
+		StringBuilder income_data = new StringBuilder();
+		StringBuilder order_data = new StringBuilder();	
+		StringBuilder customer_data = new StringBuilder();
 		
-		shop_manageShopDTO.getStatistic().getSold_price_current_month().forEach((date,price)->{
-			if (!label.isEmpty()&&!label.toString().isBlank()) {
-				label.append(",");
-				series.append(",");
-			}
-			label.append("\""+date+"\"");	
-			series.append(""+price+"");
+		Set<String> date_key = new HashSet<String>();
+		
+		date_key.addAll(shop_manageShopDTO.getStatistic().getIncome_current_month().keySet());
+		
+		date_key.addAll(shop_manageShopDTO.getStatistic().getOrder_current_month().keySet());
+		
+		date_key.addAll(shop_manageShopDTO.getStatistic().getCustomer_current_month().keySet());
+		
+		date_key.forEach(day -> {
+			if (!datetime_data.isEmpty()&&!datetime_data.toString().isBlank()) {
+				datetime_data.append(",");
+			} 
+			datetime_data.append(day);	
+			
+			if (!income_data.isEmpty()&&!income_data.toString().isBlank()) {
+				income_data.append(",");
+			} 
+			income_data.append(shop_manageShopDTO.getStatistic().getIncome_current_month().getOrDefault(day, (double)0));
+			
+			if (!order_data.isEmpty()&&!order_data.toString().isBlank()) {
+				order_data.append(",");
+			} 
+			order_data.append(shop_manageShopDTO.getStatistic().getOrder_current_month().getOrDefault(day, 0));
+			
+			if (!customer_data.isEmpty()&&!customer_data.toString().isBlank()) {
+				customer_data.append(",");
+			} 
+			customer_data.append(shop_manageShopDTO.getStatistic().getCustomer_current_month().getOrDefault(day, 0));
 		});
 		
-		shop_manageShopDTO.getStorage().getValue0().sort((o1,o2)->{
-			return o1.getName().compareTo(o2.getName());
-		});
+		view.put("datetime-data", datetime_data.toString());
 		
-		label.insert(0, "[");
-		label.append("]");
-		series.insert(0, "[");
-		series.append("]");
-		view.put("label", label.toString());
-		view.put("series",series.toString());
-		tmp.setLength(0);
-
-		view.put("product_sold_this_month",tmp.toString());
+		view.put("income-data", income_data.toString());	
 		
-		view.put("product_sold_this_month",tmp.toString());
+		view.put("order-data", order_data.toString());	
+		
+		view.put("customer-data", customer_data.toString());	
+		
+		
+//		shop_manageShopDTO.getStorage().getValue0().sort((o1,o2)->{
+//			return o1.getName().compareTo(o2.getName());
+//		});
 	}
+	
+	
 	
 	private static void viewSeller_manageShopProduct(Shop_manageShopDTO UserShopDTO, Map<String,String> view, StringBuilder tmp){
 		tmp.setLength(0);

@@ -5,6 +5,7 @@ import java.util.*;
 
 import connection.ShareControl;
 import constant.USER_EDIT_TYPE;
+import entity.ShopObject;
 import entity.UserObject;
 import constant.*;
 
@@ -19,5 +20,7 @@ public interface User extends ShareControl{
 	public ResultSet getUserById(int id);
 	public ResultSet getUser(String username, String userpass);
 	public ArrayList<ResultSet> getUsers(UserObject similar, int at, byte total, USER_SORT_TYPE type);
+	
+	public ArrayList<ResultSet> getCustomerStatisticByShopAndMonth(ShopObject shopObject, int month);
 	
 }

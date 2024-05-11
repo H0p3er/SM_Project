@@ -299,18 +299,30 @@ public class BillImpl extends BasicImpl implements Bill {
 	@Override
 	public ArrayList<ResultSet> getOrderStatisticByShop(ShopObject shopObject, int month) {
 		StringBuilder sql = new StringBuilder();
-		sql.append(getOrderCurrentMonthByShopSQL(shopObject, month));
+		sql.append(getOrderByShopAndMonthSQL(shopObject, month));
+		sql.append(getCountOrderByShopAndMonthSQL(shopObject, month));
+		sql.append(getCountOrderByShopAndMonthSQL(shopObject, month-1));
 		return this.getReList(sql.toString());
 	}
 	
-	private static String getOrderCurrentMonthByShopSQL(ShopObject shopObject, int month) {
+	private static String getOrderByShopAndMonthSQL(ShopObject shopObject, int month) {
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT bill_created_date, COUNT(bill_id) AS order_current_month FROM tblproduct p ");
+		sql.append("SELECT bill_created_date, COUNT(bill_id) AS order_by_month FROM tblproduct p ");
 		sql.append("INNER JOIN tblbd bd ON p.product_id = bd.bd_product_id ");
 		sql.append("INNER JOIN tblbill b ON b.bill_id = bd.bd_bill_id ");
 		sql.append("WHERE ((p.product_shop_id="+shopObject.getShop_id()+") AND (p.product_deleted=0) AND MONTH(STR_TO_DATE(bill_created_date, '%e/%c/%Y')) = (MONTH(CURRENT_DATE())) ) ");
 		sql.append("GROUP BY bill_created_date ");
 		sql.append("ORDER BY STR_TO_DATE(bill_created_date, '%e/%c/%Y') ASC;");
+		return sql.toString();
+	}
+	
+	private static String getCountOrderByShopAndMonthSQL(ShopObject shopObject, int month) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT COUNT(bill_id) AS count_order_by_month FROM tblproduct p ");
+		sql.append("INNER JOIN tblbd bd ON p.product_id = bd.bd_product_id ");
+		sql.append("INNER JOIN tblbill b ON b.bill_id = bd.bd_bill_id ");
+		sql.append("WHERE ((p.product_shop_id="+shopObject.getShop_id()+") AND (p.product_deleted=0) AND MONTH(STR_TO_DATE(bill_created_date, '%e/%c/%Y')) = ("+month+") ) ");
+		sql.append("ORDER BY count_order_by_month ASC;");
 		return sql.toString();
 	}
 

@@ -1,9 +1,20 @@
+<%@page import="entity.total.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <%@ page import="connection.*, entity.*" %>   
+ <% 
+ 
+ String user_name = "";
+ 
+ if (session.getAttribute("userLogined")==null) response.sendRedirect("/home/homepage");
+ else {
+	 UserObject user = (UserObject) session.getAttribute("userLogined");
+	 user_name = user.getUser_fullname();
+ }
+ %>  
   <header id="header" class="header fixed-top d-flex align-items-center">
-
         <div class="d-flex align-items-center justify-content-between">
-            <a href="/home/main/seller/shopmanage.jsp" class="logo d-flex align-items-center">
+            <a href="/home/seller/shop/statistic" class="logo d-flex align-items-center">
                 <img src="/home/assets/images/sm.png" alt="" style="height:50px; max-height:50px">
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -98,7 +109,7 @@
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                         <i class="ri-account-circle-line fs-2"></i>
-                        <span class="d-none d-md-block dropdown-toggle ps-2">@username</span>
+                        <span class="d-none d-md-block dropdown-toggle ps-2"><%= user_name %></span>
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
@@ -109,15 +120,12 @@
                             <hr class="dropdown-divider">
                         </li>
 
-                        
-
-
                         <li>
                             <hr class="dropdown-divider">
                         </li>
 
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="/home/main/shop/shop_profile.jsp">
+                            <a class="dropdown-item d-flex align-items-center" href="/home/homepage">
                                 <i class="bi bi-box-arrow-right"></i>
                                 <span>Trở lại trang web chính</span>
                             </a>

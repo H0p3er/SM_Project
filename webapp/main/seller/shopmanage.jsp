@@ -1,15 +1,20 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-  <jsp:include page="../component/seller_header.jsp" flush="true"></jsp:include>
-  <jsp:include page="../component/seller_navigation-bar.jsp" flush="true"></jsp:include>
-   <main id="main" class="main">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<jsp:include page="../component/seller_header.jsp" flush="true"></jsp:include>
+<jsp:include page="../component/seller_navigation-bar.jsp" flush="true"></jsp:include>
+<%@ page import="java.util.*" %>
 
-
+<% 
+Map<String, String> map = new HashMap<String,String>();
+if (request.getAttribute("shop-statistic")!=null){
+	map = (HashMap<String,String>) request.getAttribute("shop-statistic"); 
+}
+%>
+<main id="main" class="main">
 	<div class="pagetitle">
       <h1>Thống kê</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="/home/main/seller/shopmanage.jsp">Shop</a></li>
+          <li class="breadcrumb-item"><a href="/home/seller/shop/statistic">Shop</a></li>
           <li class="breadcrumb-item active">Thống kê</li>
         </ol>
       </nav>
@@ -109,13 +114,13 @@
                       new ApexCharts(document.querySelector("#reportsChart"), {
                         series: [{
                           name: 'Đơn hàng',
-                          data: [31, 40, 28, 51, 42, 82, 56],
+                          data: [<%= map.getOrDefault("order-data", "0") %>],
                         }, {
                           name: 'Doanh thu',
-                          data: [11, 32, 45, 32, 34, 52, 41]
+                          data: [<%= map.getOrDefault("income-data", "0") %>]
                         }, {
                           name: 'Lượt khách',
-                          data: [15, 11, 32, 18, 9, 24, 11]
+                          data: [<%= map.getOrDefault("customer-data", "0") %>]
                         }],
                         chart: {
                           height: 350,
@@ -146,7 +151,7 @@
                         },
                         xaxis: {
                           type: 'datetime',
-                          categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
+                          categories: [<%= map.get("datatime-data") %>]
                         },
                         tooltip: {
                           x: {
