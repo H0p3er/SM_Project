@@ -10,6 +10,7 @@
   </footer>
 
   <!-- Scripts -->
+  <script src="/home/assets/js/register.js"></script>
   <!-- Bootstrap core JavaScript -->
   <script src="/home/vendor/jquery/jquery.min.js"></script>
   <script src="/home/vendor/bootstrap/js/bootstrap.min.js"></script>
