@@ -36,15 +36,24 @@
               <!-- ***** Menu Start ***** -->
               <ul class="nav justify-content-between px-3 px-md-0">
                 <li class="ms-lg-5 col-8">
-                  <form action="/home/product/search" method="get" id="search-form">
-                    <div class="input-group">
-                      <input type="text" name="search" id="search" class="form-control" placeholder="Tìm kiếm..."
-                        aria-labbel="Timkiem" aria-describedby="button-addon2" value="<%= request.getAttribute("product-name")!=null ? request.getAttribute("product-name"):"" %>">
-                      <button class="btn btn-dark" type="submit">
-                        <i class="fa fa-search" aria-hidden="true"></i>
-                      </button>
-                    </div>
-                  </form>
+                <% String uri = request.getRequestURI(); 
+                  if (uri.equals("/home/main/guest/login.jsp") || uri.equals("/home/main/guest/register.jsp"))
+                  {
+                	  
+                  } else
+                  {
+                    out.append("<form action=\"/home/product/search\" method=\"get\" id=\"search-form\">");
+                    out.append("<div class=\"input-group\">");
+                    out.append("<input type=\"text\" name=\"search\" id=\"searc\" class=\"form-control\" placeholder=\"Tìm kiếm...\" ");
+                    out.append("aria-labbel=\"Timkiem\" aria-describedby=\"button-addon2\" "); 
+                   	out.append("value=\""+(request.getAttribute("product-name")!=null ?  (String)request.getAttribute("product-name"):"")+"\">");
+                    out.append("<button class=\"btn btn-dark\" type=\"submit\">");
+                    out.append("<i class=\"fa fa-search\" aria-hidden=\"true\"></i>");
+                    out.append("</button>");
+                    out.append("</div>");
+                    out.append("</form>");
+                  }
+                %>
                 </li>
 
                 <% session=request.getSession(true); if (session.getAttribute("userLogined")!=null) { %>
@@ -63,7 +72,7 @@
                           tin cá nhân</a>
                       </li>
                       <li>
-                        <a class="dropdown-item p-0 bg-white text-black" href="/home/main/user/order.jsp"><i class="fa-solid fa-box me-1"></i> Đơn hàng</a>
+                        <a class="dropdown-item p-0 bg-white text-black" href="/home/main/user/orders.jsp"><i class="fa-solid fa-box me-1"></i> Đơn hàng</a>
                       </li>
                       <li> <!-- /home/main/user/shop_create.jsp -->
                         <a class="dropdown-item p-0 bg-white text-black"  href="/home/shop/profile?id=<%=user.getUser_id()%>"><i class="fa-solid fa-store"></i> Gian hàng của bạn</a>

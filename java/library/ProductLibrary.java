@@ -29,7 +29,7 @@ public class ProductLibrary {
 			Product_DTO product = productObjects.get(i-1);
 			tmp.append("<div class=\"col-lg-4 col-md-6\">");
 			tmp.append("<div class=\"item\">");
-			tmp.append("<a href=\"/home/product/profile?id="+product.getProduct_id()+"\"><img src=\""+product.getProduct_images()+"\" alt=\"\"></a>");
+			tmp.append("<a href=\"/home/product/profile?id="+product.getProduct_id()+"\"><img height=\"220px\" src=\""+product.getProduct_images()+"\" alt=\"\"></a>");
 			switch (product.getProduct_pc().getId()) {
 				case 1:
 					tmp.append("<span class=\"category\">Màn hình</span>");
@@ -99,7 +99,7 @@ public class ProductLibrary {
 			Product_DTO product = iterator.next();
 			tmp.append("<div class=\"col-lg-4 col-md-6\">");
 			tmp.append("<div class=\"item\">");
-			tmp.append("<a href=\"/home/product/profile?id="+product.getProduct_id()+"\"><img src=\""+product.getProduct_images()+"\" alt=\"\"></a>");
+			tmp.append("<a href=\"/home/product/profile?id="+product.getProduct_id()+"\"><img height=\"220px\" src=\""+product.getProduct_images()+"\" alt=\"\"></a>");
 			switch (product.getProduct_pc().getId()) {
 			case 1:
 				tmp.append("<span class=\"category\">Màn hình</span>");
@@ -175,7 +175,7 @@ public class ProductLibrary {
 			Product_DTO product = iterator.next();
 			tmp.append("<div class=\"col-lg-4 col-md-6\">");
 			tmp.append("<div class=\"item\">");
-			tmp.append("<a href=\"property-details.html\"><img src=\""+product.getProduct_images()+"\" alt=\"\"></a>");
+			tmp.append("<a href=\"property-details.html\"><img height=\"160px\" src=\""+product.getProduct_images()+"\" alt=\"\"></a>");
 			tmp.append("");
 			tmp.append("<h4 style=\"height: 45px\" class=\"text-truncateline my-2\"><a href=\"property-details.html\">");
 			tmp.append(product.getProduct_name());

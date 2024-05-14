@@ -26,6 +26,7 @@
   <script src="/home/vendor/simple-datatables/simple-datatables.js"></script>
   <script src="/home/vendor/tinymce/tinymce.min.js"></script>
   <script src="/home/vendor/php-email-form/validate.js"></script>
+  <script src="/home/vendor/jquery/jquery.min.js"></script>
 
   <!-- Template Main JS File -->
   <script src="/home/assets/js/adminmain.js"></script>

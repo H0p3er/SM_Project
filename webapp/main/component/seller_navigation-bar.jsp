@@ -117,7 +117,7 @@
                         </li>
 
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="/home/main/shop/shop_profile.jsp">
+                            <a class="dropdown-item d-flex align-items-center" href="/home/homepage">
                                 <i class="bi bi-box-arrow-right"></i>
                                 <span>Trở lại trang web chính</span>
                             </a>
