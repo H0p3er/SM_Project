@@ -4,6 +4,7 @@ import connection.*;
 import constant.USER_EDIT_TYPE;
 import constant.USER_SORT_TYPE;
 import dto.user.User_viewShopDTO;
+import entity.ShopObject;
 import entity.UserObject;
 import repository.User;
 import repository.UserImpl;
@@ -13,6 +14,7 @@ import java.io.*;
 import java.util.*;
 
 import org.javatuples.Pair;
+import org.javatuples.Triplet;
 
 import java.sql.*;
 
@@ -179,6 +181,47 @@ public class UserModel {
 			}
 		}
 		return new Pair<>(items,totalGlobal);
+	}
+	
+	public Triplet<Map<String,Integer>,Integer,Integer> getCustomerStatisticByShop(ShopObject shopObject) {
+		ArrayList<ResultSet> res = this.user.getCustomerStatisticByShopAndMonth(shopObject, java.time.LocalDateTime.now().getMonth().getValue());	
+		ResultSet rs = res.get(0);
+		Map<String,Integer> customer_current_month = new HashMap<String, Integer>();
+		if (rs!=null) {
+			try {
+				while (rs.next()) {
+					customer_current_month.put(rs.getString("bill_created_date"), rs.getInt("count_customer_by_month"));
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}		
+		rs = res.get(1);
+		int count_customer_current_month = 0;
+		if (rs!=null) {
+			try {
+				if (rs.next()) {
+					count_customer_current_month = rs.getInt("count_customer_by_month");		
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}	
+		int count_customer_last_month = 0;
+		rs = res.get(2);
+		if (rs!=null) {
+			try {
+				if (rs.next()) {
+					count_customer_last_month = rs.getInt("count_customer_by_month");
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return new Triplet<>(customer_current_month,count_customer_current_month,count_customer_last_month);
 	}
 	
 	public User_viewShopDTO getSellerById(int id) {

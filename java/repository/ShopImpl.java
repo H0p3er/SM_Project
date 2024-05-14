@@ -50,7 +50,7 @@ public class ShopImpl extends BasicImpl implements Shop {
 		return flag;
 	}	
 
-	private String addShopSql() {		
+	private static String addShopSql() {		
 		StringBuilder sql = new StringBuilder();						
 		sql.append("INSERT INTO tblshop(");
 		sql.append("shop_name, shop_address,  ");
@@ -89,8 +89,7 @@ public class ShopImpl extends BasicImpl implements Shop {
 		return false;
 	}
 	
-	private String editShopSql(SHOP_EDIT_TYPE et) {		
-		
+	private static String editShopSql(SHOP_EDIT_TYPE et) {			
 		StringBuilder sql = new StringBuilder();
 		sql.append("UPDATE tblShop SET ");
 		switch (et) {
@@ -99,17 +98,15 @@ public class ShopImpl extends BasicImpl implements Shop {
 				sql.append("shop_website_link=?, shop_address_link=?, ");
 				sql.append("shop_modified_date=?, shop_images=?, shop_notes=?, ");
 				sql.append("shop_phone=?, shop_email=? ");
-			break;
-			
+				break;
 			case STOP:
 				sql.append("shop_status=0, shop_modified_date=?, ");
-			break;
-			
+				break;
 			case TRASH:
 				sql.append("shop_deleted=1, shop_modified_date=?");
-			break;
-		default:
-			break;
+				break;
+			default:
+				break;
 		}		
 		sql.append("WHERE (shop_id=?); ");
 		System.out.println(sql.toString());		
@@ -165,12 +162,11 @@ public class ShopImpl extends BasicImpl implements Shop {
 
 	@Override
 	public boolean delShop(ShopObject shopObject, UserObject currentUser) {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 		if (!this.isEmpty(shopObject)) {
 			return false;
 		}		
-		String sql = "DELETE FROM tblShop WHERE (Shop_id=?);";		
+		String sql = "DELETE FROM tblShop WHERE (shop_id=?);";		
 		try {
 			PreparedStatement pre = this.con.prepareStatement(sql);
 			pre.setInt(1, shopObject.getShop_id());
@@ -190,23 +186,18 @@ public class ShopImpl extends BasicImpl implements Shop {
 	}
 	
 	private boolean isEmpty(ShopObject item) {
-		boolean flag = true;
-		
+		boolean flag = true;	
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT export_bill_id FROM tblexportbill WHERE "
-				+ "(tblexportbill.export_bill_current_Shop_id="+ item.getShop_id()+"); ");
-		
+				+ "(tblexportbill.export_bill_current_Shop_id="+ item.getShop_id()+"); ");		
 		sql.append("SELECT transfer_bill_id FROM tbltransferbill "
-				+ "WHERE ((tbltransferbill.transfer_bill_current_Shop_id="+item.getShop_id()+") OR (transfer_bill_target_Shop_id="+item.getShop_id()+")); ");
-		
+				+ "WHERE ((tbltransferbill.transfer_bill_current_Shop_id="+item.getShop_id()+") OR (transfer_bill_target_Shop_id="+item.getShop_id()+")); ");		
 		sql.append("SELECT import_bill_id FROM tblimportbill "
-				+ "WHERE ((import_bill_target_Shop_id="+item.getShop_id()+"));");
-		
+			+ "WHERE ((import_bill_target_Shop_id="+item.getShop_id()+"));");
 		sql.append("SELECT employee_id FROM tblemployee "
 				+ "WHERE (employee_Shop_id="+item.getShop_id()+"); ");
 		
 		ArrayList<ResultSet> res = this.getReList(sql.toString());
-		
 		for (ResultSet rs: res) {
 			try {
 				if (rs!=null && rs.next()) {
@@ -223,7 +214,6 @@ public class ShopImpl extends BasicImpl implements Shop {
 
 	@Override
 	public ArrayList<ResultSet> getShopById(int id) {
-		// TODO Auto-generated method stub
 		StringBuilder sql = new StringBuilder();
 		sql.append(getShopByIdSQL(id));
 		return this.getReList(sql.toString());
@@ -231,7 +221,6 @@ public class ShopImpl extends BasicImpl implements Shop {
 	
 	@Override
 	public ArrayList<ResultSet> getShopByUser(UserObject user) {
-		// TODO Auto-generated method stub
 		StringBuilder sql = new StringBuilder();	
 		sql.append(this.getShopByUserSQL(user));	
 		return this.getReList(sql.toString());
@@ -258,52 +247,6 @@ public class ShopImpl extends BasicImpl implements Shop {
 		return "SELECT * FROM tblshop;";
 	}
 
-	
-	private String SELECTCondition(String filter, UserObject currentUser) {
-		 StringBuilder conds = new StringBuilder();
-		 
-		 return conds.toString();
-	}	
-	
-	private String WHERECondition(ShopObject similar, UserObject currentUser) {
-		 StringBuilder conds = new StringBuilder();
-		 if (currentUser!=null) {
-			 byte permis = currentUser.getUser_permission();// Tài khoản đăng nhập truyên cho
-			 //Phân tầng quản trị
-			 conds.append("(user_permission<=").append(permis).append(") ");			 
-			 int id = currentUser.getUser_id();			 				 
-			 if (id>0) {				 
-				 if (permis<4) {			 
-					 conds.append("AND (shop_creator_id="+id) ;
-				 } else {
-					 
-				 }			
-			 }
-			 if (similar!=null) {
-				 //Kiểm tra tồn tại
-				 if (similar.isShop_deleted()) {
-					 conds.append("AND (Shop_deleted=1)");
-				 } else {
-					 conds.append("AND (Shop_deleted=0)");
-				 }
-				 
-				 //Xử lí từ khóa tìm kiếm
-				 String key = similar.getShop_name();
-				 if (key!=null && !key.equalsIgnoreCase("")) {
-					 conds.append(" AND (");
-					 conds.append("(Shop_name LIKE '%"+key+"%') OR ");
-					 conds.append("(Shop_address LIKE '%"+key+"%') ");
-					 conds.append(") ");
-				 }		 
-			 }		
-		 }
-		 	 
-		 if (!conds.toString().equalsIgnoreCase("")) {
-			 conds.insert(0,"WHERE ");
-		 }
-		 
-		 return conds.toString();
-	}
 	
 	
 	public static void main(String[] args) {
@@ -347,8 +290,3 @@ public class ShopImpl extends BasicImpl implements Shop {
 	}
 }
 
-//class SQLBuilder{
-//	private String table;
-//	private List<String> field;
-//	private 
-//}

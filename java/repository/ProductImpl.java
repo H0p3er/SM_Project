@@ -188,14 +188,10 @@ public class ProductImpl extends BasicImpl implements Product{
 	}
 
 	private boolean isEmpty(ProductObject item) {
-		boolean flag = true;
-		
+		boolean flag = true;	
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT bd_id FROM tblbd WHERE bd_product_id=" + item.getProduct_id() + "; ");
-		
-		
-		ArrayList<ResultSet> res = this.getReList(sql.toString());
-		
+		ArrayList<ResultSet> res = this.getReList(sql.toString());		
 		for(ResultSet rs : res) {
 			try {
 				if(rs != null && rs.next()) {
@@ -207,7 +203,6 @@ public class ProductImpl extends BasicImpl implements Product{
 				e.printStackTrace();
 			}
 		}
-
 		return flag;
 	}
 
@@ -217,6 +212,34 @@ public class ProductImpl extends BasicImpl implements Product{
 		return this.get(sql, id);
 	}	
 	
+	
+	@Override
+	public ArrayList<ResultSet> getProducts() {
+		StringBuilder sql = new StringBuilder();
+		sql.append(getProductsNewestSQL());
+		sql.append(getProductsMostSoldSQL());
+		return this.getReList(sql.toString());
+	}
+
+	private String getProductsNewestSQL() {	
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT p.* FROM tblproduct p ");	
+		sql.append("WHERE (p.product_deleted=0) ");
+		sql.append("ORDER BY STR_TO_DATE(product_created_date, '%e/%c/%Y') ASC ");
+		sql.append("LIMIT 0,9; ");
+		return sql.toString();
+	}
+	
+	private String getProductsMostSoldSQL() {	
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT p.*, SUM(bd_product_quantity) as sold_quantity FROM tblproduct p ");
+		sql.append("INNER JOIN tblbd bd ON bd.bd_product_id = p.product_id ");
+		sql.append("WHERE (p.product_deleted=0) ");
+		sql.append("GROUP BY (p.product_id) ");
+		sql.append("ORDER BY (sold_quantity) DESC ");
+		sql.append("LIMIT 0,9; ");
+		return sql.toString();
+	}	
 	
 	/**
 	 * Lấy danh sách sản phẩm theo hoạt động tìm kiếm
@@ -229,55 +252,9 @@ public class ProductImpl extends BasicImpl implements Product{
 		StringBuilder sql = new StringBuilder();
 		sql.append(getProductsSQL(at, total, multiField, multiCondition ,multiSort));
 		sql.append(getProductsSizeSQL(multiCondition));		
-		System.out.println(sql.toString());
+//		System.out.println(sql.toString());
 		return this.getReList(sql.toString());
 	}
-	
-	@Override
-	public ArrayList<ResultSet> getProducts() {
-		StringBuilder sql = new StringBuilder();
-		sql.append(getProductsNewestSQL());
-		sql.append(getProductsMostSoldSQL());
-		return this.getReList(sql.toString());
-	}
-	
-	
-	@Override
-	public ArrayList<ResultSet> getProductsByShop(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort, ShopObject shopObject){
-		StringBuilder sql = new StringBuilder();
-		sql.append(getProductsByShopSQL(at, total, multiCondition, multiField, multiSort, shopObject));
-		sql.append(getProductsSizeByShopSQL(shopObject));
-//		sql.append(getProductsMostSoldLastMonthByShopSQL(shopObject));
-//		sql.append(getProductsMostSoldCurrentMonthByShopSQL(shopObject));
-		System.out.println(sql.toString());
-		return this.getReList(sql.toString());
-	}
-	
-	
-	@Override
-	public ArrayList<ResultSet> getProductsByBill(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort, BillObject shopObject) {
-		StringBuilder sql = new StringBuilder();
-		sql.append(getProductsByBillSQL(at, total, multiCondition, multiField, multiSort, shopObject));
-		sql.append(getProductsSizeByBillSQL(shopObject));
-		return this.getReList(sql.toString());
-	}
-	
-	@Override
-	public ArrayList<ResultSet> getProductsByPC(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort, PCObject pcObject) {
-		// TODO Auto-generated method stub
-		StringBuilder sql = new StringBuilder();
-		sql.append(getProductsByPCSQL(at, total, multiField, multiCondition, multiSort, pcObject));
-		sql.append(getProductsSizeByPCSQL(pcObject));
-		return this.getReList(sql.toString());
-	}
-	
-	@Override
-	public ArrayList<ResultSet> getProductsByCreatedDate(Date date, Date date2) {
-		// TODO Auto-generated method stub
-		StringBuilder sql = new StringBuilder();
-		return this.getReList(sql.toString());
-	}
-	
 	
 	private String getProductsSQL(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort) {
 		StringBuilder sql = new StringBuilder();
@@ -299,6 +276,27 @@ public class ProductImpl extends BasicImpl implements Product{
 		sql.append(";");
 		return sql.toString();
 	}
+	
+	@Override
+	public ArrayList<ResultSet> getProductsByShop(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort, ShopObject shopObject){
+		StringBuilder sql = new StringBuilder();
+		sql.append(getProductsByShopSQL(at, total, multiCondition, multiField, multiSort, shopObject));
+		sql.append(getProductsSizeByShopSQL(shopObject));
+	
+//		sql.append(getIncomeLastMonthByShopSQL(shopObject));
+//		sql.append(getIncomeCurrentMonthByShopSQL(shopObject));
+//		
+//		sql.append(getOrderLastMonthByShopSQL(shopObject));
+//		sql.append(getOrderCurrentMonthByShopSQL(shopObject));
+//		
+//		sql.append(getCustomerLastMonthByShopSQL(shopObject));
+//		sql.append(getCustomerCurrentMonthByShopSQL(shopObject));
+		
+		sql.append(getProductsMostSoldCurrentMonthByShopSQL(shopObject));
+		System.out.println(sql.toString());
+		return this.getReList(sql.toString());
+	}
+	
 	
 	private String getProductsByShopSQL(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort, ShopObject object) {	
 		StringBuilder sql = new StringBuilder();
@@ -323,32 +321,26 @@ public class ProductImpl extends BasicImpl implements Product{
 	}
 
 	
-	private String getProductsMostSoldLastMonthByShopSQL(ShopObject object) {	
+	private static String getProductsMostSoldCurrentMonthByShopSQL(ShopObject object) {	
 		StringBuilder sql = new StringBuilder();
-		// Lấy sản phẩm bán được 
-		sql.append("SELECT bill_created_date, SUM(product_price*bd_product_quantity) as sold_price_by_month FROM tblproduct p ");
+		sql.append("SELECT p.*, SUM(product_price*bd_product_quantity) AS most_sold_product_by_month FROM tblproduct p ");
 		sql.append("INNER JOIN tblbd bd ON p.product_id = bd.bd_product_id ");
-		sql.append("INNER JOIN tblbill b ON bd.bd = bd.bd_product_id ");
-		sql.append("WHERE ((p.product_shop_id="+object.getShop_id()+") AND (p.product_deleted=0)) ");
-		sql.append("GROUP BY STR_TO_DATE(bill_created_date, '%e/%c/%Y') as date ");
-		sql.append("HAVING MONTH(date) = (MONTH(CURRENT_DATE())-1) ");
-		sql.append("ORDER BY STR_TO_DATE(bill_created_date, '%e/%c/%Y') ASC;");
-		return sql.toString();
-	}
-	
-	
-	private String getProductsMostSoldCurrentMonthByShopSQL(ShopObject object) {	
-		StringBuilder sql = new StringBuilder();
-		// Lấy sản phẩm bán được 
-		sql.append("SELECT bill_created_date, SUM(product_price*bd_product_quantity) as sold_price_by_month FROM tblproduct p ");
-		sql.append("INNER JOIN tblbd bd ON p.product_id = bd.bd_product_id ");
-		sql.append("INNER JOIN tblbill b ON bd.bd = bd.bd_product_id ");
-		sql.append("WHERE ((p.product_shop_id="+object.getShop_id()+") AND (p.product_deleted=0)) ");
-		sql.append("GROUP BY STR_TO_DATE(bill_created_date, '%e/%c/%Y') as date ");
-		sql.append("HAVING MONTH(date) = MONTH(CURRENT_DATE()) ");
-		sql.append("ORDER BY STR_TO_DATE(bill_created_date, '%e/%c/%Y') ASC;");
+		sql.append("INNER JOIN tblbill b ON b.bill_id = bd.bd_bill_id ");
+		sql.append("WHERE ((p.product_shop_id="+object.getShop_id()+") AND (p.product_deleted=0) AND MONTH(STR_TO_DATE(bill_created_date, '%e/%c/%Y')) = (MONTH(CURRENT_DATE())) ) ");
+		sql.append("GROUP BY product_id ");
+		sql.append("ORDER BY most_sold_product_by_month ASC;");
 		return sql.toString();
 	}	
+	
+	
+	@Override
+	public ArrayList<ResultSet> getProductsByPC(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort, PCObject pcObject) {
+		// TODO Auto-generated method stub
+		StringBuilder sql = new StringBuilder();
+		sql.append(getProductsByPCSQL(at, total, multiField, multiCondition, multiSort, pcObject));
+		sql.append(getProductsSizeByPCSQL(pcObject));
+		return this.getReList(sql.toString());
+	}
 	
 	private String getProductsByPCSQL(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort, PCObject object) {	
 		StringBuilder sql = new StringBuilder();
@@ -373,6 +365,13 @@ public class ProductImpl extends BasicImpl implements Product{
 		return sql.toString();
 	}
 	
+	@Override
+	public ArrayList<ResultSet> getProductsByBill(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort, BillObject shopObject) {
+		StringBuilder sql = new StringBuilder();
+		sql.append(getProductsByBillSQL(at, total, multiCondition, multiField, multiSort, shopObject));
+		sql.append(getProductsSizeByBillSQL(shopObject));
+		return this.getReList(sql.toString());
+	}
 	
 	private String getProductsByBillSQL(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort, BillObject object) {	
 		StringBuilder sql = new StringBuilder();
@@ -389,33 +388,8 @@ public class ProductImpl extends BasicImpl implements Product{
 		sql.append("INNER JOIN tblbd bd ON bd.bd_product_id = p.product_id ");
 		sql.append("WHERE (p.product_shop_id="+object.getBill_id()+") AND (p.product_deleted=0); ");
 		return sql.toString();
-	}
+	}	
 	
-	
-	private String getProductsNewestSQL() {	
-		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT p.* FROM tblproduct p ");	
-		sql.append("WHERE (p.product_deleted=0) ");
-		sql.append("ORDER BY STR_TO_DATE(product_created_date, '%e/%c/%Y') ASC ");
-		sql.append("LIMIT 0,9; ");
-		return sql.toString();
-	}
-	
-	private String getProductsMostSoldSQL() {	
-		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT p.*, SUM(bd_product_quantity) as sold_quantity FROM tblproduct p ");
-		sql.append("INNER JOIN tblbd bd ON bd.bd_product_id = p.product_id ");
-		sql.append("WHERE (p.product_deleted=0) ");
-		sql.append("GROUP BY (p.product_id) ");
-		sql.append("ORDER BY (sold_quantity) DESC ");
-		sql.append("LIMIT 0,9; ");
-		return sql.toString();
-	}		
-	
-	private String SELECTConditions(String multiField) {
-		StringBuilder SELECT = new StringBuilder();
-		return SELECT.toString();
-	}
 
 	private String WHEREConditions(Map<String,String> multiCondition) {
 		StringBuilder WHERE = new StringBuilder();

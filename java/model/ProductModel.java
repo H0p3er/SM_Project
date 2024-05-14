@@ -4,17 +4,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.javatuples.Pair;
 import org.javatuples.Quintet;
+import org.javatuples.Triplet;
 
 import connection.ConnectionPool;
 import connection.ConnectionPoolImpl;
 import constant.PRODUCT_EDIT_TYPE;
 import dto.pc.PC_DTO;
 import dto.product.Product_DTO;
-import dto.product.Product_ShopStatisticDTO;
 import dto.product.Product_manageShopDTO;
 import dto.product.Product_viewProductDTO;
 import dto.product.Product_viewShopDTO;
@@ -33,6 +34,7 @@ import dto.productAttribute.Product_PowerSuppyDTO;
 import dto.productAttribute.Product_RamDTO;
 import dto.productAttribute.Product_StorageDTO;
 import dto.shop.Shop_manageShopDTO;
+import dto.shop.Shop_statisticDTO;
 import repository.*;
 import entity.ProductObject;
 import entity.ShopObject;
@@ -142,7 +144,7 @@ public class ProductModel {
 		return new Pair<>(items1, items2);
 	}	
 
-	public Pair<ArrayList<Product_manageShopDTO>,Integer> getProduct_manageShopDTOs(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, ShopObject shopObject) {
+	public Triplet<ArrayList<Product_manageShopDTO>,Integer,  List<Pair<Product_manageShopDTO,Double>>> getProduct_manageShopDTOs(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, ShopObject shopObject) {
 		Short pagePos = productInfors.getValue0();
 		byte pageLength = productInfors.getValue1();	
 		Map<String,String> multiField = productInfors.getValue2();
@@ -170,8 +172,33 @@ public class ProductModel {
 		}
 		rs = resultSets.get(1);
 		int count_product = getProductSize(rs);
-		return new Pair<>(product_manageShopDTOs,count_product);
+		
+		rs = resultSets.get(2);
+		List<Pair<Product_manageShopDTO,Double>> most_sold_product_current_month = getMostSoldProductCurrentMonth(rs);
+		return new Triplet<>(product_manageShopDTOs,count_product,most_sold_product_current_month);
 	}
+
+	private List<Pair<Product_manageShopDTO,Double>> getMostSoldProductCurrentMonth(ResultSet rs) {	
+		List<Pair<Product_manageShopDTO,Double>> most_sold_product_current_month =  new ArrayList<Pair<Product_manageShopDTO,Double>>();
+		if (rs!=null) {
+			try {			
+				while (rs.next()) {	
+					Product_manageShopDTO product_ShopManagerDTO = new Product_manageShopDTO();
+					product_ShopManagerDTO.setId(rs.getInt("product_id"));
+					product_ShopManagerDTO.setName(rs.getString("product_name"));
+					product_ShopManagerDTO.setQuantity(rs.getInt("product_quantity"));
+					product_ShopManagerDTO.setPrice(rs.getDouble("product_price"));
+					most_sold_product_current_month.add(new Pair<Product_manageShopDTO,Double>(product_ShopManagerDTO, rs.getDouble("most_sold_product_by_month")));
+					
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return most_sold_product_current_month;
+	}
+	
 	
 	public Pair<ArrayList<Product_viewShopDTO>,Integer> getProduct_viewShopDTO(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, ShopObject shopObject) {
 		Short pagePos = productInfors.getValue0();
@@ -261,8 +288,7 @@ public class ProductModel {
 			item.setProduct_notes(rs.getString("product_notes"));
 			item.setProduct_last_modified(rs.getString("product_last_modified"));
 			item.setProduct_shop_id(rs.getInt("product_shop_id"));
-			item.setProduct_quantity(rs.getInt("product_quantity"));
-			
+			item.setProduct_quantity(rs.getInt("product_quantity"));		
 			return item;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

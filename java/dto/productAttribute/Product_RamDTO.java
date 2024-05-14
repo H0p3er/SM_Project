@@ -3,12 +3,12 @@ package dto.productAttribute;
 import dto.product.Product_DTO;
 
 public class Product_RamDTO extends Product_DTO{
-	private int ram_id; 
-	private String ram_manufacturer; 
-	private String ram_type; 
-	private short ram_capacity_gb; 
-	private int ram_bus_speed; 
-	private String ram_standard;
+    private int ram_id;
+    private String ram_manufacturer;
+    private String ram_type;
+    private String ram_capacity;
+    private String ram_bus_speed;
+    private String ram_standard;
 	public int getRam_id() {
 		return ram_id;
 	}
@@ -27,16 +27,16 @@ public class Product_RamDTO extends Product_DTO{
 	public void setRam_type(String ram_type) {
 		this.ram_type = ram_type;
 	}
-	public short getRam_capacity_gb() {
-		return ram_capacity_gb;
+	public String getRam_capacity() {
+		return ram_capacity;
 	}
-	public void setRam_capacity_gb(short ram_capacity_gb) {
-		this.ram_capacity_gb = ram_capacity_gb;
+	public void setRam_capacity(String ram_capacity) {
+		this.ram_capacity = ram_capacity;
 	}
-	public int getRam_bus_speed() {
+	public String getRam_bus_speed() {
 		return ram_bus_speed;
 	}
-	public void setRam_bus_speed(int ram_bus_speed) {
+	public void setRam_bus_speed(String ram_bus_speed) {
 		this.ram_bus_speed = ram_bus_speed;
 	}
 	public String getRam_standard() {
@@ -45,6 +45,5 @@ public class Product_RamDTO extends Product_DTO{
 	public void setRam_standard(String ram_standard) {
 		this.ram_standard = ram_standard;
 	}
-	
 	
 }

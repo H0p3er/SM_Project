@@ -11,19 +11,17 @@ import entity.ProductObject;
 import entity.ShopObject;
 
 public interface Product extends ShareControl {
-	boolean addProduct(ProductObject p);
+	public boolean addProduct(ProductObject p);
 
-	boolean editProduct(ProductObject p, PRODUCT_EDIT_TYPE type);
+	public boolean editProduct(ProductObject p, PRODUCT_EDIT_TYPE type);
 
-	boolean delProduct(ProductObject p);
+	public boolean delProduct(ProductObject p);
 
 	public ResultSet getProductById(int id);
 	
-	public ArrayList<ResultSet> getProductsByCreatedDate(Date date, Date date2);
+	public ArrayList<ResultSet> getProducts();
 	
 	public ArrayList<ResultSet> getProducts(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort);
-
-	public ArrayList<ResultSet> getProducts();
 	
 	public ArrayList<ResultSet> getProductsByShop(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort, ShopObject shopObject);
 	

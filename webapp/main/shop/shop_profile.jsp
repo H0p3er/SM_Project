@@ -23,7 +23,7 @@
               <div class="nav-wrapper ">
                 <ul class="nav nav-tabs" role="tablist">
                   <li class="nav-item" role="presentation">
-                    <a href="/home/main/seller/shopmanage.jsp" class="nav-link active">Quản lý shop</a>
+                    <a href="/home/seller/shop/statistic" class="nav-link active">Quản lý shop</a>
                   </li>
                 </ul>
               </div> <%} %>

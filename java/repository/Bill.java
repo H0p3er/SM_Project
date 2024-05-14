@@ -26,4 +26,7 @@ public interface Bill extends ShareControl{
 	
 	public ArrayList<ResultSet> getBillByShop(int at, byte total, String multiField,  String multiCondition, String multiSort, ShopObject shopObject);
 	public ArrayList<ResultSet> getOrderByShop(int at, byte total, String multiField,  String multiCondition, String multiSort, ShopObject shopObject);
+
+	public ArrayList<ResultSet> getOrderStatisticByShop(ShopObject shopObject, int month);
+	public ArrayList<ResultSet> getIncomeStatisticByShop(ShopObject shopObject, int month);
 }

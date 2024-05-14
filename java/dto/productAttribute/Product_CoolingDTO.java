@@ -4,11 +4,10 @@ import dto.product.Product_DTO;
 
 public class Product_CoolingDTO extends Product_DTO{
 	private int cooling_id;
-	private String cooling_manufacturer; 
-	private int cooling_type;
-	private String cooling_color;
-	private String cooling_fan_size;	
-	
+    private String cooling_manufacturer;
+    private String cooling_type;
+    private String cooling_color;
+    private String cooling_fan_size;
 	public int getCooling_id() {
 		return cooling_id;
 	}
@@ -21,10 +20,10 @@ public class Product_CoolingDTO extends Product_DTO{
 	public void setCooling_manufacturer(String cooling_manufacturer) {
 		this.cooling_manufacturer = cooling_manufacturer;
 	}
-	public int getCooling_type() {
+	public String getCooling_type() {
 		return cooling_type;
 	}
-	public void setCooling_type(int cooling_type) {
+	public void setCooling_type(String cooling_type) {
 		this.cooling_type = cooling_type;
 	}
 	public String getCooling_color() {
@@ -38,7 +37,6 @@ public class Product_CoolingDTO extends Product_DTO{
 	}
 	public void setCooling_fan_size(String cooling_fan_size) {
 		this.cooling_fan_size = cooling_fan_size;
-	}
-	
-	
+	}	
+
 }

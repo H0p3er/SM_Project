@@ -3,10 +3,9 @@ package dto.productAttribute;
 import dto.product.Product_DTO;
 
 public class Product_UsbDTO extends Product_DTO{
-	private int usb_id; 
-	private String usb_manufacturer; 
-	private int usb_capacity;
-	
+    private int usb_id;
+    private String usb_manufacturer;
+    private String usb_capacity;
 	public int getUsb_id() {
 		return usb_id;
 	}
@@ -19,12 +18,11 @@ public class Product_UsbDTO extends Product_DTO{
 	public void setUsb_manufacturer(String usb_manufacturer) {
 		this.usb_manufacturer = usb_manufacturer;
 	}
-	public int getUsb_capacity() {
+	public String getUsb_capacity() {
 		return usb_capacity;
 	}
-	public void setUsb_capacity(int usb_capacity) {
+	public void setUsb_capacity(String usb_capacity) {
 		this.usb_capacity = usb_capacity;
 	}
-	
 	
 }

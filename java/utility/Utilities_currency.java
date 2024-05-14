@@ -8,17 +8,4 @@ public class Utilities_currency {
 		DecimalFormat df = new DecimalFormat("#,### VND");
 		return df.format(price);
 	}
-	
-	public static double toBillionVND(double price) {	
-		return price/1000000000;
-	}
-	
-	public static double toMillionVND(double price) {	
-		return price/1000000;
-	}
-	
-	public static double toThounsandVND(double price) {	
-		return price/1000;
-	}
-	
 }

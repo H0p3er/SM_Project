@@ -3,15 +3,15 @@ package dto.productAttribute;
 import dto.product.Product_DTO;
 
 public class Product_MonitorDTO extends Product_DTO{
-	private int monitor_id;
-	private String monitor_manufacturer; 
-	private String monitor_size;
-	private String monitor_type; 
-	private String monitor_resolution;
-	private String monitor_panel_type;
-	private int monitor_refresh_rate;
-	private String monitor_screen_type; 
-	private double monitor_response;
+    private int monitor_id;
+    private String monitor_manufacturer;
+    private String monitor_size;
+    private String monitor_type;
+    private String monitor_resolution;
+    private String monitor_panel_type;
+    private int monitor_refresh_rate;
+    private String monitor_screen_type;
+    private double monitor_response;
 	public int getMonitor_id() {
 		return monitor_id;
 	}
@@ -67,5 +67,4 @@ public class Product_MonitorDTO extends Product_DTO{
 		this.monitor_response = monitor_response;
 	}
 
-	
 }

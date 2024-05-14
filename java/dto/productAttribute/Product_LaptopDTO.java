@@ -3,16 +3,16 @@ package dto.productAttribute;
 import dto.product.Product_DTO;
 
 public class Product_LaptopDTO extends Product_DTO {
-	private int laptop_id; 
-	private String laptop_manufacturer; 
-	private String laptop_type;
-	private String laptop_cpu;
-	private String laptop_ram;
-	private String laptop_graphics_card;
-	private String laptop_storage;
-	private String laptop_screen_size;
-	private String laptop_refresh_rate; 
-	private String laptop_resolution;
+    private int laptop_id;
+    private String laptop_manufacturer;
+    private String laptop_cpu;
+    private String laptop_ram;
+    private String laptop_graphics_card;
+    private String laptop_storage;
+    private String laptop_screen_size;
+    private String laptop_refresh_rate;
+    private String laptop_resolution;
+    private String laptop_type;
 	public int getLaptop_id() {
 		return laptop_id;
 	}
@@ -24,12 +24,6 @@ public class Product_LaptopDTO extends Product_DTO {
 	}
 	public void setLaptop_manufacturer(String laptop_manufacturer) {
 		this.laptop_manufacturer = laptop_manufacturer;
-	}
-	public String getLaptop_type() {
-		return laptop_type;
-	}
-	public void setLaptop_type(String laptop_type) {
-		this.laptop_type = laptop_type;
 	}
 	public String getLaptop_cpu() {
 		return laptop_cpu;
@@ -73,7 +67,11 @@ public class Product_LaptopDTO extends Product_DTO {
 	public void setLaptop_resolution(String laptop_resolution) {
 		this.laptop_resolution = laptop_resolution;
 	}
-
-	
+	public String getLaptop_type() {
+		return laptop_type;
+	}
+	public void setLaptop_type(String laptop_type) {
+		this.laptop_type = laptop_type;
+	}
 	
 }

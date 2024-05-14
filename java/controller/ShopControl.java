@@ -7,8 +7,8 @@ import org.javatuples.*;
 import connection.*;
 import constant.SHOP_EDIT_TYPE;
 import dto.product.Product_DTO;
-import dto.product.Product_ShopStatisticDTO;
 import dto.shop.Shop_manageShopDTO;
+import dto.shop.Shop_statisticDTO;
 import dto.shop.Shop_viewShopDTO;
 import entity.UserObject;
 import entity.ShopObject;
@@ -51,10 +51,10 @@ public class ShopControl {
 		return ShopLibrary.viewShop_Profile(shopDTO);
 	}
 
-	public Map<String,String> displaySeller_manageShop(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, 
+	public Map<String,String> displaySeller_ShopStatistic(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, 
 			UserObject currentUser){
 		Shop_manageShopDTO shopDTO = this.shopModel.getShopDTOByUser(productInfors,currentUser);
-		return ShopLibrary.viewSeller_manageShop(shopDTO);
+		return ShopLibrary.viewSeller_ShopStatistic(shopDTO);
 	}
 
 }

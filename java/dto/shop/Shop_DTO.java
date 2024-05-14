@@ -2,7 +2,6 @@ package dto.shop;
 
 import java.util.List;
 
-import dto.product.Product_ShopStatisticDTO;
 import dto.product.Product_manageShopDTO;
 import entity.ShopObject;
 
@@ -19,7 +18,7 @@ public class Shop_DTO {
 	private String phone;
     private String email;
 	private List<Product_manageShopDTO> storage;
-	private Product_ShopStatisticDTO statistic;
+	private Shop_statisticDTO statistic;
 	
 	public int getId() {
 		return this.id;
@@ -127,11 +126,11 @@ public class Shop_DTO {
 		shopObject.setShop_notes(notes);
 	}
 
-	public Product_ShopStatisticDTO getStatistic() {
+	public Shop_statisticDTO getStatistic() {
 		return statistic;
 	}
 
-	public void setStatistic(Product_ShopStatisticDTO statistic) {
+	public void setStatistic(Shop_statisticDTO statistic) {
 		this.statistic = statistic;
 	}
 

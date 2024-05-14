@@ -6,6 +6,7 @@ import java.sql.*;
 import java.util.*;
 
 import connection.*;
+import entity.ShopObject;
 import entity.UserObject;
 import basic.*;
 import utility.Utilities;
@@ -28,7 +29,6 @@ public class UserImpl extends BasicImpl implements User {
 		if (this.isExisting(item)) {
 			return false;
 		}
-
 		StringBuilder sql = new StringBuilder();
 		sql.append("INSERT INTO tbluser(");
 		sql.append("user_name, user_pass, ");
@@ -55,7 +55,6 @@ public class UserImpl extends BasicImpl implements User {
             pre.setString(11, item.getUser_created_date());
             pre.setString(12, item.getUser_phone());
             pre.setString(13, item.getUser_social_links());
-
             boolean success = this.add(pre);
             if (success) {
                 ResultSet generatedKeys = pre.getGeneratedKeys();
@@ -78,7 +77,7 @@ public class UserImpl extends BasicImpl implements User {
 		return false;
 	}
 
-	private boolean isExisting(UserObject item) {
+	public boolean isExisting(UserObject item) {
 		boolean flag = false;
 		String sql = "SELECT user_id FROM tbluser WHERE (user_name='" + item.getUser_name() + "'); ";
 		ResultSet rs = this.gets(sql);
@@ -262,6 +261,37 @@ public class UserImpl extends BasicImpl implements User {
 		return this.getReList(multiSelect.toString());
 	}
 
+	@Override
+	public ArrayList<ResultSet> getCustomerStatisticByShopAndMonth(ShopObject shopObject, int month){
+		StringBuilder sql = new StringBuilder();
+		sql.append(getCustomerByShopAndMonth(shopObject, month));
+		sql.append(getCustomerCountByShopAndMonth(shopObject, month));
+		sql.append(getCustomerCountByShopAndMonth(shopObject, month-1));
+		return this.getReList(sql.toString());
+	}
+	
+	private static String getCustomerByShopAndMonth(ShopObject shopObject, int month) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT bill_created_date , COUNT(bill_creator_id) AS count_customer_by_month FROM tblproduct p ");
+		sql.append("INNER JOIN tblbd bd ON p.product_id = bd.bd_product_id ");
+		sql.append("INNER JOIN tblbill b ON b.bill_id = bd.bd_bill_id ");
+		sql.append("WHERE ( (p.product_shop_id="+shopObject.getShop_id()+") AND (p.product_deleted=0) AND MONTH(STR_TO_DATE(bill_created_date, '%e/%c/%Y')) = ("+month+") ) ");
+		sql.append("GROUP BY bill_created_date ");
+		sql.append("ORDER BY STR_TO_DATE(bill_created_date, '%e/%c/%Y') ASC;");
+		return sql.toString();
+	}
+	
+	private static String getCustomerCountByShopAndMonth(ShopObject shopObject, int month) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT COUNT(bill_creator_id) AS count_customer_by_month FROM tblproduct p ");
+		sql.append("INNER JOIN tblbd bd ON p.product_id = bd.bd_product_id ");
+		sql.append("INNER JOIN tblbill b ON b.bill_id = bd.bd_bill_id ");
+		sql.append("WHERE ( (p.product_shop_id="+shopObject.getShop_id()+") AND (p.product_deleted=0) AND MONTH(STR_TO_DATE(bill_created_date, '%e/%c/%Y')) = ("+month+") ) ");
+		sql.append("ORDER BY count_customer_by_month ASC;");
+		return sql.toString();
+	}
+	
+	
 	private String createCondition(UserObject similar) {
 		StringBuilder conds = new StringBuilder();
 
@@ -310,19 +340,15 @@ public class UserImpl extends BasicImpl implements User {
 
 		// Tao doi tuong thuc thi chuc nang muc User
 		User u = new UserImpl(cp);
-
+		
 		// Them mot nguoi su dung
 		UserObject new_user = new UserObject();
-		new_user.setUser_name("lingling1");
+		new_user.setUser_name("tester");
 		new_user.setUser_pass("linhuu111");
-		new_user.setUser_nickname("godah");
 		new_user.setUser_fullname("123 ling");
-		new_user.setUser_images(null);
-		new_user.setUser_social_links(null);
-		new_user.setUser_gender((byte) 1);
 		new_user.setUser_email("admin1@gmail.com");
 		new_user.setUser_address("Ha Noi");
-		new_user.setUser_created_date("2022/11/11");
+		new_user.setUser_phone("1231231313");
 
 		boolean resultAdd = u.addUser(new_user);
 		if (resultAdd) {
