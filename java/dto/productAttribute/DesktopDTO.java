@@ -2,7 +2,7 @@ package dto.productAttribute;
 
 import dto.product.Product_DTO;
 
-public class Product_DesktopDTO extends Product_DTO{
+public class DesktopDTO implements Product_AttributeDTO{
     private int desktop_id;
     private String desktop_manufacturer;
     private String desktop_type;

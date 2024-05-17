@@ -3,10 +3,13 @@ package repository;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 import java.util.TreeMap;
+
+import org.javatuples.Pair;
 
 import basic.BasicImpl;
 import connection.ConnectionPool;
@@ -23,83 +26,63 @@ public class BillImpl extends BasicImpl implements Bill {
 
 	public BillImpl(ConnectionPool cp) {
 		super(cp, "Bill");
-		// TODO Auto-generated constructor stub
 	}
 	
 	public BillImpl(ConnectionPool cp, String objectName) {
 		super(cp, objectName);
-		// TODO Auto-generated constructor stub
 	}
 	
 	@Override
-	public boolean addBill(BillObject item, ArrayList<BDObject> bdObjects) {
+	public Pair<Boolean, Integer> addBill(BillObject item, ArrayList<BDObject> bdObjects) {
 		if (this.isExisting(item)) {
-			return false;
-		}	
-		StringBuilder getIdSql = new StringBuilder();
-		getIdSql.append("SELECT AUTO_INCREMENT ");
-		getIdSql.append("FROM information_schema.TABLES ");
-		getIdSql.append("WHERE TABLE_SCHEMA=\"test\" ");
-		getIdSql.append("AND TABLE_NAME=\"tblbill\"; ");
-		System.out.println(getIdSql.toString());		
-		ResultSet billId = this.getReList(getIdSql.toString()).get(0);
-		
-		if (billId==null) {
-			return false;
+			return new Pair<>(false,0);
 		}
-		
 		try {
-			if (billId.next()) {
-				int id = billId.getInt("AUTO_INCREMENT");
-				billId.close();			
-				
-				StringBuilder sql = new StringBuilder();
-				
-				sql.append("INSERT INTO tblbill(");
-				sql.append("bill_status, bill_created_date, ");
-				sql.append("bill_last_modified_date, bill_last_modified_id, bill_shop_id, ");
-				sql.append("bill_transporter_id, bill_type, bill_customer_id, bill_target_address ");
+			StringBuilder sql = new StringBuilder();	
+			sql.append("INSERT INTO tblbill(");
+			sql.append("bill_created_date, bill_creator_id, ");
+			sql.append("bill_last_modified_date, bill_last_modified_id, bill_shop_id, ");
+			sql.append("bill_transporter_id, bill_type, bill_customer_id, bill_target_address ");
+			sql.append(")");
+			sql.append("VALUES(?,?,?,?,?,?,?,?,?); ");	
+	, bill_delivery_id
+			PreparedStatement pre = this.con.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS);
+			
+			pre.setByte(1,item.getBill_status());
+			pre.setString(2, item.getBill_created_date());		
+			pre.setString(3, item.getBill_last_modified_date());
+			pre.setInt(4, item.getBill_last_modified_id());
+			pre.setInt(5, item.getBill_creator_id());
+			pre.setInt(6, item.getBill_transporter_id());
+			pre.setByte(7, item.getBill_type());
+			
+			if (this.add(pre)) {
+				sql.setLength(0);
+				sql.append("INSERT INTO tblbd(");
+				sql.append("bd_bill_id, bd_product_id, ");
+				sql.append("bd_product_quantity");				
 				sql.append(")");
-				sql.append("VALUES(?,?,?,?,?,?,?,?,?); ");	
-				
-				PreparedStatement pre = this.con.prepareStatement(sql.toString());
-				
-				pre.setByte(1,item.getBill_status());
-				pre.setString(2, item.getBill_created_date());		
-				pre.setString(3, item.getBill_last_modified_date());
-				pre.setInt(4, item.getBill_last_modified_id());
-				pre.setInt(5, item.getBill_creator_id());
-				pre.setInt(6, item.getBill_transporter_id());
-				pre.setByte(7, item.getBill_type());
-				
-				if (this.add(pre)) {
-					sql.setLength(0);
-					sql.append("INSERT INTO tblbd(");
-					sql.append("bd_bill_id, bd_product_id, ");
-					sql.append("bd_product_quantity");				
-					sql.append(")");
-					sql.append("VALUES(?,?,?,?);");	
-					PreparedStatement pre2 = this.con.prepareStatement(sql.toString());
-					bdObjects.forEach(bd->{
-						try {
-							pre2.setInt(1, bd.getBd_bill_id());
-							pre2.setInt(2, bd.getBd_product_id());
-							pre2.setInt(3, bd.getBd_product_quantity());
-							pre2.addBatch();
-						} catch (SQLException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						
-					});
-					return this.addList(pre);
-				} 	
-			}
+				sql.append("VALUES(?,?,?,?);");	
+				PreparedStatement pre2 = this.con.prepareStatement(sql.toString());
+				bdObjects.forEach(bd->{
+					try {
+						pre2.setInt(1, pre.getGeneratedKeys().getInt(1));
+						pre2.setInt(2, bd.getBd_product_id());
+						pre2.setInt(3, bd.getBd_product_quantity());
+						pre2.addBatch();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+				});
+				return this.addList(pre);
+			} 	
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return false;
+		return new Pair<>(false,0);
 	}
 	
 

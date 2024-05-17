@@ -10,20 +10,20 @@ import org.javatuples.Quartet;
 import org.javatuples.Quintet;
 
 import dto.product.Product_DTO;
-import dto.productAttribute.Product_CPUDTO;
-import dto.productAttribute.Product_CaseDTO;
-import dto.productAttribute.Product_CoolingDTO;
-import dto.productAttribute.Product_DesktopDTO;
-import dto.productAttribute.Product_GraphicsCardDTO;
-import dto.productAttribute.Product_HeadphoneSpeakerDTO;
-import dto.productAttribute.Product_KeyboardDTO;
-import dto.productAttribute.Product_LaptopDTO;
-import dto.productAttribute.Product_MiceDTO;
-import dto.productAttribute.Product_MonitorDTO;
-import dto.productAttribute.Product_MotherboardDTO;
-import dto.productAttribute.Product_PowerSuppyDTO;
-import dto.productAttribute.Product_RamDTO;
-import dto.productAttribute.Product_StorageDTO;
+import dto.productAttribute.CPUDTO;
+import dto.productAttribute.CaseDTO;
+import dto.productAttribute.CoolingDTO;
+import dto.productAttribute.DesktopDTO;
+import dto.productAttribute.GraphicsCardDTO;
+import dto.productAttribute.HeadphoneSpeakerDTO;
+import dto.productAttribute.KeyboardDTO;
+import dto.productAttribute.LaptopDTO;
+import dto.productAttribute.MiceDTO;
+import dto.productAttribute.MonitorDTO;
+import dto.productAttribute.MotherboardDTO;
+import dto.productAttribute.PowerSuppyDTO;
+import dto.productAttribute.RamDTO;
+import dto.productAttribute.StorageDTO;
 import dto.productAttribute.Product_UsbDTO;
 import repository.Product;
 
@@ -37,8 +37,8 @@ public class ProductLibrary {
 			Product_DTO product = productObjects.get(i-1);
 			tmp.append("<div class=\"col-lg-4 col-md-6\">");
 			tmp.append("<div class=\"item\">");
-			tmp.append("<a href=\"/home/product/profile?id="+product.getProduct_id()+"\"><img src=\""+product.getProduct_images()+"\" alt=\"\"></a>");
-			switch (product.getProduct_pc().getId()) {
+			tmp.append("<a href=\"/home/product/profile?id="+product.getId()+"\"><img src=\""+product.getImages()+"\" alt=\"\"></a>");
+			switch (product.getPc().getId()) {
 				case 1:
 					tmp.append("<span class=\"category\">Màn hình</span>");
 					break;		
@@ -82,15 +82,15 @@ public class ProductLibrary {
 					tmp.append("<span class=\"category\">Bộ tản nhiệt</span>");
 					break;					
 			}	
-			tmp.append("<h6>"+product.getProduct_price()+"</h6>");
-			tmp.append("<h4 style=\"height: 44px\" class=\"text-truncateline my-2\"><a href=\"/home/product/profile?id="+product.getProduct_id()+"\">"+product.getProduct_name()+"</a></h4>");
+			tmp.append("<h6>"+product.getPrice()+"</h6>");
+			tmp.append("<h4 style=\"height: 44px\" class=\"text-truncateline my-2\"><a href=\"/home/product/profile?id="+product.getId()+"\">"+product.getName()+"</a></h4>");
 			tmp.append("<ul class=\"item-list\">");
 			
 			tmp.append(viewProductAttribute(product));
 			
 			tmp.append("</ul>");
 			tmp.append("<div class=\"main-button\">");
-			tmp.append("<a href=\"/home/product/profile?id="+product.getProduct_id()+"\">Xem chi tiết</a>");
+			tmp.append("<a href=\"/home/product/profile?id="+product.getId()+"\">Xem chi tiết</a>");
 			tmp.append("</div>");
 			tmp.append("</div>");
 			tmp.append("</div>");
@@ -107,8 +107,8 @@ public class ProductLibrary {
 			Product_DTO product = iterator.next();
 			tmp.append("<div class=\"col-lg-4 col-md-6\">");
 			tmp.append("<div class=\"item\">");
-			tmp.append("<a href=\"/home/product/profile?id="+product.getProduct_id()+"\"><img src=\""+product.getProduct_images()+"\" alt=\"\"></a>");
-			switch (product.getProduct_pc().getId()) {
+			tmp.append("<a href=\"/home/product/profile?id="+product.getId()+"\"><img src=\""+product.getImages()+"\" alt=\"\"></a>");
+			switch (product.getPc().getId()) {
 			case 1:
 				tmp.append("<span class=\"category\">Màn hình</span>");
 				break;		
@@ -152,15 +152,15 @@ public class ProductLibrary {
 				tmp.append("<span class=\"category\">Bộ tản nhiệt</span>");
 				break;					
 		}	
-			tmp.append("<h6>"+product.getProduct_price()+"</h6>");
-			tmp.append("<h4 style=\"height: 44px\" class=\"text-truncateline my-2\"><a href=\"/home/product/profile?id="+product.getProduct_id()+"\">"+product.getProduct_name()+"</a></h4>");
+			tmp.append("<h6>"+product.getPrice()+"</h6>");
+			tmp.append("<h4 style=\"height: 44px\" class=\"text-truncateline my-2\"><a href=\"/home/product/profile?id="+product.getId()+"\">"+product.getName()+"</a></h4>");
 			tmp.append("<ul class=\"item-list\">");
 			
 			tmp.append(viewProductAttribute(product));
 			
 			tmp.append("</ul>");
 			tmp.append("<div class=\"main-button\">");
-			tmp.append("<a href=\"/home/product/profile?id="+product.getProduct_id()+"\">Xem chi tiết</a>");
+			tmp.append("<a href=\"/home/product/profile?id="+product.getId()+"\">Xem chi tiết</a>");
 			tmp.append("</div>");
 			tmp.append("</div>");
 			tmp.append("</div>");
@@ -176,35 +176,52 @@ public class ProductLibrary {
 		
 		Map<String,String> view = new HashMap<String,String>();
 		StringBuilder tmp = new StringBuilder();
-		ArrayList<Product_DTO> productObjects = datas.getValue0();
-		Iterator<Product_DTO> iterator =  datas.getValue0().iterator();
-		
+		Iterator<Product_DTO> iterator =  datas.getValue0().iterator();	
 		while (iterator.hasNext()) {
 			Product_DTO product = iterator.next();
 			tmp.append("<div class=\"col-lg-4 col-md-6\">");
 			tmp.append("<div class=\"item\">");
-			tmp.append("<a href=\"property-details.html\"><img src=\""+product.getProduct_images()+"\" alt=\"\"></a>");
+			tmp.append("<a href=\"property-details.html\"><img src=\""+product.getImages()+"\" alt=\"\"></a>");
 			tmp.append("");
 			tmp.append("<h4 style=\"height: 45px\" class=\"text-truncateline my-2\"><a href=\"property-details.html\">");
-			tmp.append(product.getProduct_name());
+			tmp.append(product.getName());
 			tmp.append("</a></h4>");
-			tmp.append("<h6 class=\"float-none mt-0 my-2\">"+product.getProduct_price()+"</h6>");
+			tmp.append("<h6 class=\"float-none mt-0 my-2\">"+product.getPrice()+"</h6>");
 			tmp.append("<ul class=\"item-list\">");
 			tmp.append(viewProductAttribute(product));
 			tmp.append("</ul>");
 			tmp.append("<div class=\"main-button\">");
-			tmp.append("<a href=\"/home/product/profile?"+product.getProduct_id()+"\">Xem chi tiết</a>");
+			tmp.append("<a href=\"/home/product/profile?id="+product.getId()+"\">Xem chi tiết</a>");
 			tmp.append("</div>");
 			tmp.append("</div>");
 			tmp.append("</div>");
 		}	
-		view.put("product-search",tmp.toString());	
-		
-		
+		view.put("product-search",tmp.toString());
 		tmp.setLength(0);
-		tmp.append(viewProductPagination(datas.getValue1(), infors.getValue0(), infors.getValue1(), infors.getValue3(), url));
-		view.put("product-search-pagination", tmp.toString());
+		
+		view.put("product-filter", viewSearchPC(datas.getValue0()));
+		
+		
+		view.put("product-search-pagination", viewProductPagination(datas.getValue1(), infors.getValue0(), infors.getValue1(), infors.getValue3(), url));
 		return view;
+	}
+	
+	private static String viewSearchPC(ArrayList<Product_DTO> product_DTOs) {
+		StringBuilder tmp = new StringBuilder();
+		Map<String,Integer> map = new HashMap<String, Integer>();
+		product_DTOs.forEach(product->{
+			String category_name = (product.getPc().getName()!=null)?product.getPc().getName():"Khác";
+			if (map.get(category_name) != null) {
+				map.put(category_name, map.get(category_name)+1);		
+			} else {
+				map.put(category_name, 1);
+			}
+		});
+		
+		map.forEach((key,value)->{
+			tmp.append("<li><a class=\"text-black\" href=\"\">"+key+"("+value+")</a></li>");
+		});
+		return tmp.toString();
 	}
 	
 	
@@ -213,7 +230,7 @@ public class ProductLibrary {
 		
 		StringBuilder tmp = new StringBuilder();
 		
-		tmp.append("<img src=\""+productObject.getProduct_images()+"\" alt=\"\" style=\"max-height: 430px;\">");
+		tmp.append("<img src=\""+productObject.getImages()+"\" alt=\"\" style=\"max-height: 430px;\">");
 		view.put("product-image", tmp.toString());
 		tmp.setLength(0);	
 		
@@ -221,27 +238,27 @@ public class ProductLibrary {
 		view.put("product-attribute",tmp.toString());
 		tmp.setLength(0);
 		
-		tmp.append("<h3>"+productObject.getProduct_name()+"</h3>");
+		tmp.append("<h3>"+productObject.getName()+"</h3>");
 		view.put("product-name",tmp.toString());
 		tmp.setLength(0);	
 
-		tmp.append("<h6 style=\"color: #f35525;\" class=\"fs-3 my-4\">"+productObject.getProduct_price()+"</h6>");
+		tmp.append("<h6 style=\"color: #f35525;\" class=\"fs-3 my-4\">"+productObject.getPrice()+"</h6>");
 		view.put("product-price",tmp.toString());
 		tmp.setLength(0);
 
-		tmp.append("<div class=\"col-3\">Số lượng: <span>"+productObject.getProduct_quantity()+"</span></div>");
+		tmp.append("<div class=\"col-3\">Số lượng: <span>"+productObject.getQuantity()+"</span></div>");
 		view.put("product-left",tmp.toString());
 		tmp.setLength(0);
 		
-		tmp.append("<div class=\"col-7\">"+productObject.getProduct_shop_id()+"</div>");
+		tmp.append("<div class=\"col-7\">"+productObject.getShop().getId()+"</div>");
 		view.put("seller-name",tmp.toString());
 		tmp.setLength(0);
 		
-		tmp.append("<span class=\"mt-4 overflow-y-auto\" style=\"height: 250px\">"+productObject.getProduct_notes()+"</span>");
+		tmp.append("<span class=\"mt-4 overflow-y-auto\" style=\"height: 250px\">"+productObject.getNotes()+"</span>");
 		view.put("product-notes",tmp.toString());
 		tmp.setLength(0);
 		
-		tmp.append("<a class=\"btn btn-dark col-4\" href=\"/home/shop/profile?id="+productObject.getProduct_shop_id()+"\">Xem gian hàng</a>");
+		tmp.append("<a class=\"btn btn-dark col-4\" href=\"/home/shop/profile?id="+productObject.getShop().getId()+"\">Xem gian hàng</a>");
 		view.put("product-shop",tmp.toString());
 		tmp.setLength(0);	
 		return view;
@@ -311,126 +328,126 @@ public class ProductLibrary {
 	
 	private static String viewProductAttribute(Product_DTO product) {
 		StringBuilder tmp = new StringBuilder();
-		switch (product.getProduct_pc().getId()) {
+		switch (product.getPc().getId()) {
 		case 1:
 			//monitor
-			tmp.append("<li>Hãng: <span>"+((Product_MonitorDTO)product).getMonitor_manufacturer()+"</span></li>");
-			tmp.append("<li>Dòng: <span>"+((Product_MonitorDTO)product).getMonitor_type()+"</span></li>");
-			tmp.append("<li>Độ phân giải: <span>"+((Product_MonitorDTO)product).getMonitor_resolution()+"</span></li>");
-			tmp.append("<li>Tấm nền: <span>"+((Product_MonitorDTO)product).getMonitor_panel_type()+"</span></li>");
-			tmp.append("<li>Tần số quét: <span>"+((Product_MonitorDTO)product).getMonitor_refresh_rate()+"Hz</span></li>");
-			tmp.append("<li>Kiểu màn hình: <span>"+((Product_MonitorDTO)product).getMonitor_screen_type()+"</span></li>");
-			tmp.append("<li>Tốc độ phản hồi: <span>"+((Product_MonitorDTO)product).getMonitor_response()+"ms</span></li>");
+			tmp.append("<li>Hãng: <span>"+((MonitorDTO)product.getAttribute()).getMonitor_manufacturer()+"</span></li>");
+			tmp.append("<li>Dòng: <span>"+((MonitorDTO)product.getAttribute()).getMonitor_type()+"</span></li>");
+			tmp.append("<li>Độ phân giải: <span>"+((MonitorDTO)product.getAttribute()).getMonitor_resolution()+"</span></li>");
+			tmp.append("<li>Tấm nền: <span>"+((MonitorDTO)product.getAttribute()).getMonitor_panel_type()+"</span></li>");
+			tmp.append("<li>Tần số quét: <span>"+((MonitorDTO)product.getAttribute()).getMonitor_refresh_rate()+"Hz</span></li>");
+			tmp.append("<li>Kiểu màn hình: <span>"+((MonitorDTO)product.getAttribute()).getMonitor_screen_type()+"</span></li>");
+			tmp.append("<li>Tốc độ phản hồi: <span>"+((MonitorDTO)product.getAttribute()).getMonitor_response()+"ms</span></li>");
 			break;		
 		case 2:
 			//Keyboard
-			tmp.append("<li>Loại: <span>"+((Product_KeyboardDTO)product).getKeyboard_type()+"</span></li>");
-			tmp.append("<li>Kiểu kết nối: <span>"+((Product_KeyboardDTO)product).getKeyboard_connection_type()+"</span></li>");
-			tmp.append("<li>kích thước: <span>"+((Product_KeyboardDTO)product).getKeyboard_size_layout()+"</span></li>");
-			tmp.append("<li>Led: <span>"+((Product_KeyboardDTO)product).getKeyboard_led_backlighting()+"</span></li>");
+			tmp.append("<li>Loại: <span>"+((KeyboardDTO)product.getAttribute()).getKeyboard_type()+"</span></li>");
+			tmp.append("<li>Kiểu kết nối: <span>"+((KeyboardDTO)product.getAttribute()).getKeyboard_connection_type()+"</span></li>");
+			tmp.append("<li>kích thước: <span>"+((KeyboardDTO)product.getAttribute()).getKeyboard_size_layout()+"</span></li>");
+			tmp.append("<li>Led: <span>"+((KeyboardDTO)product.getAttribute()).getKeyboard_led_backlighting()+"</span></li>");
 			break;					
 		case 3:
 			//Mouse
-			tmp.append("<li>Hãng: <span>"+((Product_MiceDTO)product).getMouse_manufacturer()+"</span></li>");
-			tmp.append("<li>Loại: <span>"+((Product_MiceDTO)product).getMouse_type()+"</span></li>");
-			tmp.append("<li>Kiểu kết nối: <span>"+((Product_MiceDTO)product).getMouse_connection_type()+"</span></li>");
-			tmp.append("<li>Thiết kế: <span>"+((Product_MiceDTO)product).getMouse_design()+"</span></li>");
-			tmp.append("<li>Pin: <span>"+((Product_MiceDTO)product).getMouse_battery()+"</span></li>");
+			tmp.append("<li>Hãng: <span>"+((MiceDTO)product.getAttribute()).getMouse_manufacturer()+"</span></li>");
+			tmp.append("<li>Loại: <span>"+((MiceDTO)product.getAttribute()).getMouse_type()+"</span></li>");
+			tmp.append("<li>Kiểu kết nối: <span>"+((MiceDTO)product.getAttribute()).getMouse_connection_type()+"</span></li>");
+			tmp.append("<li>Thiết kế: <span>"+((MiceDTO)product.getAttribute()).getMouse_design()+"</span></li>");
+			tmp.append("<li>Pin: <span>"+((MiceDTO)product.getAttribute()).getMouse_battery()+"</span></li>");
 			break;					
 		case 4:
 			//Headphone
-			tmp.append("<li>Hãng: <span>"+((Product_HeadphoneSpeakerDTO)product).getHeadphones_manufacturer()+"</span></li>");
-			tmp.append("<li>Loại: <span>"+((Product_HeadphoneSpeakerDTO)product).getHeadphone_type()+"</span></li>");
-			tmp.append("<li>Kiểu kết nối: <span>"+((Product_HeadphoneSpeakerDTO)product).getHeadphones_connection()+"</span></li>");
-			tmp.append("<li>Cổng: <span>"+((Product_HeadphoneSpeakerDTO)product).getHeadphones_connection_ports()+"</span></li>");
+			tmp.append("<li>Hãng: <span>"+((HeadphoneSpeakerDTO)product.getAttribute()).getHeadphones_manufacturer()+"</span></li>");
+			tmp.append("<li>Loại: <span>"+((HeadphoneSpeakerDTO)product.getAttribute()).getHeadphone_type()+"</span></li>");
+			tmp.append("<li>Kiểu kết nối: <span>"+((HeadphoneSpeakerDTO)product.getAttribute()).getHeadphones_connection()+"</span></li>");
+			tmp.append("<li>Cổng: <span>"+((HeadphoneSpeakerDTO)product.getAttribute()).getHeadphones_connection_ports()+"</span></li>");
 			break;	
 			
 		case 5:	
 			//laptop
-			tmp.append("<li>Hãng: <span>"+((Product_LaptopDTO)product).getLaptop_manufacturer()+"</span></li>");
-			tmp.append("<li>Dòng: <span>"+((Product_LaptopDTO)product).getLaptop_type()+"</span></li>");
-			tmp.append("<li>Kích thước màn: <span>"+((Product_LaptopDTO)product).getLaptop_screen_size()+"</span></li>");
-			tmp.append("<li>CPU: <span>"+((Product_LaptopDTO)product).getLaptop_cpu()+"</span></li>");
-			tmp.append("<li>RAM: <span>"+((Product_LaptopDTO)product).getLaptop_ram()+" GB</span></li>");
-			tmp.append("<li>Bộ nhớ: <span>"+((Product_LaptopDTO)product).getLaptop_storage()+"</span></li>");		
+			tmp.append("<li>Hãng: <span>"+((LaptopDTO)product.getAttribute()).getLaptop_manufacturer()+"</span></li>");
+			tmp.append("<li>Dòng: <span>"+((LaptopDTO)product.getAttribute()).getLaptop_type()+"</span></li>");
+			tmp.append("<li>Kích thước màn: <span>"+((LaptopDTO)product.getAttribute()).getLaptop_screen_size()+"</span></li>");
+			tmp.append("<li>CPU: <span>"+((LaptopDTO)product.getAttribute()).getLaptop_cpu()+"</span></li>");
+			tmp.append("<li>RAM: <span>"+((LaptopDTO)product.getAttribute()).getLaptop_ram()+" GB</span></li>");
+			tmp.append("<li>Bộ nhớ: <span>"+((LaptopDTO)product.getAttribute()).getLaptop_storage()+"</span></li>");		
 			break;						
 		case 6:
 			//desktop
-			tmp.append("<li>Hãng: <span>"+((Product_DesktopDTO)product).getDesktop_manufacturer()+"</span></li>");
-			tmp.append("<li>Dòng: <span>"+((Product_DesktopDTO)product).getDesktop_type()+"</span></li>");
-			tmp.append("<li>CPU: <span>"+((Product_DesktopDTO)product).getDesktop_cpu()+"</span></li>");
-			tmp.append("<li>GPU: <span>"+((Product_DesktopDTO)product).getDesktop_gpu()+"</span></li>");
-			tmp.append("<li>RAM: <span>"+((Product_DesktopDTO)product).getDesktop_ram_capacity()+" "+((Product_DesktopDTO)product).getDesktop_ram_type()+"</span></li>");
-			tmp.append("<li>Bộ nhớ: <span>"+((Product_DesktopDTO)product).getDesktop_storage()+"</span></li>");		
-			tmp.append("<li>Nguồn: <span>"+((Product_DesktopDTO)product).getDesktop_power_supply()+"</span></li>");
+			tmp.append("<li>Hãng: <span>"+((DesktopDTO) product.getAttribute()).getDesktop_manufacturer()+"</span></li>");
+			tmp.append("<li>Dòng: <span>"+((DesktopDTO) product.getAttribute()).getDesktop_type()+"</span></li>");
+			tmp.append("<li>CPU: <span>"+((DesktopDTO) product.getAttribute()).getDesktop_cpu()+"</span></li>");
+			tmp.append("<li>GPU: <span>"+((DesktopDTO) product.getAttribute()).getDesktop_gpu()+"</span></li>");
+			tmp.append("<li>RAM: <span>"+((DesktopDTO) product.getAttribute()).getDesktop_ram_capacity()+" "+((DesktopDTO) product.getAttribute()).getDesktop_ram_type()+"</span></li>");
+			tmp.append("<li>Bộ nhớ: <span>"+((DesktopDTO) product.getAttribute()).getDesktop_storage()+"</span></li>");		
+			tmp.append("<li>Nguồn: <span>"+((DesktopDTO) product.getAttribute()).getDesktop_power_supply()+"</span></li>");
 			break;						
 		case 7:
 			//cpu
-			tmp.append("<li>Bộ: <span>"+((Product_CPUDTO)product).getCpu_collection()+"</span></li>");
-			tmp.append("<li>Socket: <span>"+((Product_CPUDTO)product).getCpu_socket()+"</span></li>");
-			tmp.append("<li>Số nhân: <span>"+((Product_CPUDTO)product).getCpu_cores()+"</span></li>");
-			tmp.append("<li>Số luồng: <span>"+((Product_CPUDTO)product).getCpu_threads()+"</span></li>");
-			tmp.append("<li>Xung nhịp: <span>"+((Product_CPUDTO)product).getCpu_speed_ghz()+"</span></li>");
+			tmp.append("<li>Bộ: <span>"+((CPUDTO)product.getAttribute()).getCpu_collection()+"</span></li>");
+			tmp.append("<li>Socket: <span>"+((CPUDTO)product.getAttribute()).getCpu_socket()+"</span></li>");
+			tmp.append("<li>Số nhân: <span>"+((CPUDTO)product.getAttribute()).getCpu_cores()+"</span></li>");
+			tmp.append("<li>Số luồng: <span>"+((CPUDTO)product.getAttribute()).getCpu_threads()+"</span></li>");
+			tmp.append("<li>Xung nhịp: <span>"+((CPUDTO)product.getAttribute()).getCpu_speed_ghz()+"</span></li>");
 			break;						
 		case 8:
 			//Mainboard
-			tmp.append("<li>Hãng: <span>"+((Product_MotherboardDTO)product).getMotherboard_manufacturer()+"</span></li>");
-			tmp.append("<li>Chipset: <span>"+((Product_MotherboardDTO)product).getMotherboard_chipset()+"</span></li>");
-			tmp.append("<li>Socket: <span>"+((Product_MotherboardDTO)product).getMotherboard_socket()+"</span></li>");
-			tmp.append("<li>Kích thước: <span>"+((Product_MotherboardDTO)product).getMotherboard_size()+"</span></li>");
-			tmp.append("<li>Loại RAM hỗ trợ: <span>"+((Product_MotherboardDTO)product).getMotherboard_ram_support()+"</span></li>");
-			tmp.append("<li>Số khe RAM: <span>"+((Product_MotherboardDTO)product).getMotherboard_ram_slots()+"</span></li>");
+			tmp.append("<li>Hãng: <span>"+((MotherboardDTO)product.getAttribute()).getMotherboard_manufacturer()+"</span></li>");
+			tmp.append("<li>Chipset: <span>"+((MotherboardDTO)product.getAttribute()).getMotherboard_chipset()+"</span></li>");
+			tmp.append("<li>Socket: <span>"+((MotherboardDTO)product.getAttribute()).getMotherboard_socket()+"</span></li>");
+			tmp.append("<li>Kích thước: <span>"+((MotherboardDTO)product.getAttribute()).getMotherboard_size()+"</span></li>");
+			tmp.append("<li>Loại RAM hỗ trợ: <span>"+((MotherboardDTO)product.getAttribute()).getMotherboard_ram_support()+"</span></li>");
+			tmp.append("<li>Số khe RAM: <span>"+((MotherboardDTO)product.getAttribute()).getMotherboard_ram_slots()+"</span></li>");
 			break;						
 		case 9:			
 			//RAM
-			tmp.append("<li>Hãng: <span>"+((Product_RamDTO)product).getRam_manufacturer()+"</span></li>");
-			tmp.append("<li>Loại: <span>"+((Product_RamDTO)product).getRam_type()+"</span></li>");
-			tmp.append("<li>Dung lượng: <span>"+((Product_RamDTO)product).getRam_capacity()+"</span></li>");
-			tmp.append("<li>Tốc độ: <span>"+((Product_RamDTO)product).getRam_bus_speed()+"</span></li>");
-			tmp.append("<li>Hỗ trợ: <span>"+((Product_RamDTO)product).getRam_standard()+"</span></li>");		
+			tmp.append("<li>Hãng: <span>"+((RamDTO)product.getAttribute()).getRam_manufacturer()+"</span></li>");
+			tmp.append("<li>Loại: <span>"+((RamDTO)product.getAttribute()).getRam_type()+"</span></li>");
+			tmp.append("<li>Dung lượng: <span>"+((RamDTO)product.getAttribute()).getRam_capacity()+"</span></li>");
+			tmp.append("<li>Tốc độ: <span>"+((RamDTO)product.getAttribute()).getRam_bus_speed()+"</span></li>");
+			tmp.append("<li>Hỗ trợ: <span>"+((RamDTO)product.getAttribute()).getRam_standard()+"</span></li>");		
 			break;		
 		case 10:
 			//storage
-			tmp.append("<li>Hãng: <span>"+((Product_StorageDTO)product).getStorage_manufacturer()+"</span></li>");
-			tmp.append("<li>Loại: <span>"+((Product_StorageDTO)product).getStorage_type()+"</span></li>");
-			tmp.append("<li>Dung lượng: <span>"+((Product_StorageDTO)product).getStorage_capacity()+"</span></li>");
-			tmp.append("<li>Kiểu: <span>"+((Product_StorageDTO)product).getStorage_m2_pcie_type()+"</span></li>");
-			tmp.append("<li>Tốc độ: <span>"+((Product_StorageDTO)product).getStorage_rpm()+"</span></li>");		
+			tmp.append("<li>Hãng: <span>"+((StorageDTO)product.getAttribute()).getStorage_manufacturer()+"</span></li>");
+			tmp.append("<li>Loại: <span>"+((StorageDTO)product.getAttribute()).getStorage_type()+"</span></li>");
+			tmp.append("<li>Dung lượng: <span>"+((StorageDTO)product.getAttribute()).getStorage_capacity()+"</span></li>");
+			tmp.append("<li>Kiểu: <span>"+((StorageDTO)product.getAttribute()).getStorage_m2_pcie_type()+"</span></li>");
+			tmp.append("<li>Tốc độ: <span>"+((StorageDTO)product.getAttribute()).getStorage_rpm()+"</span></li>");		
 			break;				
 		case 11:	
 			//vga
-			tmp.append("<li>Hãng: <span>"+((Product_GraphicsCardDTO)product).getGraphics_card_manufacturer()+"</span></li>");
-			tmp.append("<li>Phiên bản: <span>"+((Product_GraphicsCardDTO)product).getGraphics_card_version()+"</span></li>");
-			tmp.append("<li>Xung nhịp: <span>"+((Product_GraphicsCardDTO)product).getGraphics_card_speed()+"</span></li>");
-			tmp.append("<li>Số nhân: <span>"+((Product_GraphicsCardDTO)product).getGraphics_card_cores()+"</span></li>");
-			tmp.append("<li>Dung lượng VRAM: <span>"+((Product_GraphicsCardDTO)product).getGraphics_card_vram_capacity()+"</span></li>");
-			tmp.append("<li>Bộ nguồn khuyến nghị: <span>"+((Product_GraphicsCardDTO)product).getGraphics_card_require_psu()+"</span></li>");	
+			tmp.append("<li>Hãng: <span>"+((GraphicsCardDTO)product.getAttribute()).getGraphics_card_manufacturer()+"</span></li>");
+			tmp.append("<li>Phiên bản: <span>"+((GraphicsCardDTO)product.getAttribute()).getGraphics_card_version()+"</span></li>");
+			tmp.append("<li>Xung nhịp: <span>"+((GraphicsCardDTO)product.getAttribute()).getGraphics_card_speed()+"</span></li>");
+			tmp.append("<li>Số nhân: <span>"+((GraphicsCardDTO)product.getAttribute()).getGraphics_card_cores()+"</span></li>");
+			tmp.append("<li>Dung lượng VRAM: <span>"+((GraphicsCardDTO)product.getAttribute()).getGraphics_card_vram_capacity()+"</span></li>");
+			tmp.append("<li>Bộ nguồn khuyến nghị: <span>"+((GraphicsCardDTO)product.getAttribute()).getGraphics_card_require_psu()+"</span></li>");	
 			break;						
 		case 12:
 			//PSU
-			tmp.append("<li>Hãng: <span>"+((Product_PowerSuppyDTO)product).getPsu_manufacturer()+"</span></li>");
-			tmp.append("<li>Chứng nhận: <span>"+((Product_PowerSuppyDTO)product).getPsu_certification()+"</span></li>");
-			tmp.append("<li>Loại cap: <span>"+((Product_PowerSuppyDTO)product).getPsu_cable_type()+"</span></li>");
-			tmp.append("<li>Kích thước: <span>"+((Product_PowerSuppyDTO)product).getPsu_size()+"</span></li>");	
-			tmp.append("<li>Công suất: <span>"+((Product_PowerSuppyDTO)product).getPsu_power_output()+"</span></li>");	
+			tmp.append("<li>Hãng: <span>"+((PowerSuppyDTO)product.getAttribute()).getPsu_manufacturer()+"</span></li>");
+			tmp.append("<li>Chứng nhận: <span>"+((PowerSuppyDTO)product.getAttribute()).getPsu_certification()+"</span></li>");
+			tmp.append("<li>Loại cap: <span>"+((PowerSuppyDTO)product.getAttribute()).getPsu_cable_type()+"</span></li>");
+			tmp.append("<li>Kích thước: <span>"+((PowerSuppyDTO)product.getAttribute()).getPsu_size()+"</span></li>");	
+			tmp.append("<li>Công suất: <span>"+((PowerSuppyDTO)product.getAttribute()).getPsu_power_output()+"</span></li>");	
 			break;						
 		case 13:
 			//case
-			tmp.append("<li>Hãng: <span>"+((Product_CaseDTO)product).getCase_manufacturer()+"</span></li>");
-			tmp.append("<li>Kích thước: <span>"+((Product_CaseDTO)product).getCase_size()+"</span></li>");
-			tmp.append("<li>Màu sắc: <span>"+((Product_CaseDTO)product).getCase_color()+"</span></li>");	
+			tmp.append("<li>Hãng: <span>"+((CaseDTO)product.getAttribute()).getCase_manufacturer()+"</span></li>");
+			tmp.append("<li>Kích thước: <span>"+((CaseDTO)product.getAttribute()).getCase_size()+"</span></li>");
+			tmp.append("<li>Màu sắc: <span>"+((CaseDTO)product.getAttribute()).getCase_color()+"</span></li>");	
 			break;				
 		case 14:
 			//cooling
-			tmp.append("<li>Hãng: <span>"+((Product_CoolingDTO)product).getCooling_manufacturer()+"</span></li>");
-			tmp.append("<li>Phân loại: <span>"+((Product_CoolingDTO)product).getCooling_type()+"</span></li>");
-			tmp.append("<li>Màu sắc: <span>"+((Product_CoolingDTO)product).getCooling_color()+"</span></li>");
-			tmp.append("<li>Kích thước: <span>"+((Product_CoolingDTO)product).getCooling_fan_size()+"</span></li>");	
+			tmp.append("<li>Hãng: <span>"+((CoolingDTO)product.getAttribute()).getCooling_manufacturer()+"</span></li>");
+			tmp.append("<li>Phân loại: <span>"+((CoolingDTO)product.getAttribute()).getCooling_type()+"</span></li>");
+			tmp.append("<li>Màu sắc: <span>"+((CoolingDTO)product.getAttribute()).getCooling_color()+"</span></li>");
+			tmp.append("<li>Kích thước: <span>"+((CoolingDTO)product.getAttribute()).getCooling_fan_size()+"</span></li>");	
 			break;	
 		case 15:
 			//usb
-			tmp.append("<li>Hãng: <span>"+((Product_UsbDTO)product).getUsb_manufacturer()+"</span></li>");
-			tmp.append("<li>Dung lượng: <span>"+((Product_UsbDTO)product).getUsb_capacity()+"</span></li>");	
+			tmp.append("<li>Hãng: <span>"+((Product_UsbDTO)product.getAttribute()).getUsb_manufacturer()+"</span></li>");
+			tmp.append("<li>Dung lượng: <span>"+((Product_UsbDTO)product.getAttribute()).getUsb_capacity()+"</span></li>");	
 			break;	
 		
 		}	

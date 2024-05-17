@@ -52,16 +52,16 @@ public class ProductDR extends HttpServlet {
 			ConnectionPool cp = (ConnectionPool) getServletContext().getAttribute("CPool");
 			ProductControl pc = new ProductControl(cp);
 			Product_DTO sProduct = new Product_DTO();
-			sProduct.setProduct_id(id);
-			sProduct.setProduct_last_modified(Utilities_date.getCurrentDate());
+			sProduct.setId(id);
+			sProduct.setLast_modified(Utilities_date.getCurrentDate());
 			
 
 			String isStopedCell = request.getParameter("t");
 			String isRestore = request.getParameter("r");
 			if(isRestore != null) {
-				sProduct.setProduct_deleted((byte)1);
+				sProduct.setDeleted((byte)1);
 			} else {
-				sProduct.setProduct_deleted((byte)0);
+				sProduct.setDeleted((byte)0);
 			}
 			
 			boolean result;

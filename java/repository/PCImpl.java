@@ -48,10 +48,7 @@ public class PCImpl extends BasicImpl implements PC {
 	
 	public static void main(String[] args) {
 		int id = 1;
-		
 		ConnectionPool cp = new ConnectionPoolImpl();
-		
-		
 		PC a = new PCImpl(cp);
 		
 		ResultSet rs = a.getPCById(id);
@@ -67,6 +64,17 @@ public class PCImpl extends BasicImpl implements PC {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+
+	@Override
+	public ArrayList<ResultSet> getPCs() {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT pc.*, COUNT(product_id) FROM tblpc pc ");
+		sql.append("INNER JOIN tblproduct p ON pc.pc_id = p.product_pc_id ");
+		sql.append("GROUP BY pc_id ");
+		sql.append(";");
+		return this.getReList(sql.toString());
 	}
 
 	@Override

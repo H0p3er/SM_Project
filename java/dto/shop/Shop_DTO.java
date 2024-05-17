@@ -20,6 +20,10 @@ public class Shop_DTO {
 	private List<Product_manageShopDTO> storage;
 	private Shop_statisticDTO statistic;
 	
+	public Shop_DTO(int id) {
+		this.id = id ;
+	}
+
 	public int getId() {
 		return this.id;
 	}

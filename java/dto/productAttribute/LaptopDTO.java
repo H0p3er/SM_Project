@@ -2,7 +2,7 @@ package dto.productAttribute;
 
 import dto.product.Product_DTO;
 
-public class Product_LaptopDTO extends Product_DTO {
+public class LaptopDTO implements Product_AttributeDTO{
     private int laptop_id;
     private String laptop_manufacturer;
     private String laptop_cpu;

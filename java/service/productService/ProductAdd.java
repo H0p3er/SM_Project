@@ -19,7 +19,7 @@ import connection.ConnectionPool;
 import constant.PRODUCT_EDIT_TYPE;
 import controller.ProductControl;
 import dto.product.Product_DTO;
-import file.StorageService;
+import service.StorageService;
 
 /**
  * Servlet implementation class ProductEdit
@@ -35,7 +35,7 @@ public class ProductAdd extends HttpServlet {
 	// Định nghĩa kiểu nội dung xuất về trình khách
 	private static final String CONTENT_TYPE = "text/html; charset=utf-8";
 	private StorageService storeService;
-    private final String UPLOAD_DIR = "images/product"; 
+    private final String UPLOAD_DIR = "/home/assets/images/product"; 
     private final String seperator = utility.Utilities_const.SEPERATOR.label;
 	
     /**
@@ -61,15 +61,8 @@ public class ProductAdd extends HttpServlet {
 		request.setCharacterEncoding("utf-8");//Thiết lập tập kí tự
 		
 		String name = request.getParameter("txtProductName");
-		short idForPost = utility.Utilities.getShortParam(request, "idForPost");
-		if(name != null && !name.isBlank() && idForPost != -1) {
-			String barcode = request.getParameter("txtProductCode");
-			short pcid = utility.Utilities.getShortParam(request, "slcProductCat");
-			int importPrice = utility.Utilities.getIntParam(request, "txtProductImportPrice");
-			int sellPrice = utility.Utilities.getIntParam(request, "txtProductSellPrice");
-			short minInventory = utility.Utilities.getShortParam(request, "minInven");
-			short maxInventory = utility.Utilities.getShortParam(request, "maxInven");
-			String desc = request.getParameter("txtProductDesc");
+		if(name != null && !name.isBlank()) {
+			short pc = utility.Utilities.getShortParam(request, "pc");
 			String note = request.getParameter("txtProductNote");
 			String oldPath = request.getParameter("from-db");
 			
@@ -84,6 +77,7 @@ public class ProductAdd extends HttpServlet {
 	        if (!fileSaveDir.exists()) {
 	            fileSaveDir.mkdirs();
 	        }
+	        
 	        System.out.println("Upload File Directory="+fileSaveDir.getAbsolutePath());
 	        String partname = "";
 	        String updatePath = "";
@@ -115,24 +109,23 @@ public class ProductAdd extends HttpServlet {
 			
 			System.out.println(updatePath + seperator+ imagePath.toString());
 			Product_DTO editProduct = new Product_DTO();
-			editProduct.setProduct_id(idForPost);
-			editProduct.setProduct_name(name);
-			editProduct.setProduct_images(updatePath + seperator+ imagePath.toString());
-			editProduct.setProduct_notes(utility.Utilities.encode(note));
+			editProduct.setName(name);
+			editProduct.setImages(updatePath + seperator+ imagePath.toString());
+			editProduct.setNotes(utility.Utilities.encode(note));
 			
 			// Lưu thay đổi vào csdl
 			ConnectionPool cp = (ConnectionPool)getServletContext().getAttribute("CPool");
-			ProductControl pc = new ProductControl(cp);
+			ProductControl productControl = new ProductControl(cp);
 			if(cp == null) {
-				cp = pc.getCP();
+				cp = productControl.getCP();
 				getServletContext().setAttribute("CPool", cp);
 			}
-			boolean editSuccess = pc.editProduct(editProduct, PRODUCT_EDIT_TYPE.GENERAL);
+			boolean editSuccess = productControl.editProduct(editProduct, PRODUCT_EDIT_TYPE.GENERAL);
 			if(editSuccess) {
-				response.sendRedirect("/home/product/product-list.jsp?status=succ&type=edit");
+				response.sendRedirect("/home/product/add?status=succ&type=edit");
 				
 			} else {
-				response.sendRedirect("/home/product/product-list.jsp?status=err&type=edit");
+				response.sendRedirect("/home/product/add?status=err&type=edit");
 			}
 		}
 	}

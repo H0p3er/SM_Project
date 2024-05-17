@@ -2,7 +2,7 @@ package dto.productAttribute;
 
 import dto.product.Product_DTO;
 
-public class Product_CoolingDTO extends Product_DTO{
+public class CoolingDTO implements Product_AttributeDTO{
 	private int cooling_id;
     private String cooling_manufacturer;
     private String cooling_type;

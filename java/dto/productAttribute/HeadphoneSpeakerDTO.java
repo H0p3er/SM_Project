@@ -2,7 +2,7 @@ package dto.productAttribute;
 
 import dto.product.Product_DTO;
 
-public class Product_HeadphoneSpeakerDTO extends Product_DTO{
+public class HeadphoneSpeakerDTO implements Product_AttributeDTO{
 	private int headphones_speakers_id; 
 	private String headphones_manufacturer;
 	private String headphone_type;

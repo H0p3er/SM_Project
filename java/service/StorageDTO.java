@@ -1,4 +1,4 @@
-package file;
+package service;
 
 
 public class StorageDTO {

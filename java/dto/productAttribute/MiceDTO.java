@@ -2,7 +2,7 @@ package dto.productAttribute;
 
 import dto.product.Product_DTO;
 
-public class Product_MiceDTO extends Product_DTO{
+public class MiceDTO implements Product_AttributeDTO{
 	private int mouse_id; 
 	private String mouse_manufacturer; 
 	private String mouse_type;

@@ -2,9 +2,11 @@ package dto.product;
 
 
 import dto.pc.PC_DTO;
+import dto.productAttribute.Product_AttributeDTO;
 import dto.shop.Shop_viewProductDTO;
+import entity.ProductObject;
 
-public class Product_viewProductDTO {
+public class Product_viewProductDTO implements ProductDTO<Product_AttributeDTO>{
     private String name;
     private byte status;
     private String price;
@@ -12,6 +14,8 @@ public class Product_viewProductDTO {
     private String last_modified;
     private PC_DTO pc;
     private Shop_viewProductDTO shop;
+    private Product_AttributeDTO attribute;
+    
 	public String getName() {
 		return name;
 	}
@@ -54,7 +58,17 @@ public class Product_viewProductDTO {
 	public void setShop(Shop_viewProductDTO shop) {
 		this.shop = shop;
 	}
+	
+	@Override
+	public void ApplyToEntity(ProductObject productObject) {
 
+	}
+	public Product_AttributeDTO getAttribute() {
+		return attribute;
+	}
+	public void setAttribute(Product_AttributeDTO attribute) {
+		this.attribute = attribute;
+	}
     
     
 }

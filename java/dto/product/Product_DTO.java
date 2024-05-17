@@ -1,105 +1,116 @@
 package dto.product;
 
 import dto.pc.PC_DTO;
+import dto.productAttribute.Product_AttributeDTO;
+import dto.shop.Shop_DTO;
 import entity.ProductObject;
 import utility.Utilities_currency;
 
-public class Product_DTO {
-	private int product_id;
-    private String product_name;
-    private byte product_status;
-    private byte product_deleted;
-    private int product_visited;
-    private String product_price;
-    private String product_images;
-    private String product_notes;
-    private String product_created_date;
-    private String product_last_modified;
-    private int product_quantity;
-    private PC_DTO product_pc;
-    private int product_shop_id;
-	public int getProduct_id() {
-		return product_id;
+public class Product_DTO implements ProductDTO<Product_AttributeDTO> {
+	private int id;
+    private String name;
+    private byte status;
+    private byte deleted;
+    private int visited;
+    private String price;
+    private String images;
+    private String notes;
+    private String created_date;
+    private String last_modified;
+    private int quantity;
+    private PC_DTO pc;
+    private Shop_DTO shop;
+    private Product_AttributeDTO attribute;
+	public int getId() {
+		return id;
 	}
-	public void setProduct_id(int product_id) {
-		this.product_id = product_id;
+	public void setId(int id) {
+		this.id = id;
 	}
-	public String getProduct_name() {
-		return product_name;
+	public String getName() {
+		return name;
 	}
-	public void setProduct_name(String product_name) {
-		this.product_name = product_name;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public byte getProduct_status() {
-		return product_status;
+	public byte getStatus() {
+		return status;
 	}
-	public void setProduct_status(byte product_status) {
-		this.product_status = product_status;
+	public void setStatus(byte status) {
+		this.status = status;
 	}
-	public byte getProduct_deleted() {
-		return product_deleted;
+	public byte getDeleted() {
+		return deleted;
 	}
-	public void setProduct_deleted(byte product_deleted) {
-		this.product_deleted = product_deleted;
+	public void setDeleted(byte deleted) {
+		this.deleted = deleted;
 	}
-	public int getProduct_visited() {
-		return product_visited;
+	public int getVisited() {
+		return visited;
 	}
-	public void setProduct_visited(int product_visited) {
-		this.product_visited = product_visited;
+	public void setVisited(int visited) {
+		this.visited = visited;
 	}
-	public String getProduct_price() {
-		return product_price;
+	public String getPrice() {
+		return price;
 	}
-	public void setProduct_price(double product_price) {
-		this.product_price = Utilities_currency.toVND(product_price);
+	public void setPrice(double price) {
+		this.price = Utilities_currency.toVND(price);
 	}
-	public String getProduct_images() {
-		return product_images;
+	public String getImages() {
+		return images;
 	}
-	public void setProduct_images(String product_images) {
-		this.product_images = product_images;
+	public void setImages(String images) {
+		this.images = images;
 	}
-	public String getProduct_notes() {
-		return product_notes;
+	public String getNotes() {
+		return notes;
 	}
-	public void setProduct_notes(String product_notes) {
-		this.product_notes = product_notes;
+	public void setNotes(String notes) {
+		this.notes = notes;
 	}
-	public String getProduct_created_date() {
-		return product_created_date;
+	public String getCreated_date() {
+		return created_date;
 	}
-	public void setProduct_created_date(String product_created_date) {
-		this.product_created_date = product_created_date;
+	public void setCreated_date(String created_date) {
+		this.created_date = created_date;
 	}
-	public String getProduct_last_modified() {
-		return product_last_modified;
+	public String getLast_modified() {
+		return last_modified;
 	}
-	public void setProduct_last_modified(String product_last_modified) {
-		this.product_last_modified = product_last_modified;
+	public void setLast_modified(String last_modified) {
+		this.last_modified = last_modified;
 	}
-	public int getProduct_quantity() {
-		return product_quantity;
+	public int getQuantity() {
+		return quantity;
 	}
-	public void setProduct_quantity(int product_quantity) {
-		this.product_quantity = product_quantity;
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
-	public PC_DTO getProduct_pc() {
-		return product_pc;
+	public PC_DTO getPc() {
+		return pc;
 	}
-	public void setProduct_pc(PC_DTO product_pc) {
-		this.product_pc = product_pc;
+	public void setPc(PC_DTO pc) {
+		this.pc = pc;
 	}
-	public int getProduct_shop_id() {
-		return product_shop_id;
+	public Shop_DTO getShop() {
+		return shop;
 	}
-	public void setProduct_shop_id(int product_shop_id) {
-		this.product_shop_id = product_shop_id;
+	public void setShop(Shop_DTO shop) {
+		this.shop = shop;
 	}
-	
+    
+	@Override
     public void ApplyToEntity(ProductObject productObject) {
-    	productObject.setProduct_id(this.product_id);
-    	productObject.setProduct_created_date(this.product_created_date); 	
-    	productObject.setProduct_pc_id(this.product_pc.getId());
+    	productObject.setProduct_id(this.id);
+    	productObject.setProduct_created_date(this.created_date); 	
+    	productObject.setProduct_pc_id(this.pc.getId());
     }
+	public Product_AttributeDTO getAttribute() {
+		return attribute;
+	}
+	public void setAttribute(Product_AttributeDTO attribute) {
+		this.attribute = attribute;
+	}
+
 }

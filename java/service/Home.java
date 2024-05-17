@@ -68,7 +68,7 @@ public class Home extends HttpServlet {
 		
 		// Lấy câu trúc
 		Product_DTO similar = new Product_DTO();
-		similar.setProduct_name(saveKey);
+		similar.setName(saveKey);
 		
 		// Tìm tham số xác định loại danh sách
 

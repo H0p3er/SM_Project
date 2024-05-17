@@ -50,9 +50,9 @@ public class Utilities {
 	}	
 	
 	public static String getStringParam(ServletRequest request, String name) {
-		String str_value = request.getParameter(name);
-		return (str_value!=null && !str_value.isBlank())? str_value.trim() : "";
+		return (Utilities_text.checkValidString(request, name))? request.getParameter(name).trim() : "";
 	}
+	
 	
 	public static String toParam(Map<String, String> map) {
 		StringBuilder parameter = new StringBuilder();
@@ -61,7 +61,7 @@ public class Utilities {
 				parameter.append("&");
 			}
 			switch (key) {
-			case "name":
+			case "search":
 				parameter.append("search=");
 				parameter.append(value);
 				break;
@@ -71,11 +71,20 @@ public class Utilities {
 				break;
 			case "max":
 				parameter.append("max=");
-				parameter.append(value);
+				if (value.isBlank() || value.isEmpty()) {
+					parameter.append(0);
+				} else {
+					parameter.append(value);
+				}
+				
 				break;			
 			case "min":
 				parameter.append("min=");
-				parameter.append(value);
+				if (value.isBlank() || value.isEmpty()) {
+					parameter.append(0);
+				} else {
+					parameter.append(value);
+				}
 				break;
 			}
 		});

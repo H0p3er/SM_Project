@@ -15,24 +15,9 @@ import connection.ConnectionPool;
 import connection.ConnectionPoolImpl;
 import constant.PRODUCT_EDIT_TYPE;
 import dto.pc.PC_DTO;
-import dto.product.Product_DTO;
-import dto.product.Product_manageShopDTO;
-import dto.product.Product_viewProductDTO;
-import dto.product.Product_viewShopDTO;
-import dto.productAttribute.Product_CPUDTO;
-import dto.productAttribute.Product_CaseDTO;
-import dto.productAttribute.Product_CoolingDTO;
-import dto.productAttribute.Product_DesktopDTO;
-import dto.productAttribute.Product_GraphicsCardDTO;
-import dto.productAttribute.Product_HeadphoneSpeakerDTO;
-import dto.productAttribute.Product_KeyboardDTO;
-import dto.productAttribute.Product_LaptopDTO;
-import dto.productAttribute.Product_MiceDTO;
-import dto.productAttribute.Product_MonitorDTO;
-import dto.productAttribute.Product_MotherboardDTO;
-import dto.productAttribute.Product_PowerSuppyDTO;
-import dto.productAttribute.Product_RamDTO;
-import dto.productAttribute.Product_StorageDTO;
+import dto.product.*;
+import dto.productAttribute.*;
+import dto.shop.Shop_DTO;
 import dto.shop.Shop_manageShopDTO;
 import dto.shop.Shop_statisticDTO;
 import repository.*;
@@ -71,12 +56,12 @@ public class ProductModel {
 	}
 
 	public Product_DTO getProductDTO(int id) {
-		Product_DTO item = null;
+		Product_DTO item = new Product_DTO();
 		ResultSet rs = this.product.getProductById(id);
 		if (rs != null) {
 			try {
 				if (rs.next()) {
-					item = setProductAttribute(rs);;
+					setProductAttribute(item,rs);;
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -100,7 +85,8 @@ public class ProductModel {
 		if (rs != null) {
 			try {
 				while (rs.next()) {				
-					Product_DTO item = setProductAttribute(rs);
+					Product_DTO item = new Product_DTO();
+					item = setProductAttribute(item, rs);
 					items.add(item);
 				}
 			} catch (SQLException e) {
@@ -120,7 +106,8 @@ public class ProductModel {
 		if (rs != null) {
 			try {
 				while (rs.next()) {				
-					Product_DTO item = setProductAttribute(rs);
+					Product_DTO item = new Product_DTO();
+					item = setProductAttribute(item, rs);
 					items1.add(item);
 				}
 			} catch (SQLException e) {
@@ -132,8 +119,9 @@ public class ProductModel {
 		rs = res.get(1);
 		if (rs != null) {
 			try {
-				while (rs.next()) {				
-					Product_DTO item = setProductAttribute(rs);	
+				while (rs.next()) {	
+					Product_DTO item = new Product_DTO();
+					item = setProductAttribute(item, rs);	
 					items2.add(item);
 				}
 			} catch (SQLException e) {
@@ -144,20 +132,20 @@ public class ProductModel {
 		return new Pair<>(items1, items2);
 	}	
 
-	public Triplet<ArrayList<Product_manageShopDTO>,Integer,  List<Pair<Product_manageShopDTO,Double>>> getProduct_manageShopDTOs(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, ShopObject shopObject) {
+	public Triplet<ArrayList<Product_DTO>,Integer,  List<Pair<Product_DTO,Double>>> getProduct_manageShopDTO(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, ShopObject shopObject) {
 		Short pagePos = productInfors.getValue0();
 		byte pageLength = productInfors.getValue1();	
 		Map<String,String> multiField = productInfors.getValue2();
 		Map<String,String> multiCondition = productInfors.getValue3();
 		Map<String,String> multiSort = productInfors.getValue4();
 		int recordPos = (pagePos-1)*pageLength;	
-		ArrayList<Product_manageShopDTO> product_manageShopDTOs = new ArrayList<Product_manageShopDTO>();	
+		ArrayList<Product_DTO> product_manageShopDTOs = new ArrayList<Product_DTO>();	
 		ArrayList<ResultSet> resultSets = this.product.getProductsByShop(recordPos,pageLength,multiField,multiCondition,multiSort,shopObject);	
 		ResultSet rs = resultSets.get(0);
 		if (rs!=null) {
 			try {
 				while (rs.next()) {
-					Product_manageShopDTO product_ShopManagerDTO = new Product_manageShopDTO();
+					Product_DTO product_ShopManagerDTO = new Product_DTO();
 					product_ShopManagerDTO.setId(rs.getInt("product_id"));
 					product_ShopManagerDTO.setName(rs.getString("product_name"));
 					product_ShopManagerDTO.setQuantity(rs.getInt("product_quantity"));
@@ -174,21 +162,21 @@ public class ProductModel {
 		int count_product = getProductSize(rs);
 		
 		rs = resultSets.get(2);
-		List<Pair<Product_manageShopDTO,Double>> most_sold_product_current_month = getMostSoldProductCurrentMonth(rs);
+		List<Pair<Product_DTO,Double>> most_sold_product_current_month = getMostSoldProductCurrentMonth(rs);
 		return new Triplet<>(product_manageShopDTOs,count_product,most_sold_product_current_month);
 	}
 
-	private List<Pair<Product_manageShopDTO,Double>> getMostSoldProductCurrentMonth(ResultSet rs) {	
-		List<Pair<Product_manageShopDTO,Double>> most_sold_product_current_month =  new ArrayList<Pair<Product_manageShopDTO,Double>>();
+	private List<Pair<Product_DTO,Double>> getMostSoldProductCurrentMonth(ResultSet rs) {	
+		List<Pair<Product_DTO,Double>> most_sold_product_current_month =  new ArrayList<Pair<Product_DTO,Double>>();
 		if (rs!=null) {
 			try {			
 				while (rs.next()) {	
-					Product_manageShopDTO product_ShopManagerDTO = new Product_manageShopDTO();
+					Product_DTO product_ShopManagerDTO = new Product_DTO();
 					product_ShopManagerDTO.setId(rs.getInt("product_id"));
 					product_ShopManagerDTO.setName(rs.getString("product_name"));
 					product_ShopManagerDTO.setQuantity(rs.getInt("product_quantity"));
 					product_ShopManagerDTO.setPrice(rs.getDouble("product_price"));
-					most_sold_product_current_month.add(new Pair<Product_manageShopDTO,Double>(product_ShopManagerDTO, rs.getDouble("most_sold_product_by_month")));
+					most_sold_product_current_month.add(new Pair<Product_DTO,Double>(product_ShopManagerDTO, rs.getDouble("most_sold_product_by_month")));
 					
 				}
 			} catch (SQLException e) {
@@ -200,20 +188,20 @@ public class ProductModel {
 	}
 	
 	
-	public Pair<ArrayList<Product_viewShopDTO>,Integer> getProduct_viewShopDTO(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, ShopObject shopObject) {
+	public Pair<ArrayList<Product_DTO>,Integer> getProduct_viewShopDTO(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, ShopObject shopObject) {
 		Short pagePos = productInfors.getValue0();
 		byte pageLength = productInfors.getValue1();	
 		Map<String,String> multiField = productInfors.getValue2();
 		Map<String,String> multiCondition = productInfors.getValue3();
 		Map<String,String> multiSort = productInfors.getValue4();
 		int recordPos = (pagePos-1)*pageLength;	
-		ArrayList<Product_viewShopDTO> product_viewShopDTOs = new ArrayList<Product_viewShopDTO>();	
+		ArrayList<Product_DTO> product_viewShopDTOs = new ArrayList<Product_DTO>();	
 		ArrayList<ResultSet> resultSets = this.product.getProductsByShop(recordPos,pageLength,multiField,multiCondition,multiSort,shopObject);	
 		ResultSet rs = resultSets.get(0);
 		if (rs!=null) {
 			try {
 				while (rs.next()) {
-					Product_viewShopDTO product_viewShopDTO = new Product_viewShopDTO();
+					Product_DTO product_viewShopDTO = new Product_DTO();
 					product_viewShopDTO.setId(rs.getInt("product_id"));
 					product_viewShopDTO.setName(rs.getString("product_name"));
 					product_viewShopDTO.setQuantity(rs.getInt("product_quantity"));
@@ -230,65 +218,63 @@ public class ProductModel {
 		return new Pair<>(product_viewShopDTOs,count_product);
 	}	
 	
-	private Product_DTO setProductAttribute(ResultSet rs) {
+	private Product_DTO setProductAttribute(Product_DTO item, ResultSet rs) {
 		try {	
-			Product_DTO item = new Product_DTO();
-			item.setProduct_id(rs.getInt("product_id"));
-			item.setProduct_pc(new PC_DTO(rs.getInt("product_pc_id")));
+//			Product_DTO item = new Product_DTO<Product_AttributeDTO>();
+			item.setId(rs.getInt("product_id"));
+			item.setPc(new PC_DTO(rs.getInt("product_pc_id")));
 			switch (rs.getInt("product_pc_id")) {
 			case 1:
-				item = this.pc.getProduct_MonitorDTO(item);	
+				this.pc.getMonitorDTO(item);	
 				break;						
 			case 2:
-				item = this.pc.getProduct_KeyboardDTO(item);	
+				this.pc.getKeyboardDTO(item);	
 				break;
 			case 3:
-				item = this.pc.getProduct_MiceDTO(item);	
+				this.pc.getMiceDTO(item);	
 				break;					
 			case 4:
-				item = this.pc.getProduct_HeadphoneSpeakerDTO(item);	
+				this.pc.getHeadphoneSpeakerDTO(item);	
 				break;						
-			case 5:	
-				item = this.pc.getProduct_LaptopDTO(item);
+			case 5:
+				this.pc.getLaptopDTO(item);
 				break;						
 			case 6:
-				item = this.pc.getProduct_DesktopDTO(item);		
+				this.pc.getDesktopDTO(item);		
 				break;						
 			case 7:	
-				item = this.pc.getProduct_CPUDTO(item);
+				this.pc.getCPUDTO(item);
 				break;						
 			case 8:
-				item = this.pc.getProduct_MotherboardDTO(item);
+				this.pc.getMotherboardDTO(item);
 				break;						
 			case 9:	
-				item = this.pc.getProduct_RamDTO(item);					
+				this.pc.getRamDTO(item);					
 				break;		
 			case 10:
-				item = this.pc.getProduct_StorageDTO(item);	
+				this.pc.getStorageDTO(item);	
 				break;				
 			case 11:
-				item = this.pc.getProduct_GraphicsCardDTO(item);
+				this.pc.getGraphicsCardDTO(item);
 				break;						
 			case 12:
-				item = this.pc.getProduct_PowerSuppyDTO(item);		
+				this.pc.getPowerSuppyDTO(item);		
 				break;						
 			case 13:
-				item = this.pc.getProduct_CaseDTO(item);	
+				this.pc.getCaseDTO(item);	
 				break;				
 			case 14:
-				item = this.pc.getProduct_CoolingDTO(item);				
+				this.pc.getCoolingDTO(item);				
 				break;	
 			}
-			item.setProduct_pc(new PC_DTO(rs.getInt("product_pc_id")));
-			item.setProduct_id(rs.getInt("product_id"));
-			item.setProduct_name(Utilities.decode(rs.getString("product_name")));
-			item.setProduct_status(rs.getByte("product_status"));
-			item.setProduct_price(rs.getDouble("product_price"));
-			item.setProduct_images(rs.getString("product_images"));
-			item.setProduct_notes(rs.getString("product_notes"));
-			item.setProduct_last_modified(rs.getString("product_last_modified"));
-			item.setProduct_shop_id(rs.getInt("product_shop_id"));
-			item.setProduct_quantity(rs.getInt("product_quantity"));		
+			item.setName(Utilities.decode(rs.getString("product_name")));
+			item.setStatus(rs.getByte("product_status"));
+			item.setPrice(rs.getDouble("product_price"));
+			item.setImages(rs.getString("product_images"));
+			item.setNotes(rs.getString("product_notes"));
+			item.setLast_modified(rs.getString("product_last_modified"));
+			item.setShop(new Shop_DTO(rs.getInt("product_shop_id")));
+			item.setQuantity(rs.getInt("product_quantity"));		
 			return item;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -339,18 +325,18 @@ public class ProductModel {
 
 		if (rs1!=null) {
 			rs1.forEach(product->{
-				if (product instanceof Product_CaseDTO) {
-					System.out.println("object:"+((Product_CaseDTO) product).getProduct_name());
-				}
-				
-				if (product instanceof Product_LaptopDTO) {
-					System.out.println("object:"+((Product_LaptopDTO) product).getLaptop_ram());
-				}
-				
-				if (product instanceof Product_CoolingDTO) {
-					System.out.println("object:"+((Product_CoolingDTO) product).getProduct_name());
-				}	
-	
+//				if (product instanceof Product_CaseDTO) {
+//					System.out.println("object:"+((Product_CaseDTO) product).getName());
+//				}
+//				
+//				if (product instanceof Product_LaptopDTO) {
+//					System.out.println("object:"+((Product_LaptopDTO) product).getLaptop_ram());
+//				}
+//				
+//				if (product instanceof Product_CoolingDTO) {
+//					System.out.println("object:"+((Product_CoolingDTO) product).getName());
+//				}	
+				System.out.println(((Product_DTO) product).getAttribute());
 			});	
 		}
 	}

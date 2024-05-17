@@ -14,9 +14,9 @@ import entity.ShopObject;
 import entity.UserObject;
 
 public interface Bill extends ShareControl{
-	public boolean addBill(BillObject item, ArrayList<BDObject> bdObjects);
-	public boolean editBill(BillObject item, ArrayList<BDObject> bdObjects, BILL_EDIT_TYPE et);
-	public boolean delBill(BillObject item);
+	public Pair<Boolean, Integer> addBill(BillObject item, ArrayList<BDObject> bdObjects);
+	public Pair<Boolean, Integer> editBill(BillObject item, ArrayList<BDObject> bdObjects, BILL_EDIT_TYPE et);
+	public Pair<Boolean, Integer> delBill(BillObject item);
 	
 	public ResultSet getBillById(int id);
 	public ResultSet getBillByCreatedDate(Date start, Date end);

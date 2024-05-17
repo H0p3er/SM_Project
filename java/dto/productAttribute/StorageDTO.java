@@ -2,7 +2,7 @@ package dto.productAttribute;
 
 import dto.product.Product_DTO;
 
-public class Product_StorageDTO extends Product_DTO{
+public class StorageDTO implements Product_AttributeDTO{
     private int storage_id;
     private String storage_manufacturer;
     private String storage_type;

@@ -23,6 +23,7 @@ import controller.ProductControl;
 import dto.product.Product_DTO;
 import entity.UserObject;
 import utility.Utilities;
+import utility.Utilities_text;
 
 /**
  * Servlet implementation class ProductList
@@ -73,16 +74,24 @@ public class ProductSearch extends HttpServlet {
 		
 		Map<String, String> multiConditions = new HashMap<String, String>();
 		
-		String search = utility.Utilities.getStringParam(request, "search");
-		multiConditions.put("name", search);	
-		String category = utility.Utilities.getStringParam(request, "pc");
-		multiConditions.put("category", category);	
-		String max = utility.Utilities.getStringParam(request, "max");
-		multiConditions.put("max", max);	
-		String min = utility.Utilities.getStringParam(request, "min");
-		multiConditions.put("min", min);
+		if (Utilities_text.checkValidString(request, "search")) {
+			String search = utility.Utilities.getStringParam(request, "search");
+			multiConditions.put("search", search);
+			request.setAttribute("product-name", search);
+		}
+		if (Utilities_text.checkValidString(request, "pc")) {
+			String category = utility.Utilities.getStringParam(request, "pc");
+			multiConditions.put("category", category);
+		}
+		if (Utilities_text.checkValidString(request, "max")) {
+			String max = utility.Utilities.getStringParam(request, "max");
+			multiConditions.put("max", max);
+		}
+		if (Utilities_text.checkValidString(request, "min")) {
+			String min = utility.Utilities.getStringParam(request, "min");
+			multiConditions.put("min", min);
+		}
 
-		
 		Quintet<Short, Byte,  Map<String,String>,  Map<String,String>,  Map<String,String>> infors 
 		= new Quintet<>( page, (byte) 6,
 				utility.Utilities.getMapParam(request, null), 
@@ -97,7 +106,6 @@ public class ProductSearch extends HttpServlet {
 		pc.releaseConnection();
 		
 		request.setAttribute("product-search", viewProductsList);
-		request.setAttribute("product-name", search);
 	    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/main/product/search.jsp");
 	    requestDispatcher.forward(request, response);		
 		

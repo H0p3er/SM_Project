@@ -19,7 +19,7 @@ import connection.ConnectionPool;
 import constant.PRODUCT_EDIT_TYPE;
 import controller.ProductControl;
 import dto.product.Product_DTO;
-import file.StorageService;
+import service.StorageService;
 
 /**
  * Servlet implementation class ProductEdit
@@ -115,10 +115,10 @@ public class ProductEdit extends HttpServlet {
 			
 			System.out.println(updatePath + seperator+ imagePath.toString());
 			Product_DTO editProduct = new Product_DTO();
-			editProduct.setProduct_id(idForPost);
-			editProduct.setProduct_name(name);
-			editProduct.setProduct_images(updatePath + seperator+ imagePath.toString());
-			editProduct.setProduct_notes(utility.Utilities.encode(note));
+			editProduct.setId(idForPost);
+			editProduct.setName(name);
+			editProduct.setImages(updatePath + seperator+ imagePath.toString());
+			editProduct.setNotes(utility.Utilities.encode(note));
 			
 			// Lưu thay đổi vào csdl
 			ConnectionPool cp = (ConnectionPool)getServletContext().getAttribute("CPool");

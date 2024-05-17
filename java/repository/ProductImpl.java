@@ -252,7 +252,7 @@ public class ProductImpl extends BasicImpl implements Product{
 		StringBuilder sql = new StringBuilder();
 		sql.append(getProductsSQL(at, total, multiField, multiCondition ,multiSort));
 		sql.append(getProductsSizeSQL(multiCondition));		
-//		System.out.println(sql.toString());
+		System.out.println(sql.toString());
 		return this.getReList(sql.toString());
 	}
 	
@@ -398,23 +398,30 @@ public class ProductImpl extends BasicImpl implements Product{
 				WHERE.append("AND ");
 			}
 			switch (key) {
-			case "name":
+			case "search":
 				WHERE.append("product_name LIKE '%"+value+"%' ");
 				break;
 			case "id":
 				WHERE.append("product_id= ");
 				break;
 			case "address":
-				WHERE.append("product_address= ");
+				WHERE.append("product_address="+value+" ");
 				break;
 			case "last_modified":
-				WHERE.append("product_last_modified="+value);
+				WHERE.append("product_last_modified="+value+" ");
 				break;
-			case "pc":
-				WHERE.append("product_pc_id= ");
+			case "category":
+				WHERE.append("product_pc_id="+value+" ");
+				break;
+			case "max":
+				WHERE.append("product_price<"+value+" ");
+				break;
+			case "min":
+				WHERE.append("product_price>"+value+" ");
 				break;
 			default:
-				WHERE.append("product_name LIKE '%"+value+"%'");
+				WHERE.append("product_name LIKE '%"+value+"%' ");
+				break;
 			}			
 		});		
 		if(!WHERE.toString().equalsIgnoreCase("")) {
@@ -438,7 +445,7 @@ public class ProductImpl extends BasicImpl implements Product{
 				ORDER.append("product_last_modified");
 				break;
 			default:
-				ORDER.append("product_id");
+				ORDER.append("STR_TO_DATE(product_created_date, '%e/%c/%Y')");
 			}			
 			switch (value) {
 			case "asc":
