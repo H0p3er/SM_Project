@@ -139,4 +139,4 @@ if (mm < 10) {
 } 
     
 today = yyyy + '-' + mm + '-' + dd;
-document.querySelector(".datefield").setAttribute("max", today);
+document.querySelector(".datefield").attr("max", today);

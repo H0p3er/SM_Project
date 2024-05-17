@@ -59,7 +59,7 @@ public class UserImpl extends BasicImpl implements User {
             if (success) {
                 ResultSet generatedKeys = pre.getGeneratedKeys();
                 if (generatedKeys.next()) {
-                    int newUserId = generatedKeys.getInt("user_id");
+                    int newUserId = generatedKeys.getInt(1);
                     item.setUser_id(newUserId);
                 } 
             }
@@ -77,7 +77,7 @@ public class UserImpl extends BasicImpl implements User {
 		return false;
 	}
 
-	private boolean isExisting(UserObject item) {
+	public boolean isExisting(UserObject item) {
 		boolean flag = false;
 		String sql = "SELECT user_id FROM tbluser WHERE (user_name='" + item.getUser_name() + "'); ";
 		ResultSet rs = this.gets(sql);
@@ -340,19 +340,15 @@ public class UserImpl extends BasicImpl implements User {
 
 		// Tao doi tuong thuc thi chuc nang muc User
 		User u = new UserImpl(cp);
-
+		
 		// Them mot nguoi su dung
 		UserObject new_user = new UserObject();
-		new_user.setUser_name("lingling1");
+		new_user.setUser_name("tester");
 		new_user.setUser_pass("linhuu111");
-		new_user.setUser_nickname("godah");
 		new_user.setUser_fullname("123 ling");
-		new_user.setUser_images(null);
-		new_user.setUser_social_links(null);
-		new_user.setUser_gender((byte) 1);
 		new_user.setUser_email("admin1@gmail.com");
 		new_user.setUser_address("Ha Noi");
-		new_user.setUser_created_date("2022/11/11");
+		new_user.setUser_phone("1231231313");
 
 		boolean resultAdd = u.addUser(new_user);
 		if (resultAdd) {

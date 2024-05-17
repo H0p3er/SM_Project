@@ -16,14 +16,14 @@
 .item .item-list {
     height: 170px ;
 }
-
-.item img {
-    aspect-ratio: 1;
-}
 .text-truncateline {
         width:100%;
         overflow: hidden;
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
+}
+
+.table>thead {
+  vertical-align: top;
 }
