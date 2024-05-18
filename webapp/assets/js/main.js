@@ -12,9 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 }
             });
-
         }
-
         // Call fetchData() initially to load data on page load
         fetchData();
 
@@ -22,7 +20,6 @@ document.addEventListener("DOMContentLoaded", function () {
         setInterval(fetchData, 300000); // 30 seconds
     });
 });
-
 
 
 $('.btn-number').click(function (e) {
@@ -84,6 +81,7 @@ $('.input-number').change(function () {
 
 
 });
+
 function updatePrice() {
     var totalPrice =0;
     $(".input-number").each(function() {
@@ -92,7 +90,7 @@ function updatePrice() {
         console.log($("span[data-field='" + fieldName + "']").attr('value'));
     });
     console.log(totalPrice)
-    $("#total-price").text(totalPrice);
+    $("#total_price").text(totalPrice+" VND");
 };
 updatePrice();
 
