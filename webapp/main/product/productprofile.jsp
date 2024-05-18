@@ -23,12 +23,12 @@
                         <div class="col-md-4">
 
                           <!-- product-image -->
-                          <%=map.get("product-image") %>
+                          <%=map.getOrDefault("product-image", "") %>
                             <div class="properties">
                               <div class="item p-3 mb-0 ">
                                 <ul class="border-bottom-0 mb-0 pb-0">
                                   <!-- product-attribute -->
-                                  <%=map.get("product-attribute") %>
+                                  <%=map.getOrDefault("product-attribute", "Không tồn tại") %>
                                 </ul>
 
                               </div>
@@ -38,11 +38,11 @@
                           <div class="contact-page">
                             <div class="item email p-4">
                               <!-- product-name -->
-                              <%=map.get("product-name") %>
+                              <%=map.getOrDefault("product-name", "Không tồn tại tên") %>
                                 <div>$0 Bình luận |$0 Đã bán </div>
 
                                 <!-- product-price -->
-                                <%=map.get("product-price") %>
+                                <%=map.getOrDefault("product-price", "") %>
 
                                   <div class="row justify-content-between">
                                     <!-- product-area -->
@@ -55,10 +55,10 @@
                                     <i class="fa fa-user fs-3 col-1 pe-0"></i>
 
                                     <!-- seller-name -->
-                                    <%=map.get("seller-name") %>
+                                    <%=map.getOrDefault("seller-name", "Người bán hàng không tồn tại hoặc đã bị xóa") %>
 
 									<!-- product-shop -->
-                                   <%=map.get("product-shop") %>
+                                   <%=map.getOrDefault("product-shop", "") %>
 
                                       <br></br>
 
@@ -66,7 +66,8 @@
                                       <%=map.get("product-notes") %>
                                   </h6>
                                   <div class="icon-button">
-                                    <a href="property-details.html"><i class="fa fa-calendar"></i>Thêm vào giỏ hàng</a>
+                                  	<!-- product-notes -->
+                                    <button class="add-cart" type="button" id="6" href=""><i class="fa fa-calendar"></i>Thêm vào giỏ hàng</button>
                                   </div>
                             </div>
                           </div>

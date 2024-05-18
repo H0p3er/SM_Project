@@ -1,8 +1,14 @@
 package dto.productAttribute;
 
-import dto.product.Product_DTO;
-
 public class CoolingDTO implements Product_AttributeDTO{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2222906638570859546L;
+	/**
+	 * 
+	 */
+	
 	private int cooling_id;
     private String cooling_manufacturer;
     private String cooling_type;

@@ -3,6 +3,8 @@ package service.productService;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -22,12 +24,13 @@ import controller.ProductControl;
 import dto.product.Product_DTO;
 import entity.UserObject;
 import utility.Utilities;
+import utility.Utilities_text;
 
 /**
  * Servlet implementation class ProductList
  */
-@WebServlet("/product/order")
-public class ProductOrder extends HttpServlet {
+@WebServlet("/product/compare")
+public class ProductCompare extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	// Định nghĩa kiểu nội dung xuất về trình khách
@@ -36,7 +39,7 @@ public class ProductOrder extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProductOrder() {
+    public ProductCompare() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -53,13 +56,9 @@ public class ProductOrder extends HttpServlet {
 		// Xác định kiểu nội dung xuất về trình khách
 		response.setContentType(CONTENT_TYPE);
 
-		
 		// Thiết lập tập ký tự cần lấy. Việc thiết lập này cần xác định từ đầu
 		request.setCharacterEncoding("utf-8");
 
-		
-		PrintWriter out = response.getWriter();
-		
 		// Tìm bộ quản lý kết nối
 		ConnectionPool cp = (ConnectionPool) getServletContext().getAttribute("CPool");
 		// Tạo đối tượng thực thi chức năng
@@ -68,14 +67,21 @@ public class ProductOrder extends HttpServlet {
 			getServletContext().setAttribute("CPool", pc.getCP());
 		}
 		
+		// Lấy từ khóa tìm kiếm;
+		short page = Utilities.getShortParam(request, "page");
+		if(page < 1) {
+			page = 1;
+		}		
 		
-
+		List<Product_DTO> product_DTOs = (ArrayList<Product_DTO>) request.getSession().getAttribute("product-compare");
+		
+	
 		// Trả về kết nối
-		pc.releaseConnection();
-		// Tạo đối tượng thực hiện xuất nội dung
-		request.setAttribute("product-order", "");
-	    
+//		pc.releaseConnection();
 		
+		request.setAttribute("product-compare", "");
+	    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/main/product/search.jsp");
+	    requestDispatcher.forward(request, response);		
 		
 	}
 

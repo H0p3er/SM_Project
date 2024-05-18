@@ -95,3 +95,13 @@ function updatePrice() {
     $("#total-price").val(totalPrice);
 };
 updatePrice();
+
+console.log(document.getElementsByClassName("add-cart"));
+
+for (var product of document.getElementsByClassName("add-cart")){
+    product.addEventListener("click",()=>{
+        fetch("/home/product/cart?id="+product.id+"", {
+			method:"POST",
+		});
+    })
+}

@@ -1,6 +1,10 @@
 package dto.productAttribute;
 
 public class CaseDTO implements Product_AttributeDTO{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6924286724403532621L;
 	private int case_id;
 	private String case_manufacturer;
 	private String case_color; 

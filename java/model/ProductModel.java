@@ -46,13 +46,19 @@ public class ProductModel {
 		this.pc.releaseCP();
 	}
 	public boolean addProduct(Product_DTO item) {
-		return this.product.addProduct(item);
+		ProductObject productObject = new ProductObject();
+		item.ApplyToEntity(productObject);
+		return this.product.addProduct(productObject);
 	}
 	public boolean editProduct(Product_DTO item, PRODUCT_EDIT_TYPE type) {
-		return this.product.editProduct(item, type);
+		ProductObject productObject = new ProductObject();
+		item.ApplyToEntity(productObject);
+		return this.product.editProduct(productObject, type);
 	}
 	public boolean delProduct(Product_DTO item) {
-		return this.product.delProduct(item);
+		ProductObject productObject = new ProductObject();
+		item.ApplyToEntity(productObject);
+		return this.product.delProduct(productObject);
 	}
 
 	public Product_DTO getProductDTO(int id) {
@@ -86,7 +92,7 @@ public class ProductModel {
 			try {
 				while (rs.next()) {				
 					Product_DTO item = new Product_DTO();
-					item = setProductAttribute(item, rs);
+					setProductAttribute(item, rs);
 					items.add(item);
 				}
 			} catch (SQLException e) {
@@ -107,7 +113,7 @@ public class ProductModel {
 			try {
 				while (rs.next()) {				
 					Product_DTO item = new Product_DTO();
-					item = setProductAttribute(item, rs);
+					setProductAttribute(item, rs);
 					items1.add(item);
 				}
 			} catch (SQLException e) {
@@ -121,7 +127,7 @@ public class ProductModel {
 			try {
 				while (rs.next()) {	
 					Product_DTO item = new Product_DTO();
-					item = setProductAttribute(item, rs);	
+					setProductAttribute(item, rs);	
 					items2.add(item);
 				}
 			} catch (SQLException e) {
@@ -177,7 +183,6 @@ public class ProductModel {
 					product_ShopManagerDTO.setQuantity(rs.getInt("product_quantity"));
 					product_ShopManagerDTO.setPrice(rs.getDouble("product_price"));
 					most_sold_product_current_month.add(new Pair<Product_DTO,Double>(product_ShopManagerDTO, rs.getDouble("most_sold_product_by_month")));
-					
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -218,11 +223,11 @@ public class ProductModel {
 		return new Pair<>(product_viewShopDTOs,count_product);
 	}	
 	
-	private Product_DTO setProductAttribute(Product_DTO item, ResultSet rs) {
+	private void setProductAttribute(Product_DTO item, ResultSet rs) {
 		try {	
 //			Product_DTO item = new Product_DTO<Product_AttributeDTO>();
 			item.setId(rs.getInt("product_id"));
-			item.setPc(new PC_DTO(rs.getInt("product_pc_id")));
+			item.setPc(new PC_DTO(rs.getInt("product_pc_id"), rs.getString("pc_name")));
 			switch (rs.getInt("product_pc_id")) {
 			case 1:
 				this.pc.getMonitorDTO(item);	
@@ -275,13 +280,10 @@ public class ProductModel {
 			item.setLast_modified(rs.getString("product_last_modified"));
 			item.setShop(new Shop_DTO(rs.getInt("product_shop_id")));
 			item.setQuantity(rs.getInt("product_quantity"));		
-			return item;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		return null;
 	}
 	
 

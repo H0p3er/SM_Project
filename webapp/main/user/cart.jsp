@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-
-  <jsp:include page="../component/user_header.jsp" flush="true"></jsp:include>
-  <jsp:include page="../component/user_navigation-bar.jsp" flush="true"></jsp:include>
+ <jsp:include page="../component/user_header.jsp" flush="true"></jsp:include>
+ <jsp:include page="../component/user_navigation-bar.jsp" flush="true"></jsp:include>
+ 
+   <%@ page import="java.util.*" %>
+	<%@ page import="dto.product.*" %>
+	<%@ page import="java.io.*" %>
+    <% Map<String,String> map = (Map<String,String>) request.getAttribute("product-cart"); %>
   <div class="best-deal bg-white mt-2">
     <div class="container">
       <div class="row">
@@ -32,58 +36,8 @@
 
                           </thead>
                           <tbody id="product-list">
-                            <tr>
-                              <th scope="row">1</th>
-                              <td><img height="70px" class="p-0" src="/home/assets/images/product/cpu/cpu.png" alt="">
-                              </td>
-                              <td><a href="">Logitech Wireless Headphones</a></td>
-                              <td>
-                                <div class="input-group col-2">
-                                  <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default btn-number" disabled="disabled"
-                                      data-type="minus" data-field="quant[1]">
-                                      <i class="fa-solid fa-minus"></i>
-                                    </button>
-                                  </span>
-                                  <input type="text" name="quant[1]" class="form-control input-number" value="1" min="1"
-                                    max="99"> <!-- max value is set by query product available quantity -->
-                                  <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default btn-number" data-type="plus"
-                                      data-field="quant[1]">
-                                      <i class="fa-solid fa-plus"></i>
-                                    </button>
-                                  </span>
-                                </div>
-                              </td>
-                              <td><span class="product-price" data-field="quant[1]"  value="32">$32</span></td>
-                              <td><i class="fa-solid fa-trash"></i></td>
-                            </tr>
-                            <tr>
-                              <th scope="row">2</th>
-                              <td><img height="70px" class="p-0" src="/home/assets/images/product/cpu/cpu.png" alt="">
-                              </td>
-                              <td><a href="">Logitech Wireless Headphones</a></td>
-                              <td>
-                                <div class="input-group col-2">
-                                  <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default btn-number" disabled="disabled"
-                                      data-type="minus" data-field="quant[2]">
-                                      <i class="fa-solid fa-minus"></i>
-                                    </button>
-                                  </span>
-                                  <input type="text" name="quant[2]" class="form-control input-number" value="1" min="1"
-                                    max="99">
-                                  <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default btn-number" data-type="plus"
-                                      data-field="quant[2]">
-                                      <i class="fa-solid fa-plus"></i>
-                                    </button>
-                                  </span>
-                                </div>
-                              </td>
-                              <td><span class="product-price" data-field="quant[2]"  value="67">$67</span></td>
-                              <td><i class="fa-solid fa-trash"></i></td>
-                            </tr>
+                          	<%=map.get("product-cart")  %>
+
                           </tbody>
                         </table>
                         <div class="row">

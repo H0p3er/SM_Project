@@ -41,11 +41,11 @@ public class BillImpl extends BasicImpl implements Bill {
 			StringBuilder sql = new StringBuilder();	
 			sql.append("INSERT INTO tblbill(");
 			sql.append("bill_created_date, bill_creator_id, ");
-			sql.append("bill_last_modified_date, bill_last_modified_id, bill_shop_id, ");
+			sql.append("bill_delivery_id, bill_last_modified_id, bill_shop_id, ");
 			sql.append("bill_transporter_id, bill_type, bill_customer_id, bill_target_address ");
 			sql.append(")");
 			sql.append("VALUES(?,?,?,?,?,?,?,?,?); ");	
-	, bill_delivery_id
+
 			PreparedStatement pre = this.con.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS);
 			
 			pre.setByte(1,item.getBill_status());
@@ -104,7 +104,7 @@ public class BillImpl extends BasicImpl implements Bill {
 	
 
 	@Override
-	public boolean editBill(BillObject item, ArrayList<BDObject> bdObjects ,BILL_EDIT_TYPE et) {
+	public Pair<Boolean, Integer> editBill(BillObject item, ArrayList<BDObject> bdObjects ,BILL_EDIT_TYPE et) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("UPDATE tblbill SET ");
 		switch (et) {
@@ -115,10 +115,8 @@ public class BillImpl extends BasicImpl implements Bill {
 			break;
 			
 		}
-		
 		sql.append("WHERE (bill_id=?); ");
-		
-		
+
 		//Bien dich
 		try {
 			PreparedStatement pre = this.con.prepareStatement(sql.toString());
@@ -132,8 +130,9 @@ public class BillImpl extends BasicImpl implements Bill {
 					break;
 
 			}
-			
-			return this.edit(pre);
+			boolean edit = this.edit(pre);
+			Pair<Boolean, Integer> editList = this.editList(pre); 
+			if (edit && editList.getValue0()) return new Pair<>(edit,editList.getValue1());
 		} catch (SQLException e) {
 			try {
 				this.con.rollback();

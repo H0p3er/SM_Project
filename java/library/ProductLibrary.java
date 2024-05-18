@@ -453,4 +453,43 @@ public class ProductLibrary {
 		}	
 		return tmp.toString();
 	}
+	
+	public static Map<String,String> viewProductCart(ArrayList<Product_DTO> product_DTOs){
+		Map<String,String> view = new HashMap<String, String>();
+		
+		StringBuilder tmp = new StringBuilder();
+		
+		System.out.print("api:"+product_DTOs);
+  		if (product_DTOs!=null){
+		product_DTOs.forEach(product->{		                   			 
+                tmp.append("<tr>");
+				tmp.append("<th scope=\"row\">1</th>");
+				tmp.append("<td><img height=\"70px\" class=\"p-0\" src=\"/"+product.getImages()+"\" alt=\"\">");
+				tmp.append("</td>");
+				tmp.append("<td><a href=\"\">"+product.getName()+"</a></td>");
+				tmp.append("<td>");
+				tmp.append("<div class=\"input-group col-2\">");
+				tmp.append("<span class=\"input-group-btn\">");
+				tmp.append("<button type=\"button\" class=\"btn btn-default btn-number\" disabled=\"disabled\" data-type=\"minus\" data-field=\"quant[1]\">");
+				tmp.append("<i class=\"fa-solid fa-minus\"></i>");
+				tmp.append("</button>");
+				tmp.append("</span>");
+				tmp.append("<input type=\"text\" name=\"quant[1]\" class=\"form-control input-number\" value=\"1\" min=\"1\" max=\"99\"> <!-- max value is set by query product available quantity -->");
+				tmp.append("<span class=\"input-group-btn\">");
+				tmp.append("<button type=\"button\" class=\"btn btn-default btn-number\" data-type=\"plus\" data-field=\"quant[1]\">");
+				tmp.append("<i class=\"fa-solid fa-plus\"></i>");
+				tmp.append("</button>");
+				tmp.append("</span>");
+				tmp.append("</div>");
+				tmp.append("</td>");
+				tmp.append("<td><span class=\"product-price\" data-field=\"quant[1]\"  value=\""+product.getPrice()+"\">"+product.getPrice()+"</span></td>");
+				tmp.append("<td><i class=\"fa-solid fa-trash\"></i></td>");
+				tmp.append("</tr>");        	
+  			});
+		view.put("product-cart",tmp.toString());
+		} 
+		return view;
+		
+	}
+	
 }

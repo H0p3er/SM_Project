@@ -9,9 +9,7 @@ public class Utilities {
 	// Lấy dữ liệu kiểu Byte từ Para
 	public static byte getByteParam(ServletRequest request, String name) {
 		byte value = -1;
-		
 		String str_value = request.getParameter(name);
-		
 		if (str_value!=null && !str_value.equalsIgnoreCase("")) {
 			value = Byte.parseByte(str_value);
 		}
@@ -20,9 +18,7 @@ public class Utilities {
 	
 	public static short getShortParam(ServletRequest request, String name) {
 		short value = -1;
-		
 		String str_value = request.getParameter(name);
-		
 		if (str_value!=null && !str_value.equalsIgnoreCase("")) {
 			value = Short.parseShort(str_value);
 		}
@@ -86,6 +82,7 @@ public class Utilities {
 					parameter.append(value);
 				}
 				break;
+			
 			}
 		});
 		
