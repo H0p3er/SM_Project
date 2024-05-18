@@ -12,9 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 }
             });
-
         }
-
         // Call fetchData() initially to load data on page load
         fetchData();
 
@@ -22,7 +20,6 @@ document.addEventListener("DOMContentLoaded", function () {
         setInterval(fetchData, 300000); // 30 seconds
     });
 });
-
 
 
 $('.btn-number').click(function (e) {
@@ -84,15 +81,16 @@ $('.input-number').change(function () {
 
 
 });
+
 function updatePrice() {
     var totalPrice =0;
     $(".input-number").each(function() {
         fieldName = $(this).attr('name');
-        totalPrice +=  (parseInt($("span[data-field='" + fieldName + "']").attr('value'))*$(this).val());
+        totalPrice +=  (parseFloat($("span[data-field='" + fieldName + "']").attr('value'))*$(this).val());
         console.log($("span[data-field='" + fieldName + "']").attr('value'));
     });
     console.log(totalPrice)
-    $("#total-price").val(totalPrice);
+    $("#total_price").text(totalPrice+" VND");
 };
 updatePrice();
 

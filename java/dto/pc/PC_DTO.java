@@ -1,7 +1,14 @@
 package dto.pc;
 
-public class PC_DTO {
+import java.io.Serializable;
+
+public class PC_DTO implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8371052839529548311L;
+
 	private int id;
 	
 	private String name;

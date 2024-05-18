@@ -44,7 +44,8 @@
                           <div class="best-deal bg-white">
                             <div class="info-table bg-white offset-lg-0 offset-7" style="box-shadow: 0 0 0;">
                               <ul>
-                                <li class="text-black">Tổng cộng<span><input id="total-price" type="text" value="100" disabled></span></li>
+                                <li class="text-black">Tổng cộng<span id="total_price">0</span></li>
+                                <!-- <input id="total-price" type="text" value="100" disabled> -->
                               </ul>
                             </div>
                           </div>

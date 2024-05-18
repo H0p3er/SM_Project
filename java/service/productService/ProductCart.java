@@ -2,9 +2,8 @@ package service.productService;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,9 +11,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.javatuples.Quartet;
-import org.javatuples.Quintet;
 
 import com.google.gson.Gson;
 
@@ -67,18 +63,15 @@ public class ProductCart extends HttpServlet {
 		
 		
 		try {
-			ArrayList<Product_DTO> product_DTOs = (ArrayList<Product_DTO>) request.getSession().getAttribute("product-cart");
+			TreeMap<Product_DTO,Integer> product_DTOs = (TreeMap<Product_DTO,Integer>) request.getSession().getAttribute("product-cart");
 			
 			if (product_DTOs==null) {
-				product_DTOs = new ArrayList<Product_DTO>();
-				request.setAttribute("product-cart", pc.viewCart(product_DTOs));
-			} else {
-				request.setAttribute("product-cart", pc.viewCart(product_DTOs));
+				product_DTOs = new TreeMap<Product_DTO,Integer>();
 			}
-		
+			request.setAttribute("product-cart", pc.viewCart(product_DTOs));
 			System.out.println("get:"+product_DTOs);
 		} catch (ClassCastException e) {
-			ArrayList<Product_DTO> product_DTOs = new ArrayList<Product_DTO>();
+			TreeMap<Product_DTO,Integer> product_DTOs = new TreeMap<Product_DTO,Integer>();
 			request.setAttribute("product-cart", pc.viewCart(product_DTOs));
 		}
 		
@@ -95,8 +88,6 @@ public class ProductCart extends HttpServlet {
 	
 		// Thiết lập tập ký tự cần lấy. Việc thiết lập này cần xác định từ đầu
 		request.setCharacterEncoding("utf-8");
-
-		PrintWriter out = response.getWriter();
 		
 		// Tìm bộ quản lý kết nối
 		ConnectionPool cp = (ConnectionPool) getServletContext().getAttribute("CPool");
@@ -112,24 +103,27 @@ public class ProductCart extends HttpServlet {
 		Product_DTO product_DTO = pc.getProductDTO(id);
 		
 		try {
-			ArrayList<Product_DTO> product_DTOs = (ArrayList<Product_DTO>) request.getSession().getAttribute("product-cart");
+			TreeMap<Product_DTO,Integer> product_DTOs = (TreeMap<Product_DTO,Integer>) request.getSession().getAttribute("product-cart");
 			
 			if (product_DTOs==null) {
-				product_DTOs = new ArrayList<Product_DTO>();
-				product_DTOs.add(product_DTO);
-				request.getSession().setAttribute("product-cart", product_DTOs);
+				product_DTOs = new TreeMap<Product_DTO,Integer>();
+				product_DTOs.put(product_DTO,1);
+				System.out.println("post new from null:"+product_DTOs);
 			} else {
-				product_DTOs.add(product_DTO);
-				request.getSession().setAttribute("product-cart", product_DTOs);
-			}
-			
-			System.out.println("post:"+product_DTOs);
-		
+				if (product_DTOs.containsKey(product_DTO)) {		
+					product_DTOs.replace(product_DTO,product_DTOs.get(product_DTO)+1);
+					System.out.println("post update:"+product_DTOs);
+				} else {
+					product_DTOs.put(product_DTO,1);
+					System.out.println("post new:"+product_DTOs);
+				}
+				
+			}	
+			request.getSession().setAttribute("product-cart", product_DTOs);
 		} catch (ClassCastException e) {
-			ArrayList<Product_DTO> product_DTOs = new ArrayList<Product_DTO>();
-			product_DTOs.add(product_DTO);
-			
-			System.out.println("post false:"+product_DTOs);
+			TreeMap<Product_DTO,Integer> product_DTOs = new TreeMap<Product_DTO,Integer>();
+			product_DTOs.put(product_DTO,1);
+			System.out.println("post error:"+product_DTOs);
 			request.getSession().setAttribute("product-cart", product_DTOs);
 			
 		}
@@ -140,3 +134,4 @@ public class ProductCart extends HttpServlet {
 	}
 
 }
+ 
