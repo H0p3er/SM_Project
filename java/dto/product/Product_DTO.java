@@ -1,18 +1,20 @@
 package dto.product;
 
+import java.util.Comparator;
+
 import dto.pc.PC_DTO;
 import dto.productAttribute.Product_AttributeDTO;
 import dto.shop.Shop_DTO;
 import entity.ProductObject;
 import utility.Utilities_currency;
 
-public class Product_DTO implements ProductDTO<Product_AttributeDTO> {
+public class Product_DTO implements ProductDTO<Product_AttributeDTO>, Comparable<Product_DTO> {
 	private int id;
     private String name;
     private byte status;
     private byte deleted;
     private int visited;
-    private String price;
+    private double price;
     private String images;
     private String notes;
     private String created_date;
@@ -51,11 +53,11 @@ public class Product_DTO implements ProductDTO<Product_AttributeDTO> {
 	public void setVisited(int visited) {
 		this.visited = visited;
 	}
-	public String getPrice() {
+	public double getPrice() {
 		return price;
 	}
 	public void setPrice(double price) {
-		this.price = Utilities_currency.toVND(price);
+		this.price = price;
 	}
 	public String getImages() {
 		return images;
@@ -112,5 +114,23 @@ public class Product_DTO implements ProductDTO<Product_AttributeDTO> {
 	public void setAttribute(Product_AttributeDTO attribute) {
 		this.attribute = attribute;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		try {
+			Product_DTO dto = (Product_DTO) obj;
+			if (this.id == dto.id) {
+				return true;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return false;
 
+	}
+
+	@Override
+	public int compareTo(Product_DTO o) {
+		return Integer.compare(this.getId(), o.getId());
+	}
 }

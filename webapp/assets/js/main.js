@@ -88,7 +88,7 @@ function updatePrice() {
     var totalPrice =0;
     $(".input-number").each(function() {
         fieldName = $(this).attr('name');
-        totalPrice +=  (parseInt($("span[data-field='" + fieldName + "']").attr('value'))*$(this).val());
+        totalPrice +=  (parseFloat($("span[data-field='" + fieldName + "']").attr('value'))*$(this).val());
         console.log($("span[data-field='" + fieldName + "']").attr('value'));
     });
     console.log(totalPrice)

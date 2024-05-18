@@ -1,11 +1,16 @@
 package dto.shop;
 
+import java.io.Serializable;
 import java.util.List;
 
 import dto.product.Product_manageShopDTO;
 import entity.ShopObject;
 
-public class Shop_DTO {
+public class Shop_DTO implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8005003582622994802L;
 	private int id;
     private String name;
     private String address;

@@ -1,7 +1,9 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.javatuples.Pair;
 import org.javatuples.Quartet;
@@ -99,7 +101,7 @@ public class ProductControl {
 		return ProductLibrary.viewHomeProduct(datas);
 	}
 	
-	public Map<String,String> viewCart(ArrayList<Product_DTO> product_DTOs){
+	public Map<String,String> viewCart(TreeMap<Product_DTO,Integer> product_DTOs){
 		return library.ProductLibrary.viewProductCart(product_DTOs);
 	}
 	
