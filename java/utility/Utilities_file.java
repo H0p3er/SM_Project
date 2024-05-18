@@ -4,14 +4,11 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import javax.servlet.ServletException;
-import javax.servlet.ServletInputStream;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.servlet.*;
 import javax.servlet.http.*;
 
 import java.util.*;
+import java.util.logging.Level;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -21,19 +18,24 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.javatuples.Pair;
 
+import org.eclipse.birt.*;
+import org.eclipse.birt.core.framework.Platform;
+import org.eclipse.birt.report.engine.api.EngineConfig;
+import org.eclipse.birt.report.engine.api.IReportDocument;
+import org.eclipse.birt.report.engine.api.IReportEngine;
+import org.eclipse.birt.report.engine.api.IReportEngineFactory;
+import org.eclipse.birt.report.engine.api.TOCNode;
+
 import dto.product.Product_DTO;
 import entity.EmployeeObject;
 import entity.UserObject;
-import objects.*;
+
 
 public class Utilities_file extends HttpServlet {
 
 
 	public static ArrayList<Object> readExcelFile(InputStream input, String type) {	
-		ArrayList<Object> data = new ArrayList<Object>();
-		
-		
-		// Try block to check for exceptions
+		ArrayList<Object> data = new ArrayList<Object>();		// Try block to check for exceptions
 		try {
 
 			try (// Create Workbook instance holding reference to
@@ -317,7 +319,26 @@ public class Utilities_file extends HttpServlet {
 	}
 	
 	public static boolean writeEmployeeExcelFile(OutputStream os, ArrayList<EmployeeObject> datas, EmployeeObject filter){        
-        
+        EngineConfig engineConfig = new EngineConfig();
+//		engineConfig.setEngineHome("");
+		Platform.startup(engineConfig);
+		IReportEngineFactory factory = (IReportEngineFactory) Platform
+	            .createFactoryObject( IReportEngineFactory.EXTENSION_REPORT_ENGINE_FACTORY );
+	    IReportEngine engine = factory.createReportEngine(engineConfig);
+	    engine.changeLogLevel(Level.WARNING);
+	    IReportDocument ird = engine.openReportDocument("c:/work/test/TOCTest.rptdocument");
+		  //get root node
+		  TOCNode td = ird.findTOC(null);
+		  List children = td.getChildren( );
+		  //Loop through Top Level Children
+		  if ( children != null && children.size( ) > 0 ){
+		      for ( int i = 0; i < children.size( ); i++ ){
+		          TOCNode child = ( TOCNode ) children.get( i );
+		          System.out.println( "Node ID " + child.getNodeID());
+		          System.out.println( "Node Display String " + child.getDisplayString());
+		          System.out.println( "Node Bookmark " + child.getBookmark());
+		      }
+		  }
 		try (// Blank workbook
 		HSSFWorkbook workbook = new HSSFWorkbook();	
 				) {
@@ -345,22 +366,10 @@ public class Utilities_file extends HttpServlet {
 				Row row = sheet.createRow((int) datas.indexOf(employee)+1);	
 				
 				List<Object> propertiesValue = Arrays.asList(					
-						(Integer) employee.getEmployee_id(), employee.getUser_name(), employee.getUser_pass(),
-						employee.getUser_nickname(), employee.getUser_fullname(),employee.getUser_images(),
-						employee.getUser_notes(), employee.getUser_permission(), 
-						(Integer) employee.getUser_last_modified_id(), employee.getUser_last_modified_date(), 
-						(Byte) employee.getUser_gender(), employee.getUser_address(),
-						employee.getUser_created_date(), (Boolean)employee.isUser_deleted(), employee.getUser_mobile_phone(), 
-						employee.getUser_office_phone(), employee.getUser_social_links(), (Integer)employee.getUser_logined(),
-						(Byte) employee.getEmployee_role(), employee.getEmployee_contract_expired_date(),
-						(Boolean) employee.isEmployee_status(), (Byte) employee.getEmployee_work_time_length(),
-						(Integer) employee.getEmployee_workplace_id(),(Integer) employee.getEmployee_work_finished_day()
+
 						
 						
 				);
-				System.out.println(propertiesValue);
-//				System.out.println(propertiesValue);
-				
 				propertiesValue.forEach(property->{
 					
 					if (property!=null) {
@@ -405,7 +414,7 @@ public class Utilities_file extends HttpServlet {
 	}
 
 	
-	public static boolean writeExcelFile(OutputStream os, ArrayList<Object> datas){
+	public static boolean writeExcelFile(OutputStream os, ArrayList<DTO> datas){
         
 		try (// Blank workbook
 		HSSFWorkbook workbook = new HSSFWorkbook();

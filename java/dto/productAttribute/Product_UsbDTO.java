@@ -2,7 +2,7 @@ package dto.productAttribute;
 
 import dto.product.Product_DTO;
 
-public class Product_UsbDTO extends Product_DTO{
+public class Product_UsbDTO implements Product_AttributeDTO{
     private int usb_id;
     private String usb_manufacturer;
     private String usb_capacity;

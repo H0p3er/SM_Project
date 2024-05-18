@@ -2,7 +2,7 @@ package dto.productAttribute;
 
 import dto.product.Product_DTO;
 
-public class Product_GraphicsCardDTO extends Product_DTO{
+public class GraphicsCardDTO implements Product_AttributeDTO{
 	
     private int graphics_card_id;
     private String graphics_card_manufacturer;

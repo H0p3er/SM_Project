@@ -2,7 +2,7 @@ package dto.productAttribute;
 
 import dto.product.Product_DTO;
 
-public class Product_KeyboardDTO extends Product_DTO{
+public class KeyboardDTO implements Product_AttributeDTO{
     private int keyboard_id;
     private String keyboard_type;
     private String keyboard_connection_type;

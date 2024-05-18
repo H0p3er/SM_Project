@@ -2,7 +2,7 @@ package dto.productAttribute;
 
 import dto.product.Product_DTO;
 
-public class Product_RamDTO extends Product_DTO{
+public class RamDTO implements Product_AttributeDTO{
     private int ram_id;
     private String ram_manufacturer;
     private String ram_type;

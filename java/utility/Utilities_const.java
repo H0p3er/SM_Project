@@ -1,7 +1,7 @@
 package utility;
 
 public enum Utilities_const {
-	UPLOAD_PATH("src/main/webapp/assets/images"),
+	UPLOAD_PATH("src/main/webapp/assets/images/product"),
 	USERMAIL_NAME("quyet3582@gmail.com"),
 	USERMAIL_PASS("ahnagqoldkmumbxc"),
 	MAIL_HOST("smtp.gmail.com"),

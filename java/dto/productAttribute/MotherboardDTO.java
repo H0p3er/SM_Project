@@ -2,7 +2,7 @@ package dto.productAttribute;
 
 import dto.product.Product_DTO;
 
-public class Product_MotherboardDTO extends Product_DTO {
+public class MotherboardDTO implements Product_AttributeDTO{
 	private int motherboard_id;
 	private String motherboard_manufacturer;
 	private String motherboard_chipset;

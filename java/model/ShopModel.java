@@ -127,14 +127,14 @@ public class ShopModel {
 				e.printStackTrace();
 			}
 		}		
-		Triplet<ArrayList<Product_manageShopDTO>,Integer, List<Pair<Product_manageShopDTO,Double>>> productResultSets = this.product.getProduct_manageShopDTOs(productInfors,shopObject);
+		Triplet<ArrayList<Product_DTO>,Integer, List<Pair<Product_DTO,Double>>> productResultSets = this.product.getProduct_manageShopDTO(productInfors,shopObject);
 		shop_ShopManagerDTO.setStorage(new Pair<>(productResultSets.getValue0(),productResultSets.getValue1()));
 		shop_ShopManagerDTO.setStatistic(getShopStatisticDTO(productResultSets.getValue2(), shopObject));;
 		return shop_ShopManagerDTO;	
 	}
 	
 
-	private Shop_statisticDTO getShopStatisticDTO(List<Pair<Product_manageShopDTO,Double>> most_sold_product_current_month, ShopObject shopObject) {	
+	private Shop_statisticDTO getShopStatisticDTO(List<Pair<Product_DTO,Double>> most_sold_product_current_month, ShopObject shopObject) {	
 		Shop_statisticDTO shop_StatisticDTO = new Shop_statisticDTO();	
 		shop_StatisticDTO.setMost_sold_product_current_month(most_sold_product_current_month);
 		

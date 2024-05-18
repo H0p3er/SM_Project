@@ -1,10 +1,8 @@
 package dto.shop;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import org.javatuples.Pair;
-
+import dto.product.Product_DTO;
 import dto.product.Product_viewShopDTO;
 import dto.user.User_viewShopDTO;
 import entity.ShopObject;
@@ -22,7 +20,8 @@ public class Shop_viewShopDTO {
     private String notes;
 	private String phone;
     private String email;
-	private Pair<ArrayList<Product_viewShopDTO>,Integer> storage;
+	private Pair<ArrayList<Product_DTO>,Integer> storage;
+	
 	
 	public int getId() {
 		return id;
@@ -113,20 +112,12 @@ public class Shop_viewShopDTO {
 		this.email = email;
 	}
 
-	public Pair<ArrayList<Product_viewShopDTO>,Integer> getStorage() {
+	public Pair<ArrayList<Product_DTO>,Integer> getStorage() {
 		return storage;
 	}
 
-	public void setStorage(Pair<ArrayList<Product_viewShopDTO>,Integer> storage) {
+	public void setStorage(Pair<ArrayList<Product_DTO>,Integer> storage) {
 		this.storage = storage;
-	}
-
-	public void applyToEntity(ShopObject shopObject) {
-		shopObject.setShop_name(this.name);
-		shopObject.setShop_address(address);
-		shopObject.setShop_address_link(address_link);
-		shopObject.setShop_images(images);
-		shopObject.setShop_email(images);
 	}
 
 	public User_viewShopDTO getUser() {
@@ -135,6 +126,14 @@ public class Shop_viewShopDTO {
 
 	public void setUser(User_viewShopDTO user) {
 		this.user = user;
+	}
+
+	public void applyToEntity(ShopObject shopObject) {
+		shopObject.setShop_name(this.name);
+		shopObject.setShop_address(address);
+		shopObject.setShop_address_link(address_link);
+		shopObject.setShop_images(images);
+		shopObject.setShop_email(images);
 	}
 
 }

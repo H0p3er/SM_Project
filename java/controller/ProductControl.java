@@ -48,12 +48,12 @@ public class ProductControl {
 	 * @return sản phẩm cần lấy nếu tìm được
 	 * Cập nhật ngày 26/10/2023
 	 */
-	public Product_DTO getProductObject(int id) {
+	public Product_DTO getProductDTO(int id) {
 		return this.pm.getProductDTO(id);
 	}
 	
 	public Map<String,String> getProductProfile(int id) {
-		Product_DTO productObject = this.getProductObject(id);
+		Product_DTO productObject = this.getProductDTO(id);
 		return ProductLibrary.viewProductProfile(productObject);
 	}
 	
@@ -97,6 +97,10 @@ public class ProductControl {
 		Pair<ArrayList<Product_DTO>,ArrayList<Product_DTO>> datas = this.pm.getProductObjects();
 		
 		return ProductLibrary.viewHomeProduct(datas);
+	}
+	
+	public Map<String,String> viewCart(ArrayList<Product_DTO> product_DTOs){
+		return library.ProductLibrary.viewProductCart(product_DTOs);
 	}
 	
 }

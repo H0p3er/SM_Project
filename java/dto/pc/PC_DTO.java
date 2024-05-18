@@ -6,8 +6,11 @@ public class PC_DTO {
 	
 	private String name;
 
-	public PC_DTO(int id) {
-		this.id = id; 
+	
+	public PC_DTO(int id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
 	}
 
 	public String getName() {

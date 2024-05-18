@@ -65,7 +65,7 @@
                     <ul class="dropdown-menu" id="dropdown">
                       <li>
                         <a class="dropdown-item p-0 bg-white text-black"
-                          href="/home/main/user/cart.jsp"><i class="fa-solid fa-cart-shopping"></i> Giỏ hàng</a>
+                          href="/home/product/cart"><i class="fa-solid fa-cart-shopping"></i> Giỏ hàng</a>
                       </li>
                       <li>
                         <a class="dropdown-item p-0 bg-white text-black" href="/home/main/user/user_profile.jsp"><i class="fa-regular fa-id-card"></i> Thông

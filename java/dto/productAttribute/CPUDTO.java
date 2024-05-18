@@ -1,8 +1,10 @@
 package dto.productAttribute;
 
-import dto.product.Product_DTO;
-
-public class Product_CPUDTO extends Product_DTO{
+public class CPUDTO implements Product_AttributeDTO{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8586413792483383459L;
 	private int cpu_id;
     private String cpu_collection;
     private String cpu_socket;

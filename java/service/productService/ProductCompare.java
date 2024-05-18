@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -28,8 +29,8 @@ import utility.Utilities_text;
 /**
  * Servlet implementation class ProductList
  */
-@WebServlet("/product/search")
-public class ProductSearch extends HttpServlet {
+@WebServlet("/product/compare")
+public class ProductCompare extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	// Định nghĩa kiểu nội dung xuất về trình khách
@@ -38,7 +39,7 @@ public class ProductSearch extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProductSearch() {
+    public ProductCompare() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -72,40 +73,13 @@ public class ProductSearch extends HttpServlet {
 			page = 1;
 		}		
 		
-		Map<String, String> multiConditions = new HashMap<String, String>();
+		List<Product_DTO> product_DTOs = (ArrayList<Product_DTO>) request.getSession().getAttribute("product-compare");
 		
-		if (Utilities_text.checkValidString(request, "search")) {
-			String search = utility.Utilities.getStringParam(request, "search");
-			multiConditions.put("search", search);
-			request.setAttribute("product-name", search);
-		}
-		if (Utilities_text.checkValidString(request, "pc")) {
-			String category = utility.Utilities.getStringParam(request, "pc");
-			multiConditions.put("category", category);
-		}
-		if (Utilities_text.checkValidString(request, "max")) {
-			String max = utility.Utilities.getStringParam(request, "max");
-			multiConditions.put("max", max);
-		}
-		if (Utilities_text.checkValidString(request, "min")) {
-			String min = utility.Utilities.getStringParam(request, "min");
-			multiConditions.put("min", min);
-		}
-
-		Quintet<Short, Byte,  Map<String,String>,  Map<String,String>,  Map<String,String>> infors 
-		= new Quintet<>( page, (byte) 6,
-				utility.Utilities.getMapParam(request, null), 
-				multiConditions,
-				utility.Utilities.getMapParam(request, "orderby")
-				);
-
-		Map<String,String> viewProductsList = 
-				pc.viewSearchProduct(infors, request.getRequestURI());
-
+	
 		// Trả về kết nối
-		pc.releaseConnection();
+//		pc.releaseConnection();
 		
-		request.setAttribute("product-search", viewProductsList);
+		request.setAttribute("product-compare", "");
 	    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/main/product/search.jsp");
 	    requestDispatcher.forward(request, response);		
 		

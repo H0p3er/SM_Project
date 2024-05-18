@@ -208,8 +208,11 @@ public class ProductImpl extends BasicImpl implements Product{
 
 	@Override
 	public ResultSet getProductById(int id) {
-		String sql = "SELECT * FROM tblProduct WHERE (product_id=?) AND (product_deleted=0)";
-		return this.get(sql, id);
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT p.*, pc.pc_name FROM tblproduct p ");
+		sql.append("LEFT JOIN tblpc pc ON p.product_pc_id = pc.pc_id ");
+		sql.append("WHERE (product_id=?) AND (product_deleted=0); ");
+		return this.get(sql.toString(), id);
 	}	
 	
 	
@@ -223,7 +226,8 @@ public class ProductImpl extends BasicImpl implements Product{
 
 	private String getProductsNewestSQL() {	
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT p.* FROM tblproduct p ");	
+		sql.append("SELECT p.*, pc.pc_name FROM tblproduct p ");
+		sql.append("LEFT JOIN tblpc pc ON p.product_pc_id = pc.pc_id ");
 		sql.append("WHERE (p.product_deleted=0) ");
 		sql.append("ORDER BY STR_TO_DATE(product_created_date, '%e/%c/%Y') ASC ");
 		sql.append("LIMIT 0,9; ");
@@ -232,7 +236,8 @@ public class ProductImpl extends BasicImpl implements Product{
 	
 	private String getProductsMostSoldSQL() {	
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT p.*, SUM(bd_product_quantity) as sold_quantity FROM tblproduct p ");
+		sql.append("SELECT p.*, pc.pc_name, SUM(bd_product_quantity) as sold_quantity FROM tblproduct p ");
+		sql.append("LEFT JOIN tblpc pc ON p.product_pc_id = pc.pc_id ");
 		sql.append("INNER JOIN tblbd bd ON bd.bd_product_id = p.product_id ");
 		sql.append("WHERE (p.product_deleted=0) ");
 		sql.append("GROUP BY (p.product_id) ");
@@ -252,13 +257,14 @@ public class ProductImpl extends BasicImpl implements Product{
 		StringBuilder sql = new StringBuilder();
 		sql.append(getProductsSQL(at, total, multiField, multiCondition ,multiSort));
 		sql.append(getProductsSizeSQL(multiCondition));		
-//		System.out.println(sql.toString());
+		System.out.println(sql.toString());
 		return this.getReList(sql.toString());
 	}
 	
 	private String getProductsSQL(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort) {
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT * FROM tblproduct ");
+		sql.append("SELECT * FROM tblproduct p ");
+		sql.append("LEFT JOIN tblpc pc ON p.product_pc_id = pc.pc_id ");
 		sql.append(this.WHEREConditions(multiCondition));
 		sql.append(this.ORDERConditions(multiSort));	
 		if(total > 0) {
@@ -271,7 +277,8 @@ public class ProductImpl extends BasicImpl implements Product{
 	
 	private String getProductsSizeSQL(Map<String,String> multiCondition) {
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT COUNT(product_id) AS product_count FROM tblproduct ");
+		sql.append("SELECT COUNT(product_id) AS product_count FROM tblproduct p ");
+		sql.append("LEFT JOIN tblpc pc ON p.product_pc_id = pc.pc_id ");
 		sql.append(this.WHEREConditions(multiCondition));	
 		sql.append(";");
 		return sql.toString();
@@ -375,16 +382,18 @@ public class ProductImpl extends BasicImpl implements Product{
 	
 	private String getProductsByBillSQL(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort, BillObject object) {	
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT p.* FROM tblproduct p ");
+		sql.append("SELECT p.*, pc.pc_name FROM tblproduct p ");
+		sql.append("LEFT JOIN tblpc pc ON p.product_pc_id = pc.pc_id ");
 		sql.append("INNER JOIN tblbd bd ON bd.bd_product_id = p.product_id ");
 		sql.append("WHERE (p.product_shop_id="+object.getBill_id()+") AND (p.product_deleted=0) ");
-		sql.append("GROUP BY p.product_id; ");
+		sql.append("GROUP BY p.product_id, pc.pc_name ; ");
 		return sql.toString();
 	}	
 	
 	private String getProductsSizeByBillSQL(BillObject object) {	
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT COUNT(p.product_id) as product_count FROM tblproduct p ");	
+		sql.append("LEFT JOIN tblpc pc ON p.product_pc_id = pc.pc_id ");
 		sql.append("INNER JOIN tblbd bd ON bd.bd_product_id = p.product_id ");
 		sql.append("WHERE (p.product_shop_id="+object.getBill_id()+") AND (p.product_deleted=0); ");
 		return sql.toString();
@@ -398,23 +407,30 @@ public class ProductImpl extends BasicImpl implements Product{
 				WHERE.append("AND ");
 			}
 			switch (key) {
-			case "name":
-				WHERE.append("product_name LIKE '%"+value+"%' ");
+			case "search":
+				WHERE.append("product_name LIKE '%"+value+"%' OR pc_name LIKE '%"+value+"%'");
 				break;
 			case "id":
 				WHERE.append("product_id= ");
 				break;
 			case "address":
-				WHERE.append("product_address= ");
+				WHERE.append("product_address="+value+" ");
 				break;
 			case "last_modified":
-				WHERE.append("product_last_modified="+value);
+				WHERE.append("product_last_modified="+value+" ");
 				break;
-			case "pc":
-				WHERE.append("product_pc_id= ");
+			case "category":
+				WHERE.append("product_pc_id="+value+" ");
+				break;
+			case "max":
+				WHERE.append("product_price <"+value+" ");
+				break;
+			case "min":
+				WHERE.append("product_price >"+value+" ");
 				break;
 			default:
-				WHERE.append("product_name LIKE '%"+value+"%'");
+				WHERE.append("product_name LIKE '%"+value+"%' ");
+				break;
 			}			
 		});		
 		if(!WHERE.toString().equalsIgnoreCase("")) {
@@ -438,7 +454,7 @@ public class ProductImpl extends BasicImpl implements Product{
 				ORDER.append("product_last_modified");
 				break;
 			default:
-				ORDER.append("product_id");
+				ORDER.append("STR_TO_DATE(product_created_date, '%e/%c/%Y')");
 			}			
 			switch (value) {
 			case "asc":

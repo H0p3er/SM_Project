@@ -68,15 +68,12 @@ public class ProductOrder extends HttpServlet {
 			getServletContext().setAttribute("CPool", pc.getCP());
 		}
 		
-		// Lấy từ khóa tìm kiếm
-		int id = Utilities.getIntParam(request, "id");
-
-		Map<String,String> viewProduct= pc.getProductProfile(id);
+		
 
 		// Trả về kết nối
 		pc.releaseConnection();
 		// Tạo đối tượng thực hiện xuất nội dung
-		request.setAttribute("product-profile", viewProduct);
+		request.setAttribute("product-order", "");
 	    
 		
 		

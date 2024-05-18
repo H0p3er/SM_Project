@@ -2,7 +2,7 @@
  <%@ page import="java.util.*" %>
   <jsp:include page="../component/user_header.jsp" flush="true"></jsp:include>
   <jsp:include page="../component/user_navigation-bar.jsp" flush="true"></jsp:include>
-
+<% Map<String, String> map = (HashMap<String,String>) request.getAttribute("product-search"); %>
   <div class="properties section">
     <div class="container">
       <nav aria-label="breadcrumb" class="ms-lg-5">
@@ -17,7 +17,24 @@
           <div class="best-deal p-0">
             <div class="info-table">
               <ul>
-                <li>Hãng sản xuất
+              	<li>Danh mục
+                  <ul class="ms-4 mt-2">
+                  <%= map.getOrDefault("product-filter", "") %>
+<!--                     <li><a class="text-black" href="">Acer</a></li>
+                    <li><a class="text-black" href="">AOC</a></li>
+                    <li><a class="text-black" href="">Asus</a></li>
+                    <li><a class="text-black" href="">BenQ</a></li>
+                    <li><a class="text-black" href="">Dell</a></li>
+                    <li><a class="text-black" href="">Gigabyte</a></li>
+                    <li><a class="text-black" href="">HP</a></li>
+                    <li><a class="text-black" href="">LG</a></li>
+                    <li><a class="text-black" href="">MSI</a></li>
+                    <li><a class="text-black" href="">Samsung</a></li>
+                    <li><a class="text-black" href="">ViewSonic</a></li> -->
+                  </ul>
+                </li>
+              
+ <!--                <li>Hãng sản xuất
                   <ul class="ms-4 mt-2">
                     <li><a class="text-black" href="">Acer</a></li>
                     <li><a class="text-black" href="">AOC</a></li>
@@ -67,23 +84,20 @@
                     <li><a href="" class="text-black">144Hz - 175Hz</a></li>
                     <li><a href="" class="text-black">240Hz - 360Hz</a></li>
                   </ul>
-                </li>
+                </li> -->
               </ul>
             </div>
           </div>
         </div>
         <div class="col-lg-9">
           <div class="row">
-
-		<% Map<String, String> map = (HashMap<String,String>) request.getAttribute("product-search"); %>
-		<%=map.get("product-search") %>			
-
+			<%= map.getOrDefault("product-search", "") %>			
           </div>
           <div class="row">
 	        <div class="col-lg-12">
 	          <ul class="pagination">
 	          
-	        <%=map.get("product-search-pagination") %>	
+	       		 <%=map.get("product-search-pagination") %>	
 	          </ul>
 	        </div>
 	      </div>

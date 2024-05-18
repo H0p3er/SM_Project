@@ -7,21 +7,23 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import connection.ConnectionPool;
+import dto.product.ProductDTO;
 import dto.product.Product_DTO;
-import dto.productAttribute.Product_CPUDTO;
-import dto.productAttribute.Product_CaseDTO;
-import dto.productAttribute.Product_CoolingDTO;
-import dto.productAttribute.Product_DesktopDTO;
-import dto.productAttribute.Product_GraphicsCardDTO;
-import dto.productAttribute.Product_HeadphoneSpeakerDTO;
-import dto.productAttribute.Product_KeyboardDTO;
-import dto.productAttribute.Product_LaptopDTO;
-import dto.productAttribute.Product_MiceDTO;
-import dto.productAttribute.Product_MonitorDTO;
-import dto.productAttribute.Product_MotherboardDTO;
-import dto.productAttribute.Product_PowerSuppyDTO;
-import dto.productAttribute.Product_RamDTO;
-import dto.productAttribute.Product_StorageDTO;
+import dto.productAttribute.Product_AttributeDTO;
+import dto.productAttribute.CPUDTO;
+import dto.productAttribute.CaseDTO;
+import dto.productAttribute.CoolingDTO;
+import dto.productAttribute.DesktopDTO;
+import dto.productAttribute.GraphicsCardDTO;
+import dto.productAttribute.HeadphoneSpeakerDTO;
+import dto.productAttribute.KeyboardDTO;
+import dto.productAttribute.LaptopDTO;
+import dto.productAttribute.MiceDTO;
+import dto.productAttribute.MonitorDTO;
+import dto.productAttribute.MotherboardDTO;
+import dto.productAttribute.PowerSuppyDTO;
+import dto.productAttribute.RamDTO;
+import dto.productAttribute.StorageDTO;
 import dto.productAttribute.Product_UsbDTO;
 import entity.PCObject;
 import entity.ProductObject;
@@ -65,41 +67,41 @@ public class PCModel {
 	
 	
 	
-	public Product_CaseDTO getProduct_CaseDTO(Product_DTO product_DTO) throws SQLException {
+	public void getCaseDTO(Product_DTO product_DTO) throws SQLException {
 		ProductObject productObject = new ProductObject();
 		product_DTO.ApplyToEntity(productObject);
 		ResultSet attribute = this.pc.getProductAttribute(productObject);	
-		Product_CaseDTO product_CaseDTO = new Product_CaseDTO();
+		CaseDTO product_CaseDTO = new CaseDTO();
 		if (attribute.next()) {
 			product_CaseDTO.setCase_size(attribute.getString("case_size"));
 			product_CaseDTO.setCase_manufacturer(attribute.getString("case_manufacturer"));
 			product_CaseDTO.setCase_color(attribute.getString("case_color"));
 			
-		}	
-		
-		return product_CaseDTO;
+		}
+		product_DTO.setAttribute(product_CaseDTO);
+		//return product_CaseDTO;
 	}
 	
-	public Product_CoolingDTO getProduct_CoolingDTO(Product_DTO product_DTO) throws SQLException {	
+	public void getCoolingDTO(Product_DTO product_DTO) throws SQLException {	
 		ProductObject productObject = new ProductObject();
 		product_DTO.ApplyToEntity(productObject);
 		ResultSet attribute = this.pc.getProductAttribute(productObject);
-		Product_CoolingDTO product_CoolingDTO = new Product_CoolingDTO();
+		CoolingDTO product_CoolingDTO = new CoolingDTO();
 		if (attribute.next()) {
 			product_CoolingDTO.setCooling_color(attribute.getString("cooling_color"));
 			product_CoolingDTO.setCooling_type(attribute.getString("cooling_color"));
 			product_CoolingDTO.setCooling_fan_size(attribute.getString("cooling_fan_size"));
 			product_CoolingDTO.setCooling_manufacturer(attribute.getString("cooling_manufacturer"));
 		}
-	
-		return product_CoolingDTO;
+		product_DTO.setAttribute(product_CoolingDTO);
+		//return product_CoolingDTO;
 	}
 	
-	public Product_CPUDTO getProduct_CPUDTO(Product_DTO product_DTO) throws SQLException {	
+	public void getCPUDTO(Product_DTO product_DTO) throws SQLException {	
 		ProductObject productObject = new ProductObject();
 		product_DTO.ApplyToEntity(productObject);
 		ResultSet attribute = this.pc.getProductAttribute(productObject);	
-		Product_CPUDTO product_CPUDTO = new Product_CPUDTO();
+		CPUDTO product_CPUDTO = new CPUDTO();
 		if (attribute.next()) {
 			product_CPUDTO.setCpu_collection(attribute.getString("cpu_collection"));
 			product_CPUDTO.setCpu_socket(attribute.getString("cpu_socket"));
@@ -107,14 +109,15 @@ public class PCModel {
 			product_CPUDTO.setCpu_threads(attribute.getInt("cpu_threads"));
 			product_CPUDTO.setCpu_speed_ghz(attribute.getString("cpu_speed_ghz"));
 		}
-		return product_CPUDTO;
+		product_DTO.setAttribute(product_CPUDTO);
+		//return product_CPUDTO;
 	}
 	
-	public Product_DesktopDTO getProduct_DesktopDTO(Product_DTO product_DTO) throws SQLException {	
+	public void getDesktopDTO(Product_DTO product_DTO) throws SQLException {	
 		ProductObject productObject = new ProductObject();
 		product_DTO.ApplyToEntity(productObject);
 		ResultSet attribute = this.pc.getProductAttribute(productObject);	
-		Product_DesktopDTO product_DesktopDTO = new Product_DesktopDTO();
+		DesktopDTO product_DesktopDTO = new DesktopDTO();
 		if (attribute.next()) {
 			product_DesktopDTO.setDesktop_manufacturer(attribute.getString("desktop_manufacturer"));
 			product_DesktopDTO.setDesktop_ram_type(attribute.getString("desktop_type"));
@@ -125,14 +128,15 @@ public class PCModel {
 			product_DesktopDTO.setDesktop_storage(attribute.getString("desktop_storage"));
 			product_DesktopDTO.setDesktop_power_supply(attribute.getString("desktop_power_supply"));
 		}
-		return product_DesktopDTO;
+		product_DTO.setAttribute(product_DesktopDTO);
+		// return product_DesktopDTO;
 	}
 	
-	public Product_GraphicsCardDTO getProduct_GraphicsCardDTO(Product_DTO product_DTO) throws SQLException {	
+	public void getGraphicsCardDTO(Product_DTO product_DTO) throws SQLException {	
 		ProductObject productObject = new ProductObject();
 		product_DTO.ApplyToEntity(productObject);
 		ResultSet attribute = this.pc.getProductAttribute(productObject);
-		Product_GraphicsCardDTO product_GraphicsCardDTO = new Product_GraphicsCardDTO();
+		GraphicsCardDTO product_GraphicsCardDTO = new GraphicsCardDTO();
 		if (attribute.next()) {
 			product_GraphicsCardDTO.setGraphics_card_manufacturer(attribute.getString("graphics_card_manufacturer"));
 			product_GraphicsCardDTO.setGraphics_card_speed(attribute.getString("graphics_card_speed"));
@@ -141,28 +145,30 @@ public class PCModel {
 			product_GraphicsCardDTO.setGraphics_card_vram_capacity(attribute.getString("graphics_card_vram_capacity"));
 			product_GraphicsCardDTO.setGraphics_card_require_psu(attribute.getString("graphics_card_require_psu"));
 		}
-		return product_GraphicsCardDTO ;
+		product_DTO.setAttribute(product_GraphicsCardDTO);
+//		return product_GraphicsCardDTO ;
 	}
 	
-	public Product_HeadphoneSpeakerDTO getProduct_HeadphoneSpeakerDTO(Product_DTO product_DTO) throws SQLException {	
+	public void getHeadphoneSpeakerDTO(Product_DTO product_DTO) throws SQLException {	
 		ProductObject productObject = new ProductObject();
 		product_DTO.ApplyToEntity(productObject);
 		ResultSet attribute = this.pc.getProductAttribute(productObject);	
-		Product_HeadphoneSpeakerDTO product_HeadphoneSpeakerDTO = new Product_HeadphoneSpeakerDTO();
+		HeadphoneSpeakerDTO product_HeadphoneSpeakerDTO = new HeadphoneSpeakerDTO();
 		if (attribute.next()) {
 			product_HeadphoneSpeakerDTO.setHeadphones_manufacturer(attribute.getString("headphones_manufacturer"));
 			product_HeadphoneSpeakerDTO.setHeadphone_type(attribute.getString("headphone_type"));
 			product_HeadphoneSpeakerDTO.setHeadphones_connection(attribute.getString("headphones_connection"));
 			product_HeadphoneSpeakerDTO.setHeadphones_connection_ports(attribute.getString("headphones_connection_ports"));
 		}
-		return product_HeadphoneSpeakerDTO;
+		product_DTO.setAttribute(product_HeadphoneSpeakerDTO);
+//		return product_HeadphoneSpeakerDTO;
 	}
 	
-	public Product_KeyboardDTO getProduct_KeyboardDTO(Product_DTO product_DTO) throws SQLException {	
+	public void getKeyboardDTO(Product_DTO product_DTO) throws SQLException {	
 		ProductObject productObject = new ProductObject();
 		product_DTO.ApplyToEntity(productObject);
 		ResultSet attribute = this.pc.getProductAttribute(productObject);
-		Product_KeyboardDTO product_KeyboardDTO = new Product_KeyboardDTO();
+		KeyboardDTO product_KeyboardDTO = new KeyboardDTO();
 		if (attribute.next()) {
 	        product_KeyboardDTO.setKeyboard_id(attribute.getInt("keyboard_id"));
 	        product_KeyboardDTO.setKeyboard_type(attribute.getString("keyboard_type"));
@@ -170,14 +176,16 @@ public class PCModel {
 	        product_KeyboardDTO.setKeyboard_size_layout(attribute.getString("keyboard_size_layout"));
 	        product_KeyboardDTO.setKeyboard_led_backlighting(attribute.getString("keyboard_led_backlighting"));
 	    }
-		return product_KeyboardDTO;
+		
+		product_DTO.setAttribute(product_KeyboardDTO);
+		//return product_KeyboardDTO;
 	}
 	
-	public Product_LaptopDTO getProduct_LaptopDTO(Product_DTO product_DTO) throws SQLException {	
+	public void getLaptopDTO(Product_DTO product_DTO) throws SQLException {	
 		ProductObject productObject = new ProductObject();
 		product_DTO.ApplyToEntity(productObject);
 		ResultSet attribute = this.pc.getProductAttribute(productObject);
-		Product_LaptopDTO product_LaptopDTO = new Product_LaptopDTO();
+		LaptopDTO product_LaptopDTO = new LaptopDTO();
 		if (attribute.next()) {
 			product_LaptopDTO.setLaptop_manufacturer(attribute.getString("laptop_manufacturer"));
 			product_LaptopDTO.setLaptop_cpu(attribute.getString("laptop_cpu"));
@@ -187,14 +195,15 @@ public class PCModel {
 			product_LaptopDTO.setLaptop_resolution(attribute.getString("laptop_resolution"));
 			product_LaptopDTO.setLaptop_type(attribute.getString("laptop_type"));
 		}
-		return product_LaptopDTO;
+		product_DTO.setAttribute(product_LaptopDTO);
+		//return product_LaptopDTO;
 	}
 
-	public Product_StorageDTO getProduct_StorageDTO(Product_DTO product_DTO) throws SQLException {
+	public void getStorageDTO(Product_DTO product_DTO) throws SQLException {
 		ProductObject productObject = new ProductObject();
 		product_DTO.ApplyToEntity(productObject);
 		ResultSet attribute = this.pc.getProductAttribute(productObject);
-		Product_StorageDTO product_StorageDTO = new Product_StorageDTO();
+		StorageDTO product_StorageDTO = new StorageDTO();
 		if (attribute.next()) {
 	        product_StorageDTO.setStorage_id(attribute.getInt("storage_id"));
 	        product_StorageDTO.setStorage_manufacturer(attribute.getString("storage_manufacturer"));
@@ -203,14 +212,15 @@ public class PCModel {
 	        product_StorageDTO.setStorage_m2_pcie_type(attribute.getString("storage_m2_pcie_type"));
 	        product_StorageDTO.setStorage_rpm(attribute.getString("storage_rpm"));
 	    }
-		return product_StorageDTO;
+		product_DTO.setAttribute(product_StorageDTO);
+		//return product_StorageDTO;
 	}
 
-	public Product_RamDTO getProduct_RamDTO(Product_DTO product_DTO)  throws SQLException{
+	public void getRamDTO(Product_DTO product_DTO)  throws SQLException{
 		ProductObject productObject = new ProductObject();
 		product_DTO.ApplyToEntity(productObject);
 		ResultSet attribute = this.pc.getProductAttribute(productObject);	
-		Product_RamDTO product_RamDTO = new Product_RamDTO();
+		RamDTO product_RamDTO = new RamDTO();
 		if (attribute.next()) {
 	        product_RamDTO.setRam_id(attribute.getInt("ram_id"));
 	        product_RamDTO.setRam_manufacturer(attribute.getString("ram_manufacturer"));
@@ -219,14 +229,15 @@ public class PCModel {
 	        product_RamDTO.setRam_bus_speed(attribute.getString("ram_bus_speed"));
 	        product_RamDTO.setRam_standard(attribute.getString("ram_standard"));
 	    }
-		return product_RamDTO;
+		product_DTO.setAttribute(product_RamDTO);
+		//return product_RamDTO;
 	}
 
-	public Product_PowerSuppyDTO getProduct_PowerSuppyDTO(Product_DTO product_DTO)  throws SQLException{
+	public void getPowerSuppyDTO(Product_DTO product_DTO)  throws SQLException{
 		ProductObject productObject = new ProductObject();
 		product_DTO.ApplyToEntity(productObject);
 		ResultSet attribute = this.pc.getProductAttribute(productObject);
-		Product_PowerSuppyDTO product_PowerSuppyDTO = new Product_PowerSuppyDTO();
+		PowerSuppyDTO product_PowerSuppyDTO = new PowerSuppyDTO();
 		if (attribute.next()) {
 	        product_PowerSuppyDTO.setPsu_id(attribute.getInt("psu_id"));
 	        product_PowerSuppyDTO.setPsu_manufacturer(attribute.getString("psu_manufacturer"));
@@ -235,14 +246,15 @@ public class PCModel {
 	        product_PowerSuppyDTO.setPsu_size(attribute.getString("psu_size"));
 	        product_PowerSuppyDTO.setPsu_power_output(attribute.getString("psu_power_output"));
 	    }
-		return product_PowerSuppyDTO;
+		product_DTO.setAttribute(product_PowerSuppyDTO);
+		//return product_PowerSuppyDTO;
 	}
 
-	public Product_MotherboardDTO getProduct_MotherboardDTO(Product_DTO product_DTO)  throws SQLException{
+	public void getMotherboardDTO(Product_DTO product_DTO)  throws SQLException{
 		ProductObject productObject = new ProductObject();
 		product_DTO.ApplyToEntity(productObject);
 		ResultSet attribute = this.pc.getProductAttribute(productObject);
-		Product_MotherboardDTO product_MotherboardDTO = new Product_MotherboardDTO();
+		MotherboardDTO product_MotherboardDTO = new MotherboardDTO();
 		if (attribute.next()) {
 	        product_MotherboardDTO.setMotherboard_id(attribute.getInt("motherboard_id"));
 	        product_MotherboardDTO.setMotherboard_manufacturer(attribute.getString("motherboard_manufacturer"));
@@ -252,14 +264,15 @@ public class PCModel {
 	        product_MotherboardDTO.setMotherboard_ram_support(attribute.getString("motherboard_ram_support"));
 	        product_MotherboardDTO.setMotherboard_ram_slots(attribute.getString("motherboard_ram_slots"));
 	    }
-		return product_MotherboardDTO;
+		product_DTO.setAttribute(product_MotherboardDTO);
+		//return product_MotherboardDTO;
 	}
 
-	public Product_MonitorDTO getProduct_MonitorDTO(Product_DTO product_DTO)  throws SQLException{
+	public void getMonitorDTO(Product_DTO product_DTO) throws SQLException{
 		ProductObject productObject = new ProductObject();
 		product_DTO.ApplyToEntity(productObject);
 		ResultSet attribute = this.pc.getProductAttribute(productObject);
-		Product_MonitorDTO product_MonitorDTO = new Product_MonitorDTO();
+		MonitorDTO product_MonitorDTO = new MonitorDTO();
 		if (attribute.next()) {
 	        product_MonitorDTO.setMonitor_id(attribute.getInt("monitor_id"));
 	        product_MonitorDTO.setMonitor_manufacturer(attribute.getString("monitor_manufacturer"));
@@ -271,14 +284,15 @@ public class PCModel {
 	        product_MonitorDTO.setMonitor_screen_type(attribute.getString("monitor_screen_type"));
 	        product_MonitorDTO.setMonitor_response(attribute.getDouble("monitor_response"));
 	    }
-		return product_MonitorDTO;
+		product_DTO.setAttribute(product_MonitorDTO);
+//		return product_MonitorDTO;
 	}
 
-	public Product_MiceDTO getProduct_MiceDTO(Product_DTO product_DTO)  throws SQLException{
+	public void getMiceDTO(Product_DTO product_DTO)  throws SQLException{
 		ProductObject productObject = new ProductObject();
 		product_DTO.ApplyToEntity(productObject);
 		ResultSet attribute = this.pc.getProductAttribute(productObject);
-		Product_MiceDTO product_MiceDTO = new Product_MiceDTO();
+		MiceDTO product_MiceDTO = new MiceDTO();
 		if (attribute.next()) {
 	        product_MiceDTO.setMouse_id(attribute.getInt("mouse_id"));
 	        product_MiceDTO.setMouse_manufacturer(attribute.getString("mouse_manufacturer"));
@@ -287,9 +301,11 @@ public class PCModel {
 	        product_MiceDTO.setMouse_design(attribute.getString("mouse_design"));
 	        product_MiceDTO.setMouse_battery(attribute.getString("mouse_battery"));
 	    }
-		return product_MiceDTO;
+		product_DTO.setAttribute(product_MiceDTO);
+		
+//		return product_MiceDTO;
 	}
-	public Product_UsbDTO getProduct_UsbDTO(Product_DTO product_DTO) throws SQLException {    
+	public void getProduct_UsbDTO(Product_DTO product_DTO) throws SQLException {    
 	    ProductObject productObject = new ProductObject();
 	    product_DTO.ApplyToEntity(productObject);
 	    ResultSet attribute = this.pc.getProductAttribute(productObject);
@@ -299,6 +315,7 @@ public class PCModel {
 	        product_UsbDTO.setUsb_manufacturer(attribute.getString("usb_manufacturer"));
 	        product_UsbDTO.setUsb_capacity(attribute.getString("usb_capacity"));
 	    }
-	    return product_UsbDTO;
+	    product_DTO.setAttribute(product_UsbDTO);
+//	    return product_UsbDTO;
 	}
 }

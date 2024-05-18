@@ -2,7 +2,7 @@ package dto.productAttribute;
 
 import dto.product.Product_DTO;
 
-public class Product_PowerSuppyDTO extends Product_DTO{
+public class PowerSuppyDTO implements Product_AttributeDTO{
 	private int psu_id;
 	private String psu_manufacturer;
 	private String psu_certification;

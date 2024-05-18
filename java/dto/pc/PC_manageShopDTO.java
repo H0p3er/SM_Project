@@ -1,6 +1,6 @@
 package dto.pc;
 
-public class PC_ShopManagerDTO {
+public class PC_manageShopDTO {
 	 private String name;
 
 	public String getName() {

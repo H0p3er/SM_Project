@@ -73,5 +73,4 @@ public class LogObject {
 		this.log_deleted = log_deleted;
 	}
 	
-	
 }
