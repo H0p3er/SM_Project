@@ -92,6 +92,6 @@ function updatePrice() {
         console.log($("span[data-field='" + fieldName + "']").attr('value'));
     });
     console.log(totalPrice)
-    $("#total-price").val(totalPrice);
+    $("#total-price").text(totalPrice);
 };
 updatePrice();
