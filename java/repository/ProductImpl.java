@@ -230,7 +230,7 @@ public class ProductImpl extends BasicImpl implements Product{
 		sql.append("LEFT JOIN tblpc pc ON p.product_pc_id = pc.pc_id ");
 		sql.append("WHERE (p.product_deleted=0) ");
 		sql.append("ORDER BY STR_TO_DATE(product_created_date, '%e/%c/%Y') ASC ");
-		sql.append("LIMIT 0,9; ");
+		sql.append("LIMIT 0,6; ");
 		return sql.toString();
 	}
 	
@@ -242,7 +242,7 @@ public class ProductImpl extends BasicImpl implements Product{
 		sql.append("WHERE (p.product_deleted=0) ");
 		sql.append("GROUP BY (p.product_id) ");
 		sql.append("ORDER BY (sold_quantity) DESC ");
-		sql.append("LIMIT 0,9; ");
+		sql.append("LIMIT 0,6; ");
 		return sql.toString();
 	}	
 	

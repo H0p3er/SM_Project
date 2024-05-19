@@ -450,11 +450,13 @@ public class ProductLibrary {
 			tmp.append("<li>Màu sắc: <span>"+((CoolingDTO)product.getAttribute()).getCooling_color()+"</span></li>");
 			tmp.append("<li>Kích thước: <span>"+((CoolingDTO)product.getAttribute()).getCooling_fan_size()+"</span></li>");	
 			break;	
-		case 15:
-			//usb
-			tmp.append("<li>Hãng: <span>"+((Product_UsbDTO)product.getAttribute()).getUsb_manufacturer()+"</span></li>");
-			tmp.append("<li>Dung lượng: <span>"+((Product_UsbDTO)product.getAttribute()).getUsb_capacity()+"</span></li>");	
-			break;	
+//		case 15:
+//			//usb
+//			tmp.append("<li>Hãng: <span>"+((Product_UsbDTO)product.getAttribute()).getUsb_manufacturer()+"</span></li>");
+//			tmp.append("<li>Dung lượng: <span>"+((Product_UsbDTO)product.getAttribute()).getUsb_capacity()+"</span></li>");	
+//			break;	
+			
+			//Bug??
 		
 		}	
 		return tmp.toString();
