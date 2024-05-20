@@ -1142,7 +1142,7 @@ CREATE TABLE `tblproduct` (
 
 /*!40000 ALTER TABLE `tblproduct` DISABLE KEYS */;
 INSERT INTO `tblproduct` (`product_id`,`product_name`,`product_status`,`product_deleted`,`product_visited`,`product_price`,`product_images`,`product_notes`,`product_created_date`,`product_last_modified`,`product_pc_id`,`product_shop_id`,`product_quantity`) VALUES 
- (6,'MacBook Air 13 inch M1 2020 7-core GPU',1,0,3,32000000,' /home/assets/images/product/laptop/lap_mac.jpg','Impressive performance with M1 chip',CURRENT_DATE(),' 30/10/2023',5,2,1),
+ (6,'MacBook Air 13 inch M1 2020 7-core GPU',1,0,3,32000000,' /home/assets/images/product/laptop/lap_mac.jpg','Impressive performance with M1 chip','2024-05-20',' 30/10/2023',5,2,1),
  (7,'HP 15s fq5229TU i3 1215U (8U237PA)',1,0,2,12300000,'/home/assets/images/product/laptop/lap_hp.jpg','Reliable everyday computing','2023-07-15','30/10/2023',5,2,2),
 (8,'Asus TUF Gaming F15 FX506HF i5 11400H (HN014W)',1,0,1,16000000,'/home/assets/images/product/laptop/lap_asus.jpg','Powerful gaming performance','2023-08-05','30/10/2023',5,2,3),
 (9,'Acer Aspire 5 Gaming A515 58GM 51LB i5 13420H (NX.KQ4SV.002)',1,0,42,19800000,'/home/assets/images/product/laptop/lap_acer.jpg','Great for gaming and multitasking','2023-09-12','30/10/2023',5,3,4),
@@ -1407,7 +1407,7 @@ CREATE TABLE `tbluser` (
   `user_fullname` varchar(100) CHARACTER SET utf8 DEFAULT NULL COMMENT 'Tên đầy đủ',
   `user_images` varchar(200) DEFAULT NULL COMMENT 'Hình ảnh',
   `user_email` varchar(100) DEFAULT NULL COMMENT 'Email',
-  `user_notes` text COMMENT 'Mô tả',
+  `user_notes` text CHARACTER SET utf8 COMMENT 'Mô tả',
   `user_permission` smallint(6) NOT NULL DEFAULT '0' COMMENT 'Quyền trong hệ thống',
   `user_gender` smallint(1) NOT NULL DEFAULT '0' COMMENT 'Giới tính',
   `user_address` varchar(100) CHARACTER SET utf8 DEFAULT NULL COMMENT 'Địa chỉ',
@@ -1427,12 +1427,12 @@ CREATE TABLE `tbluser` (
 
 /*!40000 ALTER TABLE `tbluser` DISABLE KEYS */;
 INSERT INTO `tbluser` (`user_id`, `user_nickname`, `user_fullname`, `user_images`, `user_email`, `user_notes`, `user_permission`, `user_gender`, `user_address`, `user_created_date`, `user_deleted`, `user_phone`, `user_social_links`, `user_logined`, `user_name`, `user_pass`) VALUES
-(1, 'Dog lover', 'John Wick', '\\home\\images\\user\\01.jpg', 'doglover@gmail.com', 'Ng??i tiêu dùng', 1, 0, '7 Lê Duẩn, Quận 1, Thành phố Hồ Chí Minh.','01/12/2023', 0, '0342312435', NULL, 0, 'DogLoverr', 'NoDogNoLife3000'),
+(1, 'Dog lover', 'John Wick', '\\home\\images\\user\\01.jpg', 'doglover@gmail.com', 'Người tiêu dùng', 1, 0, '7 Lê Duẩn, Quận 1, Thành phố Hồ Chí Minh.','01/12/2023', 0, '0342312435', NULL, 0, 'DogLoverr', 'NoDogNoLife3000'),
 (2, 'Pé', 'Nguyễn Thị Ngọc Mai', '\\home\\images\\user\\02.jpg', 'mai06071969@gmail.com', 'Không có thông tin', 1, 0, '46 Hòa Mã, Quận Ba Đình, Hà Nội.','01/12/2023', 0, '0123423131', NULL, 0, 'testing','ae2b1fca515949e5d54fb22b8ed95575'),
 (3, 'SKT Khánh', 'Mai Quốc Khánh', '\\home\\images\\user\\03.jpg', 'faker123@gmail.com', 'Không có thông tin', 1, 1, '191 Lãng Yên, Quận Hà Đông, Hà Nội.','01/12/2023', 0, '0257123423', NULL, 3, 'SktKhanh', '738a1eca9e15f674ff6fd7434ea1b965'),
 (4, 'Cloudy Vân', 'Tô Văn Vân', '\\home\\images\\user\\04.jpg', 'imhigh@gmail.com', 'Không có thông tin', 1, 1, '57 Trần Hưng Đạo, Hoàn Kiếm, Hà Nội.','01/12/2023', 0, '0385175892', NULL, 0, 'Cloudy999', 'VanCloud'),
 (5, 'Tuấn White', 'Trần Tuấn Bạch', '\\home\\images\\user\\05.jpg', 'maninblack@gmail.com', 'Không có thông tin', 1, 1, '27 Liễu Giai, Quận Ba Đình, Hà Nội.','01/12/2023', 0, '0385174512', NULL, 0, 'TuanWhite', 'TrangNhuOMO'),
-(6, 'Donald Trump', 'Đỗ Nam Trung', '\\home\\images\\user\06.jpg', 'greatagain999@gmail.com', 'Qu?n lý t?i chi nhánh Lâm ??ng', 4, 1, '51 Nguyễn Du, Quận Hai Bà Trưng, Hà Nội.','01/12/2023', 0, '08967912345', NULL, 575, 'admin@gmail.com', '75d23af433e0cea4c0e45a56dba18b30'),
+(6, 'Donald Trump', 'Đỗ Nam Trung', '\\home\\images\\user\06.jpg', 'greatagain999@gmail.com', 'Quản lý tại chi nhánh Lâm Đồng', 4, 1, '51 Nguyễn Du, Quận Hai Bà Trưng, Hà Nội.','01/12/2023', 0, '08967912345', NULL, 575, 'admin@gmail.com', '75d23af433e0cea4c0e45a56dba18b30'),
 (7, 'Janua', 'Trường', '\\home\\images\\user\\07.jpg', 'janua@gmail.com', 'Không có thông tin', 1, 0, '47 Đào Duy Từ, quận Hoàn Kiếm','01/12/2023', 0, '0912334253', NULL, 1, 'January3', 'Xy#7pLz!'),
 (8, 'Februa', 'Kỳ', '\\home\\images\\user\\08.jpg', 'februa@gmail.com', 'Không có thông tin', 2, 1, '24 Hàng Bồ, quận Hoàn Kiếm','01/12/2023', 0, '0875643865', NULL, 1, 'February1', 'qRt2$yZa'),
 (9, 'March', 'Kháng', '\\home\\images\\user\\09.jpg', 'march@gmail.com', 'Không có thông tin', 3, 0, '49 Bát Đàn, quận Hoàn Kiếm ','01/12/2023', 0, '0864479754', NULL, 1, 'March7th', '9b#6sPxY'),

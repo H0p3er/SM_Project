@@ -27,6 +27,9 @@ public class UserRegister extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        
         String username = request.getParameter("txtusername");
         String name = request.getParameter("txtname");
         String birthday = request.getParameter("birthday");
@@ -36,8 +39,6 @@ public class UserRegister extends HttpServlet {
         String address = request.getParameter("txtaddress");
         String password = request.getParameter("txtpassword");
         String cfpassword = request.getParameter("txtcfpassword");
-        
-        
         
         UserObject user = new UserObject();
         user.setUser_name(username);
@@ -50,12 +51,8 @@ public class UserRegister extends HttpServlet {
         user.setUser_created_date(utility.Utilities_date.getCurrentDate());
   
         ServletContext application = getServletConfig().getServletContext();
-		
-		//Tìm bộ quản lí kết nối trong không gian ngữ cảnh
-		ConnectionPool cp = (ConnectionPool)application.getAttribute("CPool");;
-        
+		ConnectionPool cp = (ConnectionPool)application.getAttribute("CPool");
         UserControl uc = new UserControl(cp);
-        
         boolean success = uc.addUser(user);
         uc.releaseConnection();
         

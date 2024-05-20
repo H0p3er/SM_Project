@@ -96,13 +96,13 @@ public class UserImpl extends BasicImpl implements User {
 	@Override
 	public boolean editUser(UserObject item, USER_EDIT_TYPE et) {
 		// TODO Auto-generated method stub
-
+		
 		String sql = "UPDATE tbluser SET ";
 		switch (et) {
 		case GENERAL:
 			sql += "user_nickname=?, user_fullname=?, user_images=?, ";
 			sql += "user_email=?, user_notes=?, user_gender=?, ";
-			sql += "user_address=?, user_phone=?, user_social_links=?";
+			sql += "user_address=?, user_created_date=?, user_phone=?, user_social_links=?";
 			break;
 		case SETTINGS:
 			sql += "user_permission=? ";
@@ -110,6 +110,9 @@ public class UserImpl extends BasicImpl implements User {
 
 		case TRASH:
 			sql += "user_deleted=1 ";
+			break;
+		case PASS:
+			sql += "user_pass=md5(?)";
 			break;
 		}
 
@@ -127,9 +130,10 @@ public class UserImpl extends BasicImpl implements User {
 				pre.setString(5, item.getUser_notes());
 				pre.setByte(6, item.getUser_gender());
 				pre.setString(7, item.getUser_address());
-				pre.setString(8, item.getUser_phone());
-				pre.setString(9, item.getUser_social_links());
-				pre.setInt(10, item.getUser_id());
+				pre.setString(8, item.getUser_created_date());
+				pre.setString(9, item.getUser_phone());
+				pre.setString(10, item.getUser_social_links());
+				pre.setInt(11, item.getUser_id());
 				break;
 
 			case SETTINGS:
@@ -139,6 +143,10 @@ public class UserImpl extends BasicImpl implements User {
 
 			case TRASH:
 				pre.setInt(1, item.getUser_id());
+				break;
+			case PASS:
+	            pre.setString(1, item.getUser_pass());
+				pre.setInt(2, item.getUser_id());
 				break;
 			}
 
@@ -343,11 +351,13 @@ public class UserImpl extends BasicImpl implements User {
 		
 		// Them mot nguoi su dung
 		UserObject new_user = new UserObject();
-		new_user.setUser_name("tester");
+//		new_user.getUser_id(6);
+		new_user.setUser_name("tester1");
 		new_user.setUser_pass("linhuu111");
-		new_user.setUser_fullname("123 ling");
+		new_user.setUser_fullname("NGUYỄN HỮU LINH");
+		new_user.setUser_nickname("NGỌC NGÀ");
 		new_user.setUser_email("admin1@gmail.com");
-		new_user.setUser_address("Ha Noi");
+		new_user.setUser_address("HÀ NỘI");
 		new_user.setUser_phone("1231231313");
 
 		boolean resultAdd = u.addUser(new_user);
@@ -376,21 +386,24 @@ public class UserImpl extends BasicImpl implements User {
 		String row;
 		// Duyen va hien thi danh sach nguoi su dung
 		if (rs != null) {
-			try {
-				while (rs.next()) {
-					row = "ID: " + rs.getInt("user_id");
-					row += "\tNAME: " + rs.getString("user_name");
-					row += "\tLOGINED: " + rs.getShort("user_logined");
-
-					System.out.println(row);
-				}
-				rs.close();
-
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		    try {
+		        while (rs.next()) {
+		            int userId = rs.getInt("user_id");
+		            String userName = rs.getString("user_name");
+		            String pas = rs.getString("user_pass");
+		            String fullname = Utilities.decode(rs.getString("user_fullname"));
+		            String nickname = (rs.getString("user_nickname"));
+		            String phone = rs.getString("user_phone"); // Lấy thông tin về số điện thoại
+		            String createdDate = rs.getString("user_created_date"); // Lấy thông tin về ngày tạo
+		            byte gender  = rs.getByte("user_gender");
+		            System.out.println("ID: " + userId + "\tNAME: " + userName + "\tPASS: " + pas +"\tFULLNAME: " + fullname +"\tNICKNAME: " + nickname +"\tPHONE: " + phone + "\tCREATED DATE: "+ createdDate + "\tGENDER: " + gender);
+		        }
+		        rs.close();
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
 		}
+
 
 		rs = res.get(1);
 		if (rs != null) {

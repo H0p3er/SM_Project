@@ -8,5 +8,7 @@ public enum USER_EDIT_TYPE {
 	SETTINGS,
 	
 	//Xóa tương đôi
-	TRASH
+	TRASH,
+	
+	PASS
 }
