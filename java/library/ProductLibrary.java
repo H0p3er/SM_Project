@@ -256,7 +256,7 @@ public class ProductLibrary {
 		view.put("seller-name",tmp.toString());
 		tmp.setLength(0);
 		
-		tmp.append("<span class=\"mt-4 overflow-y-auto\" style=\"height: 250px\">"+product_DTO.getNotes()+"</span>");
+		tmp.append("<span class=\"mt-4 overflow-y-auto\">"+product_DTO.getNotes()+"</span>");
 		view.put("product-notes",tmp.toString());
 		tmp.setLength(0);
 		
@@ -472,21 +472,19 @@ public class ProductLibrary {
 				tmp.append("<td><img height=\"70px\" class=\"p-0\" src=\"/"+product.getImages()+"\" alt=\"\">");
 				tmp.append("</td>");
 				tmp.append("<td><a href=\"\">"+product.getName()+"</a></td>");
-				tmp.append("<td>");
-				tmp.append("<div class=\"col-4\">");
+				tmp.append("<td class=\"col-2\">");
 				tmp.append("<div class=\"input-group\">");
 				tmp.append("<span class=\"input-group-btn\">");
 				tmp.append("<button type=\"button\" class=\"btn btn-default btn-number\" disabled=\"disabled\" data-type=\"minus\" data-field=\"quant["+product.getId()+"]\">");
 				tmp.append("<i class=\"fa-solid fa-minus\"></i>");
 				tmp.append("</button>");
 				tmp.append("</span>");
-				tmp.append("<input type=\"text\" name=\"quant["+product.getId()+"]\" class=\"form-control input-number\" value=\""+quantity+"\" min=\"1\" max=\"99\">");
+				tmp.append("<input type=\"text\" name=\"quant["+product.getId()+"]\" class=\"form-control input-number\" value=\""+quantity+"\" min=\"1\" max=\"99\" maxlength=\"2\">");
 				tmp.append("<span class=\"input-group-btn\">");
 				tmp.append("<button type=\"button\" class=\"btn btn-default btn-number\" data-type=\"plus\" data-field=\"quant["+product.getId()+"]\">");
 				tmp.append("<i class=\"fa-solid fa-plus\"></i>");
 				tmp.append("</button>");
 				tmp.append("</span>");
-				tmp.append("</div>");
 				tmp.append("</div>");
 				tmp.append("</td>");
 				tmp.append("<td><span class=\"product-price\" data-field=\"quant["+product.getId()+"]\"  value=\""+product.getPrice()+"\">"+Utilities_currency.toVND(product.getPrice())+"</span></td>");

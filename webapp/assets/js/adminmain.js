@@ -323,10 +323,11 @@
 
 
 
-$(document).ready(function () {
-  function updateContent(selectedOption) {
+$(document).ready(function updateContent(selectedOption) {
     var divContent = '';
     switch (selectedOption) {
+      case '':
+
       case '5':
         divContent = `
               <div class="row mb-3">
@@ -399,9 +400,7 @@ $(document).ready(function () {
       default:
         divContent = ''; // default action if none of the above cases match
     }
-
     $('#categorySpecs').html(divContent);
-  };
   $('#productSelect').change(function () {
     updateContent($(this).val());
   });

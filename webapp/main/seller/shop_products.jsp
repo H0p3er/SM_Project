@@ -101,11 +101,12 @@
                 <label for="productPC" class="col-md-4 col-lg-3 col-form-label">Loại sản phẩm</label>
                 <div class="col-md-8 col-lg-9">
                   <select name="productCategory" id="productSelect" class="form-select">
+                    <option value="" selected disabled hidden>Choose here...</option>
                     <option value="2">Bàn phím</option>
                     <option value="3">Chuột</option>
                     <option value="7">CPU</option>
                     <option value="6">Desktop</option>
-                    <option value="5" selected>Laptop</option>
+                    <option value="5">Laptop</option>
                     <option value="8">Mainboard</option>
                     <option value="1">Màn hình</option>
                     <option value="10">Ổ cứng</option>
@@ -129,10 +130,6 @@
                   <textarea name="about" class="form-control" id="about"
                     style="height: 100px">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</textarea>
                 </div>
-              </div>
-
-              <div class="text-center">
-                <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
               </div>
             </form><!-- End Profile Edit Form -->
           </div>

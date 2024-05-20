@@ -23,31 +23,55 @@
                           <thead>
                             <tr>
                               <th scope="col">#</th>
-                              <th scope="col">Tên sản phẩm</th>
+                              <th scope="col">Sản phẩm</th>
+                              <th scope="col">Giá trị</th>
+                              <th scope="col">Tình trạng</th>
                               <th scope="col"></th>
-                              <th scope="col">Giá bán</th>
-                              <th scope="col" colspan="2" class="text-center"></th>
                             </tr>
                           </thead>
                           <tbody id="product-list">
-                          
-                          
+                            <tr>
+                              <th scope="row">1</th>
+                              <td >
+                                <ul class="ps-0" style="list-style-type: none;">
+                                  <li><span id="order-product-id">3x</span><a href="">Logitech Wireless Headphones</a></li>
+                                  <li><a href="">Mechanical_2 USB Tenkeyless Keyboard RGB</a></li>
+                                  <li><a href="">Asus 27 inch Gaming Monitor 2560x1440 TN 240Hz</a></li>
+                                  <li><a href="">MSI B460 ATX Motherboard</a></li>
+                                </ul>
+                              </td>
+                              <td>2000000VND</td>
+                              <td>
+                                <span class="badge bg-success">Đã xác nhận</span>  <!-- Chờ xác nhận, đã xác nhận, đã thanh toán, Đã giao hàng-->
+                              </td>
+                              <td>
+                                <div>
+                                  <button class="btn btn-danger">Hủy đơn</button>
+                                </div>
+                                <!-- <button class="btn btn-dark">Nhận hàng</button> -->
+                              </td>
+                            </tr>
+                            <tr>
+                              <th scope="row">1</th>
+                              <td >
+                                <ul class="ps-0" style="list-style-type: none;">
+                                  <li><span id="order-product-id">3x</span><a href="">Logitech Wireless Headphones</a></li>
+                                  <li><a href="">Mechanical_2 USB Tenkeyless Keyboard RGB</a></li>
+                                  <li><a href="">Asus 27 inch Gaming Monitor 2560x1440 TN 240Hz</a></li>
+                                  <li><a href="">MSI B460 ATX Motherboard</a></li>
+                                </ul>
+                              </td>
+                              <td>2000000VND</td>
+                              <td>
+                                <span class="badge bg-success">Đã xác nhận</span>  <!-- Chờ xác nhận, đã xác nhận, đã thanh toán, Đã giao hàng-->
+                              </td>
+                              <td>
+                                  <button class="btn btn-danger">Hủy đơn</button>
+                                <!-- <button class="btn btn-dark">Nhận hàng</button> -->
+                              </td>
+                            </tr>
                           </tbody>
-
                         </table>
-                        <div class="row">
-                          <div class="best-deal bg-white">
-                            <div class="info-table bg-white offset-lg-0 offset-7" style="box-shadow: 0 0 0;">
-                              <ul>
-                                <li class="text-black">Tổng cộng<span>0đ</span></li>
-                              </ul>
-                            </div>
-                          </div>
-                          <div class="main-button">
-                            <a class="float-end" href="../payment">Mua hàng</a>
-                          </div>
-                        </div>
-
                       </div>
                     </div>
                   </div>
