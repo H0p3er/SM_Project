@@ -471,7 +471,8 @@ public class ProductLibrary {
 				tmp.append("</td>");
 				tmp.append("<td><a href=\"\">"+product.getName()+"</a></td>");
 				tmp.append("<td>");
-				tmp.append("<div class=\"input-group col-2\">");
+				tmp.append("<div class=\"col-4\">");
+				tmp.append("<div class=\"input-group\">");
 				tmp.append("<span class=\"input-group-btn\">");
 				tmp.append("<button type=\"button\" class=\"btn btn-default btn-number\" disabled=\"disabled\" data-type=\"minus\" data-field=\"quant["+product.getId()+"]\">");
 				tmp.append("<i class=\"fa-solid fa-minus\"></i>");
@@ -483,6 +484,7 @@ public class ProductLibrary {
 				tmp.append("<i class=\"fa-solid fa-plus\"></i>");
 				tmp.append("</button>");
 				tmp.append("</span>");
+				tmp.append("</div>");
 				tmp.append("</div>");
 				tmp.append("</td>");
 				tmp.append("<td><span class=\"product-price\" data-field=\"quant["+product.getId()+"]\"  value=\""+product.getPrice()+"\">"+Utilities_currency.toVND(product.getPrice())+"</span></td>");

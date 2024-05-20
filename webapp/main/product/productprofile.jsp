@@ -67,7 +67,7 @@
                                   </h6>
                                   <div class="icon-button">
                                   	<!-- product-notes -->
-                                    <button class="add-cart" type="button" id="<%=map.get("product-id") %>" href=""><i class="fa fa-calendar"></i>Thêm vào giỏ hàng</button>
+                                    <button class="add-cart btn btn-dark" type="button" id="<%=map.get("product-id") %>" href=""><i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ hàng</button>
                                   </div>
                             </div>
                           </div>

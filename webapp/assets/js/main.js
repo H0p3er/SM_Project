@@ -86,11 +86,11 @@ function updatePrice() {
     var totalPrice =0;
     $(".input-number").each(function() {
         fieldName = $(this).attr('name');
-        totalPrice +=  (parseFloat($("span[data-field='" + fieldName + "']").attr('value'))*$(this).val());
+        totalPrice +=  ($("span[data-field='" + fieldName + "']").attr('value')*$(this).val());
         console.log($("span[data-field='" + fieldName + "']").attr('value'));
     });
     console.log(totalPrice)
-    $("#total_price").text(totalPrice+" VND");
+    $("#total_price").text(parseFloat(totalPrice).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " VND");
 };
 updatePrice();
 
@@ -100,5 +100,7 @@ for (var product of document.getElementsByClassName("add-cart")){
         fetch("/home/product/cart?id="+product.id+"", {
 			method:"POST",
 		});
+        alert("Sản phẩm đã được thêm vào giỏ hàng!");
     })
 }
+
