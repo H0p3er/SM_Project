@@ -42,11 +42,16 @@ public class ShopLibrary {
 	}
 	
 	public static Map<String,String> viewSeller_ShopStatistic(
-			Shop_manageShopDTO infors)
-	{
+			Shop_manageShopDTO infors){
 		Map<String,String> view = new HashMap<String,String>();
-		StringBuilder tmp = new StringBuilder();
 		viewSeller_manageShopStatistic(infors, view);
+		return view; 
+	}
+	
+	public static Map<String,String> viewSeller_ShopProduct(
+			Shop_manageShopDTO infors){
+		Map<String,String> view = new HashMap<String,String>();
+		viewSeller_manageShopProduct(infors, view);
 		return view; 
 	}
 	
@@ -104,29 +109,22 @@ public class ShopLibrary {
 	
 	
 	
-	private static void viewSeller_manageShopProduct(Shop_manageShopDTO UserShopDTO, Map<String,String> view, StringBuilder tmp){
-		tmp.setLength(0);
+	private static void viewSeller_manageShopProduct(Shop_manageShopDTO UserShopDTO, Map<String,String> view){
+		StringBuilder tmp = new StringBuilder();
 		UserShopDTO.getStorage().getValue0().forEach(product->{
 			tmp.append("<tr>");
-			tmp.append("<th scope=\"row\">"+product.getId()+"</th>");
-			tmp.append("<td>"+product.getName()+"</td>");
+			tmp.append("<th scope=\"row\"><img width=\"120px\" src=\""+product.getImages()+"\" alt=\"\"></th>");
+			tmp.append("<td><a href=\"/home/main/seller/product/profile?id="+product.getId()+"\">"+product.getName()+"</a></td>");
+			tmp.append("<td>"+utility.Utilities_currency.toVND(product.getPrice())+"</td>");
+			tmp.append("<td>"+product.getNotes()+"</td>");
 			tmp.append("<td>"+product.getQuantity()+"</td>");
-			tmp.append("<td>"+product.getPrice()+"</td>");
-			tmp.append("<td>2014-12-05</td>");
-			
-			tmp.append("<td class=\"align-middle\">");
-			tmp.append("<a class=\"btn btn-secondary btn-sm product-edit-action\" id=\""+product.getId()+"\">");
-			tmp.append("<i class=\"fa-solid fa-pen-to-square\"></i>");
-			tmp.append("</a>");
-			tmp.append("</td>");
-			tmp.append("<td class=\"align-middle\">");
-			tmp.append("<a class=\"btn btn-danger btn-sm product-del-action\" id=\""+product.getId()+"\">");
-			tmp.append("<i class=\"fa-solid fa-trash\"></i>");
-			tmp.append("</a>");
-			tmp.append("</td>");
+			tmp.append("<td>"+product.getPc().getName()+"</td>");
 			tmp.append("</tr>");
+			
 		});
-		view.put("product_list",tmp.toString());
+		
+
+		view.put("product-list",tmp.toString());
 	}
 	
 

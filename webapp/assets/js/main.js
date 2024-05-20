@@ -94,7 +94,6 @@ function updatePrice() {
 };
 updatePrice();
 
-console.log(document.getElementsByClassName("add-cart"));
 
 for (var product of document.getElementsByClassName("add-cart")){
     product.addEventListener("click",()=>{

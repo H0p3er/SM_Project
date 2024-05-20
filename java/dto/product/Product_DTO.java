@@ -1,14 +1,16 @@
 package dto.product;
 
-import java.util.Comparator;
-
 import dto.pc.PC_DTO;
 import dto.productAttribute.Product_AttributeDTO;
 import dto.shop.Shop_DTO;
 import entity.ProductObject;
-import utility.Utilities_currency;
 
 public class Product_DTO implements ProductDTO<Product_AttributeDTO>, Comparable<Product_DTO> {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7868469160808286283L;
 	private int id;
     private String name;
     private byte status;

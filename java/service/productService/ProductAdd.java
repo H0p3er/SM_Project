@@ -122,10 +122,10 @@ public class ProductAdd extends HttpServlet {
 			}
 			boolean editSuccess = productControl.editProduct(editProduct, PRODUCT_EDIT_TYPE.GENERAL);
 			if(editSuccess) {
-				response.sendRedirect("/home/product/add?status=succ&type=edit");
+				response.sendRedirect("/home/seller/product/add?status=succ&type=edit");
 				
 			} else {
-				response.sendRedirect("/home/product/add?status=err&type=edit");
+				response.sendRedirect("/home/seller/product/add?status=err&type=edit");
 			}
 		}
 	}

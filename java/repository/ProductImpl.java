@@ -116,39 +116,49 @@ public class ProductImpl extends BasicImpl implements Product{
 
 	@Override
 	public boolean editProduct(ProductObject item, PRODUCT_EDIT_TYPE et) {
-		String sql = "UPDATE tblproduct SET ";
+		StringBuilder sql = new StringBuilder();
+		sql.append("UPDATE tblproduct SET ");
 		switch (et) {
 			case GENERAL:
-				sql += "product_name=?, product_images=?, product_notes=?, ";
-				sql += "product_pc_id=?, product_quantity=?, product_price=?";
+				sql.append("product_name=?, product_images=?, product_notes=?, ");
+				sql.append("product_pc_id=?, product_quantity=?, product_price=?");
 			break;
 			case TRASH:
-				sql += "product_deleted=1";
+				sql.append("product_deleted=1 ");
 			break;
 			case RESTORE:
-				sql += "product_deleted=0";
+				sql.append("product_deleted=0 ");
 			break;
+			
+			default:
+				break;
 		}
 		
-		sql += "WHERE product_id=?; ";
+		sql.append("WHERE product_id=?; ");
 		// Biên dịch
 		try {
-			PreparedStatement pre = this.con.prepareStatement(sql);
-			if (et == PRODUCT_EDIT_TYPE.GENERAL) {
-			pre.setString(1, utility.Utilities.encode(item.getProduct_name()));
-			pre.setString(2, item.getProduct_images());
-			pre.setString(3, utility.Utilities.encode(item.getProduct_notes()));
-			pre.setInt(4, item.getProduct_pc_id());
-			pre.setInt(5, item.getProduct_quantity());
-			pre.setDouble(6, item.getProduct_price());
-			pre.setInt(7, item.getProduct_id());
-			} else {
+			PreparedStatement pre = this.con.prepareStatement(sql.toString());
+			switch (et) {
+			case GENERAL:
+				pre.setString(1, utility.Utilities.encode(item.getProduct_name()));
+				pre.setString(2, item.getProduct_images());
+				pre.setString(3, utility.Utilities.encode(item.getProduct_notes()));
+				pre.setInt(4, item.getProduct_pc_id());
+				pre.setInt(5, item.getProduct_quantity());
+				pre.setDouble(6, item.getProduct_price());
+				pre.setInt(7, item.getProduct_id());
+				break;	
+				
+			case TRASH:	
 				pre.setInt(1, item.getProduct_id());
-			}
+				break;
+				
+			default:
+				break;
+			} 
 			return this.edit(pre);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			
+			// TODO Auto-generated catch block	
 			try {
 				this.con.rollback();
 			} catch (SQLException e1) {
@@ -159,6 +169,27 @@ public class ProductImpl extends BasicImpl implements Product{
 		}
 		return false;
 	}
+
+	private boolean isEmpty(ProductObject item) {
+		boolean flag = true;	
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT bd_id FROM tblbd WHERE bd_product_id=" + item.getProduct_id() + "; ");
+		sql.append("SELECT shop_id FROM tblshop WHERE product_shop_id=" + item.getProduct_id() + "; ");
+		ArrayList<ResultSet> res = this.getReList(sql.toString());		
+		for(ResultSet rs : res) {
+			try {
+				if(rs != null && rs.next()) {
+					flag = false;
+					break;
+				}
+			} catch (SQLException e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+		}
+		return flag;
+	}
+
 
 	@Override
 	public boolean delProduct(ProductObject item) {
@@ -187,25 +218,6 @@ public class ProductImpl extends BasicImpl implements Product{
 		return false;
 	}
 
-	private boolean isEmpty(ProductObject item) {
-		boolean flag = true;	
-		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT bd_id FROM tblbd WHERE bd_product_id=" + item.getProduct_id() + "; ");
-		ArrayList<ResultSet> res = this.getReList(sql.toString());		
-		for(ResultSet rs : res) {
-			try {
-				if(rs != null && rs.next()) {
-					flag = false;
-					break;
-				}
-			} catch (SQLException e) {
-				// TODO: handle exception
-				e.printStackTrace();
-			}
-		}
-		return flag;
-	}
-
 	@Override
 	public ResultSet getProductById(int id) {
 		StringBuilder sql = new StringBuilder();
@@ -214,7 +226,6 @@ public class ProductImpl extends BasicImpl implements Product{
 		sql.append("WHERE (product_id=?) AND (product_deleted=0); ");
 		return this.get(sql.toString(), id);
 	}	
-	
 	
 	@Override
 	public ArrayList<ResultSet> getProducts() {
@@ -307,6 +318,7 @@ public class ProductImpl extends BasicImpl implements Product{
 	
 	private String getProductsByShopSQL(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort, ShopObject object) {	
 		StringBuilder sql = new StringBuilder();
+		total=-1;
 		sql.append("SELECT p.*, pc.pc_name FROM tblproduct p ");	
 		sql.append("LEFT JOIN tblpc pc ON p.product_pc_id = pc.pc_id ");
 		sql.append("INNER JOIN tblshop s ON p.product_shop_id = s.shop_id ");

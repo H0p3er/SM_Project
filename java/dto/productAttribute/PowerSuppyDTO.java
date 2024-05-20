@@ -1,8 +1,10 @@
 package dto.productAttribute;
 
-import dto.product.Product_DTO;
-
 public class PowerSuppyDTO implements Product_AttributeDTO{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4041534411136077946L;
 	private int psu_id;
 	private String psu_manufacturer;
 	private String psu_certification;

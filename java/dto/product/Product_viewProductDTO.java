@@ -7,7 +7,11 @@ import dto.shop.Shop_viewProductDTO;
 import entity.ProductObject;
 
 public class Product_viewProductDTO implements ProductDTO<Product_AttributeDTO>{
-    private String name;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5700954887225147387L;
+	private String name;
     private byte status;
     private String price;
     private String images;
@@ -58,11 +62,7 @@ public class Product_viewProductDTO implements ProductDTO<Product_AttributeDTO>{
 	public void setShop(Shop_viewProductDTO shop) {
 		this.shop = shop;
 	}
-	
-	@Override
-	public void ApplyToEntity(ProductObject productObject) {
 
-	}
 	public Product_AttributeDTO getAttribute() {
 		return attribute;
 	}
@@ -70,5 +70,10 @@ public class Product_viewProductDTO implements ProductDTO<Product_AttributeDTO>{
 		this.attribute = attribute;
 	}
     
+	
+	@Override
+	public void ApplyToEntity(ProductObject productObject) {
+
+	}
     
 }

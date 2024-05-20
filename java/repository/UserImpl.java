@@ -404,4 +404,9 @@ public class UserImpl extends BasicImpl implements User {
 			}
 		}
 	}
+
+	@Override
+	public ArrayList<ResultSet> getCustomerByShop(ShopObject shopObject) {	
+		return null;
+	}
 }

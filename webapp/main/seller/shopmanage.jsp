@@ -378,11 +378,11 @@ if (request.getAttribute("shop-statistic")!=null){
               <h5 class="card-title">Biểu đồ báo cáo <span>| Tháng $date</span></h5>
 
               <!-- Line Chart -->
-              <div id="reportsChart"></div>
+              <div id="reports"></div>
 
               <script>
                 document.addEventListener("DOMContentLoaded", () => {
-                  new ApexCharts(document.querySelector("#reportsChart"), {
+                  new ApexCharts(document.querySelector("#reports"), {
                     series: [{
                       name: 'Đơn hàng',
                       data: [31, 40, 28, 51, 42, 82, 56],

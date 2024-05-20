@@ -1,9 +1,12 @@
 package dto.productAttribute;
 
-import dto.product.Product_DTO;
 
 public class DesktopDTO implements Product_AttributeDTO{
-    private int desktop_id;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6906267364449132448L;
+	private int desktop_id;
     private String desktop_manufacturer;
     private String desktop_type;
     private String desktop_cpu;

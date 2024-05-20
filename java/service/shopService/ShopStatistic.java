@@ -30,13 +30,13 @@ import entity.ShopObject;
  * Servlet implementation class WorkplaceProfile
  */
 @WebServlet("/seller/shop/statistic")
-public class Seller_ShopStatistic extends HttpServlet {
+public class ShopStatistic extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String CONTENT_TYPE = "application/json; charset=utf-8";
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public Seller_ShopStatistic() {
+	public ShopStatistic() {
 		super();
 	}
 

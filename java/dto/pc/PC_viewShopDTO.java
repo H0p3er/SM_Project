@@ -1,7 +1,13 @@
 package dto.pc;
 
-public class PC_viewShopDTO {
-	 private String name;
+import entity.PCObject;
+
+public class PC_viewShopDTO implements PCDTO{
+	 /**
+	 * 
+	 */
+	private static final long serialVersionUID = -367846039853487466L;
+	private String name;
 
 	public String getName() {
 		return name;
@@ -9,5 +15,11 @@ public class PC_viewShopDTO {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Override
+	public void ApplyToEntity(PCObject entity) {
+		// TODO Auto-generated method stub
+		
 	}
 }

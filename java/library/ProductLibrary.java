@@ -25,7 +25,7 @@ import dto.productAttribute.MotherboardDTO;
 import dto.productAttribute.PowerSuppyDTO;
 import dto.productAttribute.RamDTO;
 import dto.productAttribute.StorageDTO;
-import dto.productAttribute.Product_UsbDTO;
+import dto.productAttribute.UsbDTO;
 import repository.Product;
 import utility.Utilities_currency;
 
@@ -452,8 +452,8 @@ public class ProductLibrary {
 			break;	
 		case 15:
 			//usb
-			tmp.append("<li>Hãng: <span>"+((Product_UsbDTO)product.getAttribute()).getUsb_manufacturer()+"</span></li>");
-			tmp.append("<li>Dung lượng: <span>"+((Product_UsbDTO)product.getAttribute()).getUsb_capacity()+"</span></li>");	
+			tmp.append("<li>Hãng: <span>"+((UsbDTO)product.getAttribute()).getUsb_manufacturer()+"</span></li>");
+			tmp.append("<li>Dung lượng: <span>"+((UsbDTO)product.getAttribute()).getUsb_capacity()+"</span></li>");	
 			break;	
 		
 		}	

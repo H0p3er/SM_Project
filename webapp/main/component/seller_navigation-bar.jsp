@@ -152,7 +152,7 @@
             </li><!-- End Dashboard Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="/home/main/seller/shop_products.jsp">
+                <a class="nav-link collapsed" href="/home/seller/shop/product">
                     <i class="bi bi-menu-button-wide"></i><span>Sản phẩm</span>
                 </a>
             </li><!-- End Components Nav -->

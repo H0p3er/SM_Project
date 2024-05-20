@@ -100,7 +100,7 @@ public class ProductCart extends HttpServlet {
 		// Lấy từ khóa tìm kiếm
 		int id = Utilities.getIntParam(request, "id");
 
-		Product_DTO product_DTO = pc.getProductDTO(id);
+		Product_DTO product_DTO = pc.getProduct_DTOById(id);
 		
 		try {
 			TreeMap<Product_DTO,Integer> product_DTOs = (TreeMap<Product_DTO,Integer>) request.getSession().getAttribute("product-cart");
