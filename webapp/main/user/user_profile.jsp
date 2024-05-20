@@ -24,7 +24,19 @@ if (success != null && success.equals("1")) {
 	<div class="alert alert-danger alert-dismissible fade show"
 		role="alert">
 		<i class="fa-solid fa-circle-exclamation"></i><strong> Error:</strong>
-		Cập nhật thất bại!
+		Cập nhật thông tin thất bại!
+		<button type="button" class="btn-close" data-bs-dismiss="alert"
+			aria-label="Close"></button>
+	</div>
+</div>
+<%
+} else if (errorMessage != null && errorMessage.equals("failedPass")) {
+%>
+<div class="col-lg-6 offset-lg-3 mb-5 text-bg-light">
+	<div class="alert alert-danger alert-dismissible fade show"
+		role="alert">
+		<i class="fa-solid fa-circle-exclamation"></i><strong> Error:</strong>
+		Mật khẩu cũ không đúng, đổi mật khẩu thất bại!
 		<button type="button" class="btn-close" data-bs-dismiss="alert"
 			aria-label="Close"></button>
 	</div>
@@ -290,8 +302,5 @@ if (success != null && success.equals("1")) {
 	</div>
 </div>
 <script>
-    window.onload = function() {
-        document.getElementById("birtday").value = txtBirthdayJS;
-    };
 </script>
 <jsp:include page="../component/user_footer.jsp" flush="true"></jsp:include>

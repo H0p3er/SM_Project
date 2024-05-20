@@ -8,7 +8,7 @@ import entity.ShopObject;
 import entity.UserObject;
 import repository.User;
 import repository.UserImpl;
-import utility.Utilities;
+import utility.*;
 
 import java.io.*;
 import java.util.*;
@@ -69,7 +69,8 @@ public class UserModel {
 					item.setUser_id(rs.getInt("user_id"));
 					item.setUser_fullname(Utilities.decode(rs.getString("user_fullname")));
 					item.setUser_email(rs.getString("user_email"));
-					item.setUser_address(rs.getString("user_address"));
+					item.setUser_address(Utilities.decode(rs.getString("user_address")));
+					item.setUser_created_date(Utilities_date.getDateFormat(rs.getString("user_created_date")));
 					item.setUser_permission(rs.getByte("user_permission"));
 					item.setUser_notes(rs.getString("user_notes"));
 					if (rs.getBlob("user_images")!=null) {
@@ -101,6 +102,7 @@ public class UserModel {
 					item = new UserObject();
 					item.setUser_id(rs.getInt("user_id"));
 					item.setUser_nickname(rs.getString("user_nickname"));
+					item.setUser_pass(rs.getString("user_pass"));
 					item.setUser_fullname(rs.getString("user_fullname"));
 					item.setUser_gender(rs.getByte("user_gender"));
 					item.setUser_email(rs.getString("user_email"));

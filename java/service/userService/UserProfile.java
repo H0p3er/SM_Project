@@ -40,6 +40,9 @@ public class UserProfile extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        
 		HttpSession session = request.getSession();
 		UserObject user = (UserObject) session.getAttribute("userLogined");
 
@@ -59,6 +62,9 @@ public class UserProfile extends HttpServlet {
 
 	private void updateProfile(HttpServletRequest request, HttpServletResponse response, UserObject user)
 			throws IOException, ServletException {
+		request.setCharacterEncoding("UTF-8");
+	    response.setCharacterEncoding("UTF-8");
+	    
 		String fullname = request.getParameter("name");
 		String nickname = request.getParameter("nickname");
 		String birthday = request.getParameter("birthday");
@@ -69,16 +75,16 @@ public class UserProfile extends HttpServlet {
 		String note = request.getParameter("note");
 
 		// Update user object
-		user.setUser_fullname(Utilities.decode(fullname));
-		user.setUser_nickname(Utilities.decode(nickname));
+		user.setUser_fullname(fullname);
+		user.setUser_nickname(nickname);
 		if(birthday != null && !birthday.isEmpty()) {
 			user.setUser_created_date(Utilities_date.getDateFormat(birthday));
 		}
 		user.setUser_gender("Nam".equals(gender) ? (byte) 1 : (byte) 0);
 		user.setUser_phone(tel);
 		user.setUser_email(email);
-		user.setUser_address(Utilities.decode(address));
-		user.setUser_notes(Utilities.decode(note));
+		user.setUser_address(address);
+		user.setUser_notes(note);
 
 		ServletContext application = getServletConfig().getServletContext();
 		ConnectionPool cp = (ConnectionPool) application.getAttribute("CPool");
@@ -102,16 +108,18 @@ public class UserProfile extends HttpServlet {
 		ServletContext application = getServletConfig().getServletContext();
 		ConnectionPool cp = (ConnectionPool) application.getAttribute("CPool");
 
+		
+		//max hóa md5 cho current pass
 		if (!user.getUser_pass().equals(currentPassword)) {
-			request.setAttribute("passwordError", "Mật khẩu cũ không đúng!");
-			request.getRequestDispatcher("/user_profile.jsp").forward(request, response);
-			return;
+//			request.setAttribute("passwordError", "Mật khẩu cũ không đúng!");
+//			request.getRequestDispatcher("/main/user/user_profile.jsp").forward(request, response);
+			response.sendRedirect("/home/main/user/user_profile.jsp?err=failedPass");
 
 		} else {
 			user.setUser_pass(newPassword);
 
 			UserControl uc = new UserControl(cp);
-			boolean success = uc.editUser(user, USER_EDIT_TYPE.GENERAL);
+			boolean success = uc.editUser(user, USER_EDIT_TYPE.PASS);
 			uc.releaseConnection();
 
 			if (!success) {
