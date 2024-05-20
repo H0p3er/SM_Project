@@ -5,9 +5,7 @@ import java.util.Map;
 
 import org.javatuples.Pair;
 
-import dto.product.Product_DTO;
-
-
+import dto.product.Product_manageShopDTO;
 
 public class Shop_statisticDTO {
 	
@@ -23,8 +21,8 @@ public class Shop_statisticDTO {
 	private int count_customer_current_month;	
 	private Map<String,Integer> customer_current_month;	
 	
-	private List<Pair<Product_DTO,Double>> most_sold_product_current_month;
-	private List<Product_DTO> new_product_current_month;
+	private List<Pair<Product_manageShopDTO,Double>> most_sold_product_current_month;
+	private List<Product_manageShopDTO> new_product_current_month;
 	public int getCount_order_last_month() {
 		return count_order_last_month;
 	}
@@ -79,17 +77,17 @@ public class Shop_statisticDTO {
 	public void setCustomer_current_month(Map<String, Integer> customer_current_month) {
 		this.customer_current_month = customer_current_month;
 	}
-	public List<Pair<Product_DTO, Double>> getMost_sold_product_current_month() {
+	public List<Pair<Product_manageShopDTO, Double>> getMost_sold_product_current_month() {
 		return most_sold_product_current_month;
 	}
 	public void setMost_sold_product_current_month(
-			List<Pair<Product_DTO, Double>> most_sold_product_current_month) {
+			List<Pair<Product_manageShopDTO, Double>> most_sold_product_current_month) {
 		this.most_sold_product_current_month = most_sold_product_current_month;
 	}
-	public List<Product_DTO> getNew_product_current_month() {
+	public List<Product_manageShopDTO> getNew_product_current_month() {
 		return new_product_current_month;
 	}
-	public void setNew_product_current_month(List<Product_DTO> new_product_current_month) {
+	public void setNew_product_current_month(List<Product_manageShopDTO> new_product_current_month) {
 		this.new_product_current_month = new_product_current_month;
 	}
 	

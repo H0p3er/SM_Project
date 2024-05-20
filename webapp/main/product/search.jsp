@@ -1,8 +1,19 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
- <%@ page import="java.util.*" %>
-  <jsp:include page="../component/user_header.jsp" flush="true"></jsp:include>
-  <jsp:include page="../component/user_navigation-bar.jsp" flush="true"></jsp:include>
-<% Map<String, String> map = (HashMap<String,String>) request.getAttribute("product-search"); %>
+<%@ page import="java.util.*" %>
+<jsp:include page="../component/user_header.jsp" flush="true"></jsp:include>
+<jsp:include page="../component/user_navigation-bar.jsp" flush="true"></jsp:include>
+<% 
+
+	Map<String, String> map = new HashMap<String,String>();
+try {
+	map = (HashMap<String,String>) request.getAttribute("product-search"); 
+} catch (ClassCastException e){
+	
+}
+
+
+%>
   <div class="properties section">
     <div class="container">
       <nav aria-label="breadcrumb" class="ms-lg-5">
@@ -91,7 +102,7 @@
         </div>
         <div class="col-lg-9">
           <div class="row">
-			<%= map.getOrDefault("product-search", "") %>			
+			<%= map.getOrDefault("product-search", "<p>Không tồn tại sản phẩm</p>") %>			
           </div>
           <div class="row">
 	        <div class="col-lg-12">

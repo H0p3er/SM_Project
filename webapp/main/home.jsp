@@ -1,10 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="com.google.gson.*" %>
 <jsp:include page="component/user_header.jsp" flush="true"></jsp:include>
 <jsp:include page="component/user_navigation-bar.jsp" flush="true"></jsp:include>
 
-<% Map<String, String> map = (Map<String,String>) request.getAttribute("home-page"); %>
+<% 
+Map<String, String> map = new HashMap<String,String>();
+try {
+	map = (HashMap<String,String>) request.getAttribute("home-page"); 
+} catch (ClassCastException e){
+	
+}
+
+
+
+%>
 
         <div class="contact bg-black">
     <div class="container">
@@ -40,21 +51,21 @@
           <div class="carousel-item active">
             <div class="container">
               <div class="row">
-					<%=map.get("home_most_sold_carousel_1") %>
+					<%=map.getOrDefault("home_most_sold_carousel_1", "") %>
               </div>
             </div>
           </div>
           <div class="carousel-item">
             <div class="container">
 	            <div class="row">
-					<%=map.get("home_most_sold_carousel_2") %>
+					<%=map.getOrDefault("home_most_sold_carousel_2", "") %>
 	            </div>
             </div>
           </div>
           <div class="carousel-item">
             <div class="container">
 	            <div class="row">
-					<%=map.get("home_most_sold_carousel_3") %>
+					<%=map.getOrDefault("home_most_sold_carousel_3", "") %>
 	            </div>
             </div>
           </div>
@@ -82,7 +93,7 @@
       <div class="row">
 
 
-			<%=map.get("home_newest_product") %>	
+			<%=map.getOrDefault("home_newest_product","") %>	
       </div>
     </div>
   </div>

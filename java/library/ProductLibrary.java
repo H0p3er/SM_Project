@@ -25,7 +25,7 @@ import dto.productAttribute.MotherboardDTO;
 import dto.productAttribute.PowerSuppyDTO;
 import dto.productAttribute.RamDTO;
 import dto.productAttribute.StorageDTO;
-import dto.productAttribute.Product_UsbDTO;
+import dto.productAttribute.UsbDTO;
 import repository.Product;
 import utility.Utilities_currency;
 
@@ -450,13 +450,11 @@ public class ProductLibrary {
 			tmp.append("<li>Màu sắc: <span>"+((CoolingDTO)product.getAttribute()).getCooling_color()+"</span></li>");
 			tmp.append("<li>Kích thước: <span>"+((CoolingDTO)product.getAttribute()).getCooling_fan_size()+"</span></li>");	
 			break;	
-//		case 15:
-//			//usb
-//			tmp.append("<li>Hãng: <span>"+((Product_UsbDTO)product.getAttribute()).getUsb_manufacturer()+"</span></li>");
-//			tmp.append("<li>Dung lượng: <span>"+((Product_UsbDTO)product.getAttribute()).getUsb_capacity()+"</span></li>");	
-//			break;	
-			
-			//Bug??
+		case 15:
+			//usb
+			tmp.append("<li>Hãng: <span>"+((UsbDTO)product.getAttribute()).getUsb_manufacturer()+"</span></li>");
+			tmp.append("<li>Dung lượng: <span>"+((UsbDTO)product.getAttribute()).getUsb_capacity()+"</span></li>");	
+			break;	
 		
 		}	
 		return tmp.toString();

@@ -2,78 +2,95 @@ package dto.bill;
 
 import java.util.List;
 
-import dto.BDDTO;
+import dto.bd.BD_viewBillDTO;
+import entity.BDObject;
+import entity.BillObject;
 
-public class Bill_viewBillDTO {
-	private int bill_id;
-	private String bill_code;
-	private String bill_created_date;
+public class Bill_viewBillDTO implements Bill_DTO{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3081522859541249386L;
+	private int id;
+	private String created_date;
 	private byte bill_status; 
-	private String bill_last_modified_date; 
-	private int bill_last_modified_id;
 	private int bill_creator_id;
-	private int bill_transporter_id;
+	private int bill_delivery_id;
 	private byte bill_type;
-	private List<BDDTO> bd;
-	public int getBill_id() {
-		return bill_id;
+	private List<BD_viewBillDTO> bd;
+	
+	public int getId() {
+		return id;
 	}
-	public void setBill_id(int bill_id) {
-		this.bill_id = bill_id;
+
+	public void setId(int id) {
+		this.id = id;
 	}
-	public String getBill_code() {
-		return bill_code;
+
+
+	public String getCreated_date() {
+		return created_date;
 	}
-	public void setBill_code(String bill_code) {
-		this.bill_code = bill_code;
+
+
+	public void setCreated_date(String created_date) {
+		this.created_date = created_date;
 	}
-	public String getBill_created_date() {
-		return bill_created_date;
-	}
-	public void setBill_created_date(String bill_created_date) {
-		this.bill_created_date = bill_created_date;
-	}
+
+
 	public byte getBill_status() {
 		return bill_status;
 	}
+
+
 	public void setBill_status(byte bill_status) {
 		this.bill_status = bill_status;
 	}
-	public String getBill_last_modified_date() {
-		return bill_last_modified_date;
-	}
-	public void setBill_last_modified_date(String bill_last_modified_date) {
-		this.bill_last_modified_date = bill_last_modified_date;
-	}
-	public int getBill_last_modified_id() {
-		return bill_last_modified_id;
-	}
-	public void setBill_last_modified_id(int bill_last_modified_id) {
-		this.bill_last_modified_id = bill_last_modified_id;
-	}
+
+
 	public int getBill_creator_id() {
 		return bill_creator_id;
 	}
+
 	public void setBill_creator_id(int bill_creator_id) {
 		this.bill_creator_id = bill_creator_id;
 	}
-	public int getBill_transporter_id() {
-		return bill_transporter_id;
+
+
+	public int getBill_delivery_id() {
+		return bill_delivery_id;
 	}
-	public void setBill_transporter_id(int bill_transporter_id) {
-		this.bill_transporter_id = bill_transporter_id;
+
+
+	public void setBill_delivery_id(int bill_delivery_id) {
+		this.bill_delivery_id = bill_delivery_id;
 	}
+
+
 	public byte getBill_type() {
 		return bill_type;
 	}
+
+
 	public void setBill_type(byte bill_type) {
 		this.bill_type = bill_type;
 	}
-	public List<BDDTO> getBd() {
+
+
+	public List<BD_viewBillDTO> getBd() {
 		return bd;
 	}
-	public void setBd(List<BDDTO> bd) {
+
+
+	public void setBd(List<BD_viewBillDTO> bd) {
 		this.bd = bd;
+	}
+
+
+	@Override
+	public void ApplyToEntity(BillObject billObject, List<BDObject> bdObjects) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

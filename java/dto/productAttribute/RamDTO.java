@@ -1,9 +1,11 @@
 package dto.productAttribute;
 
-import dto.product.Product_DTO;
-
 public class RamDTO implements Product_AttributeDTO{
-    private int ram_id;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 192573609626679795L;
+	private int ram_id;
     private String ram_manufacturer;
     private String ram_type;
     private String ram_capacity;

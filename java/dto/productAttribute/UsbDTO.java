@@ -1,9 +1,11 @@
 package dto.productAttribute;
 
-import dto.product.Product_DTO;
-
-public class Product_UsbDTO implements Product_AttributeDTO{
-    private int usb_id;
+public class UsbDTO implements Product_AttributeDTO{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3454915298618804525L;
+	private int usb_id;
     private String usb_manufacturer;
     private String usb_capacity;
 	public int getUsb_id() {

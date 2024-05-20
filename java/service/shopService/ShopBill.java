@@ -23,20 +23,19 @@ import connection.ConnectionPool;
 import controller.ProductControl;
 import controller.ShopControl;
 import entity.UserObject;
-import jakarta.xml.ws.http.HTTPException;
 import entity.ShopObject;
 
 /**
  * Servlet implementation class WorkplaceProfile
  */
-@WebServlet("/seller/shop/statistic")
-public class Seller_ShopStatistic extends HttpServlet {
+@WebServlet("/seller/shop/bill")
+public class ShopBill extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String CONTENT_TYPE = "application/json; charset=utf-8";
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public Seller_ShopStatistic() {
+	public ShopBill() {
 		super();
 	}
 
@@ -52,8 +51,8 @@ public class Seller_ShopStatistic extends HttpServlet {
 		if (user!=null) {
 			view(request, response, user);
 		} else {
-			response.sendError(HttpServletResponse.SC_NON_AUTHORITATIVE_INFORMATION);
 			response.sendRedirect("/home/homepage");
+			response.sendError(HttpServletResponse.SC_NON_AUTHORITATIVE_INFORMATION);
 		}
 		
 	}
@@ -83,13 +82,13 @@ public class Seller_ShopStatistic extends HttpServlet {
 				utility.Utilities.getMapParam(request, null),
 				utility.Utilities.getMapParam(request, null));
 
-		Map<String,String> data = shopControl.displaySeller_ShopStatistic(productInfors,user);
+		Map<String,String> data = shopControl.displaySeller_ShopProduct(productInfors,user);
 		
 		shopControl.releaseCP();
-		
-		request.setAttribute("shop-statistic", data);
+		System.out.print(data);
+		request.setAttribute("shop-product", data);
 	    
-	    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/main/seller/shopmanage.jsp");
+	    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/main/seller/shop_products.jsp");
 		// Tạo đối tượng thực hiện xuất nội dung
 	    requestDispatcher.forward(request, response);		
 	}

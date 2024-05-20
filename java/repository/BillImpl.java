@@ -9,18 +9,15 @@ import java.util.Date;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.javatuples.Pair;
 
 import basic.BasicImpl;
 import connection.ConnectionPool;
 import connection.ConnectionPoolImpl;
 import constant.BILL_EDIT_TYPE;
-import constant.BILL_SORT_TYPE;
 import entity.BDObject;
 import entity.BillObject;
 import entity.ShopObject;
 import entity.UserObject;
-import utility.Utilities;
 
 public class BillImpl extends BasicImpl implements Bill {
 
@@ -33,9 +30,9 @@ public class BillImpl extends BasicImpl implements Bill {
 	}
 	
 	@Override
-	public Pair<Boolean, Integer> addBill(BillObject item, ArrayList<BDObject> bdObjects) {
+	public boolean addBill(BillObject item, ArrayList<BDObject> bdObjects) {
 		if (this.isExisting(item)) {
-			return new Pair<>(false,0);
+			return false;
 		}
 		try {
 			StringBuilder sql = new StringBuilder();	
@@ -76,13 +73,13 @@ public class BillImpl extends BasicImpl implements Bill {
 					}
 					
 				});
-				return this.addList(pre);
+				return this.addList(pre).getValue0();
 			} 	
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return new Pair<>(false,0);
+		return false;
 	}
 	
 
@@ -104,7 +101,7 @@ public class BillImpl extends BasicImpl implements Bill {
 	
 
 	@Override
-	public Pair<Boolean, Integer> editBill(BillObject item, ArrayList<BDObject> bdObjects ,BILL_EDIT_TYPE et) {
+	public boolean editBill(BillObject item, ArrayList<BDObject> bdObjects , BILL_EDIT_TYPE et) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("UPDATE tblbill SET ");
 		switch (et) {
@@ -112,6 +109,8 @@ public class BillImpl extends BasicImpl implements Bill {
 				sql.append("bill_status, ");
 				sql.append("bill_last_modified_date, bill_last_modified_id, ");
 				sql.append("bill_transporter_id,");
+			break;
+		default:
 			break;
 			
 		}
@@ -128,11 +127,10 @@ public class BillImpl extends BasicImpl implements Bill {
 					pre.setInt(4, item.getBill_transporter_id());
 					pre.setInt(6, item.getBill_id());
 					break;
-
+			default:
+				break;
 			}
-			boolean edit = this.edit(pre);
-			Pair<Boolean, Integer> editList = this.editList(pre); 
-			if (edit && editList.getValue0()) return new Pair<>(edit,editList.getValue1());
+			return this.edit(pre);
 		} catch (SQLException e) {
 			try {
 				this.con.rollback();
@@ -221,6 +219,7 @@ public class BillImpl extends BasicImpl implements Bill {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT * FROM tblbill b ");	 
 		sql.append("LEFT JOIN tblbd bd ON b.bill_id=bd.bd_id ");
+		sql.append("WHERE b.bill_creator_id="+userObject.getUser_id()+" AND b.bill_status = 0 ");
 		sql.append(ORDERConditions(multiSort));
 		sql.append("LIMIT "+at+"," +total+"; ") ;
 		System.out.print(sql.toString());
@@ -230,7 +229,7 @@ public class BillImpl extends BasicImpl implements Bill {
 	private static String getBillSizeByUserSQL(String multiCondition, UserObject userObject) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT COUNT(bill_id) AS total FROM tblbill b");
-		sql.append("WHERE b.bill_creator_id="+userObject.getUser_id()+"");
+		sql.append("WHERE b.bill_creator_id="+userObject.getUser_id()+" AND b.bill_status = 0 ");
 		sql.append("; ");
 		return sql.toString();
 	}
@@ -247,9 +246,10 @@ public class BillImpl extends BasicImpl implements Bill {
 	
 	private static String getBillByShopSQL(int at, byte total, String multiField, String multiCondition, String multiSort, ShopObject shopObject) {
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT * FROM tblbill b ");	 
-		sql.append("LEFT JOIN tblbd bd ON b.bill_id=bd.bd_id ");
-		sql.append("WHERE b.bill_shop_id="+shopObject.getShop_id()+"");
+		sql.append("SELECT bill.* FROM tblbill b ");	 
+		sql.append("INNER JOIN tblbd bd ON b.bill_id=bd.bd_id ");
+		sql.append("INNER JOIN tblproduct p ON bd.bd_product_id=p.product_id ");
+		sql.append("WHERE b.product_shop_id="+shopObject.getShop_id()+" AND b.bill_status=0 ");
 		sql.append(ORDERConditions(multiSort));
 		sql.append("LIMIT "+at+"," +total+"; ") ;
 		return sql.toString();
@@ -258,7 +258,9 @@ public class BillImpl extends BasicImpl implements Bill {
 	private static String getBillSizeByShopSQL(String multiCondition, ShopObject shopObject) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT COUNT(bill_id) AS total FROM tblbill b");
-		sql.append("WHERE b.bill_creator_id="+shopObject.getShop_id()+"");
+		sql.append("INNER JOIN tblbd bd ON b.bill_id=bd.bd_id ");
+		sql.append("INNER JOIN tblproduct p ON bd.bd_product_id=p.product_id ");
+		sql.append("WHERE b.product_shop_id="+shopObject.getShop_id()+" AND b.bill_status=0 ");
 		sql.append("; ");
 		return sql.toString();
 	}
@@ -267,15 +269,59 @@ public class BillImpl extends BasicImpl implements Bill {
 	@Override
 	public ArrayList<ResultSet> getOrderByUser(int at, byte total, String multiField, String multiCondition,
 			String multiSort, UserObject userObject) {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuilder sql = new StringBuilder();
+		sql.append(getOrderByUserSQL(at, total, multiField, multiCondition, multiSort, userObject));
+		sql.append(getOrderSizeByUserSQL(multiCondition, userObject));
+		return this.getReList(sql.toString());
 	}
 
+	private static String getOrderByUserSQL(int at, byte total, String multiField,  String multiCondition, String multiSort, UserObject userObject) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT * FROM tblbill b ");	 
+		sql.append("LEFT JOIN tblbd bd ON b.bill_id=bd.bd_id ");
+		sql.append("WHERE b.bill_creator_id="+userObject.getUser_id()+" AND b.bill_status = 1 ");
+		sql.append(ORDERConditions(multiSort));
+		sql.append("LIMIT "+at+"," +total+"; ") ;
+		System.out.print(sql.toString());
+		return sql.toString();
+	}
+	
+	private static String getOrderSizeByUserSQL(String multiCondition, UserObject userObject) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT COUNT(bill_id) AS total FROM tblbill b");
+		sql.append("WHERE b.bill_creator_id="+userObject.getUser_id()+" AND b.bill_status = 1 ");
+		sql.append("; ");
+		return sql.toString();
+	}
+	
 	@Override
 	public ArrayList<ResultSet> getOrderByShop(int at, byte total, String multiField, String multiCondition,
 			String multiSort, ShopObject shopObject) {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuilder sql = new StringBuilder();
+		sql.append(getOrderByShopSQL(at, total, multiField, multiCondition, multiSort, shopObject));
+		sql.append(getOrderSizeByShopSQL(multiCondition, shopObject));
+		return this.getReList(sql.toString());
+	}	
+
+	private static String getOrderByShopSQL(int at, byte total, String multiField, String multiCondition, String multiSort, ShopObject shopObject) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT bill.* FROM tblbill b ");	 
+		sql.append("INNER JOIN tblbd bd ON b.bill_id=bd.bd_id ");
+		sql.append("INNER JOIN tblproduct p ON bd.bd_product_id=p.product_id ");
+		sql.append("WHERE b.product_shop_id="+shopObject.getShop_id()+" AND b.bill_status=1 ");
+		sql.append(ORDERConditions(multiSort));
+		sql.append("LIMIT "+at+"," +total+"; ") ;
+		return sql.toString();
+	}
+	
+	private static String getOrderSizeByShopSQL(String multiCondition, ShopObject shopObject) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT COUNT(bill_id) AS total FROM tblbill b");
+		sql.append("INNER JOIN tblbd bd ON b.bill_id=bd.bd_id ");
+		sql.append("INNER JOIN tblproduct p ON bd.bd_product_id=p.product_id ");
+		sql.append("WHERE b.product_shop_id="+shopObject.getShop_id()+" AND b.bill_status=1 ");
+		sql.append("; ");
+		return sql.toString();
 	}
 
 	@Override

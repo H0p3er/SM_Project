@@ -1,8 +1,10 @@
 package dto.productAttribute;
 
-import dto.product.Product_DTO;
-
 public class MotherboardDTO implements Product_AttributeDTO{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2923434328987527529L;
 	private int motherboard_id;
 	private String motherboard_manufacturer;
 	private String motherboard_chipset;

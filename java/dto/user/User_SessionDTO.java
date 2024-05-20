@@ -1,5 +1,13 @@
 package dto.user;
 
-public class User_SessionDTO {
+import entity.UserObject;
+
+public class User_SessionDTO implements User_DTO{
 	private String name;
+
+	@Override
+	public void ApplyToEntity(UserObject entity) {
+		// TODO Auto-generated method stub
+		
+	}
 }

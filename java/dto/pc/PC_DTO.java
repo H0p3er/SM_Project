@@ -1,8 +1,8 @@
 package dto.pc;
 
-import java.io.Serializable;
+import entity.PCObject;
 
-public class PC_DTO implements Serializable{
+public class PC_DTO implements PCDTO{
 	
 	/**
 	 * 
@@ -14,8 +14,15 @@ public class PC_DTO implements Serializable{
 	private String name;
 
 	
+	public PC_DTO() {
+		
+	}
+
+	public PC_DTO(int id) {
+		this.id = id;
+	}
+	
 	public PC_DTO(int id, String name) {
-		super();
 		this.id = id;
 		this.name = name;
 	}
@@ -34,5 +41,11 @@ public class PC_DTO implements Serializable{
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	@Override
+	public void ApplyToEntity(PCObject entity) {
+		// TODO Auto-generated method stub
+		
 	}
 }

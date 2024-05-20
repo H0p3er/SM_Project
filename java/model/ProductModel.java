@@ -15,11 +15,10 @@ import connection.ConnectionPool;
 import connection.ConnectionPoolImpl;
 import constant.PRODUCT_EDIT_TYPE;
 import dto.pc.PC_DTO;
+import dto.pc.PC_manageShopDTO;
 import dto.product.*;
-import dto.productAttribute.*;
+import dto.productAttribute.Product_AttributeDTO;
 import dto.shop.Shop_DTO;
-import dto.shop.Shop_manageShopDTO;
-import dto.shop.Shop_statisticDTO;
 import repository.*;
 import entity.ProductObject;
 import entity.ShopObject;
@@ -45,23 +44,23 @@ public class ProductModel {
 		this.product.releaseCP();
 		this.pc.releaseCP();
 	}
-	public boolean addProduct(Product_DTO item) {
+	public boolean addProduct(ProductDTO<Product_AttributeDTO> item) {
 		ProductObject productObject = new ProductObject();
 		item.ApplyToEntity(productObject);
 		return this.product.addProduct(productObject);
 	}
-	public boolean editProduct(Product_DTO item, PRODUCT_EDIT_TYPE type) {
+	public boolean editProduct(ProductDTO<Product_AttributeDTO> item, PRODUCT_EDIT_TYPE type) {
 		ProductObject productObject = new ProductObject();
 		item.ApplyToEntity(productObject);
 		return this.product.editProduct(productObject, type);
 	}
-	public boolean delProduct(Product_DTO item) {
+	public boolean delProduct(ProductDTO<Product_AttributeDTO> item) {
 		ProductObject productObject = new ProductObject();
 		item.ApplyToEntity(productObject);
 		return this.product.delProduct(productObject);
 	}
 
-	public Product_DTO getProductDTO(int id) {
+	public Product_DTO getProduct_DTOById(int id) {
 		Product_DTO item = new Product_DTO();
 		ResultSet rs = this.product.getProductById(id);
 		if (rs != null) {
@@ -77,7 +76,7 @@ public class ProductModel {
 		return item;
 	}
 	
-	public Pair<ArrayList<Product_DTO>, Integer> getProductDTO(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> infors) {	
+	public Pair<ArrayList<Product_DTO>, Integer> getProduct_DTOs(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> infors) {	
 		short page = infors.getValue0();
 		byte productPerPage = infors.getValue1();	
 		Map<String,String> multiField = infors.getValue2();
@@ -105,7 +104,7 @@ public class ProductModel {
 		return new Pair<>(items, product_count);
 	}
 	
-	public Pair<ArrayList<Product_DTO>, ArrayList<Product_DTO>> getProductObjects() {		
+	public Pair<ArrayList<Product_DTO>, ArrayList<Product_DTO>> getProduct_DTOs() {		
 		ArrayList<Product_DTO> items1 = new ArrayList<>();
 		ArrayList<ResultSet> res = this.product.getProducts();
 		ResultSet rs = res.get(0);
@@ -138,24 +137,27 @@ public class ProductModel {
 		return new Pair<>(items1, items2);
 	}	
 
-	public Triplet<ArrayList<Product_DTO>,Integer,  List<Pair<Product_DTO,Double>>> getProduct_manageShopDTO(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, ShopObject shopObject) {
+	public Triplet<List<Product_manageShopDTO>,Integer, List<Pair<Product_manageShopDTO,Double>>> getProduct_manageShopDTO(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, ShopObject shopObject) {
 		Short pagePos = productInfors.getValue0();
 		byte pageLength = productInfors.getValue1();	
 		Map<String,String> multiField = productInfors.getValue2();
 		Map<String,String> multiCondition = productInfors.getValue3();
 		Map<String,String> multiSort = productInfors.getValue4();
 		int recordPos = (pagePos-1)*pageLength;	
-		ArrayList<Product_DTO> product_manageShopDTOs = new ArrayList<Product_DTO>();	
+		List<Product_manageShopDTO> product_manageShopDTOs = new ArrayList<Product_manageShopDTO>();	
 		ArrayList<ResultSet> resultSets = this.product.getProductsByShop(recordPos,pageLength,multiField,multiCondition,multiSort,shopObject);	
 		ResultSet rs = resultSets.get(0);
 		if (rs!=null) {
 			try {
 				while (rs.next()) {
-					Product_DTO product_ShopManagerDTO = new Product_DTO();
+					Product_manageShopDTO product_ShopManagerDTO = new Product_manageShopDTO();
 					product_ShopManagerDTO.setId(rs.getInt("product_id"));
 					product_ShopManagerDTO.setName(rs.getString("product_name"));
 					product_ShopManagerDTO.setQuantity(rs.getInt("product_quantity"));
+					product_ShopManagerDTO.setImages(rs.getString("product_images"));
 					product_ShopManagerDTO.setPrice(rs.getDouble("product_price"));
+					product_ShopManagerDTO.setNotes(rs.getString("product_notes"));
+					product_ShopManagerDTO.setPc(new PC_manageShopDTO(rs.getInt("product_pc_id"), rs.getString("pc_name")));
 					product_manageShopDTOs.add(product_ShopManagerDTO);
 				}
 				
@@ -168,45 +170,24 @@ public class ProductModel {
 		int count_product = getProductSize(rs);
 		
 		rs = resultSets.get(2);
-		List<Pair<Product_DTO,Double>> most_sold_product_current_month = getMostSoldProductCurrentMonth(rs);
+		List<Pair<Product_manageShopDTO,Double>> most_sold_product_current_month = getMostSoldProductCurrentMonth(rs);
 		return new Triplet<>(product_manageShopDTOs,count_product,most_sold_product_current_month);
-	}
-
-	private List<Pair<Product_DTO,Double>> getMostSoldProductCurrentMonth(ResultSet rs) {	
-		List<Pair<Product_DTO,Double>> most_sold_product_current_month =  new ArrayList<Pair<Product_DTO,Double>>();
-		if (rs!=null) {
-			try {			
-				while (rs.next()) {	
-					Product_DTO product_ShopManagerDTO = new Product_DTO();
-					product_ShopManagerDTO.setId(rs.getInt("product_id"));
-					product_ShopManagerDTO.setName(rs.getString("product_name"));
-					product_ShopManagerDTO.setQuantity(rs.getInt("product_quantity"));
-					product_ShopManagerDTO.setPrice(rs.getDouble("product_price"));
-					most_sold_product_current_month.add(new Pair<Product_DTO,Double>(product_ShopManagerDTO, rs.getDouble("most_sold_product_by_month")));
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		return most_sold_product_current_month;
-	}
+	}	
 	
-	
-	public Pair<ArrayList<Product_DTO>,Integer> getProduct_viewShopDTO(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, ShopObject shopObject) {
+	public Pair<ArrayList<Product_viewShopDTO>,Integer> getProduct_viewShopDTO(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, ShopObject shopObject) {
 		Short pagePos = productInfors.getValue0();
 		byte pageLength = productInfors.getValue1();	
 		Map<String,String> multiField = productInfors.getValue2();
 		Map<String,String> multiCondition = productInfors.getValue3();
 		Map<String,String> multiSort = productInfors.getValue4();
 		int recordPos = (pagePos-1)*pageLength;	
-		ArrayList<Product_DTO> product_viewShopDTOs = new ArrayList<Product_DTO>();	
+		ArrayList<Product_viewShopDTO> product_viewShopDTOs = new ArrayList<Product_viewShopDTO>();	
 		ArrayList<ResultSet> resultSets = this.product.getProductsByShop(recordPos,pageLength,multiField,multiCondition,multiSort,shopObject);	
 		ResultSet rs = resultSets.get(0);
 		if (rs!=null) {
 			try {
 				while (rs.next()) {
-					Product_DTO product_viewShopDTO = new Product_DTO();
+					Product_viewShopDTO product_viewShopDTO = new Product_viewShopDTO();
 					product_viewShopDTO.setId(rs.getInt("product_id"));
 					product_viewShopDTO.setName(rs.getString("product_name"));
 					product_viewShopDTO.setQuantity(rs.getInt("product_quantity"));
@@ -222,6 +203,27 @@ public class ProductModel {
 		int count_product = getProductSize(rs);
 		return new Pair<>(product_viewShopDTOs,count_product);
 	}	
+	
+
+	private List<Pair<Product_manageShopDTO,Double>> getMostSoldProductCurrentMonth(ResultSet rs) {	
+		List<Pair<Product_manageShopDTO,Double>> most_sold_product_current_month =  new ArrayList<Pair<Product_manageShopDTO,Double>>();
+		if (rs!=null) {
+			try {			
+				while (rs.next()) {	
+					Product_manageShopDTO product_ShopManagerDTO = new Product_manageShopDTO();
+					product_ShopManagerDTO.setId(rs.getInt("product_id"));
+					product_ShopManagerDTO.setName(rs.getString("product_name"));
+					product_ShopManagerDTO.setQuantity(rs.getInt("product_quantity"));
+					product_ShopManagerDTO.setPrice(rs.getDouble("product_price"));
+					most_sold_product_current_month.add(new Pair<Product_manageShopDTO,Double>(product_ShopManagerDTO, rs.getDouble("most_sold_product_by_month")));
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return most_sold_product_current_month;
+	}
 	
 	private void setProductAttribute(Product_DTO item, ResultSet rs) {
 		try {	
@@ -322,7 +324,7 @@ public class ProductModel {
 
 		//Lay tap ban ghi nguoi su dung
 
-		ArrayList<Product_DTO> rs1 = u.getProductDTO(new Quintet<Short, Byte, Map<String, String> ,Map<String, String>, Map<String, String>>((short) 0,(byte) 0, new HashMap<String, String>(), new HashMap<String, String>(), new HashMap<String, String>())).getValue0();
+		ArrayList<Product_DTO> rs1 = u.getProduct_DTOs(new Quintet<Short, Byte, Map<String, String> ,Map<String, String>, Map<String, String>>((short) 0,(byte) 0, new HashMap<String, String>(), new HashMap<String, String>(), new HashMap<String, String>())).getValue0();
 		String row = null;
 
 		if (rs1!=null) {

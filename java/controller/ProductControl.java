@@ -11,7 +11,9 @@ import org.javatuples.Quintet;
 
 import connection.ConnectionPool;
 import constant.PRODUCT_EDIT_TYPE;
+import dto.product.ProductDTO;
 import dto.product.Product_DTO;
+import dto.productAttribute.Product_AttributeDTO;
 import library.ProductLibrary;
 import model.ProductModel;
 
@@ -30,17 +32,16 @@ public class ProductControl {
 	public void releaseConnection() {
 		this.pm.releaseCP();
 	}
-
 	
-	public boolean addProduct(Product_DTO item) {
+	public boolean addProduct(ProductDTO<Product_AttributeDTO> item) {
 		return this.pm.addProduct(item);
 	}
 	
-	public boolean editProduct(Product_DTO item, PRODUCT_EDIT_TYPE type) {
+	public boolean editProduct(ProductDTO<Product_AttributeDTO> item, PRODUCT_EDIT_TYPE type) {
 		return this.pm.editProduct(item, type);
 	}
 	
-	public boolean delProduct(Product_DTO item) {
+	public boolean delProduct(ProductDTO<Product_AttributeDTO> item) {
 		return this.pm.delProduct(item);
 	}
 	
@@ -50,12 +51,12 @@ public class ProductControl {
 	 * @return sản phẩm cần lấy nếu tìm được
 	 * Cập nhật ngày 26/10/2023
 	 */
-	public Product_DTO getProductDTO(int id) {
-		return this.pm.getProductDTO(id);
+	public Product_DTO getProduct_DTOById(int id) {
+		return this.pm.getProduct_DTOById(id);
 	}
 	
 	public Map<String,String> getProductProfile(int id) {
-		Product_DTO productObject = this.getProductDTO(id);
+		Product_DTO productObject = this.getProduct_DTOById(id);
 		return ProductLibrary.viewProductProfile(productObject);
 	}
 	
@@ -68,7 +69,7 @@ public class ProductControl {
 	 * Cập nhật ngày 26/10/2023
 	 */
 	public Pair<ArrayList<Product_DTO>,Integer> getProducts(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> infors) {			
-		return this.pm.getProductDTO(infors);
+		return this.pm.getProduct_DTOs(infors);
 	}
 	
 	
@@ -83,7 +84,7 @@ public class ProductControl {
 			Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> infors, 
 			String url){
 
-		Pair<ArrayList<Product_DTO>,Integer> datas = this.pm.getProductDTO(infors);		
+		Pair<ArrayList<Product_DTO>,Integer> datas = this.pm.getProduct_DTOs(infors);		
 		return ProductLibrary.viewSearchProduct(datas, infors, url);
 	}
 	
@@ -96,7 +97,7 @@ public class ProductControl {
 	 */
 	public Map<String,String> viewHomeProduct(){
 
-		Pair<ArrayList<Product_DTO>,ArrayList<Product_DTO>> datas = this.pm.getProductObjects();
+		Pair<ArrayList<Product_DTO>,ArrayList<Product_DTO>> datas = this.pm.getProduct_DTOs();
 		
 		return ProductLibrary.viewHomeProduct(datas);
 	}

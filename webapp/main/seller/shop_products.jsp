@@ -1,7 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-  <jsp:include page="../component/seller_header.jsp" flush="true"></jsp:include>
-  <jsp:include page="../component/seller_navigation-bar.jsp" flush="true"></jsp:include>
+<jsp:include page="../component/seller_header.jsp" flush="true"></jsp:include>
+<jsp:include page="../component/seller_navigation-bar.jsp" flush="true"></jsp:include>
+<%@ page import="java.util.*" %>
 
+<% 
+Map<String, String> map = new HashMap<String,String>();
+if (request.getAttribute("shop-product")!=null){
+	map = (HashMap<String,String>) request.getAttribute("shop-product"); 
+}
+%>
 
   <main id="main" class="main">
     <div class="pagetitle">
@@ -44,7 +51,8 @@
                 <td>1</td>
                 <td>$product_pc_name</td>
               </tr>
-
+              	<% System.out.println(map.getOrDefault("product-list", "failed")); %>
+				<%= map.getOrDefault("product-list", "") %>
             </tbody>
           </table>
         </div>
@@ -84,16 +92,16 @@
                 </div>
               </div>
               <div class="row mb-3">
-                <label for="price" class="col-md-4 col-lg-3 col-form-label">Giá tiền</label>
+                <label for="productPrice" class="col-md-4 col-lg-3 col-form-label">Giá tiền</label>
                 <div class="col-md-8 col-lg-9">
-                  <input name="price" type="number" class="form-control" id="price"
+                  <input name="productPrice" type="number" class="form-control" id="productPrice"
                     value="32000000">
                 </div>
               </div>
               <div class="row mb-3">
                 <label for="quantity" class="col-md-4 col-lg-3 col-form-label">Số lượng</label>
                 <div class="col-md-8 col-lg-9">
-                  <input name="quantity" type="number" class="form-control" id="quantity"
+                  <input name="productQuantity" type="number" class="form-control" id="quantity"
                     value="11" max="9999" min="1">
                 </div>
               </div>
