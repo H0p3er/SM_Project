@@ -3,6 +3,7 @@ package dto.bill;
 import java.util.List;
 
 import dto.bd.BD_manageOrderDTO;
+import entity.BDObject;
 import entity.BillObject;
 
 public class Bill_manageOrderDTO implements Bill_DTO{
@@ -79,18 +80,6 @@ public class Bill_manageOrderDTO implements Bill_DTO{
 	}
 
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-
-	@Override
-	public void ApplyToEntity(BillObject entity) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
 	public List<BD_manageOrderDTO> getBd() {
 		return bd;
 	}
@@ -98,6 +87,13 @@ public class Bill_manageOrderDTO implements Bill_DTO{
 
 	public void setBd(List<BD_manageOrderDTO> bd) {
 		this.bd = bd;
+	}
+
+
+	@Override
+	public void ApplyToEntity(BillObject billObject, List<BDObject> bdObjects) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

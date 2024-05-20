@@ -18,6 +18,7 @@ import org.javatuples.Quintet;
 import com.google.gson.Gson;
 
 import connection.*;
+import controller.BillControl;
 import controller.ProductControl;
 import dto.product.Product_DTO;
 import entity.UserObject;
@@ -60,10 +61,11 @@ public class UserBill extends HttpServlet {
 		// Tìm bộ quản lý kết nối
 		ConnectionPool cp = (ConnectionPool) getServletContext().getAttribute("CPool");
 		// Tạo đối tượng thực thi chức năng
-		ProductControl pc = new ProductControl(cp);
+		BillControl pc = new BillControl(cp);
 		if (cp == null) {
 			getServletContext().setAttribute("CPool", pc.getCP());
 		}
+		
 		// Trả về kết nối
 		pc.releaseConnection();
 		// Tạo đối tượng thực hiện xuất nội dung

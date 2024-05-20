@@ -44,36 +44,24 @@ public class BillModel {
 	}
 
 	//***********************Chuyen huong dieu khien tu Bill Impl*****************************************
-	public boolean addBill(Bill_DTO bill_DTO, ArrayList<BD_DTO> bd_DTOs) {
+	public boolean addBill(Bill_DTO bill_DTO) {
 		BillObject billObject = new BillObject();
-		bill_DTO.ApplyToEntity(billObject);
-		
 		ArrayList<BDObject> bdObjects = new ArrayList<BDObject>();
-		bd_DTOs.forEach(bd_DTO->{
-			BDObject bdObject = new BDObject();
-			bd_DTO.ApplyToEntity(bdObject);
-			bdObjects.add(bdObject);
-		});
-		
+		bill_DTO.ApplyToEntity(billObject, bdObjects);;
 		return this.bill.addBill(billObject, bdObjects);
 	}
 	
-	public boolean editBill(Bill_DTO bill_DTO, ArrayList<BD_DTO> bd_DTOs, BILL_EDIT_TYPE et) {
+	public boolean editBill(Bill_DTO bill_DTO, BILL_EDIT_TYPE et) {
 		BillObject billObject = new BillObject();
-		bill_DTO.ApplyToEntity(billObject);
-		
 		ArrayList<BDObject> bdObjects = new ArrayList<BDObject>();
-		bd_DTOs.forEach(bd_DTO->{
-			BDObject bdObject = new BDObject();
-			bd_DTO.ApplyToEntity(bdObject);
-			bdObjects.add(bdObject);
-		});
+		bill_DTO.ApplyToEntity(billObject, bdObjects);
 		return this.bill.editBill(billObject, bdObjects, et);
 	}
 	
 	public boolean delBill(Bill_DTO bill_DTO) {
 		BillObject billObject = new BillObject();
-		bill_DTO.ApplyToEntity(billObject);
+		ArrayList<BDObject> bdObjects = new ArrayList<BDObject>();
+		bill_DTO.ApplyToEntity(billObject, bdObjects);
 		return this.bill.delBill(billObject);
 	}
 	

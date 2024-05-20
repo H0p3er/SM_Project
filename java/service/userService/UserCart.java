@@ -123,7 +123,6 @@ public class UserCart extends HttpServlet {
 			product_DTOs.put(product_DTO,1);
 			System.out.println("post error:"+product_DTOs);
 			request.getSession().setAttribute("product-cart", product_DTOs);
-			
 		}	
 		// Trả về kết nối
 		pc.releaseConnection();

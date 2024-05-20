@@ -81,22 +81,18 @@ public class Utilities {
 				} else {
 					parameter.append(value);
 				}
-				break;
-			
+				break;		
 			}
 		});
 		
 		if (!parameter.isEmpty() && !parameter.toString().isBlank()) {
 			parameter.insert(0, "?");
-		}
-		
+		}		
 		return parameter.toString();
-		
 	}
 	
 	public static Map<String, String> getMapParam(ServletRequest request, String name) {	
 		String str_value = request.getParameter(name);
-	
 		String safe_value = 
 				(str_value!=null && !str_value.isBlank()
 				&& str_value.contains(":") && str_value.contains(",")) 

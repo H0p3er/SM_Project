@@ -37,12 +37,12 @@ public class BillControl {
 	}
 
 	
-	public boolean addBill(Bill_DTO bill_DTO, ArrayList<BD_DTO> bd_DTOs) {
-		return this.billModel.addBill(bill_DTO, bd_DTOs);
+	public boolean addBill(Bill_DTO bill_DTO) {
+		return this.billModel.addBill(bill_DTO);
 	}
 	
-	public boolean editBill(Bill_DTO item, ArrayList<BD_DTO> bd_DTOs,BILL_EDIT_TYPE et) {
-		return this.billModel.editBill(item, bd_DTOs, et);
+	public boolean editBill(Bill_DTO item ,BILL_EDIT_TYPE et) {
+		return this.billModel.editBill(item, et);
 	}
 	
 	public boolean delBill(Bill_DTO item) {

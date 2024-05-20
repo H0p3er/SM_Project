@@ -3,6 +3,7 @@ package dto.bill;
 import java.util.List;
 
 import dto.bd.BD_manageBillDTO;
+import entity.BDObject;
 import entity.BillObject;
 
 public class Bill_manageBillDTO implements Bill_DTO{
@@ -90,9 +91,11 @@ public class Bill_manageBillDTO implements Bill_DTO{
 
 
 	@Override
-	public void ApplyToEntity(BillObject entity) {
+	public void ApplyToEntity(BillObject billObject, List<BDObject> bdObjects) {
 		// TODO Auto-generated method stub
 		
 	}
+
+
 
 }

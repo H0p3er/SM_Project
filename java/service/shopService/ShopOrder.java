@@ -26,7 +26,7 @@ import utility.Utilities;
 /**
  * Servlet implementation class ProductList
  */
-@WebServlet("/seller/shop/bill")
+@WebServlet("/seller/shop/order")
 public class ShopOrder extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
