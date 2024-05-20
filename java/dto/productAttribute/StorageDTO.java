@@ -1,9 +1,11 @@
 package dto.productAttribute;
 
-import dto.product.Product_DTO;
-
 public class StorageDTO implements Product_AttributeDTO{
-    private int storage_id;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7695986922552496177L;
+	private int storage_id;
     private String storage_manufacturer;
     private String storage_type;
     private String storage_capacity;

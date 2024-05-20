@@ -1,10 +1,13 @@
 package dto.productAttribute;
 
-import dto.product.Product_DTO;
 
 public class GraphicsCardDTO implements Product_AttributeDTO{
 	
-    private int graphics_card_id;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6774687705014132071L;
+	private int graphics_card_id;
     private String graphics_card_manufacturer;
     private String graphics_card_speed;
     private String graphics_card_cores;

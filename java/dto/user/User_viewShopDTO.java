@@ -1,6 +1,8 @@
 package dto.user;
 
-public class User_viewShopDTO {
+import entity.UserObject;
+
+public class User_viewShopDTO implements User_DTO{
     private String user_fullname;
     private String user_images;
     
@@ -15,5 +17,11 @@ public class User_viewShopDTO {
 	}
 	public void setUser_images(String user_images) {
 		this.user_images = user_images;
+	}
+	
+	@Override
+	public void ApplyToEntity(UserObject entity) {
+		// TODO Auto-generated method stub
+		
 	}
 }

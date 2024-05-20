@@ -1,8 +1,11 @@
 package dto.productAttribute;
 
-import dto.product.Product_DTO;
 
 public class HeadphoneSpeakerDTO implements Product_AttributeDTO{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2064299066777849858L;
 	private int headphones_speakers_id; 
 	private String headphones_manufacturer;
 	private String headphone_type;

@@ -33,9 +33,9 @@ public class BillImpl extends BasicImpl implements Bill {
 	}
 	
 	@Override
-	public Pair<Boolean, Integer> addBill(BillObject item, ArrayList<BDObject> bdObjects) {
+	public boolean addBill(BillObject item, ArrayList<BDObject> bdObjects) {
 		if (this.isExisting(item)) {
-			return new Pair<>(false,0);
+			return false;
 		}
 		try {
 			StringBuilder sql = new StringBuilder();	
@@ -76,13 +76,13 @@ public class BillImpl extends BasicImpl implements Bill {
 					}
 					
 				});
-				return this.addList(pre);
+				return this.addList(pre).getValue0();
 			} 	
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return new Pair<>(false,0);
+		return false;
 	}
 	
 
@@ -104,7 +104,7 @@ public class BillImpl extends BasicImpl implements Bill {
 	
 
 	@Override
-	public Pair<Boolean, Integer> editBill(BillObject item, ArrayList<BDObject> bdObjects ,BILL_EDIT_TYPE et) {
+	public boolean editBill(BillObject item, ArrayList<BDObject> bdObjects , BILL_EDIT_TYPE et) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("UPDATE tblbill SET ");
 		switch (et) {
@@ -128,11 +128,8 @@ public class BillImpl extends BasicImpl implements Bill {
 					pre.setInt(4, item.getBill_transporter_id());
 					pre.setInt(6, item.getBill_id());
 					break;
-
 			}
-			boolean edit = this.edit(pre);
-			Pair<Boolean, Integer> editList = this.editList(pre); 
-			if (edit && editList.getValue0()) return new Pair<>(edit,editList.getValue1());
+			return this.edit(pre);
 		} catch (SQLException e) {
 			try {
 				this.con.rollback();
@@ -247,9 +244,10 @@ public class BillImpl extends BasicImpl implements Bill {
 	
 	private static String getBillByShopSQL(int at, byte total, String multiField, String multiCondition, String multiSort, ShopObject shopObject) {
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT * FROM tblbill b ");	 
-		sql.append("LEFT JOIN tblbd bd ON b.bill_id=bd.bd_id ");
-		sql.append("WHERE b.bill_shop_id="+shopObject.getShop_id()+"");
+		sql.append("SELECT bill.* FROM tblbill b ");	 
+		sql.append("INNER JOIN tblbd bd ON b.bill_id=bd.bd_id ");
+		sql.append("INNER JOIN tblproduct p ON bd.bd_product_id=p.product_id ");
+		sql.append("WHERE b.product_shop_id="+shopObject.getShop_id()+"");
 		sql.append(ORDERConditions(multiSort));
 		sql.append("LIMIT "+at+"," +total+"; ") ;
 		return sql.toString();
@@ -258,7 +256,9 @@ public class BillImpl extends BasicImpl implements Bill {
 	private static String getBillSizeByShopSQL(String multiCondition, ShopObject shopObject) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT COUNT(bill_id) AS total FROM tblbill b");
-		sql.append("WHERE b.bill_creator_id="+shopObject.getShop_id()+"");
+		sql.append("INNER JOIN tblbd bd ON b.bill_id=bd.bd_id ");
+		sql.append("INNER JOIN tblproduct p ON bd.bd_product_id=p.product_id ");
+		sql.append("WHERE b.product_shop_id="+shopObject.getShop_id()+"");
 		sql.append("; ");
 		return sql.toString();
 	}

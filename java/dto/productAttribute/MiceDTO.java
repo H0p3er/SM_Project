@@ -1,8 +1,11 @@
 package dto.productAttribute;
 
-import dto.product.Product_DTO;
 
 public class MiceDTO implements Product_AttributeDTO{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2457037347057054482L;
 	private int mouse_id; 
 	private String mouse_manufacturer; 
 	private String mouse_type;

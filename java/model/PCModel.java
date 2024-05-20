@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import connection.ConnectionPool;
+import dto.pc.PC_DTO;
 import dto.product.ProductDTO;
 import dto.product.Product_DTO;
 import dto.productAttribute.Product_AttributeDTO;
@@ -24,7 +25,7 @@ import dto.productAttribute.MotherboardDTO;
 import dto.productAttribute.PowerSuppyDTO;
 import dto.productAttribute.RamDTO;
 import dto.productAttribute.StorageDTO;
-import dto.productAttribute.Product_UsbDTO;
+import dto.productAttribute.UsbDTO;
 import entity.PCObject;
 import entity.ProductObject;
 
@@ -32,29 +33,23 @@ public class PCModel {
 	private PC pc; 
 	
 	public PCModel(ConnectionPool cp) {
-		this.pc = new PCImpl(cp);
-		
-	}
-	
+		this.pc = new PCImpl(cp);	
+	}	
 	public ConnectionPool getCP() {
 		return this.pc.getCP();
-	}
-	
+	}	
 	public void releaseCP() {
 		this.pc.releaseCP();
-	}
-	
-	public PCObject getPCByID(int id) {
-		ResultSet rs = this.pc.getPCById(id);
-		
-		PCObject pcObject = null;
-		
+	}	
+	public PC_DTO getPC_DTOByID(int id) {
+		ResultSet rs = this.pc.getPCById(id);	
+		PC_DTO pc_DTO = null;
 		if (rs!=null) {
 			try {
 				if (rs.next()) {
-					pcObject = new PCObject();
-					pcObject.setPc_id(rs.getInt("pc_id"));
-					pcObject.setPc_created_date("created_date");
+					pc_DTO = new PC_DTO();
+					pc_DTO.setId(rs.getInt("pc_id"));
+					pc_DTO.setName("created_date");
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -62,9 +57,8 @@ public class PCModel {
 			}
 		}
 		
-		return pcObject;
+		return pc_DTO;
 	}
-	
 	
 	
 	public void getCaseDTO(Product_DTO product_DTO) throws SQLException {
@@ -288,7 +282,7 @@ public class PCModel {
 //		return product_MonitorDTO;
 	}
 
-	public void getMiceDTO(Product_DTO product_DTO)  throws SQLException{
+	public void getMiceDTO(Product_DTO product_DTO)  throws SQLException {
 		ProductObject productObject = new ProductObject();
 		product_DTO.ApplyToEntity(productObject);
 		ResultSet attribute = this.pc.getProductAttribute(productObject);
@@ -305,11 +299,11 @@ public class PCModel {
 		
 //		return product_MiceDTO;
 	}
-	public void getProduct_UsbDTO(Product_DTO product_DTO) throws SQLException {    
+	public void getUsbDTO(Product_DTO product_DTO) throws SQLException {    
 	    ProductObject productObject = new ProductObject();
 	    product_DTO.ApplyToEntity(productObject);
 	    ResultSet attribute = this.pc.getProductAttribute(productObject);
-	    Product_UsbDTO product_UsbDTO = new Product_UsbDTO();
+	    UsbDTO product_UsbDTO = new UsbDTO();
 	    if (attribute.next()) {
 	        product_UsbDTO.setUsb_id(attribute.getInt("usb_id"));
 	        product_UsbDTO.setUsb_manufacturer(attribute.getString("usb_manufacturer"));

@@ -1,7 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-  <jsp:include page="../component/seller_header.jsp" flush="true"></jsp:include>
-  <jsp:include page="../component/seller_navigation-bar.jsp" flush="true"></jsp:include>
+<jsp:include page="../component/seller_header.jsp" flush="true"></jsp:include>
+<jsp:include page="../component/seller_navigation-bar.jsp" flush="true"></jsp:include>
+<%@ page import="java.util.*" %>
 
+<% 
+Map<String, String> map = new HashMap<String,String>();
+if (request.getAttribute("shop-product")!=null){
+	map = (HashMap<String,String>) request.getAttribute("shop-product"); 
+}
+%>
 
   <main id="main" class="main">
     <div class="pagetitle">
@@ -44,7 +51,8 @@
                 <td>1</td>
                 <td>$product_pc_name</td>
               </tr>
-
+              	<% System.out.println(map.getOrDefault("product-list", "failed")); %>
+				<%= map.getOrDefault("product-list", "") %>
             </tbody>
           </table>
         </div>
@@ -84,23 +92,23 @@
                 </div>
               </div>
               <div class="row mb-3">
-                <label for="price" class="col-md-4 col-lg-3 col-form-label">Giá tiền</label>
+                <label for="productPrice" class="col-md-4 col-lg-3 col-form-label">Giá tiền</label>
                 <div class="col-md-8 col-lg-9">
-                  <input name="price" type="number" class="form-control" id="price"
+                  <input name="productPrice" type="number" class="form-control" id="productPrice"
                     value="32000000">
                 </div>
               </div>
               <div class="row mb-3">
                 <label for="quantity" class="col-md-4 col-lg-3 col-form-label">Số lượng</label>
                 <div class="col-md-8 col-lg-9">
-                  <input name="quantity" type="number" class="form-control" id="quantity"
+                  <input name="productQuantity" type="number" class="form-control" id="quantity"
                     value="11" max="9999" min="1">
                 </div>
               </div>
               <div class="row mb-3">
                 <label for="productPC" class="col-md-4 col-lg-3 col-form-label">Loại sản phẩm</label>
                 <div class="col-md-8 col-lg-9">
-                  <select name="" id="" class="form-control">
+                  <select name="productCategory" id="productSelect" class="form-select">
                     <option value="2">Bàn phím</option>
                     <option value="3">Chuột</option>
                     <option value="7">CPU</option>
@@ -120,63 +128,8 @@
                   </select>
                 </div>
               </div>
-
-              <div class="row mb-3">
-                <label for="manufacturer" class="col-md-4 col-lg-3 col-form-label">Hãng sản xuất</label>
-                <div class="col-md-8 col-lg-9">
-                  <input name="manufacturer" type="text" class="form-control" id="manufacturer" value="Apple" maxlength="30">
-                </div>
-              </div>
-
-              <div class="row mb-3">
-                <label for="cpu" class="col-md-4 col-lg-3 col-form-label">CPU</label>
-                <div class="col-md-8 col-lg-9">
-                  <input name="cpu" type="text" class="form-control" id="cpu" value="Apple M1">
-                </div>
-              </div>
-
-              <div class="row mb-3">
-                <label for="ram" class="col-md-4 col-lg-3 col-form-label">RAM</label>
-                <div class="col-md-8 col-lg-9">
-                  <input name="ram" type="text" class="form-control" id="ram" value="8GB LPDDR4X">
-                </div>
-              </div>
-              <div class="row mb-3">
-                <label for="graphics" class="col-md-4 col-lg-3 col-form-label">Card</label>
-                <div class="col-md-8 col-lg-9">
-                  <input name="graphics" type="text" class="form-control" id="graphics" value="Integrated Apple GPU">
-                </div>
-              </div>
-              <div class="row mb-3">
-                <label for="storage" class="col-md-4 col-lg-3 col-form-label">Ổ cứng</label>
-                <div class="col-md-8 col-lg-9">
-                  <input name="storage" type="text" class="form-control" id="storage" value="512GB SSD" maxlength="30">
-                </div>
-              </div>
-              <div class="row mb-3">
-                <label for="monitor" class="col-md-4 col-lg-3 col-form-label">Màn hình</label>
-                <div class="col-md-8 col-lg-9">
-                  <input name="monitor" type="text" class="form-control" id="monitor" value="Integrated Apple GPU">
-                </div>
-              </div>
-              <div class="row mb-3">
-                <label for="freq" class="col-md-4 col-lg-3 col-form-label">Tần số quét</label>
-                <div class="col-md-8 col-lg-9">
-                  <input name="freq" type="text" class="form-control" id="freq" value="Integrated Apple GPU">
-                </div>
-              </div>
-              <div class="row mb-3">
-                <label for="resolution" class="col-md-4 col-lg-3 col-form-label">Độ phân giải</label>
-                <div class="col-md-8 col-lg-9">
-                  <input name="resolution" type="text" class="form-control" id="resolution" value="Integrated Apple GPU" maxlength="30">
-                </div>
-              </div>
-              <div class="row mb-3">
-                <label for="type" class="col-md-4 col-lg-3 col-form-label">Phân loại</label>
-                <div class="col-md-8 col-lg-9">
-                  <input name="type" type="text" class="form-control" id="type" value="Integrated Apple GPU">
-                </div>
-              </div>
+              <div id="categorySpecs"></div>
+              
 
               <div class="row mb-3">
                 <label for="about" class="col-md-4 col-lg-3 col-form-label">Mô tả</label>

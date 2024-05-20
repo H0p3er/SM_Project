@@ -5,6 +5,10 @@ import dto.productAttribute.Product_AttributeDTO;
 import entity.ProductObject;
 
 public class Product_manageShopDTO implements ProductDTO<Product_AttributeDTO>{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4911204356464313092L;
 	private int id;
     private String name;
     private byte status;

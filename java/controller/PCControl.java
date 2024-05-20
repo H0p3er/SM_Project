@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 import connection.ConnectionPool;
 import connection.ConnectionPoolImpl;
+import dto.pc.PC_DTO;
 import entity.*;
 public class PCControl {
 	private PCModel md;
@@ -24,8 +25,7 @@ public class PCControl {
 	}
 	
 	public String viewPCDetail(int id) {
-		PCObject pcObject= this.md.getPCByID(id);
-		
+		PC_DTO  pcObject= this.md.getPC_DTOByID(id);
 		return library.PCLibrary.viewPCDetail(pcObject);
 	}
 	

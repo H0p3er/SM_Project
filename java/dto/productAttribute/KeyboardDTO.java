@@ -1,9 +1,12 @@
 package dto.productAttribute;
 
-import dto.product.Product_DTO;
 
 public class KeyboardDTO implements Product_AttributeDTO{
-    private int keyboard_id;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5744780638675586211L;
+	private int keyboard_id;
     private String keyboard_type;
     private String keyboard_connection_type;
     private String keyboard_size_layout;

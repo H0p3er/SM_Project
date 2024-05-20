@@ -5,6 +5,10 @@ import dto.productAttribute.Product_AttributeDTO;
 import entity.ProductObject;
 
 public class Product_viewShopDTO implements ProductDTO<Product_AttributeDTO>{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7243964225705406402L;
 	private int id;
     private String name;
     private byte status;
@@ -84,16 +88,16 @@ public class Product_viewShopDTO implements ProductDTO<Product_AttributeDTO>{
 	public void setProduct_deleted(byte product_deleted) {
 		this.product_deleted = product_deleted;
 	}
-	
-	@Override
-    public void ApplyToEntity(ProductObject productObject) {
-    	productObject.setProduct_id(this.id);	
-    }
+
 	public Product_AttributeDTO getAttribute() {
 		return attribute;
 	}
 	public void setAttribute(Product_AttributeDTO attribute) {
 		this.attribute = attribute;
 	}
-
+	
+	@Override
+    public void ApplyToEntity(ProductObject productObject) {
+    	productObject.setProduct_id(this.id);	
+    }
 }

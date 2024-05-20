@@ -56,5 +56,17 @@ public class ShopControl {
 		Shop_manageShopDTO shopDTO = this.shopModel.getShopDTOByUser(productInfors,currentUser);
 		return ShopLibrary.viewSeller_ShopStatistic(shopDTO);
 	}
+	
+	public Map<String,String> displaySeller_ShopProduct(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, 
+			UserObject currentUser){
+		Shop_manageShopDTO shopDTO = this.shopModel.getShopDTOByUser(productInfors,currentUser);
+		return ShopLibrary.viewSeller_ShopProduct(shopDTO);
+	}
+	
+	public Map<String,String> displaySeller_ShopBill(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, 
+			UserObject currentUser){
+		Shop_manageShopDTO shopDTO = this.shopModel.getShopDTOByUser(productInfors,currentUser);
+		return ShopLibrary.viewSeller_ShopProduct(shopDTO);
+	}
 
 }
