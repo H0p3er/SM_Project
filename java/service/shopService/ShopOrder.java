@@ -1,4 +1,4 @@
-package service.productService;
+package service.shopService;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -26,8 +26,8 @@ import utility.Utilities;
 /**
  * Servlet implementation class ProductList
  */
-@WebServlet("/product/order")
-public class ProductOrder extends HttpServlet {
+@WebServlet("/seller/shop/bill")
+public class ShopOrder extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	// Định nghĩa kiểu nội dung xuất về trình khách
@@ -36,7 +36,7 @@ public class ProductOrder extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProductOrder() {
+    public ShopOrder() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -52,12 +52,9 @@ public class ProductOrder extends HttpServlet {
 	private void view(HttpServletRequest request, HttpServletResponse response, UserObject user) throws ServletException, IOException {
 		// Xác định kiểu nội dung xuất về trình khách
 		response.setContentType(CONTENT_TYPE);
-
 		
 		// Thiết lập tập ký tự cần lấy. Việc thiết lập này cần xác định từ đầu
-		request.setCharacterEncoding("utf-8");
-
-		
+		request.setCharacterEncoding("utf-8");	
 		PrintWriter out = response.getWriter();
 		
 		// Tìm bộ quản lý kết nối
@@ -67,16 +64,10 @@ public class ProductOrder extends HttpServlet {
 		if (cp == null) {
 			getServletContext().setAttribute("CPool", pc.getCP());
 		}
-		
-		
-
 		// Trả về kết nối
 		pc.releaseConnection();
 		// Tạo đối tượng thực hiện xuất nội dung
 		request.setAttribute("product-order", "");
-	    
-		
-		
 	}
 
 	/**

@@ -23,7 +23,6 @@ import connection.ConnectionPool;
 import controller.ProductControl;
 import controller.ShopControl;
 import entity.UserObject;
-import jakarta.xml.ws.http.HTTPException;
 import entity.ShopObject;
 
 /**

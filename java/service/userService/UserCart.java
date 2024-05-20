@@ -1,4 +1,4 @@
-package service.productService;
+package service.userService;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -23,8 +23,8 @@ import utility.Utilities;
 /**
  * Servlet implementation class ProductList
  */
-@WebServlet("/product/cart")
-public class ProductCart extends HttpServlet {
+@WebServlet("/user/cart")
+public class UserCart extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	// Định nghĩa kiểu nội dung xuất về trình khách
@@ -33,7 +33,7 @@ public class ProductCart extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProductCart() {
+    public UserCart() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -60,8 +60,6 @@ public class ProductCart extends HttpServlet {
 		if (cp == null) {
 			getServletContext().setAttribute("CPool", pc.getCP());
 		}
-		
-		
 		try {
 			TreeMap<Product_DTO,Integer> product_DTOs = (TreeMap<Product_DTO,Integer>) request.getSession().getAttribute("product-cart");
 			
@@ -126,9 +124,7 @@ public class ProductCart extends HttpServlet {
 			System.out.println("post error:"+product_DTOs);
 			request.getSession().setAttribute("product-cart", product_DTOs);
 			
-		}
-
-		
+		}	
 		// Trả về kết nối
 		pc.releaseConnection();
 	}

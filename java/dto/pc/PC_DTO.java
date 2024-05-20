@@ -18,6 +18,10 @@ public class PC_DTO implements PCDTO{
 		
 	}
 
+	public PC_DTO(int id) {
+		this.id = id;
+	}
+	
 	public PC_DTO(int id, String name) {
 		this.id = id;
 		this.name = name;
