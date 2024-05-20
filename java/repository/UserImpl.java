@@ -343,12 +343,13 @@ public class UserImpl extends BasicImpl implements User {
 		
 		// Them mot nguoi su dung
 		UserObject new_user = new UserObject();
-		new_user.setUser_name("tester");
-		new_user.setUser_pass("linhuu111");
-		new_user.setUser_fullname("123 ling");
-		new_user.setUser_email("admin1@gmail.com");
-		new_user.setUser_address("Ha Noi");
-		new_user.setUser_phone("1231231313");
+//		new_user.getUser_id(6);
+//		new_user.setUser_name("tester");
+//		new_user.setUser_pass("linhuu111");
+//		new_user.setUser_fullname("123 ling");
+//		new_user.setUser_email("admin1@gmail.com");
+//		new_user.setUser_address("Ha Noi");
+//		new_user.setUser_phone("1231231313");
 
 		boolean resultAdd = u.addUser(new_user);
 		if (resultAdd) {
@@ -376,21 +377,21 @@ public class UserImpl extends BasicImpl implements User {
 		String row;
 		// Duyen va hien thi danh sach nguoi su dung
 		if (rs != null) {
-			try {
-				while (rs.next()) {
-					row = "ID: " + rs.getInt("user_id");
-					row += "\tNAME: " + rs.getString("user_name");
-					row += "\tLOGINED: " + rs.getShort("user_logined");
-
-					System.out.println(row);
-				}
-				rs.close();
-
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		    try {
+		        while (rs.next()) {
+		            int userId = rs.getInt("user_id");
+		            String userName = rs.getString("user_name");
+		            String phone = rs.getString("user_phone"); // Lấy thông tin về số điện thoại
+		            String createdDate = rs.getString("user_created_date"); // Lấy thông tin về ngày tạo
+		            byte gender  = rs.getByte("user_gender");
+		            System.out.println("ID: " + userId + "\tNAME: " + userName + "\tPHONE: " + phone + "\tCREATED DATE: "+ createdDate + "\tGENDER: " + gender);
+		        }
+		        rs.close();
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
 		}
+
 
 		rs = res.get(1);
 		if (rs != null) {

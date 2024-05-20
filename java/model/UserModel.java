@@ -102,7 +102,11 @@ public class UserModel {
 					item.setUser_id(rs.getInt("user_id"));
 					item.setUser_nickname(rs.getString("user_nickname"));
 					item.setUser_fullname(rs.getString("user_fullname"));
+					item.setUser_gender(rs.getByte("user_gender"));
 					item.setUser_email(rs.getString("user_email"));
+					item.setUser_created_date(rs.getString("user_created_date"));
+					item.setUser_phone(rs.getString("user_phone"));
+					item.setUser_notes(rs.getString("user_notes"));
 					item.setUser_address(rs.getString("user_address"));
 					item.setUser_permission(rs.getByte("user_permission"));		
 					

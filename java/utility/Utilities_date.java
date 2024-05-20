@@ -51,6 +51,19 @@ public class Utilities_date {
 		return d;
 	}
 	
-	
+	//chuyển đổi từ yyyy-MM-dd thành dd/MM/yyyy
+	public static String getDateFormat(String date) {
+        try {
+            // Định dạng ngày từ input type="date"
+            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+            // Định dạng ngày mong muốn
+            SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date date1 = inputFormat.parse(date);
+            return outputFormat.format(date1);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 }
