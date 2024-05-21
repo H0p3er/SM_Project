@@ -5,13 +5,20 @@ import java.util.List;
 import org.javatuples.Pair;
 
 import dto.product.Product_manageShopDTO;
+import dto.user.User_manageShopDTO;
 import entity.ShopObject;
+import entity.UserObject;
 
-public class Shop_manageShopDTO {
+public class Shop_manageShopDTO implements Shop_DTO{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8070648219807688134L;
 	private int id;
     private String name;
     private String address;
     private byte status;
+    private User_manageShopDTO user;
     private String website_link;
     private String address_link;
     private String created_date;
@@ -20,8 +27,16 @@ public class Shop_manageShopDTO {
 	private String phone;
     private String email;
 	private Pair<List<Product_manageShopDTO>,Integer> storage;
-	private Shop_statisticDTO statistic;
-	
+	private Shop_statisticDTO statistic;	
+
+	public Shop_manageShopDTO(int id) {
+		this.id = id;
+	}
+
+	public Shop_manageShopDTO() {
+		
+	}
+
 	public int getId() {
 		return this.id;
 	}
@@ -126,7 +141,17 @@ public class Shop_manageShopDTO {
 		this.statistic = statistic;
 	}
 
+
+	public User_manageShopDTO getUser() {
+		return user;
+	}
+
+	public void setUser(User_manageShopDTO user) {
+		this.user = user;
+	}
+	
 	public void applyToEntity(ShopObject shopObject) {
+		shopObject.setShop_id(id);
 		shopObject.setShop_name(this.name);
 		shopObject.setShop_address(address);
 		shopObject.setShop_address_link(address_link);
@@ -134,6 +159,12 @@ public class Shop_manageShopDTO {
 		shopObject.setShop_email(email);
 		shopObject.setShop_notes(notes);
 	}
+
+	@Override
+	public void applyToEntity(ShopObject shopObject, UserObject userObject) {
+		applyToEntity(shopObject);
+	}
+
 
 
 }

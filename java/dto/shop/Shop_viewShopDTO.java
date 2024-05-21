@@ -5,9 +5,14 @@ import org.javatuples.Pair;
 import dto.product.Product_viewShopDTO;
 import dto.user.User_viewShopDTO;
 import entity.ShopObject;
+import entity.UserObject;
 
-public class Shop_viewShopDTO {
-    private int id;
+public class Shop_viewShopDTO implements Shop_DTO{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -375565371012405015L;
+	private int id;
     private String name;
     private String address;
     private byte status;
@@ -127,12 +132,19 @@ public class Shop_viewShopDTO {
 		this.user = user;
 	}
 
+	@Override
 	public void applyToEntity(ShopObject shopObject) {
 		shopObject.setShop_name(this.name);
 		shopObject.setShop_address(address);
 		shopObject.setShop_address_link(address_link);
 		shopObject.setShop_images(images);
 		shopObject.setShop_email(images);
+	}
+
+	@Override
+	public void applyToEntity(ShopObject shopObject, UserObject userObject) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

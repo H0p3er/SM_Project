@@ -3,20 +3,32 @@ package dto.user;
 import entity.UserObject;
 
 public class User_viewShopDTO implements User_DTO{
-    private String user_fullname;
-    private String user_images;
+	private int id;
+    private String fullname;
+    private String images;
     
-	public String getUser_fullname() {
-		return user_fullname;
+	public int getId() {
+		return id;
 	}
-	public void setUser_fullname(String user_fullname) {
-		this.user_fullname = user_fullname;
+
+	public void setId(int id) {
+		this.id = id;
 	}
-	public String getUser_images() {
-		return user_images;
+
+	public String getFullname() {
+		return fullname;
 	}
-	public void setUser_images(String user_images) {
-		this.user_images = user_images;
+
+	public void setFullname(String fullname) {
+		this.fullname = fullname;
+	}
+
+	public String getImages() {
+		return images;
+	}
+
+	public void setImages(String images) {
+		this.images = images;
 	}
 	
 	@Override

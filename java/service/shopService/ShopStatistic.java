@@ -51,8 +51,8 @@ public class ShopStatistic extends HttpServlet {
 		if (user!=null) {
 			view(request, response, user);
 		} else {
-			response.sendError(HttpServletResponse.SC_NON_AUTHORITATIVE_INFORMATION);
 			response.sendRedirect("/home/homepage");
+//			response.sendError(HttpServletResponse.SC_NON_AUTHORITATIVE_INFORMATION);
 		}
 		
 	}

@@ -19,6 +19,8 @@ import dto.pc.PC_manageShopDTO;
 import dto.product.*;
 import dto.productAttribute.Product_AttributeDTO;
 import dto.shop.Shop_DTO;
+import dto.shop.Shop_manageShopDTO;
+import dto.shop.Shop_viewProductDTO;
 import repository.*;
 import entity.ProductObject;
 import entity.ShopObject;
@@ -280,7 +282,7 @@ public class ProductModel {
 			item.setImages(rs.getString("product_images"));
 			item.setNotes(rs.getString("product_notes"));
 			item.setLast_modified(rs.getString("product_last_modified"));
-			item.setShop(new Shop_DTO(rs.getInt("product_shop_id")));
+			item.setShop(new Shop_manageShopDTO(rs.getInt("product_shop_id")));
 			item.setQuantity(rs.getInt("product_quantity"));		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

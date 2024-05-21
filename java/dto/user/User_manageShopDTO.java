@@ -2,7 +2,7 @@ package dto.user;
 
 import entity.UserObject;
 
-public class User_viewCustomerDTO implements User_DTO{
+public class User_manageShopDTO implements User_DTO{
 	private int id;
     private String fullname;
     private String images;
@@ -30,7 +30,7 @@ public class User_viewCustomerDTO implements User_DTO{
 	public void setImages(String images) {
 		this.images = images;
 	}
-
+	
 	@Override
 	public void ApplyToEntity(UserObject entity) {
 		// TODO Auto-generated method stub

@@ -91,7 +91,7 @@ public class ShopImpl extends BasicImpl implements Shop {
 	
 	private static String editShopSql(SHOP_EDIT_TYPE et) {			
 		StringBuilder sql = new StringBuilder();
-		sql.append("UPDATE tblShop SET ");
+		sql.append("UPDATE tblshop SET ");
 		switch (et) {
 			case GENERAL:
 				sql.append("shop_name=?, shop_address=?,   ");
@@ -118,7 +118,7 @@ public class ShopImpl extends BasicImpl implements Shop {
 		
 		//Bien dich
 		try {
-			PreparedStatement pre = this.con.prepareStatement(this.editShopSql(et));
+			PreparedStatement pre = this.con.prepareStatement(editShopSql(et));
 			switch(et) {
 				case GENERAL:
 					pre.setString(1, shopObject.getShop_name());

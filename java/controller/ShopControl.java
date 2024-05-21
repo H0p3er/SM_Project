@@ -7,6 +7,7 @@ import org.javatuples.*;
 import connection.*;
 import constant.SHOP_EDIT_TYPE;
 import dto.product.Product_DTO;
+import dto.shop.Shop_DTO;
 import dto.shop.Shop_manageShopDTO;
 import dto.shop.Shop_statisticDTO;
 import dto.shop.Shop_viewShopDTO;
@@ -33,16 +34,16 @@ public class ShopControl {
 	}
 
 	
-	public boolean addShop(Shop_viewShopDTO shopDTO, UserObject currentUser) {
-		return this.shopModel.addShop(shopDTO, currentUser);		
+	public boolean addShop(Shop_DTO shop_DTO) {		
+		return this.shopModel.addShop(shop_DTO);		
 	}
 	
-	public boolean editShop(Shop_viewShopDTO shopDTO, SHOP_EDIT_TYPE et, UserObject currentUser) {
-		return this.shopModel.editShop(shopDTO, et, currentUser);
+	public boolean editShop(Shop_DTO shop_DTO, SHOP_EDIT_TYPE et) {
+		return this.shopModel.editShop(shop_DTO, et);
 	}
 	
-	public boolean delShop(Shop_viewShopDTO wItem, UserObject currentUser) {
-		return this.shopModel.delShop(wItem, currentUser);
+	public boolean delShop(Shop_DTO shop_DTO) {
+		return this.shopModel.delShop(shop_DTO);
 	}
 
 	
@@ -67,6 +68,12 @@ public class ShopControl {
 			UserObject currentUser){
 		Shop_manageShopDTO shopDTO = this.shopModel.getShopDTOByUser(productInfors,currentUser);
 		return ShopLibrary.viewSeller_ShopProduct(shopDTO);
+	}
+	
+	public Map<String,String> displaySeller_ShopProfile(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, 
+			UserObject currentUser){
+		Shop_manageShopDTO shop_manageShopDTO = this.shopModel.getShopDTOByUser(productInfors,currentUser);
+		return ShopLibrary.viewSeller_ShopProfile(shop_manageShopDTO);
 	}
 
 }

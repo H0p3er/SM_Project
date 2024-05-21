@@ -38,8 +38,7 @@
                 <li class="ms-lg-5 col-8">
                 <% String uri = request.getRequestURI(); 
                   if (uri.equals("/home/main/guest/login.jsp") || uri.equals("/home/main/guest/register.jsp"))
-                  {
-                	  
+                  {          	  
                   } else
                   {
                     out.append("<form action=\"/home/product/search\" method=\"get\" id=\"search-form\">");
