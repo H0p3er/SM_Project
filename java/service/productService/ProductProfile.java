@@ -68,7 +68,7 @@ public class ProductProfile extends HttpServlet {
 		// Lấy từ khóa tìm kiếm
 		int id = Utilities.getIntParam(request, "id");
 
-		Map<String,String> viewProduct= pc.getProductProfile(id);
+		Map<String,String> viewProduct= pc.viewProductProfile(id);
 
 		// Trả về kết nối
 		pc.releaseConnection();

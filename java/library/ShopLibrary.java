@@ -26,8 +26,7 @@ public class ShopLibrary {
 		
 		tmp.append("<li>Tổng sản phẩm <span>185</span></li>");
 		tmp.append("<li>Ngày tham gia <span>"+shopDTO.getCreated_date()+"</span></li>");
-		tmp.append("<li>Khu vực <span>Hanoi</span></li>");
-		tmp.append("<li>Địa chỉ <span>Yes</span></li>");
+		tmp.append("<li>Địa chỉ <span>"+shopDTO.getAddress()+"</span></li>");
 		tmp.append("<li>Điện thoại <span>"+shopDTO.getPhone()+"</span></li>");
 		tmp.append("<li>Email <span>"+shopDTO.getEmail()+"</span></li>");
 		view.put("shop-attribute",tmp.toString());
@@ -124,8 +123,7 @@ public class ShopLibrary {
 	
 	public static Map<String,String> viewSeller_ShopProfile(Shop_manageShopDTO shop_manageShopDTO){
 		Map<String,String> view = new HashMap<String,String>();		
-		StringBuilder tmp = new StringBuilder();
-
+		
 		view.put("shop-id", ""+shop_manageShopDTO.getId()+"");
 		
 		view.put("shop-images", shop_manageShopDTO.getImages());

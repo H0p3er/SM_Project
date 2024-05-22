@@ -110,6 +110,7 @@ public class Product_DTO implements ProductDTO<Product_AttributeDTO>, Comparable
     	productObject.setProduct_created_date(this.created_date); 	
     	productObject.setProduct_pc_id(this.pc.getId());
     }
+	
 	public Product_AttributeDTO getAttribute() {
 		return attribute;
 	}

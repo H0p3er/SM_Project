@@ -11,6 +11,12 @@ public class Shop_viewProductDTO implements Shop_DTO{
 	private int id;
 	private String name;
 	private String images;
+	
+	
+	public Shop_viewProductDTO(int id) {
+		this.id = id;
+	}
+	
 	public int getId() {
 		return id;
 	}
