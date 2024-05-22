@@ -7,6 +7,7 @@ import org.javatuples.*;
 import connection.*;
 import constant.SHOP_EDIT_TYPE;
 import dto.product.Product_DTO;
+import dto.product.Product_manageShopDTO;
 import dto.shop.Shop_DTO;
 import dto.shop.Shop_manageShopDTO;
 import dto.shop.Shop_statisticDTO;

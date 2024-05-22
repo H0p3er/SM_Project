@@ -80,7 +80,7 @@ public class Home extends HttpServlet {
 
 		Map<String,String> viewProductsList = pc.viewHomeProduct();
 		// Trả về kết nối
-		pc.releaseConnection();
+		pc.releaseCP();
 	    
 	    request.setAttribute("home-page", viewProductsList);
 	    

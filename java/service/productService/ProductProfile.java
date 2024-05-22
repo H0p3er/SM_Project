@@ -71,7 +71,7 @@ public class ProductProfile extends HttpServlet {
 		Map<String,String> viewProduct= pc.viewProductProfile(id);
 
 		// Trả về kết nối
-		pc.releaseConnection();
+		pc.releaseCP();
 		// Tạo đối tượng thực hiện xuất nội dung
 		request.setAttribute("product-profile", viewProduct);
 	    

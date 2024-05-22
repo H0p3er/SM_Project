@@ -40,18 +40,6 @@ if (request.getAttribute("shop-product")!=null){
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">
-                  <img width="120px" src="/home/assets/images/sm.png" alt="">
-                </th>
-                <td><a href="/home/main/seller/shop_products_profile.jsp">MacBook Air 13 inch M1 2020 7-core GPU</a>
-                </td>
-                <td>32000000VND</td>
-                <td>null</td>
-                <td>1</td>
-                <td>$product_pc_name</td>
-              </tr>
-              	<% System.out.println(map.getOrDefault("product-list", "failed")); %>
 				<%= map.getOrDefault("product-list", "") %>
             </tbody>
           </table>
@@ -65,12 +53,14 @@ if (request.getAttribute("shop-product")!=null){
     <div class="modal fade" id="addproductModal" tabindex="-1" aria-labelledby="addproductModal" aria-hidden="true">
       <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
+         <form method="post" action="/home/seller/shop/product">
+            <input name="method" value="POST" hidden />
+            <input name="shopId" value="<%= map.getOrDefault("shop-id", "") %>" hidden />
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="exampleModalLabel">Thêm sản phẩm</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form>
               <div class="row mb-3">
                 <label for="productImg" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                 <div class="col-md-8 col-lg-9">
@@ -109,7 +99,7 @@ if (request.getAttribute("shop-product")!=null){
                 <label for="productPC" class="col-md-4 col-lg-3 col-form-label">Loại sản phẩm</label>
                 <div class="col-md-8 col-lg-9">
                   <select name="productCategory" id="productSelect" class="form-select">
-                    <option value="" selected disabled hidden>Choose here...</option>
+                    <option value="16" selected disabled hidden>Choose here...</option>
                     <option value="2">Bàn phím</option>
                     <option value="3">Chuột</option>
                     <option value="7">CPU</option>
@@ -138,12 +128,12 @@ if (request.getAttribute("shop-product")!=null){
                   <textarea name="about" class="form-control" id="about"
                     style="height: 100px">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</textarea>
                 </div>
-              </div>
-            </form><!-- End Profile Edit Form -->
+              </div>      
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary">Lưu</button>
+            <button type="submit" class="btn btn-primary">Lưu</button>
           </div>
+           </form><!-- End Profile Edit Form -->
         </div>
       </div>
     </div>

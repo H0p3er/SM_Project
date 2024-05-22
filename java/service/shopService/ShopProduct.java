@@ -34,6 +34,7 @@ import dto.product.Product_DTO;
 import dto.product.Product_addProductDTO;
 import dto.productAttribute.LaptopDTO;
 import dto.productAttribute.Product_AttributeDTO;
+import dto.shop.Shop_addProductDTO;
 import entity.UserObject;
 import utility.Utilities;
 import utility.Utilities_data_type;
@@ -64,7 +65,7 @@ public class ShopProduct extends HttpServlet {
 			view(request, response, user);
 		} else {
 			response.sendRedirect("/home/homepage");
-			response.sendError(HttpServletResponse.SC_NON_AUTHORITATIVE_INFORMATION);
+//			response.sendError(HttpServletResponse.SC_NON_AUTHORITATIVE_INFORMATION);
 		}
 		
 	}
@@ -132,10 +133,12 @@ public class ShopProduct extends HttpServlet {
 		if(name != null && !name.isBlank()) {	
 			ProductDTO<Product_AttributeDTO> product_DTO = new Product_addProductDTO();
 			((Product_addProductDTO) product_DTO).setName(name);
-			((Product_addProductDTO) product_DTO).setPc(new PC_addProductDTO(utility.Utilities.getIntParam(request, "productPc")));
+			((Product_addProductDTO) product_DTO).setPc(new PC_addProductDTO(utility.Utilities.getIntParam(request, "productCategory")));
 			((Product_addProductDTO) product_DTO).setQuantity(utility.Utilities.getIntParam(request, "productQuantity"));
+			((Product_addProductDTO) product_DTO).setPrice(utility.Utilities.getDoubleParam(request, "productPrice"));
 			((Product_addProductDTO) product_DTO).setCreated_date(Utilities_date.getCurrentDate());
 			((Product_addProductDTO) product_DTO).setNotes(utility.Utilities.encode(request.getParameter("productNote")));	
+			((Product_addProductDTO) product_DTO).setShop(new Shop_addProductDTO(utility.Utilities.getIntParam(request, "shopId")));
 			switch (Utilities_data_type.getProductAttribute(((Product_addProductDTO) product_DTO).getPc())) {
 			case CASE:
 				break;
@@ -250,7 +253,7 @@ public class ShopProduct extends HttpServlet {
 			} else {
 				result = pc.editProduct(sProduct, PRODUCT_EDIT_TYPE.DELETED);
 			}
-			pc.releaseConnection();
+			pc.releaseCP();
 			if(result) {
 //					status = "succ";
 				response.sendRedirect(url);

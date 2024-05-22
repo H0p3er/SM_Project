@@ -72,7 +72,7 @@ public class ProductImport extends HttpServlet {
 		}); 
 		
 		fileContent.close();
-		pc.releaseConnection();	 
+		pc.releaseCP();	 
 		response.sendRedirect("/home/product");  
 	}
 

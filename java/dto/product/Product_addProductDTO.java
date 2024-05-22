@@ -139,8 +139,13 @@ public class Product_addProductDTO implements ProductDTO<Product_AttributeDTO>, 
 
 	@Override
 	public void ApplyToEntity(ProductObject productObject) {
-		// TODO Auto-generated method stub
-		
+		productObject.setProduct_id(this.id);
+		productObject.setProduct_name(this.name);
+    	productObject.setProduct_created_date(this.created_date); 	
+    	productObject.setProduct_pc_id(this.pc.getId());
+    	productObject.setProduct_notes(this.notes);
+    	productObject.setProduct_shop_id(this.shop.getId());
+    	productObject.setProduct_quantity(this.quantity);
 	}
 
 	

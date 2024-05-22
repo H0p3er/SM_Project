@@ -1,8 +1,15 @@
-package service.productService;
+package service.shopService;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
+import java.util.TreeMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import org.javatuples.Quintet;
 
@@ -26,18 +34,21 @@ import dto.product.Product_DTO;
 import dto.product.Product_addProductDTO;
 import dto.productAttribute.LaptopDTO;
 import dto.productAttribute.Product_AttributeDTO;
+import dto.shop.Shop_addProductDTO;
 import entity.UserObject;
+import utility.Utilities;
+import utility.Utilities_data_type;
 import utility.Utilities_date;
 
 
-@WebServlet("/product/edit")
-public class ProductEdit extends HttpServlet {
+@WebServlet("/seller/shop/product/profile")
+public class ShopProductProfile extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String CONTENT_TYPE = "application/json; charset=utf-8";
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public ProductEdit() {
+	public ShopProductProfile() {
 		super();
 	}
 
@@ -54,7 +65,7 @@ public class ProductEdit extends HttpServlet {
 			view(request, response, user);
 		} else {
 			response.sendRedirect("/home/homepage");
-			response.sendError(HttpServletResponse.SC_NON_AUTHORITATIVE_INFORMATION);
+//			response.sendError(HttpServletResponse.SC_NON_AUTHORITATIVE_INFORMATION);
 		}
 		
 	}
@@ -63,24 +74,15 @@ public class ProductEdit extends HttpServlet {
 			throws ServletException, IOException {	
 		response.setContentType(CONTENT_TYPE);		
 		ConnectionPool connectionPool= (ConnectionPool) getServletContext().getAttribute("CPool");	
-		ShopControl shopControl = new ShopControl(connectionPool);	
+		ProductControl productControl = new ProductControl(connectionPool);	
 		if (connectionPool == null) {
-			getServletContext().setAttribute("CPool", shopControl.getCP());
+			getServletContext().setAttribute("CPool", productControl.getCP());
 		} 
-		Quintet<Short, Byte,  Map<String,String>,  Map<String,String>,  Map<String,String>> productInfors = 
-		new Quintet<>
-		((short) 0,(byte) 0, 
-				utility.Utilities.getMapParam(request, null), 
-				utility.Utilities.getMapParam(request, null),
-				utility.Utilities.getMapParam(request, null));
 		
-		
-		
-		Map<String,String> data = shopControl.displaySeller_ShopProduct(productInfors,user);	
-		shopControl.releaseCP();
-		System.out.print(data);
-		request.setAttribute("shop-product", data);	    
-	    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/main/seller/shop_products.jsp");
+		Map<String,String> data = productControl.viewSeller_ShopProductProfle(utility.Utilities.getIntParam(request, "id"));	
+		productControl.releaseCP();
+		request.setAttribute("shop-product-profile", data);	    
+	    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/main/seller/shop_products_profile.jsp");
 		// Tạo đối tượng thực hiện xuất nội dung
 	    requestDispatcher.forward(request, response);		
 	}
@@ -93,7 +95,23 @@ public class ProductEdit extends HttpServlet {
 			throws ServletException, IOException {
 		UserObject user = (UserObject) request.getSession().getAttribute("userLogined");
 		if (user!=null) {
-			add(request, response, user);
+			switch (Utilities.getHTTPMethodParam(request)) {
+			case GET:
+				view(request, response, user);
+				break;
+			case POST:
+				add(request, response, user);
+				break;
+			case PUT:
+				update(request, response, user);
+				break;
+			case DELETE:
+				delete(request, response, user);
+				break;
+			default:
+				view(request, response, user);
+				break;
+			}
 		} else {
 			response.sendRedirect("/home/homepage");
 //			response.sendError(HttpServletResponse.SC_NON_AUTHORITATIVE_INFORMATION);
@@ -106,27 +124,47 @@ public class ProductEdit extends HttpServlet {
 		if(name != null && !name.isBlank()) {	
 			ProductDTO<Product_AttributeDTO> product_DTO = new Product_addProductDTO();
 			((Product_addProductDTO) product_DTO).setName(name);
-			((Product_addProductDTO) product_DTO).setPc(new PC_addProductDTO(utility.Utilities.getIntParam(request, "productPc")));
+			((Product_addProductDTO) product_DTO).setPc(new PC_addProductDTO(utility.Utilities.getIntParam(request, "productCategory")));
 			((Product_addProductDTO) product_DTO).setQuantity(utility.Utilities.getIntParam(request, "productQuantity"));
+			((Product_addProductDTO) product_DTO).setPrice(utility.Utilities.getDoubleParam(request, "productPrice"));
 			((Product_addProductDTO) product_DTO).setCreated_date(Utilities_date.getCurrentDate());
-			((Product_addProductDTO) product_DTO).setNotes(utility.Utilities.encode(request.getParameter("productNote")));
-			
-			switch (((Product_addProductDTO) product_DTO).getPc().getId()) {
-				case 1:
-					LaptopDTO laptopDTO = new LaptopDTO();
-					((Product_addProductDTO) product_DTO).setAttribute(laptopDTO);
-					break;
-				case 2:
-					break;
-					
-				case 3:
-					break;
-				
-				case 4:
-					break;
-				
-				case 5:
-					break;
+			((Product_addProductDTO) product_DTO).setNotes(utility.Utilities.encode(request.getParameter("productNote")));	
+			((Product_addProductDTO) product_DTO).setShop(new Shop_addProductDTO(utility.Utilities.getIntParam(request, "shopId")));
+			switch (Utilities_data_type.getProductAttribute(((Product_addProductDTO) product_DTO).getPc())) {
+			case CASE:
+				break;
+			case COOLING:
+				break;
+			case CPU:
+				break;
+			case DESKTOP:
+				break;
+			case GRAPHIC_CARD:
+				break;
+			case HEADPHONE:
+				break;
+			case KEYBOARD:
+				break;
+			case LAPTOP:
+				break;
+			case MAINBOARD:
+				break;
+			case MONITOR:
+				break;
+			case MOUSE:
+				break;
+			case OTHER:
+				break;
+			case POWER_SUPPLY:
+				break;
+			case RAM:
+				break;
+			case STORAGE:
+				break;
+			case USB:
+				break;
+			default:
+				break;				
 			}
 			
 			// Lưu thay đổi vào csdl
@@ -143,17 +181,6 @@ public class ProductEdit extends HttpServlet {
 			} else {
 				response.sendRedirect("/home/seller/shop/product?type=add&status=err");
 			}
-		}
-	}
-	
-	protected void doPut(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		UserObject user = (UserObject)request.getSession().getAttribute("userLogined");
-		if (user!=null) {
-			update(request, response, user);
-		} else {
-			response.sendRedirect("/home/homepage");
-//			response.sendError(HttpServletResponse.SC_NON_AUTHORITATIVE_INFORMATION);
 		}
 	}
 	
@@ -186,17 +213,6 @@ public class ProductEdit extends HttpServlet {
 		}
 	}	
 	
-	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		UserObject user = (UserObject)request.getSession().getAttribute("userLogined");
-		if (user!=null) {
-			delete(request, response, user);
-		} else {
-			response.sendRedirect("/home/homepage");
-			response.sendError(HttpServletResponse.SC_NON_AUTHORITATIVE_INFORMATION);
-		}
-			
-	}
 	
 	private void delete(HttpServletRequest request, HttpServletResponse response, UserObject user) throws ServletException, IOException {
 		// TODO Auto-generated method stub

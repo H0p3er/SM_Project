@@ -103,7 +103,7 @@ public class ProductSearch extends HttpServlet {
 				pc.viewSearchProduct(infors, request.getRequestURI());
 
 		// Trả về kết nối
-		pc.releaseConnection();
+		pc.releaseCP();
 		
 		request.setAttribute("product-search", viewProductsList);
 	    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/main/product/search.jsp");

@@ -68,7 +68,6 @@ public class UserCart extends HttpServlet {
 				product_DTOs = new TreeMap<Product_viewProductDTO,Integer>();
 			}
 			request.setAttribute("product-cart", pc.viewCart(product_DTOs));
-			System.out.println("get:"+product_DTOs);
 		} catch (ClassCastException e) {
 			TreeMap<Product_viewProductDTO,Integer> product_DTOs = new TreeMap<Product_viewProductDTO,Integer>();
 			request.setAttribute("product-cart", pc.viewCart(product_DTOs));
@@ -107,14 +106,14 @@ public class UserCart extends HttpServlet {
 			if (product_DTOs==null) {
 				product_DTOs = new TreeMap<Product_viewProductDTO,Integer>();
 				product_DTOs.put(product_DTO,1);
-				System.out.println("post new from null:"+product_DTOs);
+//				System.out.println("post new from null:"+product_DTOs);
 			} else {
 				if (product_DTOs.containsKey(product_DTO)) {		
 					product_DTOs.replace(product_DTO,product_DTOs.get(product_DTO)+1);
-					System.out.println("post update:"+product_DTOs);
+//					System.out.println("post update:"+product_DTOs);
 				} else {
 					product_DTOs.put(product_DTO,1);
-					System.out.println("post new:"+product_DTOs);
+//					System.out.println("post new:"+product_DTOs);
 				}
 				
 			}	
@@ -122,11 +121,11 @@ public class UserCart extends HttpServlet {
 		} catch (ClassCastException e) {
 			TreeMap<Product_viewProductDTO,Integer> product_DTOs = new TreeMap<Product_viewProductDTO,Integer>();
 			product_DTOs.put(product_DTO,1);
-			System.out.println("post error:"+product_DTOs);
+//			System.out.println("post error:"+product_DTOs);
 			request.getSession().setAttribute("product-cart", product_DTOs);
 		}	
 		// Trả về kết nối
-		pc.releaseConnection();
+		pc.releaseCP();
 	}
 
 }

@@ -71,7 +71,7 @@ public class ProductExport extends HttpServlet {
 //
 //		Pair<ArrayList<ProductObject>, Integer> datas = pc.getProducts(infors);
 
-		pc.releaseConnection();
+		pc.releaseCP();
 
 		response.setContentType("utf-8");
 		response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");

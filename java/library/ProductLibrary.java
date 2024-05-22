@@ -37,6 +37,7 @@ import dto.productAttribute.Product_AttributeDTO;
 import dto.productAttribute.RamDTO;
 import dto.productAttribute.StorageDTO;
 import dto.productAttribute.UsbDTO;
+import dto.shop.Shop_manageShopDTO;
 import dto.shop.Shop_viewProductDTO;
 import repository.Product;
 import utility.Utilities;
@@ -553,5 +554,22 @@ public class ProductLibrary {
 			break;	
 		}
 		return tmp.toString();
+	}
+	
+	
+	public static Map<String,String> viewSeller_ShopProductProfile(
+			Product_manageShopDTO product_manageShopDTO){
+		Map<String,String> view = new HashMap<String,String>();
+		
+		view.put("product-name", product_manageShopDTO.getName());
+		
+		view.put("product-price", ""+product_manageShopDTO.getPrice());
+		
+		view.put("product-category", ""+product_manageShopDTO.getPc().getName());
+		
+		view.put("product-notes", product_manageShopDTO.getNotes());
+		
+		view.put("product-quantity", product_manageShopDTO.getQuantity());
+		return view; 
 	}
 }

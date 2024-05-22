@@ -131,7 +131,6 @@ public class ShopModel {
 				e.printStackTrace();
 			}
 		}
-		
 		shop_ShopManagerDTO.applyToEntity(shopObject, currentUser);
 		Triplet<List<Product_manageShopDTO>,Integer, List<Pair<Product_manageShopDTO,Double>>> productResultSets = this.product.getProduct_manageShopDTO(productInfors,shopObject);
 		shop_ShopManagerDTO.setStorage(new Pair<>(productResultSets.getValue0(),productResultSets.getValue1()));

@@ -100,15 +100,13 @@ public class ShopLibrary {
 //			return o1.getName().compareTo(o2.getName());
 //		});
 	}
-	
-	
-	
-	private static void viewSeller_manageShopProduct(Shop_manageShopDTO UserShopDTO, Map<String,String> view){
+
+	private static void viewSeller_manageShopProduct(Shop_manageShopDTO shop_manageShopDTO, Map<String,String> view){
 		StringBuilder tmp = new StringBuilder();
-		UserShopDTO.getStorage().getValue0().forEach(product->{
+		shop_manageShopDTO.getStorage().getValue0().forEach(product->{
 			tmp.append("<tr>");
 			tmp.append("<th scope=\"row\"><img width=\"120px\" src=\""+product.getImages()+"\" alt=\"\"></th>");
-			tmp.append("<td><a href=\"/home/main/seller/product/profile?id="+product.getId()+"\">"+product.getName()+"</a></td>");
+			tmp.append("<td><a href=\"/home/seller/shop/product/profile?id="+product.getId()+"\">"+product.getName()+"</a></td>");
 			tmp.append("<td>"+utility.Utilities_currency.toVND(product.getPrice())+"</td>");
 			tmp.append("<td>"+product.getNotes()+"</td>");
 			tmp.append("<td>"+product.getQuantity()+"</td>");
@@ -116,9 +114,9 @@ public class ShopLibrary {
 			tmp.append("</tr>");
 			
 		});
-		
-
 		view.put("product-list",tmp.toString());
+		
+		view.put("shop-id",""+shop_manageShopDTO.getId());
 	}
 	
 	public static Map<String,String> viewSeller_ShopProfile(Shop_manageShopDTO shop_manageShopDTO){
@@ -149,5 +147,4 @@ public class ShopLibrary {
 		System.out.print(view);
 		return view;
 	}
-
 }
