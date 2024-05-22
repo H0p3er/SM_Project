@@ -2,6 +2,8 @@ package utility;
 
 import java.util.*;
 import javax.servlet.*;
+
+import constant.HTTP_REQUEST;
 import net.htmlparser.jericho.*;
 
 public class Utilities {
@@ -47,6 +49,22 @@ public class Utilities {
 	
 	public static String getStringParam(ServletRequest request, String name) {
 		return (Utilities_text.checkValidString(request, name))? request.getParameter(name).trim() : "";
+	}
+	
+	public static HTTP_REQUEST getHTTPMethodParam(ServletRequest request) {
+		String method = getStringParam(request, "method");
+		switch (method) {
+		case "GET":
+			return HTTP_REQUEST.GET;
+		case "POST":
+			return HTTP_REQUEST.POST;
+		case "PUT":
+			return HTTP_REQUEST.PUT;
+		case "DELETE":
+			return HTTP_REQUEST.DELETE;
+		default:
+			return HTTP_REQUEST.GET;
+		}
 	}
 	
 	

@@ -15,10 +15,17 @@ import connection.ConnectionPool;
 import connection.ConnectionPoolImpl;
 import constant.PRODUCT_EDIT_TYPE;
 import dto.pc.PC_DTO;
+import dto.pc.PC_addProductDTO;
+import dto.pc.PC_manageBillDTO;
 import dto.pc.PC_manageShopDTO;
+import dto.pc.PC_viewBillDTO;
+import dto.pc.PC_viewProductDTO;
+import dto.pc.PC_viewShopDTO;
 import dto.product.*;
 import dto.productAttribute.Product_AttributeDTO;
 import dto.shop.Shop_DTO;
+import dto.shop.Shop_manageShopDTO;
+import dto.shop.Shop_viewProductDTO;
 import repository.*;
 import entity.ProductObject;
 import entity.ShopObject;
@@ -60,8 +67,8 @@ public class ProductModel {
 		return this.product.delProduct(productObject);
 	}
 
-	public Product_DTO getProduct_DTOById(int id) {
-		Product_DTO item = new Product_DTO();
+	public Product_viewProductDTO getProduct_DTOById(int id) {
+		Product_viewProductDTO item = new Product_viewProductDTO();
 		ResultSet rs = this.product.getProductById(id);
 		if (rs != null) {
 			try {
@@ -76,13 +83,13 @@ public class ProductModel {
 		return item;
 	}
 	
-	public Pair<ArrayList<Product_DTO>, Integer> getProduct_DTOs(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> infors) {	
+	public Pair<ArrayList<Product_viewProductDTO>, Integer> getProduct_DTOs(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> infors) {	
 		short page = infors.getValue0();
 		byte productPerPage = infors.getValue1();	
 		Map<String,String> multiField = infors.getValue2();
 		Map<String,String> multiCondition = infors.getValue3();
 		Map<String,String> multiSort = infors.getValue4();		
-		ArrayList<Product_DTO> items = new ArrayList<>();
+		ArrayList<Product_viewProductDTO> items = new ArrayList<>();
 		int at = (page - 1) * productPerPage;
 		ArrayList<ResultSet> res = this.product.getProducts(at, productPerPage, multiField, multiCondition, multiSort);
 		ResultSet rs = res.get(0);
@@ -90,7 +97,7 @@ public class ProductModel {
 		if (rs != null) {
 			try {
 				while (rs.next()) {				
-					Product_DTO item = new Product_DTO();
+					Product_viewProductDTO item = new Product_viewProductDTO();
 					setProductAttribute(item, rs);
 					items.add(item);
 				}
@@ -104,14 +111,14 @@ public class ProductModel {
 		return new Pair<>(items, product_count);
 	}
 	
-	public Pair<ArrayList<Product_DTO>, ArrayList<Product_DTO>> getProduct_DTOs() {		
-		ArrayList<Product_DTO> items1 = new ArrayList<>();
+	public Pair<ArrayList<Product_viewProductDTO>, ArrayList<Product_viewProductDTO>> getProduct_DTOs() {		
+		ArrayList<Product_viewProductDTO> items1 = new ArrayList<>();
 		ArrayList<ResultSet> res = this.product.getProducts();
 		ResultSet rs = res.get(0);
 		if (rs != null) {
 			try {
 				while (rs.next()) {				
-					Product_DTO item = new Product_DTO();
+					Product_viewProductDTO item = new Product_viewProductDTO();
 					setProductAttribute(item, rs);
 					items1.add(item);
 				}
@@ -120,12 +127,12 @@ public class ProductModel {
 				e.printStackTrace();
 			}
 		}		
-		ArrayList<Product_DTO> items2 = new ArrayList<>();
+		ArrayList<Product_viewProductDTO> items2 = new ArrayList<>();
 		rs = res.get(1);
 		if (rs != null) {
 			try {
 				while (rs.next()) {	
-					Product_DTO item = new Product_DTO();
+					Product_viewProductDTO item = new Product_viewProductDTO();
 					setProductAttribute(item, rs);	
 					items2.add(item);
 				}
@@ -225,68 +232,198 @@ public class ProductModel {
 		return most_sold_product_current_month;
 	}
 	
-	private void setProductAttribute(Product_DTO item, ResultSet rs) {
+//	private void setProductAttribute(Product_DTO item, ResultSet rs) {
+//		try {	
+////			Product_DTO item = new Product_DTO<Product_AttributeDTO>();
+//			item.setId(rs.getInt("product_id"));
+//			item.setPc(new PC_DTO(rs.getInt("product_pc_id"), rs.getString("pc_name")));
+//			switch (rs.getInt("product_pc_id")) {
+//			case 1:
+//				this.pc.getMonitorDTO(item);	
+//				break;						
+//			case 2:
+//				this.pc.getKeyboardDTO(item);	
+//				break;
+//			case 3:
+//				this.pc.getMiceDTO(item);	
+//				break;					
+//			case 4:
+//				this.pc.getHeadphoneSpeakerDTO(item);	
+//				break;						
+//			case 5:
+//				this.pc.getLaptopDTO(item);
+//				break;						
+//			case 6:
+//				this.pc.getDesktopDTO(item);		
+//				break;						
+//			case 7:	
+//				this.pc.getCPUDTO(item);
+//				break;						
+//			case 8:
+//				this.pc.getMotherboardDTO(item);
+//				break;						
+//			case 9:	
+//				this.pc.getRamDTO(item);					
+//				break;		
+//			case 10:
+//				this.pc.getStorageDTO(item);	
+//				break;				
+//			case 11:
+//				this.pc.getGraphicsCardDTO(item);
+//				break;						
+//			case 12:
+//				this.pc.getPowerSuppyDTO(item);		
+//				break;						
+//			case 13:
+//				this.pc.getCaseDTO(item);	
+//				break;				
+//			case 14:
+//				this.pc.getCoolingDTO(item);				
+//				break;	
+//			}
+//			item.setName(Utilities.decode(rs.getString("product_name")));
+//			item.setStatus(rs.getByte("product_status"));
+//			item.setPrice(rs.getDouble("product_price"));
+//			item.setImages(rs.getString("product_images"));
+//			item.setNotes(rs.getString("product_notes"));
+//			item.setLast_modified(rs.getString("product_last_modified"));
+//			item.setShop(new Shop_manageShopDTO(rs.getInt("product_shop_id")));
+//			item.setQuantity(rs.getInt("product_quantity"));		
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
+	
+	private void setProductAttribute(ProductDTO<Product_AttributeDTO> product_DTO, ResultSet rs) {
+		
 		try {	
 //			Product_DTO item = new Product_DTO<Product_AttributeDTO>();
-			item.setId(rs.getInt("product_id"));
-			item.setPc(new PC_DTO(rs.getInt("product_pc_id"), rs.getString("pc_name")));
+			
+			if (product_DTO instanceof Product_viewProductDTO) {		
+				((Product_viewProductDTO) product_DTO).setName(Utilities.decode(rs.getString("product_name")));
+				((Product_viewProductDTO) product_DTO).setId(rs.getInt("product_id"));
+				((Product_viewProductDTO) product_DTO).setPc(new PC_viewProductDTO(rs.getInt("product_pc_id"), rs.getString("pc_name")));
+				((Product_viewProductDTO) product_DTO).setStatus(rs.getByte("product_status"));
+				((Product_viewProductDTO) product_DTO).setPrice(rs.getDouble("product_price"));
+				((Product_viewProductDTO) product_DTO).setImages(rs.getString("product_images"));
+				((Product_viewProductDTO) product_DTO).setNotes(rs.getString("product_notes"));
+				((Product_viewProductDTO) product_DTO).setLast_modified(rs.getString("product_last_modified"));
+				((Product_viewProductDTO) product_DTO).setShop(new Shop_viewProductDTO(rs.getInt("product_shop_id")));
+				((Product_viewProductDTO) product_DTO).setQuantity(rs.getInt("product_quantity"));	
+			}
+			
+			if (product_DTO instanceof Product_manageShopDTO) {
+				((Product_manageShopDTO) product_DTO).setName(Utilities.decode(rs.getString("product_name")));
+				((Product_manageShopDTO) product_DTO).setId(rs.getInt("product_id"));
+				((Product_manageShopDTO) product_DTO).setPc(new PC_manageShopDTO(rs.getInt("product_pc_id"), rs.getString("pc_name")));
+				((Product_manageShopDTO) product_DTO).setStatus(rs.getByte("product_status"));
+				((Product_manageShopDTO) product_DTO).setPrice(rs.getDouble("product_price"));
+				((Product_manageShopDTO) product_DTO).setImages(rs.getString("product_images"));
+				((Product_manageShopDTO) product_DTO).setNotes(rs.getString("product_notes"));
+				((Product_manageShopDTO) product_DTO).setLast_modified(rs.getString("product_last_modified"));
+				((Product_manageShopDTO) product_DTO).setQuantity(rs.getInt("product_quantity"));
+			}
+			
+			if (product_DTO instanceof Product_addProductDTO) {
+				((Product_addProductDTO) product_DTO).setName(Utilities.decode(rs.getString("product_name")));
+				((Product_addProductDTO) product_DTO).setId(rs.getInt("product_id"));
+				((Product_addProductDTO) product_DTO).setPc(new PC_addProductDTO(rs.getInt("product_pc_id"), rs.getString("pc_name")));
+				((Product_addProductDTO) product_DTO).setStatus(rs.getByte("product_status"));
+				((Product_addProductDTO) product_DTO).setPrice(rs.getDouble("product_price"));
+				((Product_addProductDTO) product_DTO).setImages(rs.getString("product_images"));
+				((Product_addProductDTO) product_DTO).setNotes(rs.getString("product_notes"));
+				((Product_addProductDTO) product_DTO).setLast_modified(rs.getString("product_last_modified"));
+				((Product_addProductDTO) product_DTO).setQuantity(rs.getInt("product_quantity"));
+			}
+			
+			if (product_DTO instanceof Product_viewShopDTO) {
+				((Product_viewShopDTO) product_DTO).setName(Utilities.decode(rs.getString("product_name")));
+				((Product_viewShopDTO) product_DTO).setId(rs.getInt("product_id"));
+				((Product_viewShopDTO) product_DTO).setPc(new PC_viewShopDTO(rs.getInt("product_pc_id"), rs.getString("pc_name")));
+				((Product_viewShopDTO) product_DTO).setStatus(rs.getByte("product_status"));
+				((Product_viewShopDTO) product_DTO).setPrice(rs.getDouble("product_price"));
+				((Product_viewShopDTO) product_DTO).setImages(rs.getString("product_images"));
+				((Product_viewShopDTO) product_DTO).setNotes(rs.getString("product_notes"));
+				((Product_viewShopDTO) product_DTO).setLast_modified(rs.getString("product_last_modified"));
+				((Product_viewShopDTO) product_DTO).setQuantity(rs.getInt("product_quantity"));
+			}
+			
+			if (product_DTO instanceof Product_manageBillDTO) {
+				((Product_manageBillDTO) product_DTO).setName(Utilities.decode(rs.getString("product_name")));
+				((Product_manageBillDTO) product_DTO).setId(rs.getInt("product_id"));
+				((Product_manageBillDTO) product_DTO).setPc(new PC_manageBillDTO(rs.getInt("product_pc_id"), rs.getString("pc_name")));
+				((Product_manageBillDTO) product_DTO).setStatus(rs.getByte("product_status"));
+				((Product_manageBillDTO) product_DTO).setPrice(rs.getDouble("product_price"));
+				((Product_manageBillDTO) product_DTO).setImages(rs.getString("product_images"));
+				((Product_manageBillDTO) product_DTO).setNotes(rs.getString("product_notes"));
+				((Product_manageBillDTO) product_DTO).setLast_modified(rs.getString("product_last_modified"));
+				((Product_manageBillDTO) product_DTO).setQuantity(rs.getInt("product_quantity"));
+			}
+			
+			if (product_DTO instanceof Product_viewBillDTO) {
+				((Product_viewBillDTO) product_DTO).setName(Utilities.decode(rs.getString("product_name")));
+				((Product_viewBillDTO) product_DTO).setId(rs.getInt("product_id"));
+				((Product_viewBillDTO) product_DTO).setPc(new PC_viewBillDTO(rs.getInt("product_pc_id"), rs.getString("pc_name")));
+				((Product_viewBillDTO) product_DTO).setStatus(rs.getByte("product_status"));
+				((Product_viewBillDTO) product_DTO).setPrice(rs.getDouble("product_price"));
+				((Product_viewBillDTO) product_DTO).setImages(rs.getString("product_images"));
+				((Product_viewBillDTO) product_DTO).setNotes(rs.getString("product_notes"));
+				((Product_viewBillDTO) product_DTO).setLast_modified(rs.getString("product_last_modified"));
+				((Product_viewBillDTO) product_DTO).setQuantity(rs.getInt("product_quantity"));
+			}
+			
 			switch (rs.getInt("product_pc_id")) {
 			case 1:
-				this.pc.getMonitorDTO(item);	
+				this.pc.getMonitorDTO(product_DTO);	
 				break;						
 			case 2:
-				this.pc.getKeyboardDTO(item);	
+				this.pc.getKeyboardDTO(product_DTO);	
 				break;
 			case 3:
-				this.pc.getMiceDTO(item);	
+				this.pc.getMiceDTO(product_DTO);	
 				break;					
 			case 4:
-				this.pc.getHeadphoneSpeakerDTO(item);	
+				this.pc.getHeadphoneSpeakerDTO(product_DTO);	
 				break;						
 			case 5:
-				this.pc.getLaptopDTO(item);
+				this.pc.getLaptopDTO(product_DTO);
 				break;						
 			case 6:
-				this.pc.getDesktopDTO(item);		
+				this.pc.getDesktopDTO(product_DTO);		
 				break;						
 			case 7:	
-				this.pc.getCPUDTO(item);
+				this.pc.getCPUDTO(product_DTO);
 				break;						
 			case 8:
-				this.pc.getMotherboardDTO(item);
+				this.pc.getMotherboardDTO(product_DTO);
 				break;						
 			case 9:	
-				this.pc.getRamDTO(item);					
+				this.pc.getRamDTO(product_DTO);					
 				break;		
 			case 10:
-				this.pc.getStorageDTO(item);	
+				this.pc.getStorageDTO(product_DTO);	
 				break;				
 			case 11:
-				this.pc.getGraphicsCardDTO(item);
+				this.pc.getGraphicsCardDTO(product_DTO);
 				break;						
 			case 12:
-				this.pc.getPowerSuppyDTO(item);		
+				this.pc.getPowerSuppyDTO(product_DTO);		
 				break;						
 			case 13:
-				this.pc.getCaseDTO(item);	
+				this.pc.getCaseDTO(product_DTO);	
 				break;				
 			case 14:
-				this.pc.getCoolingDTO(item);				
+				this.pc.getCoolingDTO(product_DTO);				
 				break;	
 			}
-			item.setName(Utilities.decode(rs.getString("product_name")));
-			item.setStatus(rs.getByte("product_status"));
-			item.setPrice(rs.getDouble("product_price"));
-			item.setImages(rs.getString("product_images"));
-			item.setNotes(rs.getString("product_notes"));
-			item.setLast_modified(rs.getString("product_last_modified"));
-			item.setShop(new Shop_DTO(rs.getInt("product_shop_id")));
-			item.setQuantity(rs.getInt("product_quantity"));		
+	
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+
 	
 
 	private int getProductSize(ResultSet rs) {
@@ -324,7 +461,7 @@ public class ProductModel {
 
 		//Lay tap ban ghi nguoi su dung
 
-		ArrayList<Product_DTO> rs1 = u.getProduct_DTOs(new Quintet<Short, Byte, Map<String, String> ,Map<String, String>, Map<String, String>>((short) 0,(byte) 0, new HashMap<String, String>(), new HashMap<String, String>(), new HashMap<String, String>())).getValue0();
+		ArrayList<Product_viewProductDTO> rs1 = u.getProduct_DTOs(new Quintet<Short, Byte, Map<String, String> ,Map<String, String>, Map<String, String>>((short) 0,(byte) 0, new HashMap<String, String>(), new HashMap<String, String>(), new HashMap<String, String>())).getValue0();
 		String row = null;
 
 		if (rs1!=null) {
@@ -340,7 +477,7 @@ public class ProductModel {
 //				if (product instanceof Product_CoolingDTO) {
 //					System.out.println("object:"+((Product_CoolingDTO) product).getName());
 //				}	
-				System.out.println(((Product_DTO) product).getAttribute());
+				System.out.println(((Product_viewProductDTO) product).getAttribute());
 			});	
 		}
 	}

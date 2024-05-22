@@ -2,18 +2,29 @@ package dto.pc;
 
 import entity.PCObject;
 
-public class PC_viewShopDTO implements PCDTO{
-	 /**
+public class PC_addProductDTO implements PCDTO{
+	
+	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -367846039853487466L;
+	private static final long serialVersionUID = 1545601451621138455L;
 	private int id;
 	private String name;
 
-	
-
-	public PC_viewShopDTO(int id, String name) {
+	public PC_addProductDTO(int id, String name) {
 		this.id = id;
+		this.name = name;
+	}
+
+	public PC_addProductDTO(int id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
 		this.name = name;
 	}
 
@@ -24,20 +35,10 @@ public class PC_viewShopDTO implements PCDTO{
 	public void setId(int id) {
 		this.id = id;
 	}
-	
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	@Override
 	public void ApplyToEntity(PCObject entity) {
 		// TODO Auto-generated method stub
 		
 	}
-
-
 }

@@ -1,8 +1,8 @@
 package dto.product;
 
-import dto.pc.PC_DTO;
+import dto.pc.PC_addProductDTO;
 import dto.productAttribute.Product_AttributeDTO;
-import dto.shop.Shop_DTO;
+import dto.shop.Shop_addProductDTO;
 import entity.ProductObject;
 
 public class Product_addProductDTO implements ProductDTO<Product_AttributeDTO>, Comparable<Product_addProductDTO>{
@@ -21,9 +21,22 @@ public class Product_addProductDTO implements ProductDTO<Product_AttributeDTO>, 
     private String created_date;
     private String last_modified;
     private int quantity;
-    private PC_DTO pc;
-    private Shop_DTO shop;
+    private PC_addProductDTO pc;
+    private Shop_addProductDTO shop;
     private Product_AttributeDTO attribute;
+    
+	public PC_addProductDTO getPc() {
+		return pc;
+	}
+	public void setPc(PC_addProductDTO pc) {
+		this.pc = pc;
+	}
+	public Shop_addProductDTO getShop() {
+		return shop;
+	}
+	public void setShop(Shop_addProductDTO shop) {
+		this.shop = shop;
+	}
 	public int getId() {
 		return id;
 	}
@@ -112,24 +125,6 @@ public class Product_addProductDTO implements ProductDTO<Product_AttributeDTO>, 
 	}
 
 
-	public PC_DTO getPc() {
-		return pc;
-	}
-
-
-	public void setPc(PC_DTO pc) {
-		this.pc = pc;
-	}
-
-
-	public Shop_DTO getShop() {
-		return shop;
-	}
-
-
-	public void setShop(Shop_DTO shop) {
-		this.shop = shop;
-	}
 
 
 	public Product_AttributeDTO getAttribute() {

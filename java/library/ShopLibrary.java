@@ -22,22 +22,18 @@ public class ShopLibrary {
 			tmp.append("<div class=\"d-flex align-items-center\"><span class=\"me-3 fs-2 text-success\">●</span> <h5>Đang hoạt động</h5></div>");
 		}
 		view.put("shop-status",tmp.toString());
-		tmp.setLength(0);
-		
+		tmp.setLength(0);	
 		
 		tmp.append("<li>Tổng sản phẩm <span>185</span></li>");
 		tmp.append("<li>Ngày tham gia <span>"+shopDTO.getCreated_date()+"</span></li>");
-		tmp.append("<li>Khu vực <span>Hanoi</span></li>");
-		tmp.append("<li>Địa chỉ <span>Yes</span></li>");
+		tmp.append("<li>Địa chỉ <span>"+shopDTO.getAddress()+"</span></li>");
 		tmp.append("<li>Điện thoại <span>"+shopDTO.getPhone()+"</span></li>");
 		tmp.append("<li>Email <span>"+shopDTO.getEmail()+"</span></li>");
 		view.put("shop-attribute",tmp.toString());
-		tmp.setLength(0);
-		
+		tmp.setLength(0);	
 		
 		view.put("shop-note",tmp.toString());
-		tmp.setLength(0);
-		
+		tmp.setLength(0);		
 		return view;
 	}
 	
@@ -57,12 +53,10 @@ public class ShopLibrary {
 	
 	private static void viewSeller_manageShopStatistic(Shop_manageShopDTO shop_manageShopDTO, 	
 			Map<String,String> view){
-	
 		StringBuilder datetime_data = new StringBuilder();
 		StringBuilder income_data = new StringBuilder();
 		StringBuilder order_data = new StringBuilder();	
 		StringBuilder customer_data = new StringBuilder();
-		
 		Set<String> date_key = new HashSet<String>();
 		
 		date_key.addAll(shop_manageShopDTO.getStatistic().getIncome_current_month().keySet());
@@ -127,5 +121,33 @@ public class ShopLibrary {
 		view.put("product-list",tmp.toString());
 	}
 	
+	public static Map<String,String> viewSeller_ShopProfile(Shop_manageShopDTO shop_manageShopDTO){
+		Map<String,String> view = new HashMap<String,String>();		
+		
+		view.put("shop-id", ""+shop_manageShopDTO.getId()+"");
+		
+		view.put("shop-images", shop_manageShopDTO.getImages());
+		
+		view.put("shop-name", shop_manageShopDTO.getName());
+		
+		view.put("shop-status", (shop_manageShopDTO.getStatus()==1)?"Đang hoạt động":"Dừng hoạt động");
+		
+		view.put("shop-website-link", shop_manageShopDTO.getWebsite_link());
+		
+		view.put("shop-address-link", shop_manageShopDTO.getAddress_link());
+		
+		view.put("shop-address", shop_manageShopDTO.getAddress());
+		
+		view.put("shop-phone", shop_manageShopDTO.getPhone());
+		
+		view.put("shop-email", shop_manageShopDTO.getEmail());
+		
+		view.put("shop-notes", shop_manageShopDTO.getNotes());
+		
+		view.put("shop-notes", shop_manageShopDTO.getNotes());
+		
+		System.out.print(view);
+		return view;
+	}
 
 }

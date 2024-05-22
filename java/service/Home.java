@@ -79,7 +79,6 @@ public class Home extends HttpServlet {
 		// Lấy cấu trúc
 
 		Map<String,String> viewProductsList = pc.viewHomeProduct();
-
 		// Trả về kết nối
 		pc.releaseConnection();
 	    

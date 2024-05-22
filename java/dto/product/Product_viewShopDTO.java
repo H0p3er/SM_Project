@@ -1,6 +1,7 @@
 package dto.product;
 
 import dto.pc.PC_manageShopDTO;
+import dto.pc.PC_viewShopDTO;
 import dto.productAttribute.Product_AttributeDTO;
 import entity.ProductObject;
 
@@ -18,7 +19,7 @@ public class Product_viewShopDTO implements ProductDTO<Product_AttributeDTO>{
     private String notes;
     private String last_modified;
     private int quantity;
-    private PC_manageShopDTO pc;
+    private PC_viewShopDTO pc;
     private byte product_deleted;
     private Product_AttributeDTO attribute;
     
@@ -76,12 +77,8 @@ public class Product_viewShopDTO implements ProductDTO<Product_AttributeDTO>{
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	public PC_manageShopDTO getPc() {
-		return pc;
-	}
-	public void setPc(PC_manageShopDTO pc) {
-		this.pc = pc;
-	}
+
+	
 	public byte getProduct_deleted() {
 		return product_deleted;
 	}
@@ -100,4 +97,10 @@ public class Product_viewShopDTO implements ProductDTO<Product_AttributeDTO>{
     public void ApplyToEntity(ProductObject productObject) {
     	productObject.setProduct_id(this.id);	
     }
+	public PC_viewShopDTO getPc() {
+		return pc;
+	}
+	public void setPc(PC_viewShopDTO pc) {
+		this.pc = pc;
+	}
 }

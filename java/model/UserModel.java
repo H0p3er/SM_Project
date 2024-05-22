@@ -238,9 +238,9 @@ public class UserModel {
 		if (rs!=null) {
 			try {
 				if (rs.next()) {
-					item.setUser_fullname(Utilities.decode(rs.getString("user_fullname")));
+					item.setFullname(Utilities.decode(rs.getString("user_fullname")));
 					if (rs.getBlob("user_images")!=null) {
-						item.setUser_images(rs.getString("user_images"));
+						item.setImages(rs.getString("user_images"));
 					}					
 				}
 			} catch (SQLException e) {

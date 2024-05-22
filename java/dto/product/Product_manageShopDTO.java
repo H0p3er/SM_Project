@@ -4,7 +4,7 @@ import dto.pc.PC_manageShopDTO;
 import dto.productAttribute.Product_AttributeDTO;
 import entity.ProductObject;
 
-public class Product_manageShopDTO implements ProductDTO<Product_AttributeDTO>{
+public class Product_manageShopDTO implements ProductDTO<Product_AttributeDTO>, Comparable<Product_manageShopDTO>{
 	/**
 	 * 
 	 */
@@ -101,4 +101,23 @@ public class Product_manageShopDTO implements ProductDTO<Product_AttributeDTO>{
 		this.attribute = attribute;
 	}
 
+	
+	@Override
+	public boolean equals(Object obj) {
+		try {
+			Product_manageShopDTO dto = (Product_manageShopDTO) obj;
+			if (this.id == dto.getId()) {
+				return true;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return false;
+
+	}
+
+	@Override
+	public int compareTo(Product_manageShopDTO o) {
+		return Integer.compare(this.getId(), o.getId());
+	}
 }

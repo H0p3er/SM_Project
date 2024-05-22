@@ -165,7 +165,7 @@
 
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="/home/main/seller/shop_edit.jsp">
+                <a class="nav-link collapsed" href="/home/seller/shop/profile">
                     <i class="bi bi-shop"></i>
                     <span>Thông tin shop</span>
                 </a>

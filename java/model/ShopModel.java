@@ -55,22 +55,25 @@ public class ShopModel {
 	}
 
 	//***********************Chuyen huong dieu khien tu Shop Impl*****************************************
-	public boolean addShop(Shop_viewShopDTO shop_viewShopDTO, UserObject currentUser) {
+	public boolean addShop(Shop_DTO shop_DTO) {
+		UserObject userObject = new UserObject();
 		ShopObject shopObject = new ShopObject();
-		shop_viewShopDTO.applyToEntity(shopObject);
-		return this.shop.addShop(shopObject, currentUser);
+		shop_DTO.applyToEntity(shopObject, userObject);
+		return this.shop.addShop(shopObject, userObject);
 	}
 	
-	public boolean editShop(Shop_viewShopDTO shop_viewShopDTO, SHOP_EDIT_TYPE et, UserObject currentUser) {
+	public boolean editShop(Shop_DTO shop_DTO, SHOP_EDIT_TYPE et) {
+		UserObject userObject = new UserObject();
 		ShopObject shopObject = new ShopObject();
-		shop_viewShopDTO.applyToEntity(shopObject);
-		return this.shop.editShop(shopObject, et, currentUser);
+		shop_DTO.applyToEntity(shopObject, userObject);
+		return this.shop.editShop(shopObject, et, userObject);
 	}
 	
-	public boolean delShop(Shop_viewShopDTO shop_viewShopDTO, UserObject currentUser) {
+	public boolean delShop(Shop_DTO shop_DTO) {
+		UserObject userObject = new UserObject();
 		ShopObject shopObject = new ShopObject();
-		shop_viewShopDTO.applyToEntity(shopObject);
-		return this.shop.delShop(shopObject, currentUser);
+		shop_DTO.applyToEntity(shopObject, userObject);
+		return this.shop.delShop(shopObject, userObject);
 	}
 	
 	public Shop_viewShopDTO getShopDTOById(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, int id) {
@@ -115,17 +118,21 @@ public class ShopModel {
 		if (rs!=null) {
 			try {
 				if (rs.next()) {
-					shopObject.setShop_id(rs.getInt("shop_id"));
-					shopObject.setShop_name(rs.getString("shop_name"));
-					shopObject.setShop_address(rs.getString("shop_address"));
-					shopObject.setShop_images(rs.getString("shop_images"));
-					shopObject.setShop_notes(rs.getString("shop_notes"));			
+					shop_ShopManagerDTO.setId(rs.getInt("shop_id"));
+					shop_ShopManagerDTO.setName(rs.getString("shop_name"));
+					shop_ShopManagerDTO.setAddress(Utilities.decode(rs.getString("shop_address")));
+					shop_ShopManagerDTO.setImages(rs.getString("shop_images"));
+					shop_ShopManagerDTO.setPhone(rs.getString("shop_phone"));
+					shop_ShopManagerDTO.setEmail(rs.getString("shop_email"));
+					shop_ShopManagerDTO.setNotes(rs.getString("shop_notes"));			
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}		
+		}
+		
+		shop_ShopManagerDTO.applyToEntity(shopObject, currentUser);
 		Triplet<List<Product_manageShopDTO>,Integer, List<Pair<Product_manageShopDTO,Double>>> productResultSets = this.product.getProduct_manageShopDTO(productInfors,shopObject);
 		shop_ShopManagerDTO.setStorage(new Pair<>(productResultSets.getValue0(),productResultSets.getValue1()));
 		shop_ShopManagerDTO.setStatistic(getShopStatisticDTO(productResultSets.getValue2(), shopObject));;
