@@ -103,7 +103,7 @@ public class ProductControl {
 		return ProductLibrary.viewHomeProduct(datas);
 	}
 	
-	public Map<String,String> viewCart(TreeMap<Product_DTO,Integer> product_DTOs){
+	public Map<String,String> viewCart(TreeMap<Product_viewProductDTO,Integer> product_DTOs){
 		return library.ProductLibrary.viewProductCart(product_DTOs);
 	}
 	

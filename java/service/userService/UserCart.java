@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import connection.*;
 import controller.ProductControl;
 import dto.product.Product_DTO;
+import dto.product.Product_viewProductDTO;
 import entity.UserObject;
 import utility.Utilities;
 
@@ -61,15 +62,15 @@ public class UserCart extends HttpServlet {
 			getServletContext().setAttribute("CPool", pc.getCP());
 		}
 		try {
-			TreeMap<Product_DTO,Integer> product_DTOs = (TreeMap<Product_DTO,Integer>) request.getSession().getAttribute("product-cart");
+			TreeMap<Product_viewProductDTO,Integer> product_DTOs = (TreeMap<Product_viewProductDTO,Integer>) request.getSession().getAttribute("product-cart");
 			
 			if (product_DTOs==null) {
-				product_DTOs = new TreeMap<Product_DTO,Integer>();
+				product_DTOs = new TreeMap<Product_viewProductDTO,Integer>();
 			}
 			request.setAttribute("product-cart", pc.viewCart(product_DTOs));
 			System.out.println("get:"+product_DTOs);
 		} catch (ClassCastException e) {
-			TreeMap<Product_DTO,Integer> product_DTOs = new TreeMap<Product_DTO,Integer>();
+			TreeMap<Product_viewProductDTO,Integer> product_DTOs = new TreeMap<Product_viewProductDTO,Integer>();
 			request.setAttribute("product-cart", pc.viewCart(product_DTOs));
 		}
 		
@@ -98,13 +99,13 @@ public class UserCart extends HttpServlet {
 		// Lấy từ khóa tìm kiếm
 		int id = Utilities.getIntParam(request, "id");
 
-		Product_DTO product_DTO = pc.getProduct_DTOById(id);
+		Product_viewProductDTO product_DTO = pc.getProduct_DTOById(id);
 		
 		try {
-			TreeMap<Product_DTO,Integer> product_DTOs = (TreeMap<Product_DTO,Integer>) request.getSession().getAttribute("product-cart");
+			TreeMap<Product_viewProductDTO,Integer> product_DTOs = (TreeMap<Product_viewProductDTO,Integer>) request.getSession().getAttribute("product-cart");
 			
 			if (product_DTOs==null) {
-				product_DTOs = new TreeMap<Product_DTO,Integer>();
+				product_DTOs = new TreeMap<Product_viewProductDTO,Integer>();
 				product_DTOs.put(product_DTO,1);
 				System.out.println("post new from null:"+product_DTOs);
 			} else {
@@ -119,7 +120,7 @@ public class UserCart extends HttpServlet {
 			}	
 			request.getSession().setAttribute("product-cart", product_DTOs);
 		} catch (ClassCastException e) {
-			TreeMap<Product_DTO,Integer> product_DTOs = new TreeMap<Product_DTO,Integer>();
+			TreeMap<Product_viewProductDTO,Integer> product_DTOs = new TreeMap<Product_viewProductDTO,Integer>();
 			product_DTOs.put(product_DTO,1);
 			System.out.println("post error:"+product_DTOs);
 			request.getSession().setAttribute("product-cart", product_DTOs);

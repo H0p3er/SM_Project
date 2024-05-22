@@ -356,7 +356,7 @@ public class ProductLibrary {
 		return tmp.toString();
 	}
 	
-	public static Map<String,String> viewProductCart(TreeMap<Product_DTO,Integer> product_DTOs){
+	public static Map<String,String> viewProductCart(TreeMap<Product_viewProductDTO,Integer> product_DTOs){
 		Map<String,String> view = new HashMap<String, String>();
 		StringBuilder tmp = new StringBuilder();		
   		if (product_DTOs!=null){
