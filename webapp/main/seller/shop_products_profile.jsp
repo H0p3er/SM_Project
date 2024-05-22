@@ -162,57 +162,141 @@
                     <div class="row mb-3">
                       <label for="manufacturer" class="col-md-4 col-lg-3 col-form-label">Hãng sản xuất</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="manufacturer" type="text" class="form-control" id="manufacturer" value="Apple" maxlength="30">
+                        <!-- <input name="manufacturer" type="text" class="form-control" id="manufacturer" value="Apple" maxlength="30"> -->
+                        <select name="productManufacturer" class="form-select">
+                          <option value="Acer">Acer</option>
+                          <option value="Apple">Apple</option>
+                          <option value="Asus">Asus</option>
+                          <option value="Dell">Dell</option>
+                          <option value="Gigabyte">Gigabyte</option>
+                          <option value="HP">HP</option>
+                          <option value="Huawei">Huawei</option>
+                          <option value="Lenovo">Lenovo</option>
+                          <option value="LG">LG</option>
+                          <option value="Microsoft">Microsoft</option>
+                          <option value="MSI">MSI</option>
+                          <option value="Viao">Viao</option>
+                          <option value="Xiaomi">Xiaomi</option>
+                          <option value="other">Hãng khác</option>
+                      </select>
                       </div>
                     </div>
-
                     <div class="row mb-3">
                       <label for="cpu" class="col-md-4 col-lg-3 col-form-label">CPU</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="cpu" type="text" class="form-control" id="cpu" value="Apple M1">
+                        <!-- <input name="cpu" type="text" class="form-control" id="cpu" value="Apple M1"> -->
+                        <select name="productCPU" class="form-select">
+                          <option value="Intel Core i3">Intel Core i3</option>
+                          <option value="Intel Core i5">Intel Core i5</option>
+                          <option value="Intel Core i7">Intel Core i7</option>
+                          <option value="Intel Core i9">Intel Core i9</option>
+                          <option value="AMD Ryzen 3">AMD Ryzen 3</option>
+                          <option value="AMD Ryzen 5">AMD Ryzen 5</option>
+                          <option value="AMD Ryzen 7">AMD Ryzen 7</option>
+                          <option value="AMD Ryzen 9">AMD Ryzen 9</option>
+                          <option value="other">Khác</option>
+                        </select>
                       </div>
                     </div>
-
                     <div class="row mb-3">
                       <label for="ram" class="col-md-4 col-lg-3 col-form-label">RAM</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="ram" type="text" class="form-control" id="ram" value="8GB LPDDR4X">
+                        <!-- <input name="ram" type="text" class="form-control" id="ram" value="8GB LPDDR4X"> -->
+                        <select name="productRam" class="form-select">
+                          <option value="4gb">4GB</option>
+                          <option value="8gb">8GB</option>
+                          <option value="16gb">16GB</option>
+                          <option value="32gb">32GB</option>
+                          <option value="64gb">64GB</option>
+                          <option value="other">Khác</option>
+                      </select>                      
                       </div>
                     </div>
                     <div class="row mb-3">
                       <label for="graphics" class="col-md-4 col-lg-3 col-form-label">Card</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="graphics" type="text" class="form-control" id="graphics" value="Integrated Apple GPU">
+                        <!-- <input name="graphics" type="text" class="form-control" id="graphics" value="Integrated Apple GPU"> -->
+                        <select name="productGraphics" class="form-select">
+                          <option value="Intel UHD">Intel UHD</option>
+                          <option value="AMD Radeon">AMD Radeon</option>
+                          <option value="Intel Iris XE">Intel Iris XE</option>
+                          <option value="GTX 9">GTX 9</option>
+                          <option value="GTX 10">GTX 10</option>
+                          <option value="GTX 16">GTX 16</option>
+                          <option value="RTX 30">RTX 30</option>
+                          <option value="RTX 40">RTX 40</option>
+                          <option value="other">Khác</option>
+                      </select>
                       </div>
                     </div>
                     <div class="row mb-3">
                       <label for="storage" class="col-md-4 col-lg-3 col-form-label">Ổ cứng</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="storage" type="text" class="form-control" id="storage" value="512GB SSD" maxlength="30">
+                        <!-- <input name="storage" type="text" class="form-control" id="storage" value="512GB SSD" maxlength="30"> -->
+                        <select name="productStorage" class="form-select">
+                          <option value="128gb">128GB</option>
+                          <option value="256gb">256GB</option>
+                          <option value="512gb">512GB</option>
+                          <option value="1tb">1TB</option>
+                          <option value="2tb">2TB</option>
+                          <option value="other">Khác</option>
+                      </select>
                       </div>
                     </div>
                     <div class="row mb-3">
                       <label for="monitor" class="col-md-4 col-lg-3 col-form-label">Màn hình</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="monitor" type="text" class="form-control" id="monitor" value="Integrated Apple GPU">
+                        <!-- <input name="monitor" type="text" class="form-control" id="monitor" value="Integrated Apple GPU"> -->
+                        <select name="productScreen" class="form-select">
+                          <option value="-13inch">&lt;13 inch</option>
+                          <option value="13inch">13 inch</option>
+                          <option value="14inch">14 inch</option>
+                          <option value="15.6inch">15.6 inch</option>
+                          <option value="16inch">16 inch</option>
+                          <option value="17inch">17 inch</option>
+                          <option value="18inch">18 inch</option>
+                      </select>
                       </div>
                     </div>
                     <div class="row mb-3">
                       <label for="freq" class="col-md-4 col-lg-3 col-form-label">Tần số quét</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="freq" type="text" class="form-control" id="freq" value="Integrated Apple GPU">
+                        <!-- <input name="freq" type="text" class="form-control" id="freq" value="Integrated Apple GPU"> -->
+                        <select name="productFreq" class="form-select">
+                          <option value="60hz">60Hz</option>
+                          <option value="90hz">90Hz</option>
+                          <option value="120hz">120Hz</option>
+                          <option value="144hz/165hz">144Hz/165Hz</option>
+                          <option value="240hz">240Hz</option>
+                          <option value="360hz">360Hz</option>
+                          <option value="other">Khác</option>
+                      </select>
                       </div>
                     </div>
                     <div class="row mb-3">
                       <label for="resolution" class="col-md-4 col-lg-3 col-form-label">Độ phân giải</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="resolution" type="text" class="form-control" id="resolution" value="Integrated Apple GPU" maxlength="30">
+                        <!-- <input name="resolution" type="text" class="form-control" id="resolution" value="Integrated Apple GPU" maxlength="30"> -->
+                        <select name="productResolution" class="form-select">
+                          <option value="HD 1280x720">HD 1280x720</option>
+                          <option value="FHD 1920x1080">FHD 1920x1080</option>
+                          <option value="2K 2560x1440">2K 2560x1440</option>
+                          <option value="4K 3840x2160">4K 3840x2160</option>
+                          <option value="other">Khác</option>
+                      </select>
                       </div>
                     </div>
                     <div class="row mb-3">
                       <label for="type" class="col-md-4 col-lg-3 col-form-label">Phân loại</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="type" type="text" class="form-control" id="type" value="Integrated Apple GPU">
+                        <!-- <input name="type" type="text" class="form-control" id="type" value="Integrated Apple GPU"> -->
+                        <select name="productType" class="form-select">
+                          <option value="Mỏng nhẹ">Mỏng nhẹ</option>
+                          <option value="Gaming">Gaming</option>
+                          <option value="Đồ Họa">Đồ Họa</option>
+                          <option value="Doanh nhân">Doanh nhân</option>
+                          <option value="Cảm ứng">Cảm ứng</option>
+                        </select>
                       </div>
                     </div>
 
