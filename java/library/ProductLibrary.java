@@ -54,7 +54,7 @@ public class ProductLibrary {
 			Product_viewProductDTO product = productObjects.get(i-1);
 			tmp.append("<div class=\"col-lg-4 col-md-6\">");
 			tmp.append("<div class=\"item\">");
-			tmp.append("<a href=\"/home/product/profile?id="+product.getId()+"\"><img src=\""+product.getImages()+"\" alt=\"\"></a>");
+			tmp.append("<a href=\"/home/product/profile?id="+product.getId()+"\"><img height=\"220px\" src=\""+product.getImages()+"\" alt=\"\"></a>");
 
 			switch (Utilities_data_type.getProductAttribute(product.getPc())) {
 			case CASE:
@@ -135,7 +135,7 @@ public class ProductLibrary {
 			Product_viewProductDTO product = iterator.next();
 			tmp.append("<div class=\"col-lg-4 col-md-6\">");
 			tmp.append("<div class=\"item\">");
-			tmp.append("<a href=\"/home/product/profile?id="+product.getId()+"\"><img src=\""+product.getImages()+"\" alt=\"\"></a>");
+			tmp.append("<a href=\"/home/product/profile?id="+product.getId()+"\"><img  height=\"220px\" src=\""+product.getImages()+"\" alt=\"\"></a>");
 			switch (product.getPc().getId()) {
 			case 1:
 				tmp.append("<span class=\"category\">Màn hình</span>");
