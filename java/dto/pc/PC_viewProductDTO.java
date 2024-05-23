@@ -2,7 +2,7 @@ package dto.pc;
 
 import entity.PCObject;
 
-public class PC_viewProductDTO implements PCDTO{
+public class PC_viewProductDTO implements PC_DTO , Comparable<PC_viewProductDTO>{
 	
 	/**
 	 * 
@@ -47,5 +47,10 @@ public class PC_viewProductDTO implements PCDTO{
 	public void ApplyToEntity(PCObject entity) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public int compareTo(PC_viewProductDTO o) {
+		return this.name.compareTo(o.getName());
 	}
 }

@@ -15,7 +15,7 @@ import connection.ConnectionPool;
 import connection.ConnectionPoolImpl;
 import constant.PRODUCT_EDIT_TYPE;
 import dto.pc.PC_DTO;
-import dto.pc.PC_addProductDTO;
+import dto.pc.PC_manageProductDTO;
 import dto.pc.PC_manageBillDTO;
 import dto.pc.PC_manageShopDTO;
 import dto.pc.PC_viewBillDTO;
@@ -51,18 +51,18 @@ public class ProductModel {
 		this.product.releaseCP();
 		this.pc.releaseCP();
 	}
-	public boolean addProduct(ProductDTO<Product_AttributeDTO> item) {
+	public boolean addProduct(Product_DTO<Product_AttributeDTO> item) {
 		ProductObject productObject = new ProductObject();
 		item.ApplyToEntity(productObject);
 		return this.product.addProduct(productObject);
 	}
 	
-	public boolean editProduct(ProductDTO<Product_AttributeDTO> item, PRODUCT_EDIT_TYPE type) {
+	public boolean editProduct(Product_DTO<Product_AttributeDTO> item, PRODUCT_EDIT_TYPE type) {
 		ProductObject productObject = new ProductObject();
 		item.ApplyToEntity(productObject);
 		return this.product.editProduct(productObject, type);
 	}
-	public boolean delProduct(ProductDTO<Product_AttributeDTO> item) {
+	public boolean delProduct(Product_DTO<Product_AttributeDTO> item) {
 		ProductObject productObject = new ProductObject();
 		item.ApplyToEntity(productObject);
 		return this.product.delProduct(productObject);
@@ -252,7 +252,7 @@ public class ProductModel {
 		return most_sold_product_current_month;
 	}
 
-	private void setProductAttribute(ProductDTO<Product_AttributeDTO> product_DTO, ResultSet rs) {	
+	private void setProductAttribute(Product_DTO<Product_AttributeDTO> product_DTO, ResultSet rs) {	
 		try {			
 			if (product_DTO instanceof Product_viewProductDTO) {		
 				((Product_viewProductDTO) product_DTO).setName(Utilities.decode(rs.getString("product_name")));
@@ -279,16 +279,16 @@ public class ProductModel {
 				((Product_manageShopDTO) product_DTO).setQuantity(rs.getInt("product_quantity"));
 			}
 			
-			if (product_DTO instanceof Product_addProductDTO) {
-				((Product_addProductDTO) product_DTO).setName(Utilities.decode(rs.getString("product_name")));
-				((Product_addProductDTO) product_DTO).setId(rs.getInt("product_id"));
-				((Product_addProductDTO) product_DTO).setPc(new PC_addProductDTO(rs.getInt("product_pc_id"), rs.getString("pc_name")));
-				((Product_addProductDTO) product_DTO).setStatus(rs.getByte("product_status"));
-				((Product_addProductDTO) product_DTO).setPrice(rs.getDouble("product_price"));
-				((Product_addProductDTO) product_DTO).setImages(rs.getString("product_images"));
-				((Product_addProductDTO) product_DTO).setNotes(rs.getString("product_notes"));
-				((Product_addProductDTO) product_DTO).setLast_modified(rs.getString("product_last_modified"));
-				((Product_addProductDTO) product_DTO).setQuantity(rs.getInt("product_quantity"));
+			if (product_DTO instanceof Product_manageProductDTO) {
+				((Product_manageProductDTO) product_DTO).setName(Utilities.decode(rs.getString("product_name")));
+				((Product_manageProductDTO) product_DTO).setId(rs.getInt("product_id"));
+				((Product_manageProductDTO) product_DTO).setPc(new PC_manageProductDTO(rs.getInt("product_pc_id"), rs.getString("pc_name")));
+				((Product_manageProductDTO) product_DTO).setStatus(rs.getByte("product_status"));
+				((Product_manageProductDTO) product_DTO).setPrice(rs.getDouble("product_price"));
+				((Product_manageProductDTO) product_DTO).setImages(rs.getString("product_images"));
+				((Product_manageProductDTO) product_DTO).setNotes(rs.getString("product_notes"));
+				((Product_manageProductDTO) product_DTO).setLast_modified(rs.getString("product_last_modified"));
+				((Product_manageProductDTO) product_DTO).setQuantity(rs.getInt("product_quantity"));
 			}
 			
 			if (product_DTO instanceof Product_viewShopDTO) {
@@ -369,7 +369,13 @@ public class ProductModel {
 				break;				
 			case 14:
 				this.pc.getCoolingDTO(product_DTO);				
-				break;	
+				break;
+			case 15:
+				this.pc.getUsbDTO(product_DTO);				
+				break;
+			case 16:
+				this.pc.getUsbDTO(product_DTO);				
+				break;
 			}
 	
 		} catch (SQLException e) {

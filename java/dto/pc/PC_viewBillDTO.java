@@ -2,7 +2,7 @@ package dto.pc;
 
 import entity.PCObject;
 
-public class PC_viewBillDTO implements PCDTO{
+public class PC_viewBillDTO implements PC_DTO{
 	
 	/**
 	 * 

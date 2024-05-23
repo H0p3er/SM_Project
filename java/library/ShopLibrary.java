@@ -128,7 +128,7 @@ public class ShopLibrary {
 		
 		view.put("shop-name", shop_manageShopDTO.getName());
 		
-		view.put("shop-status", (shop_manageShopDTO.getStatus()==1)?"Đang hoạt động":"Dừng hoạt động");
+		view.put("shop-status", ""+shop_manageShopDTO.getStatus());
 		
 		view.put("shop-website-link", shop_manageShopDTO.getWebsite_link());
 		
@@ -142,7 +142,6 @@ public class ShopLibrary {
 		
 		view.put("shop-notes", shop_manageShopDTO.getNotes());
 		
-		view.put("shop-notes", shop_manageShopDTO.getNotes());
 		
 		System.out.print(view);
 		return view;

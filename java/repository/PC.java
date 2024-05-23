@@ -2,6 +2,9 @@ package repository;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Map;
+
+import org.javatuples.Quintet;
 
 import connection.ShareControl;
 import dto.product.Product_DTO;
@@ -15,5 +18,5 @@ public interface PC extends ShareControl{
 	public ResultSet getPCById(int id);
 	public ResultSet getProductAttribute(ProductObject productObject);
 	
-	public ArrayList<ResultSet> getPCs();
+	public ResultSet getPCByProduct(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort);
 }

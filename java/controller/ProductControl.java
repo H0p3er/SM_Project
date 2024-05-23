@@ -11,7 +11,7 @@ import org.javatuples.Quintet;
 
 import connection.ConnectionPool;
 import constant.PRODUCT_EDIT_TYPE;
-import dto.product.ProductDTO;
+import dto.product.Product_DTO;
 import dto.product.Product_DTO;
 import dto.product.Product_manageShopDTO;
 import dto.product.Product_viewProductDTO;
@@ -37,15 +37,15 @@ public class ProductControl {
 		this.pm.releaseCP();
 	}
 	
-	public boolean addProduct(ProductDTO<Product_AttributeDTO> item) {
+	public boolean addProduct(Product_DTO<Product_AttributeDTO> item) {
 		return this.pm.addProduct(item);
 	}
 	
-	public boolean editProduct(ProductDTO<Product_AttributeDTO> item, PRODUCT_EDIT_TYPE type) {
+	public boolean editProduct(Product_DTO<Product_AttributeDTO> item, PRODUCT_EDIT_TYPE type) {
 		return this.pm.editProduct(item, type);
 	}
 	
-	public boolean delProduct(ProductDTO<Product_AttributeDTO> item) {
+	public boolean delProduct(Product_DTO<Product_AttributeDTO> item) {
 		return this.pm.delProduct(item);
 	}
 	

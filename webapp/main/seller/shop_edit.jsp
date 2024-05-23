@@ -151,14 +151,14 @@ if (request.getAttribute("shop-edit")!=null){
                 </div>
 
                 <div class="row mb-3">
-                  <label for="about" class="col-md-4 col-lg-3 col-form-label">About</label>
+                  <label for="about" class="col-md-4 col-lg-3 col-form-label">Mô tả</label>
                   <div class="col-md-8 col-lg-9">
                     <textarea name="shopNotes" class="form-control" id="about" style="height: 100px"><%= map.get("shop-notes") %></textarea>
                   </div>
                 </div>
 
                 <div class="text-center">
-                  <button type="submit" class="btn btn-primary">Save Changes</button>
+                  <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
                 </div>
               </form><!-- End Profile Edit Form -->
 
@@ -171,14 +171,30 @@ if (request.getAttribute("shop-edit")!=null){
 
                 <div class="row mb-3">
                   <label for="status">Trạng thái:</label>
-                  <h4 class="text-success">Đang hoạt động</h4>
-                  <h4 class="text-danger">Dừng hoạt động</h4>
-                  
-                </div>
-                
+                  <% 
+                  	switch (map.get("shop-status")){
+                  		case "1":
+                  			out.append("<h4 class=\"text-success\">Đang hoạt động</h4>");
+                  			break;
+                  		
+                  		case "0":
+                  			out.append("<h4 class=\"text-danger\">Dừng hoạt động</h4>");
+                      		break;
+                  	}
+                  %>                                        
+                </div>             
                 <div class="text-center">
-                  <button type="submit" class="btn btn-danger">Dừng hoạt động</button>
-                  <button type="submit" class="btn btn-secondary">Tái hoạt động</button>
+                  <% 
+                  	switch (map.get("shop-status")){
+                  		case "1":
+                  			out.append("<button type=\"submit\" class=\"btn btn-danger\">Dừng hoạt động</button>");
+                  			break;
+                  		
+                  		case "0":
+                  			out.append("<button type=\"submit\" class=\"btn btn-secondary\">Tái hoạt động</button>");
+                      		break;
+                  	}
+                  %>   
                 </div>
               </form><!-- End settings Form -->
 

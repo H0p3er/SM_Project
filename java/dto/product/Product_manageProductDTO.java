@@ -1,11 +1,11 @@
 package dto.product;
 
-import dto.pc.PC_addProductDTO;
+import dto.pc.PC_manageProductDTO;
 import dto.productAttribute.Product_AttributeDTO;
-import dto.shop.Shop_addProductDTO;
+import dto.shop.Shop_manageProductDTO;
 import entity.ProductObject;
 
-public class Product_addProductDTO implements ProductDTO<Product_AttributeDTO>, Comparable<Product_addProductDTO>{
+public class Product_manageProductDTO implements Product_DTO<Product_AttributeDTO>, Comparable<Product_manageProductDTO>{
 	/**
 	 * 
 	 */
@@ -21,20 +21,20 @@ public class Product_addProductDTO implements ProductDTO<Product_AttributeDTO>, 
     private String created_date;
     private String last_modified;
     private int quantity;
-    private PC_addProductDTO pc;
-    private Shop_addProductDTO shop;
+    private PC_manageProductDTO pc;
+    private Shop_manageProductDTO shop;
     private Product_AttributeDTO attribute;
     
-	public PC_addProductDTO getPc() {
+	public PC_manageProductDTO getPc() {
 		return pc;
 	}
-	public void setPc(PC_addProductDTO pc) {
+	public void setPc(PC_manageProductDTO pc) {
 		this.pc = pc;
 	}
-	public Shop_addProductDTO getShop() {
+	public Shop_manageProductDTO getShop() {
 		return shop;
 	}
-	public void setShop(Shop_addProductDTO shop) {
+	public void setShop(Shop_manageProductDTO shop) {
 		this.shop = shop;
 	}
 	public int getId() {
@@ -152,7 +152,7 @@ public class Product_addProductDTO implements ProductDTO<Product_AttributeDTO>, 
 	@Override
 	public boolean equals(Object obj) {
 		try {
-			Product_addProductDTO dto = (Product_addProductDTO) obj;
+			Product_manageProductDTO dto = (Product_manageProductDTO) obj;
 			if (this.id == dto.id) {
 				return true;
 			}
@@ -163,7 +163,7 @@ public class Product_addProductDTO implements ProductDTO<Product_AttributeDTO>, 
 
 	}
 	@Override
-	public int compareTo(Product_addProductDTO o) {
+	public int compareTo(Product_manageProductDTO o) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

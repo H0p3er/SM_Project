@@ -28,13 +28,13 @@ import constant.PRODUCT_EDIT_TYPE;
 import controller.ProductControl;
 import controller.ShopControl;
 import dto.pc.PC_DTO;
-import dto.pc.PC_addProductDTO;
-import dto.product.ProductDTO;
+import dto.pc.PC_manageProductDTO;
 import dto.product.Product_DTO;
-import dto.product.Product_addProductDTO;
+import dto.product.Product_DTO;
+import dto.product.Product_manageProductDTO;
 import dto.productAttribute.LaptopDTO;
 import dto.productAttribute.Product_AttributeDTO;
-import dto.shop.Shop_addProductDTO;
+import dto.shop.Shop_manageProductDTO;
 import entity.UserObject;
 import utility.Utilities;
 import utility.Utilities_data_type;
@@ -122,15 +122,15 @@ public class ShopProductProfile extends HttpServlet {
 		request.setCharacterEncoding("utf-8");//Thiết lập tập kí tự
 		String name = request.getParameter("productName");
 		if(name != null && !name.isBlank()) {	
-			ProductDTO<Product_AttributeDTO> product_DTO = new Product_addProductDTO();
-			((Product_addProductDTO) product_DTO).setName(name);
-			((Product_addProductDTO) product_DTO).setPc(new PC_addProductDTO(utility.Utilities.getIntParam(request, "productCategory")));
-			((Product_addProductDTO) product_DTO).setQuantity(utility.Utilities.getIntParam(request, "productQuantity"));
-			((Product_addProductDTO) product_DTO).setPrice(utility.Utilities.getDoubleParam(request, "productPrice"));
-			((Product_addProductDTO) product_DTO).setCreated_date(Utilities_date.getCurrentDate());
-			((Product_addProductDTO) product_DTO).setNotes(utility.Utilities.encode(request.getParameter("productNote")));	
-			((Product_addProductDTO) product_DTO).setShop(new Shop_addProductDTO(utility.Utilities.getIntParam(request, "shopId")));
-			switch (Utilities_data_type.getProductAttribute(((Product_addProductDTO) product_DTO).getPc())) {
+			Product_DTO<Product_AttributeDTO> product_DTO = new Product_manageProductDTO();
+			((Product_manageProductDTO) product_DTO).setName(name);
+			((Product_manageProductDTO) product_DTO).setPc(new PC_manageProductDTO(utility.Utilities.getIntParam(request, "productCategory")));
+			((Product_manageProductDTO) product_DTO).setQuantity(utility.Utilities.getIntParam(request, "productQuantity"));
+			((Product_manageProductDTO) product_DTO).setPrice(utility.Utilities.getDoubleParam(request, "productPrice"));
+			((Product_manageProductDTO) product_DTO).setCreated_date(Utilities_date.getCurrentDate());
+			((Product_manageProductDTO) product_DTO).setNotes(utility.Utilities.encode(request.getParameter("productNote")));	
+			((Product_manageProductDTO) product_DTO).setShop(new Shop_manageProductDTO(utility.Utilities.getIntParam(request, "shopId")));
+			switch (Utilities_data_type.getProductAttribute(((Product_manageProductDTO) product_DTO).getPc())) {
 			case CASE:
 				break;
 			case COOLING:
@@ -189,9 +189,9 @@ public class ShopProductProfile extends HttpServlet {
 		
 		String name = request.getParameter("productName");
 		if(name != null && !name.isBlank()) {
-			Product_DTO product_DTO = new Product_DTO();
+			Product_manageProductDTO product_DTO = new Product_manageProductDTO();
 			product_DTO.setName(name);
-			product_DTO.setPc(new PC_DTO(utility.Utilities.getIntParam(request, "productPc")));
+			product_DTO.setPc(new PC_manageProductDTO(utility.Utilities.getIntParam(request, "productPc")));
 			product_DTO.setQuantity(utility.Utilities.getIntParam(request, "productQuantity"));
 			product_DTO.setCreated_date(Utilities_date.getCurrentDate());
 			product_DTO.setNotes(utility.Utilities.encode(request.getParameter("productNote")));
@@ -223,7 +223,7 @@ public class ShopProductProfile extends HttpServlet {
 
 			ConnectionPool cp = (ConnectionPool) getServletContext().getAttribute("CPool");
 			ProductControl pc = new ProductControl(cp);
-			Product_DTO sProduct = new Product_DTO();
+			Product_manageProductDTO sProduct = new Product_manageProductDTO();
 			sProduct.setId(id);
 			sProduct.setLast_modified(Utilities_date.getCurrentDate());
 			

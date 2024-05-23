@@ -4,7 +4,7 @@ import dto.pc.PC_manageBillDTO;
 import dto.productAttribute.Product_AttributeDTO;
 import entity.ProductObject;
 
-public class Product_manageOrderDTO implements ProductDTO<Product_AttributeDTO>{
+public class Product_manageOrderDTO implements Product_DTO<Product_AttributeDTO>{
 	/**
 	 * 
 	 */
@@ -75,12 +75,6 @@ public class Product_manageOrderDTO implements ProductDTO<Product_AttributeDTO>{
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-
-
-	@Override
-    public void ApplyToEntity(ProductObject productObject) {
-    	productObject.setProduct_id(this.id);	
-    }
 	public Product_AttributeDTO getAttribute() {
 		return attribute;
 	}
@@ -93,5 +87,12 @@ public class Product_manageOrderDTO implements ProductDTO<Product_AttributeDTO>{
 	public void setPc(PC_manageBillDTO pc) {
 		this.pc = pc;
 	}
+	
+
+
+	@Override
+    public void ApplyToEntity(ProductObject productObject) {
+    	productObject.setProduct_id(this.id);	
+    }
 
 }

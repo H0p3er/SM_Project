@@ -77,7 +77,7 @@ public class ShopEdit extends HttpServlet {
 				utility.Utilities.getMapParam(request, null),
 				utility.Utilities.getMapParam(request, null));
 
-		Map<String,String> data = shopControl.displaySeller_ShopProfile(productInfors,user);
+		Map<String,String> data = shopControl.viewSeller_ShopProfile(productInfors,user);
 		
 		shopControl.releaseCP();
 		

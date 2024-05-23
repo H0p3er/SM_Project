@@ -4,7 +4,7 @@ import dto.pc.PC_manageBillDTO;
 import dto.productAttribute.Product_AttributeDTO;
 import entity.ProductObject;
 
-public class Product_viewOrderDTO implements ProductDTO<Product_AttributeDTO>{
+public class Product_viewOrderDTO implements Product_DTO<Product_AttributeDTO>{
 	/**
 	 * 
 	 */

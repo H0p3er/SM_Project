@@ -6,11 +6,15 @@ import repository.PCImpl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.util.Map;
+import java.util.TreeMap;
+
+import org.javatuples.Quintet;
+
 import connection.ConnectionPool;
-import dto.pc.PC_DTO;
-import dto.product.ProductDTO;
+import dto.pc.PC_viewProductDTO;
 import dto.product.Product_DTO;
-import dto.product.Product_addProductDTO;
+import dto.product.Product_manageProductDTO;
 import dto.product.Product_manageBillDTO;
 import dto.product.Product_manageShopDTO;
 import dto.product.Product_viewBillDTO;
@@ -47,15 +51,15 @@ public class PCModel {
 	public void releaseCP() {
 		this.pc.releaseCP();
 	}	
-	public PC_DTO getPC_DTOByID(int id) {
+	public PC_viewProductDTO getPC_ViewProductDTO(int id) {
 		ResultSet rs = this.pc.getPCById(id);	
-		PC_DTO pc_DTO = null;
+		PC_viewProductDTO pc_DTO = null;
 		if (rs!=null) {
 			try {
 				if (rs.next()) {
-					pc_DTO = new PC_DTO();
+					pc_DTO = new PC_viewProductDTO();
 					pc_DTO.setId(rs.getInt("pc_id"));
-					pc_DTO.setName("created_date");
+					pc_DTO.setName(rs.getString("pc_name"));
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -66,8 +70,35 @@ public class PCModel {
 		return pc_DTO;
 	}
 	
+	public TreeMap<PC_viewProductDTO,Integer> getPC_ViewProductDTO(
+			Quintet<Short, Byte, Map<String, String>, Map<String, String>, Map<String, String>> infors) {
+		short page = infors.getValue0();
+		byte productPerPage = infors.getValue1();	
+		Map<String,String> multiField = infors.getValue2();
+		Map<String,String> multiCondition = infors.getValue3();
+		Map<String,String> multiSort = infors.getValue4();		
+		int at = (page - 1) * productPerPage;
+		ResultSet rs = this.pc.getPCByProduct(at, productPerPage, multiField, multiCondition, multiSort);
+		TreeMap<PC_viewProductDTO,Integer> pc_viewProductDTOs = new TreeMap<PC_viewProductDTO,Integer>();
+		if (rs!=null) {
+			try {
+				while (rs.next()) {
+					PC_viewProductDTO pc_DTO = new PC_viewProductDTO();
+					pc_DTO.setId(rs.getInt("pc_id"));
+					pc_DTO.setName(rs.getString("pc_name"));
+					pc_viewProductDTOs.put(pc_DTO, rs.getInt("count_product"));
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return pc_viewProductDTOs;
+	}
 	
-	public void getCaseDTO(ProductDTO<Product_AttributeDTO> product_DTO) throws SQLException {
+	
+	public void getCaseDTO(Product_DTO<Product_AttributeDTO> product_DTO) throws SQLException {
 		ProductObject productObject = new ProductObject();
 		product_DTO.ApplyToEntity(productObject);
 		ResultSet attribute = this.pc.getProductAttribute(productObject);	
@@ -85,7 +116,7 @@ public class PCModel {
 		//return product_CaseDTO;
 	}
 	
-	public void getCoolingDTO(ProductDTO<Product_AttributeDTO> product_DTO) throws SQLException {	
+	public void getCoolingDTO(Product_DTO<Product_AttributeDTO> product_DTO) throws SQLException {	
 		ProductObject productObject = new ProductObject();
 		product_DTO.ApplyToEntity(productObject);
 		ResultSet attribute = this.pc.getProductAttribute(productObject);
@@ -104,7 +135,7 @@ public class PCModel {
 		//return product_CoolingDTO;
 	}
 	
-	public void getCPUDTO(ProductDTO<Product_AttributeDTO> product_DTO) throws SQLException {	
+	public void getCPUDTO(Product_DTO<Product_AttributeDTO> product_DTO) throws SQLException {	
 		ProductObject productObject = new ProductObject();
 		product_DTO.ApplyToEntity(productObject);
 		ResultSet attribute = this.pc.getProductAttribute(productObject);	
@@ -123,7 +154,7 @@ public class PCModel {
 		//return product_CPUDTO;
 	}
 	
-	public void getDesktopDTO(ProductDTO<Product_AttributeDTO> product_DTO) throws SQLException {	
+	public void getDesktopDTO(Product_DTO<Product_AttributeDTO> product_DTO) throws SQLException {	
 		ProductObject productObject = new ProductObject();
 		product_DTO.ApplyToEntity(productObject);
 		ResultSet attribute = this.pc.getProductAttribute(productObject);	
@@ -144,7 +175,7 @@ public class PCModel {
 		// return product_DesktopDTO;
 	}
 	
-	public void getGraphicsCardDTO(ProductDTO<Product_AttributeDTO> product_DTO) throws SQLException {	
+	public void getGraphicsCardDTO(Product_DTO<Product_AttributeDTO> product_DTO) throws SQLException {	
 		ProductObject productObject = new ProductObject();
 		product_DTO.ApplyToEntity(productObject);
 		ResultSet attribute = this.pc.getProductAttribute(productObject);
@@ -163,7 +194,7 @@ public class PCModel {
 //		return product_GraphicsCardDTO ;
 	}
 	
-	public void getHeadphoneSpeakerDTO(ProductDTO<Product_AttributeDTO> product_DTO) throws SQLException {	
+	public void getHeadphoneSpeakerDTO(Product_DTO<Product_AttributeDTO> product_DTO) throws SQLException {	
 		ProductObject productObject = new ProductObject();
 		product_DTO.ApplyToEntity(productObject);
 		ResultSet attribute = this.pc.getProductAttribute(productObject);	
@@ -180,7 +211,7 @@ public class PCModel {
 //		return product_HeadphoneSpeakerDTO;
 	}
 	
-	public void getKeyboardDTO(ProductDTO<Product_AttributeDTO> product_DTO) throws SQLException {	
+	public void getKeyboardDTO(Product_DTO<Product_AttributeDTO> product_DTO) throws SQLException {	
 		ProductObject productObject = new ProductObject();
 		product_DTO.ApplyToEntity(productObject);
 		ResultSet attribute = this.pc.getProductAttribute(productObject);
@@ -198,7 +229,7 @@ public class PCModel {
 		//return product_KeyboardDTO;
 	}
 	
-	public void getLaptopDTO(ProductDTO<Product_AttributeDTO> product_DTO) throws SQLException {	
+	public void getLaptopDTO(Product_DTO<Product_AttributeDTO> product_DTO) throws SQLException {	
 		ProductObject productObject = new ProductObject();
 		product_DTO.ApplyToEntity(productObject);
 		ResultSet attribute = this.pc.getProductAttribute(productObject);
@@ -218,7 +249,7 @@ public class PCModel {
 		//return product_LaptopDTO;
 	}
 
-	public void getStorageDTO(ProductDTO<Product_AttributeDTO> product_DTO) throws SQLException {
+	public void getStorageDTO(Product_DTO<Product_AttributeDTO> product_DTO) throws SQLException {
 		ProductObject productObject = new ProductObject();
 		product_DTO.ApplyToEntity(productObject);
 		ResultSet attribute = this.pc.getProductAttribute(productObject);
@@ -238,7 +269,7 @@ public class PCModel {
 		//return product_StorageDTO;
 	}
 
-	public void getRamDTO(ProductDTO<Product_AttributeDTO> product_DTO)  throws SQLException{
+	public void getRamDTO(Product_DTO<Product_AttributeDTO> product_DTO)  throws SQLException{
 		ProductObject productObject = new ProductObject();
 		product_DTO.ApplyToEntity(productObject);
 		ResultSet attribute = this.pc.getProductAttribute(productObject);	
@@ -257,7 +288,7 @@ public class PCModel {
 		//return product_RamDTO;
 	}
 
-	public void getPowerSuppyDTO(ProductDTO<Product_AttributeDTO> product_DTO)  throws SQLException{
+	public void getPowerSuppyDTO(Product_DTO<Product_AttributeDTO> product_DTO)  throws SQLException{
 		ProductObject productObject = new ProductObject();
 		product_DTO.ApplyToEntity(productObject);
 		ResultSet attribute = this.pc.getProductAttribute(productObject);
@@ -276,7 +307,7 @@ public class PCModel {
 		//return product_PowerSuppyDTO;
 	}
 
-	public void getMotherboardDTO(ProductDTO<Product_AttributeDTO> product_DTO)  throws SQLException{
+	public void getMotherboardDTO(Product_DTO<Product_AttributeDTO> product_DTO)  throws SQLException{
 		ProductObject productObject = new ProductObject();
 		product_DTO.ApplyToEntity(productObject);
 		ResultSet attribute = this.pc.getProductAttribute(productObject);
@@ -296,7 +327,7 @@ public class PCModel {
 		//return product_MotherboardDTO;
 	}
 
-	public void getMonitorDTO(ProductDTO<Product_AttributeDTO> product_DTO) throws SQLException{
+	public void getMonitorDTO(Product_DTO<Product_AttributeDTO> product_DTO) throws SQLException{
 		ProductObject productObject = new ProductObject();
 		product_DTO.ApplyToEntity(productObject);
 		ResultSet attribute = this.pc.getProductAttribute(productObject);
@@ -318,7 +349,7 @@ public class PCModel {
 //		return product_MonitorDTO;
 	}
 
-	public void getMiceDTO(ProductDTO<Product_AttributeDTO> product_DTO)  throws SQLException {
+	public void getMiceDTO(Product_DTO<Product_AttributeDTO> product_DTO)  throws SQLException {
 		ProductObject productObject = new ProductObject();
 		product_DTO.ApplyToEntity(productObject);
 		ResultSet attribute = this.pc.getProductAttribute(productObject);
@@ -337,7 +368,7 @@ public class PCModel {
 		
 //		return product_MiceDTO;
 	}
-	public void getUsbDTO(ProductDTO<Product_AttributeDTO> product_DTO) throws SQLException {    
+	public void getUsbDTO(Product_DTO<Product_AttributeDTO> product_DTO) throws SQLException {    
 	    ProductObject productObject = new ProductObject();
 	    product_DTO.ApplyToEntity(productObject);
 	    ResultSet attribute = this.pc.getProductAttribute(productObject);
@@ -353,7 +384,7 @@ public class PCModel {
 //	    return product_UsbDTO;
 	}
 	
-	private void setProductAttribute(ProductDTO<Product_AttributeDTO> product_DTO, Product_AttributeDTO product_AttributeDTO) {
+	private void setProductAttribute(Product_DTO<Product_AttributeDTO> product_DTO, Product_AttributeDTO product_AttributeDTO) {
 		if (product_DTO instanceof Product_viewProductDTO) {
 			((Product_viewProductDTO) product_DTO).setAttribute(product_AttributeDTO);
 		}
@@ -362,8 +393,8 @@ public class PCModel {
 			((Product_manageShopDTO) product_DTO).setAttribute(product_AttributeDTO);
 		}
 		
-		if (product_DTO instanceof Product_addProductDTO) {
-			((Product_addProductDTO) product_DTO).setAttribute(product_AttributeDTO);
+		if (product_DTO instanceof Product_manageProductDTO) {
+			((Product_manageProductDTO) product_DTO).setAttribute(product_AttributeDTO);
 		}
 		
 		if (product_DTO instanceof Product_viewShopDTO) {

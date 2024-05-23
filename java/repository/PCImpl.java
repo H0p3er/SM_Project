@@ -3,6 +3,7 @@ package repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Map;
 
 import basic.BasicImpl;
 import connection.ConnectionPool;
@@ -45,42 +46,23 @@ public class PCImpl extends BasicImpl implements PC {
 		sql.append("SELECT * FROM tblpc pc WHERE pc.pc_id=?");
 		return this.get(sql.toString(), id);
 	}
-	
-	public static void main(String[] args) {
-		int id = 1;
-		ConnectionPool cp = new ConnectionPoolImpl();
-		PC a = new PCImpl(cp);
-		
-		ResultSet rs = a.getPCById(id);
-		
-		if (rs!=null) {
-			try {
-				if (rs.next()) {
-					System.out.println(rs.getInt("pc_id"));
-					System.out.println(rs.getString("pc_name"));
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
-	
+
 
 	@Override
-	public ArrayList<ResultSet> getPCs() {
+	public ResultSet getPCByProduct(int at, byte total, Map<String,String> multiField, Map<String,String> multiCondition, Map<String,String> multiSort) {
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT pc.*, COUNT(product_id) FROM tblpc pc ");
+		sql.append("SELECT pc.*, COUNT(product_id) AS count_product FROM tblpc pc ");
 		sql.append("INNER JOIN tblproduct p ON pc.pc_id = p.product_pc_id ");
+		sql.append(WHEREConditions(multiCondition));
 		sql.append("GROUP BY pc_id ");
 		sql.append(";");
-		return this.getReList(sql.toString());
+		System.out.println(sql.toString());
+		return this.gets(sql.toString());
 	}
 
 	@Override
 	public ResultSet getProductAttribute(ProductObject productObject) {
-		StringBuilder sql = new StringBuilder();
-		
+		StringBuilder sql = new StringBuilder();	
 		switch (productObject.getProduct_pc_id()) {
 			case 1:
 				sql.append("SELECT * FROM tbl_monitors ");				
@@ -153,9 +135,74 @@ public class PCImpl extends BasicImpl implements PC {
 				sql.append("SELECT * FROM tbl_cooling ");				
 				sql.append("WHERE product_id="+productObject.getProduct_id()+";");
 				break;
+			case 15:
+				sql.append("SELECT * FROM tbl_usbs ");				
+				sql.append("WHERE product_id="+productObject.getProduct_id()+";");
+				break;
 		}
 		// TODO Auto-generated method stub
 		return this.gets(sql.toString());
 	}
 
+	private String WHEREConditions(Map<String,String> multiCondition) {
+		StringBuilder WHERE = new StringBuilder();
+		multiCondition.forEach((key,value)->{
+			if (!WHERE.isEmpty() && !WHERE.toString().isBlank()) {
+				WHERE.append("AND ");
+			}
+			switch (key) {
+			case "search":
+				WHERE.append("(product_name LIKE '%"+value+"%' OR pc_name LIKE '%"+value+"%') ");
+				break;
+			case "id":
+				WHERE.append("product_id= ");
+				break;
+			case "address":
+				WHERE.append("product_address="+value+" ");
+				break;
+			case "last_modified":
+				WHERE.append("product_last_modified="+value+" ");
+				break;
+			case "category":
+				WHERE.append("product_pc_id="+value+" ");
+				break;
+			case "max":
+				WHERE.append("product_price <"+value+" ");
+				break;
+			case "min":
+				WHERE.append("product_price >"+value+" ");
+				break;
+			default:
+				WHERE.append("product_name LIKE '%"+value+"%' ");
+				break;
+			}			
+		});		
+		if(!WHERE.toString().equalsIgnoreCase("")) {
+			WHERE.insert(0, "WHERE ");
+		}
+		
+		return WHERE.toString();
+	}
+	
+	
+	public static void main(String[] args) {
+		int id = 1;
+		ConnectionPool cp = new ConnectionPoolImpl();
+		PC a = new PCImpl(cp);
+		
+		ResultSet rs = a.getPCById(id);
+		
+		if (rs!=null) {
+			try {
+				if (rs.next()) {
+					System.out.println(rs.getInt("pc_id"));
+					System.out.println(rs.getString("pc_name"));
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
 }

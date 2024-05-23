@@ -21,7 +21,6 @@ public class Utilities_text {
 	
 	public static boolean checkValidString(ServletRequest request, String param) {
 		String str_value = request.getParameter(param);
-		System.out.println(str_value);
 		if (str_value!=null && !str_value.isBlank()) {
 			return true;
 		}

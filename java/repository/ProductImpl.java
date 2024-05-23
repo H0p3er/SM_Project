@@ -230,8 +230,8 @@ public class ProductImpl extends BasicImpl implements Product{
 	@Override
 	public ArrayList<ResultSet> getProducts() {
 		StringBuilder sql = new StringBuilder();
-		sql.append(getProductsNewestSQL());
 		sql.append(getProductsMostSoldSQL());
+		sql.append(getProductsNewestSQL());
 		return this.getReList(sql.toString());
 	}
 
@@ -253,7 +253,7 @@ public class ProductImpl extends BasicImpl implements Product{
 		sql.append("WHERE (p.product_deleted=0) ");
 		sql.append("GROUP BY (p.product_id) ");
 		sql.append("ORDER BY (sold_quantity) DESC ");
-		sql.append("LIMIT 0,6; ");
+		sql.append("LIMIT 0,9; ");
 		return sql.toString();
 	}	
 	
@@ -420,7 +420,7 @@ public class ProductImpl extends BasicImpl implements Product{
 			}
 			switch (key) {
 			case "search":
-				WHERE.append("product_name LIKE '%"+value+"%' OR pc_name LIKE '%"+value+"%'");
+				WHERE.append("(product_name LIKE '%"+value+"%' OR pc_name LIKE '%"+value+"%') ");
 				break;
 			case "id":
 				WHERE.append("product_id= ");

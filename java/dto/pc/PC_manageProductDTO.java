@@ -2,7 +2,7 @@ package dto.pc;
 
 import entity.PCObject;
 
-public class PC_addProductDTO implements PCDTO{
+public class PC_manageProductDTO implements PC_DTO{
 	
 	/**
 	 * 
@@ -11,12 +11,12 @@ public class PC_addProductDTO implements PCDTO{
 	private int id;
 	private String name;
 
-	public PC_addProductDTO(int id, String name) {
+	public PC_manageProductDTO(int id, String name) {
 		this.id = id;
 		this.name = name;
 	}
 
-	public PC_addProductDTO(int id) {
+	public PC_manageProductDTO(int id) {
 		this.id = id;
 	}
 

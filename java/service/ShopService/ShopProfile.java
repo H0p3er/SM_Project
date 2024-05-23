@@ -76,7 +76,7 @@ public class ShopProfile extends HttpServlet {
 				utility.Utilities.getMapParam(request, null),
 				utility.Utilities.getMapParam(request, null));
 
-		Map<String,String> data = shopControl.displayShop_Profile(productInfors,utility.Utilities.getIntParam(request, "id"));
+		Map<String,String> data = shopControl.viewShop_Profile(productInfors,utility.Utilities.getIntParam(request, "id"));
 		
 		shopControl.releaseCP();
 		
