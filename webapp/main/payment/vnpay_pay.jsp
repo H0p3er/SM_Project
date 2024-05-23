@@ -71,6 +71,7 @@
         <script type="text/javascript">
             $("#frmCreateOrder").submit(function () {
                 var postData = $("#frmCreateOrder").serialize();
+                alert(postData);
                 var submitUrl = $("#frmCreateOrder").attr("action");
                 $.ajax({
                     type: "POST",

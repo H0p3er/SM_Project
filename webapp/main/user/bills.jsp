@@ -61,9 +61,12 @@
                                   <li><a href="">MSI B460 ATX Motherboard</a></li>
                                 </ul>
                               </td>
-                              <td>2000000VND</td>
                               <td>
-                                <span class="badge bg-success">Đã xác nhận</span>  <!-- Chờ xác nhận, đã xác nhận, đã thanh toán, Đã giao hàng-->
+                              	<div>2000000VND</div>
+                              	<button class="btn btn-secondary">Thanh toán</button>
+                              </td>
+                              <td>
+                                <span class="badge bg-warning">Chưa thanh toán</span>  <!-- Chờ xác nhận, đã xác nhận, đã thanh toán, Đã giao hàng-->
                               </td>
                               <td>
                                   <button class="btn btn-danger">Hủy đơn</button>
