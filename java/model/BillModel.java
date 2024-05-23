@@ -17,74 +17,72 @@ import dto.bill.Bill_DTO;
 import dto.product.Product_manageShopDTO;
 import entity.BDObject;
 import entity.BillObject;
-import entity.EmployeeObject;
 import entity.ShopObject;
 import repository.Bill;
 import repository.BillImpl;
 import utility.Utilities;
 
 public class BillModel {
-	
+
 	private Bill bill;
-	
+
 	public BillModel(ConnectionPool cp) {
-		this.bill= new BillImpl(cp);
+		this.bill = new BillImpl(cp);
 	}
-	
-	protected void finalize() throws Throwable{
-		this.bill=null;
+
+	protected void finalize() throws Throwable {
+		this.bill = null;
 	}
-	
+
 	public ConnectionPool getCP() {
 		return this.bill.getCP();
 	}
-	
+
 	public void releaseConnection() {
 		this.bill.releaseCP();
 	}
 
-	//***********************Chuyen huong dieu khien tu Bill Impl*****************************************
+	// ***********************Chuyen huong dieu khien tu Bill
+	// Impl*****************************************
 	public boolean addBill(Bill_DTO bill_DTO) {
 		BillObject billObject = new BillObject();
 		ArrayList<BDObject> bdObjects = new ArrayList<BDObject>();
-		bill_DTO.ApplyToEntity(billObject, bdObjects);;
+		bill_DTO.ApplyToEntity(billObject, bdObjects);
+		;
 		return this.bill.addBill(billObject, bdObjects);
 	}
-	
+
 	public boolean editBill(Bill_DTO bill_DTO, BILL_EDIT_TYPE et) {
 		BillObject billObject = new BillObject();
 		ArrayList<BDObject> bdObjects = new ArrayList<BDObject>();
 		bill_DTO.ApplyToEntity(billObject, bdObjects);
 		return this.bill.editBill(billObject, bdObjects, et);
 	}
-	
+
 	public boolean delBill(Bill_DTO bill_DTO) {
 		BillObject billObject = new BillObject();
 		ArrayList<BDObject> bdObjects = new ArrayList<BDObject>();
 		bill_DTO.ApplyToEntity(billObject, bdObjects);
 		return this.bill.delBill(billObject);
 	}
-	
-	
-	//****************************************************************
-	
+
+	// ****************************************************************
+
 	public BillObject getBill_DTOById(int id) {
-		//Gan gia tri khoi tao cho doi tuong BillObject
-		BillObject item = null ;	
-		//Lay ban ghi 
+		// Gan gia tri khoi tao cho doi tuong BillObject
+		BillObject item = null;
+		// Lay ban ghi
 		ResultSet rs = this.bill.getBillById(id);
-		//Chuyen doi ban ghi thanh doi tuong
-		if (rs!=null) {
+		// Chuyen doi ban ghi thanh doi tuong
+		if (rs != null) {
 			try {
 				if (rs.next()) {
 					item = new BillObject();
 					item.setBill_id(rs.getInt("bill_id"));
-					item.setBill_status(rs.getByte("bill_status"));
 					item.setBill_created_date(rs.getString("bill_created_date"));
-					item.setBill_creator_id(rs.getInt("bill_creator_id"));				
-					item.setBill_last_modified_date(rs.getString("bill_last_modified_date"));
-					item.setBill_last_modified_id(rs.getInt("bill_last_modified_id"));
-					item.setBill_transporter_id(rs.getInt("bill_last_modified_id"));
+					item.setBill_creator_id(rs.getInt("bill_creator_id"));
+					item.setBill_status(rs.getByte("bill_status"));
+					item.setBill_delivery_id(rs.getInt("bill_delivery_id"));
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -93,17 +91,18 @@ public class BillModel {
 		}
 		return item;
 	}
-	
-	public Triplet<Map<String,Double>, Double, Double> getIncomeStatisticByShop(ShopObject shopObject){
-		ArrayList<ResultSet> res = this.bill.getIncomeStatisticByShop(shopObject, java.time.LocalDateTime.now().getMonth().getValue());
-		ResultSet rs = res.get(0);	
+
+	public Triplet<Map<String, Double>, Double, Double> getIncomeStatisticByShop(ShopObject shopObject) {
+		ArrayList<ResultSet> res = this.bill.getIncomeStatisticByShop(shopObject,
+				java.time.LocalDateTime.now().getMonth().getValue());
+		ResultSet rs = res.get(0);
 		Map<String, Double> income_current_month = new HashMap<String, Double>();
-		if (rs!=null) {
+		if (rs != null) {
 			try {
 				while (rs.next()) {
 					income_current_month.put(rs.getString("bill_created_date"), rs.getDouble("income_by_month"));
 				}
-				
+
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -111,21 +110,21 @@ public class BillModel {
 		}
 		rs = res.get(1);
 		double sum_income_current_month = 0;
-		if (rs!=null) {
+		if (rs != null) {
 			try {
 				if (rs.next()) {
 					sum_income_current_month = rs.getDouble("sum_income_by_month");
 				}
-				
+
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		
+
 		double sum_income_last_month = 0;
 		rs = res.get(2);
-		if (rs!=null) {
+		if (rs != null) {
 			try {
 				if (rs.next()) {
 					sum_income_last_month = rs.getDouble("sum_income_by_month");
@@ -135,14 +134,15 @@ public class BillModel {
 				e.printStackTrace();
 			}
 		}
-		return new Triplet<>(income_current_month,sum_income_current_month, sum_income_last_month);
+		return new Triplet<>(income_current_month, sum_income_current_month, sum_income_last_month);
 	}
-	
-	public Triplet<Map<String,Integer>,Integer,Integer> getOrderStatisticByShop(ShopObject shopObject) {
-		ArrayList<ResultSet> res = this.bill.getOrderStatisticByShop(shopObject, java.time.LocalDateTime.now().getMonth().getValue());	
+
+	public Triplet<Map<String, Integer>, Integer, Integer> getOrderStatisticByShop(ShopObject shopObject) {
+		ArrayList<ResultSet> res = this.bill.getOrderStatisticByShop(shopObject,
+				java.time.LocalDateTime.now().getMonth().getValue());
 		ResultSet rs = res.get(0);
-		Map<String,Integer> order_current_month = new HashMap<String, Integer>();
-		if (rs!=null) {
+		Map<String, Integer> order_current_month = new HashMap<String, Integer>();
+		if (rs != null) {
 			try {
 				while (rs.next()) {
 					order_current_month.put(rs.getString("bill_created_date"), rs.getInt("order_by_month"));
@@ -151,22 +151,22 @@ public class BillModel {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}		
+		}
 		rs = res.get(1);
 		int count_order_current_month = 0;
-		if (rs!=null) {
+		if (rs != null) {
 			try {
 				if (rs.next()) {
-					count_order_current_month = rs.getInt("count_order_by_month");		
+					count_order_current_month = rs.getInt("count_order_by_month");
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}	
+		}
 		int count_order_last_month = 0;
 		rs = res.get(2);
-		if (rs!=null) {
+		if (rs != null) {
 			try {
 				if (rs.next()) {
 					count_order_last_month = rs.getInt("count_order_by_month");
@@ -178,22 +178,16 @@ public class BillModel {
 		}
 		return new Triplet<>(order_current_month, count_order_current_month, count_order_last_month);
 	}
-		
-	
+
 	public static void main(String[] args) {
 		ConnectionPool cp = new ConnectionPoolImpl();
-		
+
 		BillModel wm = new BillModel(cp);
-		
+
 		BillObject similar = new BillObject();
-	
-		Sextet<EmployeeObject, BillObject, Short, Byte, BILL_SORT_TYPE, Boolean> infors = new 
-		Sextet<EmployeeObject, BillObject, Short, Byte, BILL_SORT_TYPE, Boolean>
-		(null, similar, (short) 1, (byte) 10, BILL_SORT_TYPE.NAME, false);
-		
-//		items.getValue2().forEach((key,value) -> System.out.println(key.getBill_name()+":"+value));
-		
 
 		
+//		items.getValue2().forEach((key,value) -> System.out.println(key.getBill_name()+":"+value));
+
 	};
 }

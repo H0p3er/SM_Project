@@ -18,15 +18,14 @@ public interface Bill extends ShareControl{
 	public boolean editBill(BillObject item, ArrayList<BDObject> bdObjects, BILL_EDIT_TYPE et);
 	public boolean delBill(BillObject item);
 	
+//	public ArrayList<ResultSet> getBillByUser(UserObject userObject);
 	public ResultSet getBillById(int id);
 	public ResultSet getBillByCreatedDate(Date start, Date end);
 	
 	public ArrayList<ResultSet> getBillByUser(int at, byte total, String multiField,  String multiCondition, String multiSort, UserObject userObject);
-	public ArrayList<ResultSet> getOrderByUser(int at, byte total, String multiField,  String multiCondition, String multiSort, UserObject userObject);
-	
+		
 	public ArrayList<ResultSet> getBillByShop(int at, byte total, String multiField,  String multiCondition, String multiSort, ShopObject shopObject);
-	public ArrayList<ResultSet> getOrderByShop(int at, byte total, String multiField,  String multiCondition, String multiSort, ShopObject shopObject);
-
+	
 	public ArrayList<ResultSet> getOrderStatisticByShop(ShopObject shopObject, int month);
 	public ArrayList<ResultSet> getIncomeStatisticByShop(ShopObject shopObject, int month);
 }

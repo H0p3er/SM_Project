@@ -61,16 +61,11 @@ public class UserControl {
 		return this.um.getUserObjects(similar, page, total, ust, isExport);
 	}
 	
-
-	
-	
 	
 	public static void main(String[] args) {
 		UserControl uc = new UserControl(null);
 		
 		Quartet<UserObject, Short, Byte, USER_SORT_TYPE> infors = new Quartet<>(null, (short) 1, (byte) 10, USER_SORT_TYPE.NAME);
-		
-
 		
 		uc.releaseConnection();//Tra ve ket noi
 		

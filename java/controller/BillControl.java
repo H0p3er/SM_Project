@@ -2,6 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.javatuples.Pair;
 import org.javatuples.Quartet;
@@ -14,10 +15,12 @@ import constant.BILL_EDIT_TYPE;
 import constant.BILL_SORT_TYPE;
 import dto.bd.BD_DTO;
 import dto.bill.Bill_DTO;
+import dto.bill.Bill_manageBillDTO;
+import dto.shop.Shop_manageShopDTO;
 import entity.BDObject;
 import entity.BillObject;
-import entity.EmployeeObject;
-import library.BillLibrary;
+import entity.UserObject;
+import library.ShopLibrary;
 import model.BillModel;
 
 public class BillControl {
@@ -50,8 +53,6 @@ public class BillControl {
 	}
 	
 
-
-	
 	
 //	public static void main(String[] args) {
 //		BillControl uc = new BillControl(null);

@@ -28,10 +28,6 @@ public class BD_manageBillDTO implements BD_DTO {
 		this.product_quantity = product_quantity;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
 	@Override
 	public void ApplyToEntity(BDObject entity) {
 		// TODO Auto-generated method stub
