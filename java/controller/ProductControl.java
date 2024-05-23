@@ -11,11 +11,14 @@ import org.javatuples.Quintet;
 
 import connection.ConnectionPool;
 import constant.PRODUCT_EDIT_TYPE;
-import dto.product.ProductDTO;
 import dto.product.Product_DTO;
+import dto.product.Product_DTO;
+import dto.product.Product_manageShopDTO;
 import dto.product.Product_viewProductDTO;
 import dto.productAttribute.Product_AttributeDTO;
+import entity.UserObject;
 import library.ProductLibrary;
+import library.ShopLibrary;
 import model.ProductModel;
 
 public class ProductControl {
@@ -30,19 +33,19 @@ public class ProductControl {
 		return this.pm.getCP();
 	}
 	
-	public void releaseConnection() {
+	public void releaseCP() {
 		this.pm.releaseCP();
 	}
 	
-	public boolean addProduct(ProductDTO<Product_AttributeDTO> item) {
+	public boolean addProduct(Product_DTO<Product_AttributeDTO> item) {
 		return this.pm.addProduct(item);
 	}
 	
-	public boolean editProduct(ProductDTO<Product_AttributeDTO> item, PRODUCT_EDIT_TYPE type) {
+	public boolean editProduct(Product_DTO<Product_AttributeDTO> item, PRODUCT_EDIT_TYPE type) {
 		return this.pm.editProduct(item, type);
 	}
 	
-	public boolean delProduct(ProductDTO<Product_AttributeDTO> item) {
+	public boolean delProduct(Product_DTO<Product_AttributeDTO> item) {
 		return this.pm.delProduct(item);
 	}
 	
@@ -53,7 +56,7 @@ public class ProductControl {
 	 * Cập nhật ngày 26/10/2023
 	 */
 	public Product_viewProductDTO getProduct_DTOById(int id) {
-		return this.pm.getProduct_DTOById(id);
+		return this.pm.getProduct_viewProductDTOById(id);
 	}
 	
 	public Map<String,String> viewProductProfile(int id) {
@@ -69,11 +72,7 @@ public class ProductControl {
 	 * 
 	 * Cập nhật ngày 26/10/2023
 	 */
-	public Pair<ArrayList<Product_DTO>,Integer> getProducts(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> infors) {			
-		return this.pm.getProduct_DTOs(infors);
-	}
-	
-	
+
 	/** 
 	 * Phương thức trả về danh sách giao diện cho phần trình bày danh sách product
 	 * @param infors các thông tin bổ sung
@@ -85,7 +84,7 @@ public class ProductControl {
 			Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> infors, 
 			String url){
 
-		Pair<ArrayList<Product_viewProductDTO>,Integer> datas = this.pm.getProduct_DTOs(infors);		
+		Pair<ArrayList<Product_viewProductDTO>,Integer> datas = this.pm.getProduct_viewProductDTO(infors);		
 		return ProductLibrary.viewSearchProduct(datas, infors, url);
 	}
 	
@@ -97,9 +96,7 @@ public class ProductControl {
 	 * <br/>Cập nhật ngày 26/10/2023
 	 */
 	public Map<String,String> viewHomeProduct(){
-
-		Pair<ArrayList<Product_viewProductDTO>,ArrayList<Product_viewProductDTO>> datas = this.pm.getProduct_DTOs();
-		
+		Pair<ArrayList<Product_viewProductDTO>,ArrayList<Product_viewProductDTO>> datas = this.pm.getProduct_viewProductDTO();
 		return ProductLibrary.viewHomeProduct(datas);
 	}
 	
@@ -107,4 +104,9 @@ public class ProductControl {
 		return library.ProductLibrary.viewProductCart(product_DTOs);
 	}
 	
+	public Map<String,String> viewSeller_ShopProductProfle(int id){
+		Product_manageShopDTO datas = this.pm.getProduct_manageShopDTO(id);
+		return ProductLibrary.viewSeller_ShopProductProfile(datas);
+	}
+
 }

@@ -9,7 +9,7 @@ import dto.user.User_manageShopDTO;
 import entity.ShopObject;
 import entity.UserObject;
 
-public class Shop_addProductDTO implements Shop_DTO{
+public class Shop_manageProductDTO implements Shop_DTO{
 	/**
 	 * 
 	 */
@@ -29,11 +29,11 @@ public class Shop_addProductDTO implements Shop_DTO{
 	private Pair<List<Product_manageShopDTO>,Integer> storage;
 	private Shop_statisticDTO statistic;	
 
-	public Shop_addProductDTO(int id) {
+	public Shop_manageProductDTO(int id) {
 		this.id = id;
 	}
 
-	public Shop_addProductDTO() {
+	public Shop_manageProductDTO() {
 		
 	}
 

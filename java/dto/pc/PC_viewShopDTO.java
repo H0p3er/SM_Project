@@ -2,7 +2,7 @@ package dto.pc;
 
 import entity.PCObject;
 
-public class PC_viewShopDTO implements PCDTO{
+public class PC_viewShopDTO implements PC_DTO{
 	 /**
 	 * 
 	 */

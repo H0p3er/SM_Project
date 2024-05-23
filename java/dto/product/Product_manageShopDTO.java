@@ -4,7 +4,7 @@ import dto.pc.PC_manageShopDTO;
 import dto.productAttribute.Product_AttributeDTO;
 import entity.ProductObject;
 
-public class Product_manageShopDTO implements ProductDTO<Product_AttributeDTO>, Comparable<Product_manageShopDTO>{
+public class Product_manageShopDTO implements Product_DTO<Product_AttributeDTO>, Comparable<Product_manageShopDTO>{
 	/**
 	 * 
 	 */

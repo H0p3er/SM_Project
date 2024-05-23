@@ -1,11 +1,10 @@
 package dto.product;
 
-import dto.pc.PC_manageShopDTO;
 import dto.pc.PC_viewShopDTO;
 import dto.productAttribute.Product_AttributeDTO;
 import entity.ProductObject;
 
-public class Product_viewShopDTO implements ProductDTO<Product_AttributeDTO>{
+public class Product_viewShopDTO implements Product_DTO<Product_AttributeDTO>{
 	/**
 	 * 
 	 */
@@ -77,7 +76,6 @@ public class Product_viewShopDTO implements ProductDTO<Product_AttributeDTO>{
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-
 	
 	public byte getProduct_deleted() {
 		return product_deleted;
@@ -93,14 +91,15 @@ public class Product_viewShopDTO implements ProductDTO<Product_AttributeDTO>{
 		this.attribute = attribute;
 	}
 	
-	@Override
-    public void ApplyToEntity(ProductObject productObject) {
-    	productObject.setProduct_id(this.id);	
-    }
 	public PC_viewShopDTO getPc() {
 		return pc;
 	}
 	public void setPc(PC_viewShopDTO pc) {
 		this.pc = pc;
 	}
+	
+	@Override
+    public void ApplyToEntity(ProductObject productObject) {
+    	productObject.setProduct_id(this.id);	
+    }
 }

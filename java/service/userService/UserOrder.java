@@ -71,7 +71,7 @@ public class UserOrder extends HttpServlet {
 			getServletContext().setAttribute("CPool", pc.getCP());
 		}
 		// Trả về kết nối
-		pc.releaseConnection();
+		pc.releaseCP();
 		// Tạo đối tượng thực hiện xuất nội dung
 		request.setAttribute("product-order", "");
 	}

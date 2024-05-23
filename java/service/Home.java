@@ -66,9 +66,6 @@ public class Home extends HttpServlet {
 		String key = request.getParameter("key");
 		String saveKey = (key != null && !key.equalsIgnoreCase("")) ? key.trim() : "";
 		
-		// Lấy câu trúc
-		Product_DTO similar = new Product_DTO();
-		similar.setName(saveKey);
 		
 		// Tìm tham số xác định loại danh sách
 
@@ -80,7 +77,7 @@ public class Home extends HttpServlet {
 
 		Map<String,String> viewProductsList = pc.viewHomeProduct();
 		// Trả về kết nối
-		pc.releaseConnection();
+		pc.releaseCP();
 	    
 	    request.setAttribute("home-page", viewProductsList);
 	    

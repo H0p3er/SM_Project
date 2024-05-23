@@ -15,7 +15,7 @@ import connection.ConnectionPool;
 import connection.ConnectionPoolImpl;
 import constant.PRODUCT_EDIT_TYPE;
 import dto.pc.PC_DTO;
-import dto.pc.PC_addProductDTO;
+import dto.pc.PC_manageProductDTO;
 import dto.pc.PC_manageBillDTO;
 import dto.pc.PC_manageShopDTO;
 import dto.pc.PC_viewBillDTO;
@@ -51,23 +51,24 @@ public class ProductModel {
 		this.product.releaseCP();
 		this.pc.releaseCP();
 	}
-	public boolean addProduct(ProductDTO<Product_AttributeDTO> item) {
+	public boolean addProduct(Product_DTO<Product_AttributeDTO> item) {
 		ProductObject productObject = new ProductObject();
 		item.ApplyToEntity(productObject);
 		return this.product.addProduct(productObject);
 	}
-	public boolean editProduct(ProductDTO<Product_AttributeDTO> item, PRODUCT_EDIT_TYPE type) {
+	
+	public boolean editProduct(Product_DTO<Product_AttributeDTO> item, PRODUCT_EDIT_TYPE type) {
 		ProductObject productObject = new ProductObject();
 		item.ApplyToEntity(productObject);
 		return this.product.editProduct(productObject, type);
 	}
-	public boolean delProduct(ProductDTO<Product_AttributeDTO> item) {
+	public boolean delProduct(Product_DTO<Product_AttributeDTO> item) {
 		ProductObject productObject = new ProductObject();
 		item.ApplyToEntity(productObject);
 		return this.product.delProduct(productObject);
 	}
 
-	public Product_viewProductDTO getProduct_DTOById(int id) {
+	public Product_viewProductDTO getProduct_viewProductDTOById(int id) {
 		Product_viewProductDTO item = new Product_viewProductDTO();
 		ResultSet rs = this.product.getProductById(id);
 		if (rs != null) {
@@ -83,7 +84,7 @@ public class ProductModel {
 		return item;
 	}
 	
-	public Pair<ArrayList<Product_viewProductDTO>, Integer> getProduct_DTOs(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> infors) {	
+	public Pair<ArrayList<Product_viewProductDTO>, Integer> getProduct_viewProductDTO(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> infors) {	
 		short page = infors.getValue0();
 		byte productPerPage = infors.getValue1();	
 		Map<String,String> multiField = infors.getValue2();
@@ -111,7 +112,7 @@ public class ProductModel {
 		return new Pair<>(items, product_count);
 	}
 	
-	public Pair<ArrayList<Product_viewProductDTO>, ArrayList<Product_viewProductDTO>> getProduct_DTOs() {		
+	public Pair<ArrayList<Product_viewProductDTO>, ArrayList<Product_viewProductDTO>> getProduct_viewProductDTO() {		
 		ArrayList<Product_viewProductDTO> items1 = new ArrayList<>();
 		ArrayList<ResultSet> res = this.product.getProducts();
 		ResultSet rs = res.get(0);
@@ -181,8 +182,25 @@ public class ProductModel {
 		return new Triplet<>(product_manageShopDTOs,count_product,most_sold_product_current_month);
 	}	
 	
+	public Product_manageShopDTO getProduct_manageShopDTO(int id) {
+		Product_manageShopDTO item = new Product_manageShopDTO();
+		ResultSet rs = this.product.getProductById(id);
+		if (rs != null) {
+			try {
+				if (rs.next()) {
+					setProductAttribute(item,rs);;
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return item;
+	}
+	
 	public Pair<ArrayList<Product_viewShopDTO>,Integer> getProduct_viewShopDTO(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, ShopObject shopObject) {
-		Short pagePos = productInfors.getValue0();
+		
+		short pagePos = productInfors.getValue0();
 		byte pageLength = productInfors.getValue1();	
 		Map<String,String> multiField = productInfors.getValue2();
 		Map<String,String> multiCondition = productInfors.getValue3();
@@ -199,6 +217,7 @@ public class ProductModel {
 					product_viewShopDTO.setName(rs.getString("product_name"));
 					product_viewShopDTO.setQuantity(rs.getInt("product_quantity"));
 					product_viewShopDTO.setPrice(rs.getDouble("product_price"));
+					setProductAttribute(product_viewShopDTO, rs);
 					product_viewShopDTOs.add(product_viewShopDTO);
 				}	
 			} catch (SQLException e) {
@@ -206,6 +225,7 @@ public class ProductModel {
 				e.printStackTrace();
 			}
 		}
+		
 		rs = resultSets.get(1);
 		int count_product = getProductSize(rs);
 		return new Pair<>(product_viewShopDTOs,count_product);
@@ -231,75 +251,9 @@ public class ProductModel {
 		}
 		return most_sold_product_current_month;
 	}
-	
-//	private void setProductAttribute(Product_DTO item, ResultSet rs) {
-//		try {	
-////			Product_DTO item = new Product_DTO<Product_AttributeDTO>();
-//			item.setId(rs.getInt("product_id"));
-//			item.setPc(new PC_DTO(rs.getInt("product_pc_id"), rs.getString("pc_name")));
-//			switch (rs.getInt("product_pc_id")) {
-//			case 1:
-//				this.pc.getMonitorDTO(item);	
-//				break;						
-//			case 2:
-//				this.pc.getKeyboardDTO(item);	
-//				break;
-//			case 3:
-//				this.pc.getMiceDTO(item);	
-//				break;					
-//			case 4:
-//				this.pc.getHeadphoneSpeakerDTO(item);	
-//				break;						
-//			case 5:
-//				this.pc.getLaptopDTO(item);
-//				break;						
-//			case 6:
-//				this.pc.getDesktopDTO(item);		
-//				break;						
-//			case 7:	
-//				this.pc.getCPUDTO(item);
-//				break;						
-//			case 8:
-//				this.pc.getMotherboardDTO(item);
-//				break;						
-//			case 9:	
-//				this.pc.getRamDTO(item);					
-//				break;		
-//			case 10:
-//				this.pc.getStorageDTO(item);	
-//				break;				
-//			case 11:
-//				this.pc.getGraphicsCardDTO(item);
-//				break;						
-//			case 12:
-//				this.pc.getPowerSuppyDTO(item);		
-//				break;						
-//			case 13:
-//				this.pc.getCaseDTO(item);	
-//				break;				
-//			case 14:
-//				this.pc.getCoolingDTO(item);				
-//				break;	
-//			}
-//			item.setName(Utilities.decode(rs.getString("product_name")));
-//			item.setStatus(rs.getByte("product_status"));
-//			item.setPrice(rs.getDouble("product_price"));
-//			item.setImages(rs.getString("product_images"));
-//			item.setNotes(rs.getString("product_notes"));
-//			item.setLast_modified(rs.getString("product_last_modified"));
-//			item.setShop(new Shop_manageShopDTO(rs.getInt("product_shop_id")));
-//			item.setQuantity(rs.getInt("product_quantity"));		
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
-	
-	private void setProductAttribute(ProductDTO<Product_AttributeDTO> product_DTO, ResultSet rs) {
-		
-		try {	
-//			Product_DTO item = new Product_DTO<Product_AttributeDTO>();
-			
+
+	private void setProductAttribute(Product_DTO<Product_AttributeDTO> product_DTO, ResultSet rs) {	
+		try {			
 			if (product_DTO instanceof Product_viewProductDTO) {		
 				((Product_viewProductDTO) product_DTO).setName(Utilities.decode(rs.getString("product_name")));
 				((Product_viewProductDTO) product_DTO).setId(rs.getInt("product_id"));
@@ -312,7 +266,7 @@ public class ProductModel {
 				((Product_viewProductDTO) product_DTO).setShop(new Shop_viewProductDTO(rs.getInt("product_shop_id")));
 				((Product_viewProductDTO) product_DTO).setQuantity(rs.getInt("product_quantity"));	
 			}
-			
+		
 			if (product_DTO instanceof Product_manageShopDTO) {
 				((Product_manageShopDTO) product_DTO).setName(Utilities.decode(rs.getString("product_name")));
 				((Product_manageShopDTO) product_DTO).setId(rs.getInt("product_id"));
@@ -325,16 +279,16 @@ public class ProductModel {
 				((Product_manageShopDTO) product_DTO).setQuantity(rs.getInt("product_quantity"));
 			}
 			
-			if (product_DTO instanceof Product_addProductDTO) {
-				((Product_addProductDTO) product_DTO).setName(Utilities.decode(rs.getString("product_name")));
-				((Product_addProductDTO) product_DTO).setId(rs.getInt("product_id"));
-				((Product_addProductDTO) product_DTO).setPc(new PC_addProductDTO(rs.getInt("product_pc_id"), rs.getString("pc_name")));
-				((Product_addProductDTO) product_DTO).setStatus(rs.getByte("product_status"));
-				((Product_addProductDTO) product_DTO).setPrice(rs.getDouble("product_price"));
-				((Product_addProductDTO) product_DTO).setImages(rs.getString("product_images"));
-				((Product_addProductDTO) product_DTO).setNotes(rs.getString("product_notes"));
-				((Product_addProductDTO) product_DTO).setLast_modified(rs.getString("product_last_modified"));
-				((Product_addProductDTO) product_DTO).setQuantity(rs.getInt("product_quantity"));
+			if (product_DTO instanceof Product_manageProductDTO) {
+				((Product_manageProductDTO) product_DTO).setName(Utilities.decode(rs.getString("product_name")));
+				((Product_manageProductDTO) product_DTO).setId(rs.getInt("product_id"));
+				((Product_manageProductDTO) product_DTO).setPc(new PC_manageProductDTO(rs.getInt("product_pc_id"), rs.getString("pc_name")));
+				((Product_manageProductDTO) product_DTO).setStatus(rs.getByte("product_status"));
+				((Product_manageProductDTO) product_DTO).setPrice(rs.getDouble("product_price"));
+				((Product_manageProductDTO) product_DTO).setImages(rs.getString("product_images"));
+				((Product_manageProductDTO) product_DTO).setNotes(rs.getString("product_notes"));
+				((Product_manageProductDTO) product_DTO).setLast_modified(rs.getString("product_last_modified"));
+				((Product_manageProductDTO) product_DTO).setQuantity(rs.getInt("product_quantity"));
 			}
 			
 			if (product_DTO instanceof Product_viewShopDTO) {
@@ -415,7 +369,13 @@ public class ProductModel {
 				break;				
 			case 14:
 				this.pc.getCoolingDTO(product_DTO);				
-				break;	
+				break;
+			case 15:
+				this.pc.getUsbDTO(product_DTO);				
+				break;
+			case 16:
+				this.pc.getUsbDTO(product_DTO);				
+				break;
 			}
 	
 		} catch (SQLException e) {
@@ -461,7 +421,7 @@ public class ProductModel {
 
 		//Lay tap ban ghi nguoi su dung
 
-		ArrayList<Product_viewProductDTO> rs1 = u.getProduct_DTOs(new Quintet<Short, Byte, Map<String, String> ,Map<String, String>, Map<String, String>>((short) 0,(byte) 0, new HashMap<String, String>(), new HashMap<String, String>(), new HashMap<String, String>())).getValue0();
+		ArrayList<Product_viewProductDTO> rs1 = u.getProduct_viewProductDTO(new Quintet<Short, Byte, Map<String, String> ,Map<String, String>, Map<String, String>>((short) 0,(byte) 0, new HashMap<String, String>(), new HashMap<String, String>(), new HashMap<String, String>())).getValue0();
 		String row = null;
 
 		if (rs1!=null) {

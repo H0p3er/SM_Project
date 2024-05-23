@@ -2,9 +2,9 @@ package utility;
 
 import constant.HTTP_REQUEST;
 import constant.PRODUCT_ATTRIBUTE;
-import dto.pc.PCDTO;
 import dto.pc.PC_DTO;
-import dto.pc.PC_addProductDTO;
+import dto.pc.PC_DTO;
+import dto.pc.PC_manageProductDTO;
 import dto.pc.PC_manageBillDTO;
 import dto.pc.PC_manageShopDTO;
 import dto.pc.PC_viewBillDTO;
@@ -13,16 +13,13 @@ import dto.pc.PC_viewShopDTO;
 
 public class Utilities_data_type {
 	
-	public static PRODUCT_ATTRIBUTE getProductAttribute(PCDTO pcdto) {
+	public static PRODUCT_ATTRIBUTE getProductAttribute(PC_DTO pcdto) {
 		int pc_id=16;
 		if (pcdto instanceof PC_manageBillDTO) {
 			pc_id = ((PC_manageBillDTO) pcdto).getId();
 		}
-		if (pcdto instanceof PC_addProductDTO) {
-			pc_id = ((PC_addProductDTO) pcdto).getId();
-		}
-		if (pcdto instanceof PC_DTO) {
-			pc_id = ((PC_DTO) pcdto).getId();
+		if (pcdto instanceof PC_manageProductDTO) {
+			pc_id = ((PC_manageProductDTO) pcdto).getId();
 		}
 		if (pcdto instanceof PC_manageShopDTO) {
 			pc_id = ((PC_manageShopDTO) pcdto).getId();

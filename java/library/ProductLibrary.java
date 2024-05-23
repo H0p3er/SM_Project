@@ -10,12 +10,12 @@ import org.javatuples.Pair;
 import org.javatuples.Quartet;
 import org.javatuples.Quintet;
 
-import dto.pc.PCDTO;
 import dto.pc.PC_DTO;
-import dto.pc.PC_addProductDTO;
-import dto.product.ProductDTO;
+import dto.pc.PC_DTO;
+import dto.pc.PC_manageProductDTO;
 import dto.product.Product_DTO;
-import dto.product.Product_addProductDTO;
+import dto.product.Product_DTO;
+import dto.product.Product_manageProductDTO;
 import dto.product.Product_manageBillDTO;
 import dto.product.Product_manageShopDTO;
 import dto.product.Product_viewBillDTO;
@@ -37,6 +37,7 @@ import dto.productAttribute.Product_AttributeDTO;
 import dto.productAttribute.RamDTO;
 import dto.productAttribute.StorageDTO;
 import dto.productAttribute.UsbDTO;
+import dto.shop.Shop_manageShopDTO;
 import dto.shop.Shop_viewProductDTO;
 import repository.Product;
 import utility.Utilities;
@@ -226,29 +227,9 @@ public class ProductLibrary {
 		view.put("product-search",tmp.toString());
 		tmp.setLength(0);
 		
-		view.put("product-filter", viewSearchPC(datas.getValue0()));
-		
 		
 		view.put("product-search-pagination", viewProductPagination(datas.getValue1(), infors.getValue0(), infors.getValue1(), infors.getValue3(), url));
 		return view;
-	}
-	
-	private static String viewSearchPC(ArrayList<Product_viewProductDTO> product_DTOs) {
-		StringBuilder tmp = new StringBuilder();
-		Map<String,Integer> map = new HashMap<String, Integer>();
-		product_DTOs.forEach(product->{
-			String category_name = (product.getPc().getName()!=null)?product.getPc().getName():"Khác";
-			if (map.get(category_name) != null) {
-				map.put(category_name, map.get(category_name)+1);		
-			} else {
-				map.put(category_name, 1);
-			}
-		});
-		
-		map.forEach((key,value)->{
-			tmp.append("<li><a class=\"text-black\" href=\"\">"+key+"("+value+")</a></li>");
-		});
-		return tmp.toString();
 	}
 	
 	
@@ -308,8 +289,11 @@ public class ProductLibrary {
 		}
 		
 		if (record_count%record_per_page!=0) page_count++;
+		
 		if (current_page>page_count) current_page=page_count;
+		
 		if (current_page<=0) current_page=1;	
+		
 		if (page_count<=3) {
 			if (current_page == 1) {
 				
@@ -391,10 +375,28 @@ public class ProductLibrary {
 		
 	}
 	
-	private static String viewProductAttribute(ProductDTO<Product_AttributeDTO> product) {
+	public static Map<String,String> viewSeller_ShopProductProfile(
+			Product_manageShopDTO product_manageShopDTO){
+		Map<String,String> view = new HashMap<String,String>();
+		
+		view.put("product-name", product_manageShopDTO.getName());
+		
+		view.put("product-price", ""+product_manageShopDTO.getPrice());
+		
+		view.put("product-category", ""+product_manageShopDTO.getPc().getName());
+		
+		view.put("product-notes", product_manageShopDTO.getNotes());
+		
+		view.put("product-quantity", ""+product_manageShopDTO.getQuantity());
+		
+		return view; 
+	}
+	
+	
+	private static String viewProductAttribute(Product_DTO<Product_AttributeDTO> product) {
 		StringBuilder tmp = new StringBuilder();
 		Product_AttributeDTO product_AttributeDTO = null;
-		PCDTO pc_DTO = null;
+		PC_DTO pc_DTO = null;
 		if (product instanceof Product_viewProductDTO) {
 			product_AttributeDTO = ((Product_viewProductDTO) product).getAttribute();
 			pc_DTO = ((Product_viewProductDTO) product).getPc();
@@ -405,9 +407,9 @@ public class ProductLibrary {
 			pc_DTO = ((Product_manageShopDTO) product).getPc();
 		}
 		
-		if (product instanceof Product_addProductDTO) {
-			product_AttributeDTO = ((Product_addProductDTO) product).getAttribute();
-			pc_DTO = ((Product_addProductDTO) product).getPc();
+		if (product instanceof Product_manageProductDTO) {
+			product_AttributeDTO = ((Product_manageProductDTO) product).getAttribute();
+			pc_DTO = ((Product_manageProductDTO) product).getPc();
 		}
 		
 		if (product instanceof Product_viewShopDTO) {
@@ -424,7 +426,6 @@ public class ProductLibrary {
 			product_AttributeDTO = ((Product_viewBillDTO) product).getAttribute();
 			pc_DTO = ((Product_viewBillDTO) product).getPc();
 		}
-
 		
 		switch (Utilities_data_type.getProductAttribute(pc_DTO)) {
 		case CASE:
@@ -549,7 +550,6 @@ public class ProductLibrary {
 			tmp.append("<li>Dung lượng: <span>"+((UsbDTO)product_AttributeDTO).getUsb_capacity()+"</span></li>");
 			break;
 		default:
-			
 			break;	
 		}
 		return tmp.toString();

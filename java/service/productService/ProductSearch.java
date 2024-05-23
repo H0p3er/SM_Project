@@ -19,6 +19,7 @@ import org.javatuples.Quintet;
 import com.google.gson.Gson;
 
 import connection.*;
+import controller.PCControl;
 import controller.ProductControl;
 import dto.product.Product_DTO;
 import entity.UserObject;
@@ -61,9 +62,9 @@ public class ProductSearch extends HttpServlet {
 		// Tìm bộ quản lý kết nối
 		ConnectionPool cp = (ConnectionPool) getServletContext().getAttribute("CPool");
 		// Tạo đối tượng thực thi chức năng
-		ProductControl pc = new ProductControl(cp);
+		ProductControl productControl = new ProductControl(cp);
 		if (cp == null) {
-			getServletContext().setAttribute("CPool", pc.getCP());
+			getServletContext().setAttribute("CPool", productControl.getCP());
 		}
 		
 		// Lấy từ khóa tìm kiếm;
@@ -91,21 +92,30 @@ public class ProductSearch extends HttpServlet {
 			String min = utility.Utilities.getStringParam(request, "min");
 			multiConditions.put("min", min);
 		}
+		System.out.println(multiConditions);
 
 		Quintet<Short, Byte,  Map<String,String>,  Map<String,String>,  Map<String,String>> infors 
-		= new Quintet<>( page, (byte) 6,
+		= new Quintet<>(page, (byte) 6,
 				utility.Utilities.getMapParam(request, null), 
 				multiConditions,
 				utility.Utilities.getMapParam(request, "orderby")
 				);
 
-		Map<String,String> viewProductsList = 
-				pc.viewSearchProduct(infors, request.getRequestURI());
+		Map<String,String> viewSearchProduct = 
+				productControl.viewSearchProduct(infors, request.getRequestURI());
 
 		// Trả về kết nối
-		pc.releaseConnection();
+		productControl.releaseCP();
 		
-		request.setAttribute("product-search", viewProductsList);
+		PCControl pcControl = new PCControl(cp);
+		
+		Map<String,String> viewSearchPC = pcControl.viewSearchPC(infors, request.getRequestURI());
+		
+		HashMap<String,String> data = new HashMap<String,String>();
+		data.putAll(viewSearchProduct);
+		data.putAll(viewSearchPC);
+		
+		request.setAttribute("product-search", data);
 	    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/main/product/search.jsp");
 	    requestDispatcher.forward(request, response);		
 		

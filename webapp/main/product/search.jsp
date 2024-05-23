@@ -30,7 +30,7 @@ try {
               <ul>
               	<li>Danh mục
                   <ul class="ms-4 mt-2">
-                  <%= map.getOrDefault("product-filter", "") %>
+                  <%= map.getOrDefault("category", "") %>
 <!--                     <li><a class="text-black" href="">Acer</a></li>
                     <li><a class="text-black" href="">AOC</a></li>
                     <li><a class="text-black" href="">Asus</a></li>
@@ -108,7 +108,7 @@ try {
 	        <div class="col-lg-12">
 	          <ul class="pagination">
 	          
-	       		 <%=map.get("product-search-pagination") %>	
+	       		 <%=map.getOrDefault("product-search-pagination","") %>	
 	          </ul>
 	        </div>
 	      </div>

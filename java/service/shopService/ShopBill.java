@@ -82,7 +82,7 @@ public class ShopBill extends HttpServlet {
 				utility.Utilities.getMapParam(request, null),
 				utility.Utilities.getMapParam(request, null));
 
-		Map<String,String> data = shopControl.displaySeller_ShopProduct(productInfors,user);
+		Map<String,String> data = shopControl.viewSeller_ShopProduct(productInfors,user);
 		
 		shopControl.releaseCP();
 		System.out.print(data);
