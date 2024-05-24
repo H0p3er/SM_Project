@@ -111,7 +111,11 @@ public class ProductSearch extends HttpServlet {
 		
 		Map<String,String> viewSearchPC = pcControl.viewSearchPC(infors, request.getRequestURI());
 		
+		pcControl.releaseCP();
+		
 		HashMap<String,String> data = new HashMap<String,String>();
+		
+		
 		data.putAll(viewSearchProduct);
 		data.putAll(viewSearchPC);
 		

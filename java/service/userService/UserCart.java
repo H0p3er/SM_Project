@@ -44,7 +44,12 @@ public class UserCart extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		UserObject user = (UserObject) request.getSession().getAttribute("userLogined");
-		view(request, response, user);
+		if (user!=null) {
+			view(request, response, user);
+		} else {
+			response.sendRedirect("/home/homepage");
+		}
+		
 	}
 	
 	private void view(HttpServletRequest request, HttpServletResponse response, UserObject user) throws ServletException, IOException {
@@ -127,6 +132,60 @@ public class UserCart extends HttpServlet {
 		// Trả về kết nối
 		pc.releaseCP();
 	}
+	
+	
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		UserObject user = (UserObject) request.getSession().getAttribute("userLogined");
+		if (user!=null) {
+			delete(request, response, user);
+		} else {
+			response.sendRedirect("/home/homepage");			
+		}
+	
+	}
+	
+	private void delete(HttpServletRequest request, HttpServletResponse response, UserObject user) throws ServletException, IOException {
+		// Xác định kiểu nội dung xuất về trình khách
+		response.setContentType(CONTENT_TYPE);
+	
+		// Thiết lập tập ký tự cần lấy. Việc thiết lập này cần xác định từ đầu
+		request.setCharacterEncoding("utf-8");
+		
+		// Tìm bộ quản lý kết nối
+		ConnectionPool cp = (ConnectionPool) getServletContext().getAttribute("CPool");
+		// Tạo đối tượng thực thi chức năng
+		ProductControl pc = new ProductControl(cp);
+		if (cp == null) {
+			getServletContext().setAttribute("CPool", pc.getCP());
+		}
+		
+		// Lấy từ khóa tìm kiếm
+		int id = Utilities.getIntParam(request, "id");
+		Product_viewProductDTO product_DTO = new Product_viewProductDTO();
+		product_DTO.setId(id);
+		
+		try {
+			TreeMap<Product_viewProductDTO,Integer> product_DTOs = (TreeMap<Product_viewProductDTO,Integer>) request.getSession().getAttribute("product-cart");
+			if (product_DTOs==null) {
+				product_DTOs = new TreeMap<Product_viewProductDTO,Integer>();
+			} else {
+				if (product_DTOs.containsKey(product_DTO)) {		
+					product_DTOs.remove(product_DTO);
+				}	
+			}	
+			request.getSession().setAttribute("product-cart", product_DTOs);
+		} catch (ClassCastException e) {
+			TreeMap<Product_viewProductDTO,Integer> product_DTOs = new TreeMap<Product_viewProductDTO,Integer>();
+			request.getSession().setAttribute("product-cart", product_DTOs);
+		}	
+		
+		
+		pc.releaseCP();
+	}
+	
 
 }
  
