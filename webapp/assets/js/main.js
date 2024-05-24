@@ -60,10 +60,10 @@ $('.input-number').change(function () {
 });
 
 function updatePrice() {
-    var totalPrice =0;
-    $(".input-number").each(function() {
+    var totalPrice = 0;
+    $(".input-number").each(function () {
         fieldName = $(this).attr('name');
-        totalPrice +=  ($("span[data-field='" + fieldName + "']").attr('value')*$(this).val());
+        totalPrice += ($("span[data-field='" + fieldName + "']").attr('value') * $(this).val());
         console.log($("span[data-field='" + fieldName + "']").attr('value'));
     });
     $("#total_price").text(parseFloat(totalPrice).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " VND");
@@ -72,44 +72,59 @@ function updatePrice() {
 updatePrice();
 
 
-for (var product of document.getElementsByClassName("add-cart")){
-    product.addEventListener("click",()=>{
-        fetch("/home/user/cart?id="+product.id+"", {
-			method:"POST",
-		});
+for (var product of document.getElementsByClassName("add-cart")) {
+    product.addEventListener("click", () => {
+        fetch("/home/user/cart?id=" + product.id + "", {
+            method: "POST",
+        });
         alert("Sản phẩm đã được thêm vào giỏ hàng!");
     })
 }
 
-for (var product of document.getElementsByClassName("del-cart")){
-    product.addEventListener("click",()=>{
-        fetch("/home/user/cart?id="+product.id+"", {
-			method:"DELETE",
-		});
+for (var product of document.getElementsByClassName("del-cart")) {
+    product.addEventListener("click", () => {
+        fetch("/home/user/cart?id=" + product.id + "", {
+            method: "DELETE",
+        });
     })
 }
 
-$("#purchase").on("click",function () {
-                var postData = "amount="+updatePrice()+"&bankCode=&language=vn";
-                alert(postData);
-                var submitUrl = "/home/vnpayajax";
-                $.ajax({
-                    type: "POST",
-                    url: submitUrl,
-                    data: postData,
-                    dataType: 'JSON',
-                    success: function (x) {
-                        if (x.code === '00') {
-                            if (window.vnpay) {
-                                vnpay.open({width: 768, height: 600, url: x.data});
-                            } else {
-                                location.href = x.data;
-                            }
-                            return false;
+$("#purchase").on("click", function () {
+    if (updatePrice() == 0) { alert("Giỏ hàng trống! Vui lòng thêm sản phẩm") } else {
+        if ($("#methodselection").find(":selected").val() == 0) {
+            alert("Vui lòng chọn phương thức thanh toán!");
+        }
+        else if ($("#methodselection").find(":selected").val() == 1) {
+            alert("Đơn hàng của bạn đã được ghi nhận! Vui lòng chờ xác nhận");
+            // backend
+        } else {
+            var postData = "amount=" + updatePrice() + "&bankCode=&language=vn";
+            var submitUrl = "/home/vnpayajax";
+            $.ajax({
+                type: "POST",
+                url: submitUrl,
+                data: postData,
+                dataType: 'JSON',
+                success: function (x) {
+                    if (x.code === '00') {
+                        if (window.vnpay) {
+                            vnpay.open({ width: 768, height: 600, url: x.data });
                         } else {
-                            alert(x.Message);
+                            location.href = x.data;
                         }
+                        return false;
+                    } else {
+                        alert(x.Message);
                     }
-                });
-                return false;
+                }
             });
+            return false;
+        }
+    }
+});
+
+$("button").on("click", function () {
+    var target = $(this).attr('id');
+    $("tr#row" + target).remove();
+    updatePrice();
+});

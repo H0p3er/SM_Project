@@ -57,6 +57,7 @@ public class BillLibrary {
         List<BD_viewBillDTO> bdList = billDTO.getBd();
         if (bdList != null && !bdList.isEmpty()) {
             int index = 1;
+            double totalValue = 0; // Tổng giá trị của các sản phẩm
             for (BD_viewBillDTO bdDTO : bdList) {
                 tmp.append("<tr>");
                 tmp.append("<td>" + (index++) + "</td>");
@@ -93,7 +94,12 @@ public class BillLibrary {
                 }
                 tmp.append("</td>");
                 tmp.append("</tr>");
+
+                // Cập nhật tổng giá trị
+                totalValue += bdDTO.getProduct().getPrice();
             }
+            // Thêm thông tin về tổng giá trị vào view
+            tmp.append("<tr><td colspan=\"2\"><b>Tổng giá trị:</b></td><td colspan=\"3\">" + totalValue + "</td></tr>");
         } else {
             tmp.append("<tr><td colspan=\"5\">Không có sản phẩm trong hóa đơn.</td></tr>");
         }
