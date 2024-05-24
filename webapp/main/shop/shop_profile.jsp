@@ -19,14 +19,12 @@
         <div class="col-lg-12">
           <div class="tabs-content">
             <div class="row">
-            <%session=request.getSession(true); if (session.getAttribute("userLogined")!=null) {%>
+   
               <div class="nav-wrapper ">
-                <ul class="nav nav-tabs" role="tablist">
-                  <li class="nav-item" role="presentation">
-                    <a href="/home/seller/shop/statistic" class="nav-link active">Quản lý shop</a>
-                  </li>
-                </ul>
-              </div> <%} %>
+             	<!-- shop-manage -->
+             	 <%= map.getOrDefault("shop-user", "") %>
+              </div> 
+
               <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="appartment" role="tabpanel" aria-labelledby="appartment-tab">
                   <div class="row">

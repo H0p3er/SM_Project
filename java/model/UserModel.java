@@ -192,7 +192,7 @@ public class UserModel {
 	public Triplet<Map<String,Integer>,Integer,Integer> getCustomerStatisticByShop(ShopObject shopObject) {
 		ArrayList<ResultSet> res = this.user.getCustomerStatisticByShopAndMonth(shopObject, java.time.LocalDateTime.now().getMonth().getValue());	
 		ResultSet rs = res.get(0);
-		Map<String,Integer> customer_current_month = new HashMap<String, Integer>();
+		Map<String,Integer> customer_current_month = new TreeMap<String, Integer>();
 		if (rs!=null) {
 			try {
 				while (rs.next()) {
@@ -232,12 +232,13 @@ public class UserModel {
 	
 	public User_viewShopDTO getSellerById(int id) {
 		//Gan gia tri khoi tao cho doi tuong UserObject
-		User_viewShopDTO item = new User_viewShopDTO() ;				
+		User_viewShopDTO item = new User_viewShopDTO();				
 		ResultSet rs = this.user.getUserById(id);		
 		//Chuyen doi ban ghi thanh doi tuong
 		if (rs!=null) {
 			try {
 				if (rs.next()) {
+					item.setId(id);
 					item.setFullname(Utilities.decode(rs.getString("user_fullname")));
 					if (rs.getBlob("user_images")!=null) {
 						item.setImages(rs.getString("user_images"));

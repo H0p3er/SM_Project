@@ -36,9 +36,8 @@ if (request.getAttribute("shop-statistic")!=null){
                       <i class="bi bi-cart"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>145</h6>
-                      <span class="text-muted small pt-2 ps-1"><i class="bi bi-arrow-down-up"></i></span>
-                      <span class="text-success small pt-1 fw-bold">12%</span>
+                      <%= map.getOrDefault("count-bill-current-month", "<h6>0</h6><span class=\"text-muted small pt-2 ps-1\"><i class=\"bi bi-arrow-down-up\"></i></span> <span class=\"text-danger small pt-1 fw-bold\">0</span>") %>
+   
                     </div>
                   </div>
                 </div>
@@ -58,10 +57,7 @@ if (request.getAttribute("shop-statistic")!=null){
                       <i class="bi bi-currency-dollar"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>$3,264</h6>
-                      <span class="text-muted small pt-2 ps-1"><i class="bi bi-arrow-down-up"></i></span>
-                      <span class="text-success small pt-1 fw-bold">8%</span>
-
+                  		<%= map.getOrDefault("count-income-current-month", "<h6>0</h6><span class=\"text-muted small pt-2 ps-1\"><i class=\"bi bi-arrow-down-up\"></i></span> <span class=\"text-danger small pt-1 fw-bold\">0</span>") %>
                     </div>
                   </div>
                 </div>
@@ -83,10 +79,7 @@ if (request.getAttribute("shop-statistic")!=null){
                       <i class="bi bi-people"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>1244</h6>
-                      <span class="text-muted small pt-2 ps-1"><i class="bi bi-arrow-down-up"></i></span>
-                      <span class="text-danger small pt-1 fw-bold">12%</span>
-
+                      <%= map.getOrDefault("count-customer-current-month", "<h6>0</h6><span class=\"text-muted small pt-2 ps-1\"><i class=\"bi bi-arrow-down-up\"></i></span> <span class=\"text-danger small pt-1 fw-bold\">0</span>") %>
                     </div>
                   </div>
 
@@ -103,60 +96,9 @@ if (request.getAttribute("shop-statistic")!=null){
                   <h5 class="card-title">Biểu đồ báo cáo <span>| Tháng</span></h5>
 
                   <!-- Line Chart -->
-                  <div id="reportsChart"></div>
-
-                  <script>
-                    document.addEventListener("DOMContentLoaded", () => {
-                      new ApexCharts(document.querySelector("#reportsChart"), {
-                        series: [{
-                          name: 'Đơn hàng',
-                          data: [<%= map.getOrDefault("order-data", "0") %>],
-                        }, {
-                          name: 'Doanh thu',
-                          data: [<%= map.getOrDefault("income-data", "0") %>]
-                        }, {
-                          name: 'Lượt khách',
-                          data: [<%= map.getOrDefault("customer-data", "0") %>]
-                        }],
-                        chart: {
-                          height: 350,
-                          type: 'area',
-                          toolbar: {
-                            show: false
-                          },
-                        },
-                        markers: {
-                          size: 4
-                        },
-                        colors: ['#4154f1', '#2eca6a', '#ff771d'],
-                        fill: {
-                          type: "gradient",
-                          gradient: {
-                            shadeIntensity: 1,
-                            opacityFrom: 0.3,
-                            opacityTo: 0.4,
-                            stops: [0, 90, 100]
-                          }
-                        },
-                        dataLabels: {
-                          enabled: false
-                        },
-                        stroke: {
-                          curve: 'smooth',
-                          width: 2
-                        },
-                        xaxis: {
-                          type: 'datetime',
-                          categories: [<%= map.get("datatime-data") %>]
-                        },
-                        tooltip: {
-                          x: {
-                            format: 'dd/MM/yy HH:mm'
-                          },
-                        }
-                      }).render();
-                    });
-                  </script>
+                 
+					<%= map.getOrDefault("data-chart", "") %>
+                 
                   <!-- End Line Chart -->
 
                 </div>

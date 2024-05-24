@@ -1,4 +1,4 @@
-package service.shopService;
+package service.userService;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -28,14 +28,14 @@ import entity.ShopObject;
 /**
  * Servlet implementation class WorkplaceProfile
  */
-@WebServlet("/shop/profile")
-public class ShopProfile extends HttpServlet {
+@WebServlet("/user/shop/profile")
+public class UserShopProfile extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String CONTENT_TYPE = "application/json; charset=utf-8";
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public ShopProfile() {
+	public UserShopProfile() {
 		super();
 	}
 
@@ -48,10 +48,12 @@ public class ShopProfile extends HttpServlet {
 		// TODO Auto-generated method stub
 		// Tìm thông tin đăng nhập
 		UserObject user = (UserObject) request.getSession().getAttribute("userLogined");
-		if (user == null) {
-			user = new UserObject();
+		if (user!=null) {
+			view(request, response, user);
+		} else {
+			response.sendRedirect("/home/homepage");
 		}
-		view(request, response, user);
+		
 	}
 
 	protected void view(HttpServletRequest request, HttpServletResponse response, UserObject user)
@@ -79,14 +81,21 @@ public class ShopProfile extends HttpServlet {
 				utility.Utilities.getMapParam(request, null),
 				utility.Utilities.getMapParam(request, null));
 
-		Map<String,String> data = shopControl.viewShop_Profile(productInfors,utility.Utilities.getIntParam(request, "id"), user);
-		System.out.println(data);
+		Map<String,String> data = shopControl.viewUser_ShopProfile(productInfors,user);
+		
 		shopControl.releaseCP();
+		
 		request.setAttribute("shop-profile", data);
-	    
-	    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/main/shop/shop_profile.jsp");
-		// Tạo đối tượng thực hiện xuất nội dung
-	    requestDispatcher.forward(request, response);		
+
+		if (data.containsKey("shop-exist")) {
+		    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/main/shop/shop_profile.jsp");
+			// Tạo đối tượng thực hiện xuất nội dung
+		    requestDispatcher.forward(request, response);	
+		} else {	
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/main/user/shop_create.jsp");
+			// Tạo đối tượng thực hiện xuất nội dung
+		    requestDispatcher.forward(request, response);
+		}
 	}
 
 	/**

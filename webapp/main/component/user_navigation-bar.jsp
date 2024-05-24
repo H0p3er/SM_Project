@@ -74,7 +74,7 @@
                         <a class="dropdown-item p-0 bg-white text-black" href="/home/main/user/bills.jsp"><i class="fa-solid fa-box me-1"></i> Đơn hàng</a>
                       </li>
                       <li> <!-- /home/main/user/shop_create.jsp -->
-                        <a class="dropdown-item p-0 bg-white text-black"  href="/home/shop/profile?id=<%=user.getUser_id()%>"><i class="fa-solid fa-store"></i> Gian hàng của bạn</a>
+                        <a class="dropdown-item p-0 bg-white text-black"  href="/home/user/shop/profile"><i class="fa-solid fa-store"></i> Gian hàng của bạn</a>
                       </li>
                       
                       <li>

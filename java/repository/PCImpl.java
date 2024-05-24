@@ -67,40 +67,33 @@ public class PCImpl extends BasicImpl implements PC {
 			case 1:
 				sql.append("SELECT * FROM tbl_monitors ");				
 				sql.append("WHERE product_id="+productObject.getProduct_id()+";");	
-				break;
-				
+				break;			
 			case 2:
 				sql.append("SELECT * FROM tbl_keyboards ");				
 				sql.append("WHERE product_id="+productObject.getProduct_id()+";");
-				break;
-				
+				break;			
 			case 3:
 				sql.append("SELECT * FROM tbl_mice ");				
-				sql.append("WHERE product_id="+productObject.getProduct_id()+";");
-		
+				sql.append("WHERE product_id="+productObject.getProduct_id()+";");	
 				break;
 				
 			case 4:
 				sql.append("SELECT * FROM tbl_headphones_speakers ");				
 				sql.append("WHERE product_id="+productObject.getProduct_id()+";");
-				break;
-				
+				break;		
 			case 5:
 				sql.append("SELECT * FROM tbl_laptops ");				
 				sql.append("WHERE product_id="+productObject.getProduct_id()+";");
-			
-				break;
-				
+				break;	
 			case 6:
 				sql.append("SELECT * FROM tbl_desktops ");				
 				sql.append("WHERE product_id="+productObject.getProduct_id()+";");
 				break;
-				
 			case 7:
 				sql.append("SELECT * FROM tbl_cpus ");				
 				sql.append("WHERE product_id="+productObject.getProduct_id()+";");
 				break;
-				
+	
 			case 8:
 				sql.append("SELECT * FROM tbl_motherboards ");				
 				sql.append("WHERE product_id="+productObject.getProduct_id()+";");
@@ -140,8 +133,11 @@ public class PCImpl extends BasicImpl implements PC {
 				sql.append("WHERE product_id="+productObject.getProduct_id()+";");
 				break;
 		}
-		// TODO Auto-generated method stub
-		return this.gets(sql.toString());
+		if (sql.toString().isBlank() || sql.toString().isEmpty()) {
+			return null;
+		} else {
+			return this.gets(sql.toString());
+		}
 	}
 
 	private String WHEREConditions(Map<String,String> multiCondition) {
