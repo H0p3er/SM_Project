@@ -81,20 +81,12 @@ for (var product of document.getElementsByClassName("add-cart")) {
     })
 }
 
-for (var product of document.getElementsByClassName("del-cart")) {
-    product.addEventListener("click", () => {
-        fetch("/home/user/cart?id=" + product.id + "", {
-            method: "DELETE",
-        });
-    })
-}
-
 $("#purchase").on("click", function () {
     if (updatePrice() == 0) { alert("Giỏ hàng trống! Vui lòng thêm sản phẩm") } else {
         if ($("#methodselection").find(":selected").val() == 0) {
             alert("Vui lòng chọn phương thức thanh toán!");
         }
-        else if ($("#methodselection").find(":selected").val() == 1) {
+        else if ($("#methodselection").find(":selected").val() == 2) {
             alert("Đơn hàng của bạn đã được ghi nhận! Vui lòng chờ xác nhận");
             // backend
         } else {
@@ -127,4 +119,7 @@ $("button").on("click", function () {
     var target = $(this).attr('id');
     $("tr#row" + target).remove();
     updatePrice();
+    fetch("/home/user/cart?id=" + target + "", {
+        method: "DELETE",
+    });
 });
