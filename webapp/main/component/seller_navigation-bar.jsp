@@ -145,7 +145,7 @@
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="/home/main/seller/shopmanage.jsp">
+                <a class="nav-link collapsed" href="/home/seller/shop/statistic">
                     <i class="bi bi-bar-chart"></i>
                     <span>Thống kê</span>
                 </a>
