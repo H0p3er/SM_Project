@@ -342,34 +342,35 @@ public class ProductLibrary {
 	
 	public static Map<String,String> viewProductCart(TreeMap<Product_viewProductDTO,Integer> product_DTOs){
 		Map<String,String> view = new HashMap<String, String>();
-		StringBuilder tmp = new StringBuilder();		
+		StringBuilder tmp = new StringBuilder();
+
   		if (product_DTOs!=null){
-		product_DTOs.forEach((product, quantity)->{		                   			 
-                tmp.append("<tr>");
-				tmp.append("<th scope=\"row\">1</th>");
-				tmp.append("<td><img height=\"70px\" class=\"p-0\" src=\"/"+product.getImages()+"\" alt=\"\">");
-				tmp.append("</td>");
-				tmp.append("<td><a href=\"\">"+product.getName()+"</a></td>");
-				tmp.append("<td class=\"col-2\">");
-				tmp.append("<div class=\"input-group\">");
-				tmp.append("<span class=\"input-group-btn\">");
-				tmp.append("<button type=\"button\" class=\"btn btn-default btn-number\" disabled=\"disabled\" data-type=\"minus\" data-field=\"quant["+product.getId()+"]\">");
-				tmp.append("<i class=\"fa-solid fa-minus\"></i>");
-				tmp.append("</button>");
-				tmp.append("</span>");
-				tmp.append("<input type=\"text\" name=\"quant["+product.getId()+"]\" class=\"form-control input-number\" value=\""+quantity+"\" min=\"1\" max=\"99\" maxlength=\"2\">");
-				tmp.append("<span class=\"input-group-btn\">");
-				tmp.append("<button type=\"button\" class=\"btn btn-default btn-number\" data-type=\"plus\" data-field=\"quant["+product.getId()+"]\">");
-				tmp.append("<i class=\"fa-solid fa-plus\"></i>");
-				tmp.append("</button>");
-				tmp.append("</span>");
-				tmp.append("</div>");
-				tmp.append("</td>");
-				tmp.append("<td><span class=\"product-price\" data-field=\"quant["+product.getId()+"]\"  value=\""+product.getPrice()+"\">"+Utilities_currency.toVND(product.getPrice())+"</span></td>");
-				tmp.append("<td><i class=\"fa-solid fa-trash\"></i></td>");
-				tmp.append("</tr>");        	
-  			});
-		view.put("product-cart",tmp.toString());
+			product_DTOs.forEach((product, quantity)->{		
+	                tmp.append("<tr>");
+					tmp.append("<th scope=\"row\">"+1+"</th>");
+					tmp.append("<td><img height=\"70px\" class=\"p-0\" src=\""+product.getImages()+"\" alt=\"\">");
+					tmp.append("</td>");
+					tmp.append("<td><a href=\"\">"+product.getName()+"</a></td>");
+					tmp.append("<td class=\"col-2\">");
+					tmp.append("<div class=\"input-group\">");
+					tmp.append("<span class=\"input-group-btn\">");
+					tmp.append("<button type=\"button\" class=\"btn btn-default btn-number\" disabled=\"disabled\" data-type=\"minus\" data-field=\"quant["+product.getId()+"]\">");
+					tmp.append("<i class=\"fa-solid fa-minus\"></i>");
+					tmp.append("</button>");
+					tmp.append("</span>");
+					tmp.append("<input type=\"text\" name=\"quant["+product.getId()+"]\" class=\"form-control input-number\" value=\""+quantity+"\" min=\"1\" max=\"99\" maxlength=\"2\">");
+					tmp.append("<span class=\"input-group-btn\">");
+					tmp.append("<button type=\"button\" class=\"btn btn-default btn-number\" data-type=\"plus\" data-field=\"quant["+product.getId()+"]\">");
+					tmp.append("<i class=\"fa-solid fa-plus\"></i>");
+					tmp.append("</button>");
+					tmp.append("</span>");
+					tmp.append("</div>");
+					tmp.append("</td>");
+					tmp.append("<td><span class=\"product-price\" data-field=\"quant["+product.getId()+"]\"  value=\""+product.getPrice()+"\">"+Utilities_currency.toVND(product.getPrice())+"</span></td>");
+					tmp.append("<td><i class=\"fa-solid fa-trash del-cart\" id=\""+product.getId()+"\" ></i></td>");
+					tmp.append("</tr>");        	
+	  			});
+			view.put("product-cart",tmp.toString());
 		} 
 		return view;
 		

@@ -81,8 +81,17 @@ for (var product of document.getElementsByClassName("add-cart")){
     })
 }
 
+for (var product of document.getElementsByClassName("del-cart")){
+    product.addEventListener("click",()=>{
+        fetch("/home/user/cart?id="+product.id+"", {
+			method:"DELETE",
+		});
+    })
+}
+
 $("#purchase").on("click",function () {
                 var postData = "amount="+updatePrice()+"&bankCode=&language=vn";
+                alert(postData);
                 var submitUrl = "/home/vnpayajax";
                 $.ajax({
                     type: "POST",
