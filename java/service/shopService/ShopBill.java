@@ -28,7 +28,7 @@ import entity.ShopObject;
 /**
  * Servlet implementation class WorkplaceProfile
  */
-@WebServlet("/seller/shop/bill")
+@WebServlet("/seller/shop/bills")
 public class ShopBill extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String CONTENT_TYPE = "application/json; charset=utf-8";

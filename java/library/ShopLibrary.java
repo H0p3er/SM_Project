@@ -146,4 +146,10 @@ public class ShopLibrary {
 		System.out.print(view);
 		return view;
 	}
+	
+	public static Map<String, String> viewSeller_ShopBill(Shop_manageShopDTO shopDTO) {
+        Map<String, String> data = new HashMap<>();
+        //null
+        return data;
+    }
 }

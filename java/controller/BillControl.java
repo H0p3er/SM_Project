@@ -1,7 +1,9 @@
 package controller;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.javatuples.Pair;
@@ -16,6 +18,7 @@ import constant.BILL_SORT_TYPE;
 import dto.bd.BD_DTO;
 import dto.bill.Bill_DTO;
 import dto.bill.Bill_manageBillDTO;
+import dto.bill.Bill_viewBillDTO;
 import dto.shop.Shop_manageShopDTO;
 import entity.BDObject;
 import entity.BillObject;
@@ -52,17 +55,8 @@ public class BillControl {
 		return this.billModel.delBill(item);
 	}
 	
+	public List<Bill_viewBillDTO> getBillDTOByUser(UserObject currentUser) {
+	    return billModel.getBillDTOByUser(currentUser);
+	}
 
-	
-//	public static void main(String[] args) {
-//		BillControl uc = new BillControl(null);
-//		
-//		Quartet<BillObject, Short, Byte, BILL_SORT_TYPE> infors = new Quartet<>(null, (short) 1, (byte) 10, BILL_SORT_TYPE.NAME);
-//		
-//		ArrayList<String> view = uc.viewBillsList(infors);
-//		
-//		uc.releaseConnection();//Tra ve ket noi
-//		
-//		System.out.println(view);
-//	}
 }

@@ -6,6 +6,8 @@ import utility.Utilities;
 import utility.Utilities_date;
 
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -101,32 +103,65 @@ public class UserProfile extends HttpServlet {
 	}
 
 	private void changePassword(HttpServletRequest request, HttpServletResponse response, UserObject user)
-			throws IOException, ServletException {
-		String currentPassword = request.getParameter("txtpass");
-		String newPassword = request.getParameter("txtpassword");
+	        throws IOException, ServletException {
+	    String currentPassword = request.getParameter("txtpass");
+	    String newPassword = request.getParameter("txtpassword");
 
-		ServletContext application = getServletConfig().getServletContext();
-		ConnectionPool cp = (ConnectionPool) application.getAttribute("CPool");
+	    ServletContext application = getServletConfig().getServletContext();
+	    ConnectionPool cp = (ConnectionPool) application.getAttribute("CPool");
 
-		
-		//max hóa md5 cho current pass
-		if (!user.getUser_pass().equals(currentPassword)) {
-//			request.setAttribute("passwordError", "Mật khẩu cũ không đúng!");
-//			request.getRequestDispatcher("/main/user/user_profile.jsp").forward(request, response);
-			response.sendRedirect("/home/main/user/user_profile.jsp?err=failedPass");
+	    try {
+	        // Mã hóa mật khẩu hiện tại
+	        String hashedCurrentPassword = encryptPassword(currentPassword);
 
-		} else {
-			user.setUser_pass(newPassword);
+	        // So sánh mật khẩu đã mã hóa với mật khẩu đã lưu
+	        if (!user.getUser_pass().equals(hashedCurrentPassword)) {
+	            response.sendRedirect("/home/main/user/user_profile.jsp?err=failedPass");
+	            return;
+	        }
 
-			UserControl uc = new UserControl(cp);
-			boolean success = uc.editUser(user, USER_EDIT_TYPE.PASS);
-			uc.releaseConnection();
+	        // Nếu mật khẩu hiện tại là chính xác, cập nhật mật khẩu mới
+	        user.setUser_pass(newPassword);
 
-			if (!success) {
-				response.sendRedirect("/home/main/user/user_profile.jsp?err=failed");
-			} else {
-				response.sendRedirect("/home/main/user/user_profile.jsp?success=1");
-			}
-		}
+	        UserControl uc = new UserControl(cp);
+	        boolean success = uc.editUser(user, USER_EDIT_TYPE.PASS);
+	        uc.releaseConnection();
+
+	        if (!success) {
+	            response.sendRedirect("/home/main/user/user_profile.jsp?err=failed");
+	        } else {
+	            response.sendRedirect("/home/main/user/user_profile.jsp?success=1");
+	        }
+		} catch (NoSuchAlgorithmException e) {
+			// Xử lý ngoại lệ nếu thuật toán MD5 không được hỗ trợ
+			// Bạn có thể redirect hoặc hiển thị thông báo lỗi
+	        e.printStackTrace();
+	        response.sendRedirect("/home/main/user/user_profile.jsp?err=failed");
+	    }
 	}
+
+	/**
+	 * Mã hóa mật khẩu sử dụng thuật toán MD5.
+	 * 
+	 * @param password Mật khẩu cần mã hóa
+	 * @return Chuỗi hex biểu diễn mật khẩu đã mã hóa
+	 * @throws NoSuchAlgorithmException Nếu thuật toán MD5 không được hỗ trợ
+	 */
+	private String encryptPassword(String password) throws NoSuchAlgorithmException {
+        try {
+            // Tạo đối tượng MessageDigest với thuật toán MD5
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            // Mã hóa mật khẩu thành mảng byte
+            byte[] messageDigest = md.digest(password.getBytes());
+            // Chuyển đổi mảng byte thành chuỗi hex
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : messageDigest) {
+                // Chuyển đổi từng byte thành dạng hex và thêm vào chuỗi
+                hexString.append(String.format("%02x", b));
+            }
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new NoSuchAlgorithmException("Error!");
+        }
+    }
 }

@@ -208,23 +208,28 @@ public class BillImpl extends BasicImpl implements Bill {
 		return this.getReList(sql.toString());
 	}
 	
-	private static String getBillByUserSQL(int at, byte total, String multiField,  String multiCondition, String multiSort, UserObject userObject) {
-		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT * FROM tblbill b ");	 
-		sql.append("LEFT JOIN tblbd bd ON b.bill_id=bd.bd_id ");
-		sql.append("WHERE b.bill_creator_id="+userObject.getUser_id()+" AND b.bill_status=0 ");
-		sql.append(ORDERConditions(multiSort));
-		sql.append("LIMIT "+at+"," +total+"; ") ;
-		System.out.print(sql.toString());
-		return sql.toString();
+	private static String getBillByUserSQL(int at, byte total, String multiField, String multiCondition, String multiSort, UserObject userObject) {
+	    StringBuilder sql = new StringBuilder();
+	    sql.append("SELECT * ");
+	    sql.append("FROM tblbill b ");
+	    sql.append("INNER JOIN tblbd bd ON b.bill_id = bd.bd_bill_id ");
+	    sql.append("INNER JOIN tblproduct p ON bd.bd_product_id = p.product_id ");
+	    sql.append("LEFT JOIN tblshop s ON p.product_shop_id = s.shop_id ");
+	    sql.append("WHERE b.bill_creator_id = ").append(userObject.getUser_id());
+	    sql.append(" AND b.bill_status = 0 "); // Assuming 0 represents an active bill
+	    sql.append(ORDERConditions(multiSort));
+	    sql.append(" LIMIT ").append(at).append(",").append(total);
+	    sql.append("; ");
+	    return sql.toString();
 	}
 	
 	private static String getBillSizeByUserSQL(String multiCondition, UserObject userObject) {
-		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT COUNT(bill_id) AS total FROM tblbill b ");
-		sql.append("WHERE b.bill_creator_id="+userObject.getUser_id()+" AND b.bill_status=0 ");
-		sql.append("; ");
-		return sql.toString();
+	    StringBuilder sql = new StringBuilder();
+	    sql.append("SELECT COUNT(b.bill_id) AS total FROM tblbill b ");
+	    sql.append("WHERE b.bill_creator_id = ").append(userObject.getUser_id());
+	    sql.append(" AND b.bill_status = 0 "); // Assuming 0 represents an active bill
+	    sql.append("; ");
+	    return sql.toString();
 	}
 
 	
@@ -238,14 +243,18 @@ public class BillImpl extends BasicImpl implements Bill {
 	}
 	
 	private static String getBillByShopSQL(int at, byte total, String multiField, String multiCondition, String multiSort, ShopObject shopObject) {
-		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT bill.* FROM tblbill b ");	 
-		sql.append("INNER JOIN tblbd bd ON b.bill_id=bd.bd_id ");
-		sql.append("INNER JOIN tblproduct p ON bd.bd_product_id=p.product_id ");
-		sql.append("WHERE b.product_shop_id="+shopObject.getShop_id()+" AND b.bill_status=0 ");
-		sql.append(ORDERConditions(multiSort));
-		sql.append("LIMIT "+at+"," +total+"; ") ;
-		return sql.toString();
+	    StringBuilder sql = new StringBuilder();
+	    sql.append("SELECT b.bill_id, GROUP_CONCAT(p.product_name SEPARATOR ', ') AS product_list, ");
+	    sql.append("GROUP_CONCAT(p.product_price SEPARATOR ', ') AS price_list, ");
+	    sql.append("u.username ");
+	    sql.append("FROM tblbill b ");
+	    sql.append("INNER JOIN tblbd bd ON b.bill_id = bd.bd_bill_id ");
+	    sql.append("INNER JOIN tblproduct p ON bd.bd_product_id = p.product_id ");
+	    sql.append("INNER JOIN tbluser u ON b.bill_creator_id = u.user_id ");
+	    sql.append("WHERE b.product_shop_id = ").append(shopObject.getShop_id()).append(" AND b.bill_status = 0 ");
+	    sql.append(ORDERConditions(multiSort));
+	    sql.append(" LIMIT ").append(at).append(",").append(total).append("; ");
+	    return sql.toString();
 	}
 	
 	private static String getBillSizeByShopSQL(String multiCondition, ShopObject shopObject) {
@@ -401,7 +410,7 @@ public class BillImpl extends BasicImpl implements Bill {
 		
 
 		UserObject currentUser = new UserObject();
-		currentUser.setUser_id(5);
+		currentUser.setUser_id(2);
 		int at = 0;
 		byte bPerPage = 6; 
 		
@@ -411,7 +420,7 @@ public class BillImpl extends BasicImpl implements Bill {
 //			System.out.print("\n---------------------Khong thanh cong-------------------\n");
 //		}
 		
-		ArrayList<ResultSet> res = u.getBillByUser(at, bPerPage,"","", "created_date:desc;shop:asc",currentUser);
+		ArrayList<ResultSet> res = u.getBillByUser(at, bPerPage,"","", "created_date:desc",currentUser);
 		
 		ResultSet rs = res.get(0);
 		String row;
@@ -419,8 +428,12 @@ public class BillImpl extends BasicImpl implements Bill {
 		if (rs!=null) {
 			try {
 				while (rs.next()) {
-					row = " date: "+rs.getString("bill_created_date");
-					System.out.println(row);
+	                    row = "Bill ID: " + rs.getInt("bill_id");
+	                    row += ", Product Name: " + rs.getString("product_name");
+	                    row += ", Price: " + rs.getDouble("product_price");
+	                    row += ", Quantity: " + rs.getInt("bd_product_quantity");
+	                    row += ", Shop Name: " + rs.getString("shop_name");
+	                    System.out.println(row);
 				}			
 				rs.close();
 				

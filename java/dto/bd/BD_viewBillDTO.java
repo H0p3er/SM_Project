@@ -2,6 +2,7 @@ package dto.bd;
 
 import dto.product.Product_viewBillDTO;
 import entity.BDObject;
+import entity.ProductObject;
 
 public class BD_viewBillDTO implements BD_DTO {
 	/**
@@ -25,7 +26,7 @@ public class BD_viewBillDTO implements BD_DTO {
 	}
 
 	public void setProduct(Product_viewBillDTO product) {
-		this.product = product;
+		this.product = product;	
 	}
 
 	public int getProduct_quantity() {
@@ -37,9 +38,10 @@ public class BD_viewBillDTO implements BD_DTO {
 	}
 
 	@Override
-	public void ApplyToEntity(BDObject entity) {
-		// TODO Auto-generated method stub
-
+	public void ApplyToEntity(BDObject bdObject) {
+		bdObject.setBd_id(id);
+		bdObject.setBd_product_quantity(product_quantity);
+	
 	}
 
 }

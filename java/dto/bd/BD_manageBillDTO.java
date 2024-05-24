@@ -29,8 +29,10 @@ public class BD_manageBillDTO implements BD_DTO {
 	}
 
 	@Override
-	public void ApplyToEntity(BDObject entity) {
-		// TODO Auto-generated method stub
+	public void ApplyToEntity(BDObject bdObject) {
+		bdObject.setBd_id(id);
+		bdObject.setBd_product_quantity(product_quantity);
+		
 
 	}
 
