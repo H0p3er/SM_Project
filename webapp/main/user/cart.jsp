@@ -49,8 +49,16 @@
                               </ul>
                             </div>
                           </div>
-                          
-                          <div class="main-button"><a class="float-end btn" id="purchase">Mua hàng</a></div>
+                          <div class="row justify-content-between">
+                            <div class="col-lg-4">
+                              <select class="form-select" name="" id="methodselection">
+                                <option value="0">Chọn phương thức thanh toán...</option>
+                                <option value="1">Thanh toán online</option>
+                                <option value="2">COD</option>
+                              </select>
+                            </div>
+                            <div class="main-button col-lg-3"><a class="btn float-end" id="purchase">Mua hàng</a></div>
+                          </div>
                         </div>
                       </div>
                     </div>

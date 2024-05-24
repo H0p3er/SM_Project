@@ -346,7 +346,7 @@ public class ProductLibrary {
 
   		if (product_DTOs!=null){
 			product_DTOs.forEach((product, quantity)->{		
-	                tmp.append("<tr>");
+	                tmp.append("<tr id=\"row"+product.getId()+"\">");
 					tmp.append("<th scope=\"row\">"+1+"</th>");
 					tmp.append("<td><img height=\"70px\" class=\"p-0\" src=\""+product.getImages()+"\" alt=\"\">");
 					tmp.append("</td>");
@@ -367,7 +367,7 @@ public class ProductLibrary {
 					tmp.append("</div>");
 					tmp.append("</td>");
 					tmp.append("<td><span class=\"product-price\" data-field=\"quant["+product.getId()+"]\"  value=\""+product.getPrice()+"\">"+Utilities_currency.toVND(product.getPrice())+"</span></td>");
-					tmp.append("<td><i class=\"fa-solid fa-trash del-cart\" id=\""+product.getId()+"\" ></i></td>");
+					tmp.append("<td><button class=\"btn btn-dark\" id=\""+product.getId()+"\"><i class=\"fa-solid fa-trash del-cart\"></i></button></td>");
 					tmp.append("</tr>");        	
 	  			});
 			view.put("product-cart",tmp.toString());
