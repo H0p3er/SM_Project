@@ -49,10 +49,9 @@
                               </ul>
                             </div>
                           </div>
-                          <div class="main-button"><a class="float-end" href="../payment">Mua hàng</a></div>
-
+                          
+                          <div class="main-button"><a class="float-end btn" id="purchase">Mua hàng</a></div>
                         </div>
-
                       </div>
                     </div>
                   </div>
@@ -64,5 +63,6 @@
       </div>
     </div>
   </div>
+  <script src="https://pay.vnpay.vn/lib/vnpay/vnpay.min.js"></script>
 
   <jsp:include page="../component/user_footer.jsp" flush="true"></jsp:include>
