@@ -90,36 +90,37 @@ for (var product of document.getElementsByClassName("del-cart")) {
 }
 
 $("#purchase").on("click", function () {
-    if ($("#methodselection").find(":selected").val() == 0) {
-        alert("Vui lòng chọn phương thức thanh toán!");
-    }
-    else if ($("#methodselection").find(":selected").val() == 1) {
-        alert("Đơn hàng của bạn đã được ghi nhận! Vui lòng chờ xác nhận");
-        // backend
-    } else {
-        var postData = "amount=" + updatePrice() + "&bankCode=&language=vn";
-        var submitUrl = "/home/vnpayajax";
-        $.ajax({
-            type: "POST",
-            url: submitUrl,
-            data: postData,
-            dataType: 'JSON',
-            success: function (x) {
-                if (x.code === '00') {
-                    if (window.vnpay) {
-                        vnpay.open({ width: 768, height: 600, url: x.data });
+    if (updatePrice() == 0) { alert("Giỏ hàng trống! Vui lòng thêm sản phẩm") } else {
+        if ($("#methodselection").find(":selected").val() == 0) {
+            alert("Vui lòng chọn phương thức thanh toán!");
+        }
+        else if ($("#methodselection").find(":selected").val() == 1) {
+            alert("Đơn hàng của bạn đã được ghi nhận! Vui lòng chờ xác nhận");
+            // backend
+        } else {
+            var postData = "amount=" + updatePrice() + "&bankCode=&language=vn";
+            var submitUrl = "/home/vnpayajax";
+            $.ajax({
+                type: "POST",
+                url: submitUrl,
+                data: postData,
+                dataType: 'JSON',
+                success: function (x) {
+                    if (x.code === '00') {
+                        if (window.vnpay) {
+                            vnpay.open({ width: 768, height: 600, url: x.data });
+                        } else {
+                            location.href = x.data;
+                        }
+                        return false;
                     } else {
-                        location.href = x.data;
+                        alert(x.Message);
                     }
-                    return false;
-                } else {
-                    alert(x.Message);
                 }
-            }
-        });
-        return false;
+            });
+            return false;
+        }
     }
-
 });
 
 $("button").on("click", function () {
