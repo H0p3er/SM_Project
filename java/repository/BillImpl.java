@@ -203,7 +203,7 @@ public class BillImpl extends BasicImpl implements Bill {
 	public ArrayList<ResultSet> getBillByUser(int at, byte total, String multiField,  String multiCondition, String multiSort, UserObject userObject) {
 		StringBuilder sql = new StringBuilder();
 		sql.append(getBillByUserSQL(at, total, multiField, multiCondition, multiSort, userObject));
-		sql.append(getBillSizeByUserSQL(multiCondition, userObject));
+//		sql.append(getBillSizeByUserSQL(multiCondition, userObject));
 		System.out.print(sql.toString());
 		return this.getReList(sql.toString());
 	}
@@ -215,22 +215,21 @@ public class BillImpl extends BasicImpl implements Bill {
 	    sql.append("INNER JOIN tblbd bd ON b.bill_id = bd.bd_bill_id ");
 	    sql.append("INNER JOIN tblproduct p ON bd.bd_product_id = p.product_id ");
 	    sql.append("LEFT JOIN tblshop s ON p.product_shop_id = s.shop_id ");
-	    sql.append("WHERE b.bill_creator_id = ").append(userObject.getUser_id());
-	    sql.append(" AND b.bill_status = 0 "); // Assuming 0 represents an active bill
+		sql.append("WHERE b.bill_creator_id="+userObject.getUser_id()+" AND b.bill_status=0 "); 
 	    sql.append(ORDERConditions(multiSort));
 	    sql.append(" LIMIT ").append(at).append(",").append(total);
 	    sql.append("; ");
 	    return sql.toString();
 	}
 	
-	private static String getBillSizeByUserSQL(String multiCondition, UserObject userObject) {
-	    StringBuilder sql = new StringBuilder();
-	    sql.append("SELECT COUNT(b.bill_id) AS total FROM tblbill b ");
-	    sql.append("WHERE b.bill_creator_id = ").append(userObject.getUser_id());
-	    sql.append(" AND b.bill_status = 0 "); // Assuming 0 represents an active bill
-	    sql.append("; ");
-	    return sql.toString();
-	}
+	/*
+	 * private static String getBillSizeByUserSQL(String multiCondition, UserObject
+	 * userObject) { StringBuilder sql = new StringBuilder();
+	 * sql.append("SELECT COUNT(b.bill_id) AS total FROM tblbill b ");
+	 * sql.append("WHERE b.bill_creator_id = ").append(userObject.getUser_id());
+	 * sql.append(" AND b.bill_status = 0 "); // Assuming 0 represents an active
+	 * bill sql.append("; "); return sql.toString(); }
+	 */
 
 	
 	@Override

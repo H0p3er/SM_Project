@@ -23,8 +23,7 @@ try {
         <div class="section-heading text-center">
           <h2>Welcome to SM Marketplace</h2>
           <br>
-          <h6>Nous n'avons pas ce dont vous avez besoin ici !</h6>
-          <h6>这里什么都没有</h6>
+          <h6>Nothing is Impossible</h6>
         </div>
       </div>
     </div>

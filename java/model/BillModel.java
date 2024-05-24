@@ -193,7 +193,7 @@ public class BillModel {
 	public List<Bill_viewBillDTO> getBillDTOByUser(UserObject currentUser) {
 	    List<Bill_viewBillDTO> billList = new ArrayList<>();
 
-	    ArrayList<ResultSet> billResultSets = this.bill.getBillByUser(0, (byte) 8, "", "", "", currentUser);
+	    ArrayList<ResultSet> billResultSets = this.bill.getBillByUser(0, (byte) 20, "", "", "", currentUser);
 
 	    try {
 	        if (billResultSets != null) {
