@@ -51,6 +51,18 @@ public class Utilities_date {
 		return d;
 	}
 	
+	public static Date getDate(String format, String date) {
+		DateFormat dateFormat = new SimpleDateFormat(format);
+		Date d = new Date();
+		try {
+			d = dateFormat.parse(date);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return d;
+	}
+	
 	//chuyển đổi từ yyyy-MM-dd thành dd/MM/yyyy
 	public static String getDateFormat(String date) {
         try {
@@ -66,4 +78,18 @@ public class Utilities_date {
         }
     }
 
+	
+	public static String getDate(String date, String inputFormat, String outputFormat) {
+        try {
+            // Định dạng ngày từ input type="date"
+            SimpleDateFormat input = new SimpleDateFormat(inputFormat);
+            // Định dạng ngày mong muốn
+            SimpleDateFormat output = new SimpleDateFormat(outputFormat);
+            Date date_str = input.parse(date);
+            return output.format(date_str);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

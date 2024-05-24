@@ -242,10 +242,6 @@ public class ShopImpl extends BasicImpl implements Shop {
 	private String getShopByUserSQL(UserObject user) {	
 		return "SELECT * FROM tblshop s WHERE (s.shop_user_id="+user.getUser_id()+") AND (s.shop_deleted=0); ";
 	}
-	
-	private String getShopsSQL() {	
-		return "SELECT * FROM tblshop;";
-	}
 
 	
 	

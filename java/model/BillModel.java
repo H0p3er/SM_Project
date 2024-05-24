@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.HashMap;
 
 import org.javatuples.*;
@@ -102,7 +103,7 @@ public class BillModel {
 		ArrayList<ResultSet> res = this.bill.getIncomeStatisticByShop(shopObject,
 				java.time.LocalDateTime.now().getMonth().getValue());
 		ResultSet rs = res.get(0);
-		Map<String, Double> income_current_month = new HashMap<String, Double>();
+		Map<String, Double> income_current_month = new TreeMap<String, Double>();
 		if (rs != null) {
 			try {
 				while (rs.next()) {
@@ -147,7 +148,7 @@ public class BillModel {
 		ArrayList<ResultSet> res = this.bill.getOrderStatisticByShop(shopObject,
 				java.time.LocalDateTime.now().getMonth().getValue());
 		ResultSet rs = res.get(0);
-		Map<String, Integer> order_current_month = new HashMap<String, Integer>();
+		Map<String, Integer> order_current_month = new TreeMap<String, Integer>();
 		if (rs != null) {
 			try {
 				while (rs.next()) {

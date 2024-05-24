@@ -134,6 +134,7 @@ public class Shop_viewShopDTO implements Shop_DTO{
 
 	@Override
 	public void applyToEntity(ShopObject shopObject) {
+		shopObject.setShop_id(this.id);
 		shopObject.setShop_name(this.name);
 		shopObject.setShop_address(address);
 		shopObject.setShop_address_link(address_link);

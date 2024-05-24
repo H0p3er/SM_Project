@@ -100,7 +100,7 @@ public class ShopModel {
 		}
 		
 		ShopObject shopObject = new ShopObject();
-		shopObject.setShop_id(shop_viewShopDTO.getId());
+		shop_viewShopDTO.applyToEntity(shopObject);
 		shop_viewShopDTO.setStorage(this.product.getProduct_viewShopDTO(productInfors,shopObject));	
 		return shop_viewShopDTO;
 	}
@@ -158,6 +158,9 @@ public class ShopModel {
 		shop_StatisticDTO.setCustomer_current_month(customer_statistic.getValue0());
 		shop_StatisticDTO.setCount_customer_current_month(customer_statistic.getValue1());
 		shop_StatisticDTO.setCount_customer_last_month(customer_statistic.getValue2());
+		
+		System.out.println(shop_StatisticDTO.toString());
+
 		return shop_StatisticDTO;
 	}
 	
