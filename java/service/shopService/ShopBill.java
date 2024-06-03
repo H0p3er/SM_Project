@@ -1,12 +1,7 @@
 package service.shopService;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,100 +10,109 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.javatuples.Quintet;
-
-import com.google.gson.Gson;
-
 import connection.ConnectionPool;
-import controller.ProductControl;
-import controller.ShopControl;
+import connection.ConnectionPoolImpl;
+import constant.BILL_EDIT_TYPE;
+import controller.BillControl;
+import dto.bill.Bill_manageBillDTO;
+import entity.BillObject;
 import entity.UserObject;
-import entity.ShopObject;
+import model.BillModel;
+import model.ShopModel;
+import model.UserModel;
 
-/**
- * Servlet implementation class WorkplaceProfile
- */
 @WebServlet("/seller/shop/bills")
 public class ShopBill extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	private static final String CONTENT_TYPE = "application/json; charset=utf-8";
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public ShopBill() {
-		super();
-	}
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		// Tìm thông tin đăng nhập
-		UserObject user = (UserObject) request.getSession().getAttribute("userLogined");
-		if (user!=null) {
-			view(request, response, user);
-		} else {
-			response.sendRedirect("/home/homepage");
-			response.sendError(HttpServletResponse.SC_NON_AUTHORITATIVE_INFORMATION);
-		}
-		
-	}
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        UserObject user = (UserObject) request.getSession().getAttribute("userLogined");
+        if (user != null) {
+            viewShopBills(request, response, user);
+        } else {
+            response.sendRedirect("/home/homepage");
+        }
+    }
 
-	protected void view(HttpServletRequest request, HttpServletResponse response, UserObject user)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
-		response.setContentType(CONTENT_TYPE);
-		/* EmployeeObject similar = new EmployeeObject(); */
-//		ShopObject similar = new ShopObject();
+    protected void viewShopBills(HttpServletRequest request, HttpServletResponse response, UserObject user) throws ServletException, IOException {
+        ConnectionPool cp = (ConnectionPool) getServletContext().getAttribute("CPool");
+	    BillModel billModel = new BillModel(cp);
+	    ShopModel shopModel = new ShopModel(cp); 
+	    billModel.setShopModel(shopModel);
 
-		ConnectionPool connectionPool= (ConnectionPool) getServletContext().getAttribute("CPool");
-		ShopControl shopControl = new ShopControl(connectionPool);
-		// TODO Auto-generated constructor stub
-		if (connectionPool == null) {
-			getServletContext().setAttribute("CPool", shopControl.getCP());
-		} 
+        // Lấy danh sách các hóa đơn của cửa hàng đang đăng nhập
+        List<Bill_manageBillDTO> billList = billModel.getBillDTOByShop(user);
+        
+        request.setAttribute("billList", billList);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/main/seller/shop_bills.jsp");
+        requestDispatcher.forward(request, response);	
+    }
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action");
 
-//		PrintWriter out = response.getWriter();
+        if ("confirmOrder".equals(action)) {
+            confirmOrder(request, response);
+        } else if ("cancelOrder".equals(action)) {
+            cancelOrder(request, response);
+        }
+    }
 
-		// Xac dinh kieu noi dung xuat ve trinh khach
-		Quintet<Short, Byte,  Map<String,String>,  Map<String,String>,  Map<String,String>> productInfors = 
-		new Quintet<>
-		((short) 0,(byte) 0, 
-				utility.Utilities.getMapParam(request, null), 
-				utility.Utilities.getMapParam(request, null),
-				utility.Utilities.getMapParam(request, null));
+    protected void cancelOrder(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String orderId = request.getParameter("orderId");
+        if (orderId != null && !orderId.isEmpty()) {
+            int orderIdInt = Integer.parseInt(orderId);
 
-		Map<String,String> data = shopControl.viewSeller_ShopProduct(productInfors,user);
-		
-		shopControl.releaseCP();
-		System.out.print(data);
-		request.setAttribute("shop-product", data);
-	    
-	    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/main/seller/shop_products.jsp");
-		// Tạo đối tượng thực hiện xuất nội dung
-	    requestDispatcher.forward(request, response);		
-	}
+            ConnectionPool cp = (ConnectionPool) getServletContext().getAttribute("CPool");
+            BillControl billControl = new BillControl(cp);
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+            BillObject billObject = billControl.getBill_DTOById(orderIdInt);
 
-	}
-	
-	protected void doPut(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-	}
-	
-	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+            if (billObject != null) {
+                Bill_manageBillDTO billDTOToEdit = new Bill_manageBillDTO();
+                billDTOToEdit.setId(billObject.getBill_id());
+                billDTOToEdit.setStatus((byte) 4); // Đặt trạng thái của đơn hàng thành "Đã hủy" (trạng thái 4)
 
-	}
+                boolean success = billControl.editBill(billDTOToEdit, BILL_EDIT_TYPE.GENERAL);
+                if (success) {
+                    response.sendRedirect(request.getContextPath() + "/seller/shop/bills");
+                } else {
+                    response.getWriter().println("Không thể cập nhật trạng thái đơn hàng.");
+                }
+            } else {
+                response.getWriter().println("Không tìm thấy đơn hàng có ID tương ứng.");
+            }
+        } else {
+            response.getWriter().println("ID đơn hàng không hợp lệ.");
+        }
+    }
 
+    protected void confirmOrder(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String orderId = request.getParameter("orderId");
+        if (orderId != null && !orderId.isEmpty()) {
+            int orderIdInt = Integer.parseInt(orderId);
+
+            ConnectionPool cp = (ConnectionPool) getServletContext().getAttribute("CPool");
+            BillControl billControl = new BillControl(cp);
+
+            BillObject billObject = billControl.getBill_DTOById(orderIdInt);
+
+            if (billObject != null) {
+                Bill_manageBillDTO billDTOToEdit = new Bill_manageBillDTO();
+                billDTOToEdit.setId(billObject.getBill_id());
+                billDTOToEdit.setStatus((byte) 2); // Đặt trạng thái của đơn hàng thành "ĐÃ XÁC NHẬN" (trạng thái 2)
+
+                boolean success = billControl.editBill(billDTOToEdit, BILL_EDIT_TYPE.GENERAL);
+                if (success) {
+                    response.sendRedirect(request.getContextPath() + "/seller/shop/bills");
+                } else {
+                    response.getWriter().println("Không thể cập nhật trạng thái đơn hàng.");
+                }
+            } else {
+                response.getWriter().println("Không tìm thấy đơn hàng có ID tương ứng.");
+            }
+        } else {
+            response.getWriter().println("ID đơn hàng không hợp lệ.");
+        }
+    }
 }

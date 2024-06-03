@@ -81,6 +81,23 @@ for (var product of document.getElementsByClassName("add-cart")) {
     })
 }
 
+/*function addOnlineOrderToDatabase() {
+    var postData = "action=addBill&paymentMethod=Online";
+    var submitUrl = "/user/bills";
+    $.ajax({
+        type: "POST",
+        url: submitUrl,
+        data: postData,
+        success: function (response) {
+            response = "ĐƠN HÀNG ĐƯỢC GHI NHẬN THÀNH CÔNG";
+            alert(response);
+        },
+        error: function (xhr, status, error) {
+            console.error("Đã xảy ra lỗi khi ghi nhận đơn hàng: " + xhr.responseText);
+        }
+    });
+}
+*/
 $("#purchase").on("click", function () {
     if (updatePrice() == 0) { alert("Giỏ hàng trống! Vui lòng thêm sản phẩm") } else {
         if ($("#methodselection").find(":selected").val() == 0) {
@@ -88,7 +105,7 @@ $("#purchase").on("click", function () {
         }
         else if ($("#methodselection").find(":selected").val() == 2) {
             alert("Đơn hàng của bạn đã được ghi nhận! Vui lòng chờ xác nhận");
-            // backend
+/*            addOnlineOrderToDatabase();*/
         } else {
             var postData = "amount=" + updatePrice() + "&bankCode=&language=vn";
             var submitUrl = "/home/vnpayajax";

@@ -1,5 +1,6 @@
 package dto.bill;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import dto.bd.BD_manageBillDTO;
@@ -19,7 +20,9 @@ public class Bill_manageBillDTO implements Bill_DTO{
 	private byte status; 
 	private List<BD_manageBillDTO> bd;
 	
-
+	public Bill_manageBillDTO() {
+        this.bd = new ArrayList<>(); // Khởi tạo danh sách bd trong constructor
+    }
 	public int getId() {
 		return id;
 	}
@@ -93,9 +96,5 @@ public class Bill_manageBillDTO implements Bill_DTO{
 			bd_DTO.ApplyToEntity(bdObject);
 			bdObjects.add(bdObject);
 		});
-		
 	}
-
-
-
 }

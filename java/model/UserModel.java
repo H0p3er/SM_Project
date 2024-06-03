@@ -70,7 +70,7 @@ public class UserModel {
 					item.setUser_fullname(Utilities.decode(rs.getString("user_fullname")));
 					item.setUser_email(rs.getString("user_email"));
 					item.setUser_address(Utilities.decode(rs.getString("user_address")));
-					item.setUser_created_date(Utilities_date.getDateFormat(rs.getString("user_created_date")));
+					item.setUser_created_date(rs.getString("user_created_date"));
 					item.setUser_permission(rs.getByte("user_permission"));
 					item.setUser_notes(rs.getString("user_notes"));
 					if (rs.getBlob("user_images")!=null) {
