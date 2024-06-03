@@ -29,53 +29,60 @@ public class BillImpl extends BasicImpl implements Bill {
 	}
 
 	@Override
-	public boolean addBill(BillObject item, ArrayList<BDObject> bdObjects) {
-		if (this.isExisting(item)) {
-			return false;
-		}
-		try {
-			StringBuilder sql = new StringBuilder();
-			sql.append("INSERT INTO tblbill(");
-			sql.append("bill_created_date, bill_creator_id, ");
-			sql.append("bill_delivery_id, bill_status ");
-			sql.append(")");
-			sql.append("VALUES(?,?,?,?); ");
+    public boolean addBill(BillObject item, ArrayList<BDObject> bdObjects) {
+        if (this.isExisting(item)) {
+            return false;
+        }
+        try {
+            StringBuilder sql = new StringBuilder();
+            sql.append("INSERT INTO tblbill(");
+            sql.append("bill_created_date, bill_creator_id, ");
+            sql.append("bill_delivery_id, bill_status ");
+            sql.append(")");
+            sql.append("VALUES(?,?,?,?); ");
 
-			PreparedStatement pre = this.con.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement pre = this.con.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS);
 
-			pre.setString(1, item.getBill_created_date());
-			pre.setInt(2, item.getBill_creator_id());
-			pre.setInt(3, item.getBill_delivery_id());
-			pre.setByte(4, item.getBill_status());
+            pre.setString(1, item.getBill_created_date());
+            pre.setInt(2, item.getBill_creator_id());
+            pre.setInt(3, item.getBill_delivery_id());
+            pre.setByte(4, item.getBill_status());
 
-			if (this.add(pre)) {
-				sql.setLength(0);
-				sql.append("INSERT INTO tblbd(");
-				sql.append("bd_bill_id, bd_product_id, ");
-				sql.append("bd_product_quantity");
-				sql.append(")");
-				sql.append("VALUES(?,?,?,?);");
-				PreparedStatement pre2 = this.con.prepareStatement(sql.toString());
-				bdObjects.forEach(bd -> {
-					try {
-						pre2.setInt(1, pre.getGeneratedKeys().getInt(1));
-						pre2.setInt(2, bd.getBd_product_id());
-						pre2.setInt(3, bd.getBd_product_quantity());
-						pre2.addBatch();
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+            if (this.add(pre)) {
+                int billId;
+                ResultSet generatedKeys = pre.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    billId = generatedKeys.getInt(1);
+                } else {
+                    throw new SQLException("Creating bill failed, no ID obtained.");
+                }
+                sql.setLength(0);
+                sql.append("INSERT INTO tblbd(");
+                sql.append("bd_bill_id, bd_product_id, ");
+                sql.append("bd_product_quantity");
+                sql.append(")");
+                sql.append("VALUES(?,?,?,?);");
+                PreparedStatement pre2 = this.con.prepareStatement(sql.toString());
+                for (BDObject bd : bdObjects) {
+                    pre2.setInt(1, billId);
+                    pre2.setInt(2, bd.getBd_product_id());
+                    pre2.setInt(3, bd.getBd_product_quantity());
+                    pre2.addBatch();
+                }
+                int[] batchResult = pre2.executeBatch();
+                for (int result : batchResult) {
+                    if (result == PreparedStatement.EXECUTE_FAILED) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
-				});
-				return this.addList(pre).getValue0();
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return false;
-	}
 
 	private boolean isExisting(BillObject item) {
 		boolean flag = false;
@@ -243,7 +250,8 @@ public class BillImpl extends BasicImpl implements Bill {
 			String multiSort, ShopObject shopObject) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT * FROM tblbill b ");
-		sql.append("INNER JOIN tblbd bd ON b.bill_id=bd.bd_id ");
+		sql.append("INNER JOIN tblbd bd ON b.bill_id=bd.bd_bill_id ");
+		sql.append("INNER JOIN tbluser u ON u.user_id=b.bill_creator_id ");
 		sql.append("INNER JOIN tblproduct p ON bd.bd_product_id=p.product_id ");
 		sql.append("WHERE p.product_shop_id=" + shopObject.getShop_id() + " ");
 		sql.append(ORDERConditions(multiSort));
@@ -404,34 +412,34 @@ public class BillImpl extends BasicImpl implements Bill {
 	}
 
 	public static void main(String[] args) {
-		// Initialize the connection pool
-		ConnectionPool cp = new ConnectionPoolImpl();
-		BillImpl billImpl = new BillImpl(cp);
+	    // Khởi tạo pool kết nối
+	    ConnectionPool cp = new ConnectionPoolImpl();
+	    // Tạo một đối tượng BillImpl
+	    BillImpl billImpl = new BillImpl(cp);
 
-		// Create a BillObject representing the bill you want to add
-		BillObject billObject = new BillObject();
-		billObject.setBill_created_date("2024-06-03"); // Set the created date
-		billObject.setBill_creator_id(2); // Set the creator ID
-		billObject.setBill_delivery_id(2); // Set the delivery ID
-		billObject.setBill_status((byte) 0); // Set the status
+	    // Tạo một đối tượng BillObject đại diện cho hóa đơn bạn muốn thêm
+	    BillObject billObject = new BillObject();
+	    billObject.setBill_created_date("2024-06-03"); // Đặt ngày tạo
+	    billObject.setBill_creator_id(2); // Đặt ID của người tạo
+	    billObject.setBill_delivery_id(2); // Đặt ID của người giao hàng
+	    billObject.setBill_status((byte) 0); // Đặt trạng thái
 
-		// Create an ArrayList of BDObject representing the items in the bill
-		ArrayList<BDObject> bdObjects = new ArrayList<>();
-		// Add BDObject representing each item in the bill to the list
-		if (bdObjects == null) {
-			System.out.println("null bd");
-		} else {
-			System.out.println("not null");
-		}
-		// Call the addBill method
-		boolean addSuccess = billImpl.addBill(billObject, bdObjects);
+	    // Tạo một ArrayList của BDObject đại diện cho các mặt hàng trong hóa đơn
+	    ArrayList<BDObject> bdObjects = new ArrayList<>();
+	    // Thêm các BDObject đại diện cho từng mặt hàng vào danh sách
+	    if (bdObjects == null) {
+	        System.out.println("null bd");
+	    } else {
+	        System.out.println("not null");
+	    }
+	    // Gọi phương thức addBill
+	    boolean addSuccess = billImpl.addBill(billObject, bdObjects);
 
-		// Handle the result
-		if (addSuccess) {
-			System.out.println("Bill added successfully!");
-		} else {
-			System.out.println("Failed to add bill!");
-		}
+	    // Xử lý kết quả
+	    if (addSuccess) {
+	        System.out.println("Hóa đơn được thêm thành công!");
+	    } else {
+	        System.out.println("Không thể thêm hóa đơn!");
+	    }
 	}
-
 }
