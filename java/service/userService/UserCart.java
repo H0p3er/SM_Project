@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
@@ -68,13 +69,14 @@ public class UserCart extends HttpServlet {
 		}
 		try {
 			TreeMap<Product_viewProductDTO,Integer> product_DTOs = (TreeMap<Product_viewProductDTO,Integer>) request.getSession().getAttribute("product-cart");
-			
 			if (product_DTOs==null) {
 				product_DTOs = new TreeMap<Product_viewProductDTO,Integer>();
 			}
+			System.out.println("view:"+product_DTOs);
 			request.setAttribute("product-cart", pc.viewCart(product_DTOs));
 		} catch (ClassCastException e) {
 			TreeMap<Product_viewProductDTO,Integer> product_DTOs = new TreeMap<Product_viewProductDTO,Integer>();
+			System.out.println("view:"+product_DTOs);
 			request.setAttribute("product-cart", pc.viewCart(product_DTOs));
 		}
 		
@@ -95,42 +97,54 @@ public class UserCart extends HttpServlet {
 		// Tìm bộ quản lý kết nối
 		ConnectionPool cp = (ConnectionPool) getServletContext().getAttribute("CPool");
 		// Tạo đối tượng thực thi chức năng
-		ProductControl pc = new ProductControl(cp);
+		ProductControl productControl = new ProductControl(cp);
 		if (cp == null) {
-			getServletContext().setAttribute("CPool", pc.getCP());
+			getServletContext().setAttribute("CPool", productControl.getCP());
 		}
 		
 		// Lấy từ khóa tìm kiếm
 		int id = Utilities.getIntParam(request, "id");
 
-		Product_viewProductDTO product_DTO = pc.getProduct_DTOById(id);
+		Product_viewProductDTO product_DTO = productControl.getProduct_DTOById(id);
 		
+		// Trả về kết nối
+		productControl.releaseCP();
+		
+		HttpSession session = request.getSession();
 		try {
-			TreeMap<Product_viewProductDTO,Integer> product_DTOs = (TreeMap<Product_viewProductDTO,Integer>) request.getSession().getAttribute("product-cart");
-			
+			TreeMap<Product_viewProductDTO,Integer> product_DTOs = (TreeMap<Product_viewProductDTO,Integer>) session.getAttribute("product-cart");
+			Iterator<String> test =  session.getAttributeNames().asIterator();
+			while (test.hasNext()) {
+				System.out.println("rq.attribute:"+test.next());
+			}
+//			System.out.println("default:"+session.getAttribute("product-cart"));
 			if (product_DTOs==null) {
 				product_DTOs = new TreeMap<Product_viewProductDTO,Integer>();
 				product_DTOs.put(product_DTO,1);
-//				System.out.println("post new from null:"+product_DTOs);
+				System.out.println("post new from null:"+product_DTOs);
 			} else {
 				if (product_DTOs.containsKey(product_DTO)) {		
 					product_DTOs.replace(product_DTO,product_DTOs.get(product_DTO)+1);
-//					System.out.println("post update:"+product_DTOs);
+					System.out.println("post update:"+product_DTOs);
 				} else {
 					product_DTOs.put(product_DTO,1);
-//					System.out.println("post new:"+product_DTOs);
-				}
-				
+					System.out.println("post new:"+product_DTOs);
+				}	
 			}	
-			request.getSession().setAttribute("product-cart", product_DTOs);
+
+			
+			session.removeAttribute("product-cart");
+			session.setAttribute("product-cart",product_DTOs);
+//			System.out.println("default:"+session.getAttribute("product-cart"));
 		} catch (ClassCastException e) {
 			TreeMap<Product_viewProductDTO,Integer> product_DTOs = new TreeMap<Product_viewProductDTO,Integer>();
 			product_DTOs.put(product_DTO,1);
-//			System.out.println("post error:"+product_DTOs);
-			request.getSession().setAttribute("product-cart", product_DTOs);
-		}	
-		// Trả về kết nối
-		pc.releaseCP();
+			System.out.println("post error:"+product_DTOs);
+			session.removeAttribute("product-cart");
+			session.setAttribute("product-cart",product_DTOs);
+		}
+		
+
 	}
 	
 	

@@ -6,7 +6,18 @@ public class User_viewCustomerDTO implements User_DTO{
 	private int id;
     private String fullname;
     private String images;
-    
+
+	public User_viewCustomerDTO(int id) {
+		this.id = id;
+	}
+
+	public User_viewCustomerDTO(int id, String fullname) {
+		this.id = id;
+		this.fullname = fullname;
+	}
+
+
+
 	public int getId() {
 		return id;
 	}

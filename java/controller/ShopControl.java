@@ -48,39 +48,44 @@ public class ShopControl {
 	}
 
 	
-	public Map<String,String> viewShop_Profile(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, int id, UserObject currentUser){
-		Shop_viewShopDTO shopDTO = this.shopModel.getShopDTOById(productInfors,id);	
-		return ShopLibrary.viewShop_Profile(shopDTO, currentUser);
-	}
-
-	public Map<String,String> viewSeller_ShopStatistic(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, 
-			UserObject currentUser){
-		Shop_manageShopDTO shopDTO = this.shopModel.getShopDTOByUser(productInfors,currentUser);
-		return ShopLibrary.viewSeller_ShopStatistic(shopDTO);
+	public Shop_viewShopDTO getShopDTOById(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, int id, UserObject currentUser){
+		return this.shopModel.getShopDTOById(productInfors,id);	
 	}
 	
+	public Shop_manageShopDTO getShopDTOByUser(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, 
+			UserObject currentUser){
+		return this.shopModel.getShopDTOByUser(productInfors,currentUser);
+	}
+	
+//	public Map<String,String> viewShop_Profile(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, int id, UserObject currentUser){
+//		Shop_viewShopDTO shopDTO = this.shopModel.getShopDTOById(productInfors,id);	
+//		return ShopLibrary.viewShop_Profile(shopDTO, currentUser);
+//	}
+//
+//	public Map<String,String> viewSeller_ShopStatistic(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, 
+//			UserObject currentUser){
+//		Shop_manageShopDTO shopDTO = this.shopModel.getShopDTOByUser(productInfors,currentUser);
+//		return ShopLibrary.viewSeller_ShopStatistic(shopDTO);
+//	}
+//	
 	public Map<String,String> viewSeller_ShopProduct(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, 
 			UserObject currentUser){
 		Shop_manageShopDTO shopDTO = this.shopModel.getShopDTOByUser(productInfors,currentUser);
 		return ShopLibrary.viewSeller_ShopProduct(shopDTO);
 	}
-	
-	public Map<String,String> viewSeller_ShopBill(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, 
-			UserObject currentUser){
-		Shop_manageShopDTO shopDTO = this.shopModel.getShopDTOByUser(productInfors,currentUser);
-		return ShopLibrary.viewSeller_ShopProduct(shopDTO);
-	}
-	
-	
-	public Map<String,String> viewUser_ShopProfile(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, UserObject currentUser){
-		Shop_manageShopDTO shopDTO = this.shopModel.getShopDTOByUser(productInfors,currentUser);
-		return ShopLibrary.viewUser_ShopProfile(shopDTO);
-	}
-	
-	public Map<String,String> viewSeller_ShopProfile(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, 
-			UserObject currentUser){
-		Shop_manageShopDTO shop_manageShopDTO = this.shopModel.getShopDTOByUser(productInfors,currentUser);
-		return ShopLibrary.viewSeller_ShopProfile(shop_manageShopDTO);
-	}
+//	
+
+//	
+//	
+//	public Map<String,String> viewUser_ShopProfile(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, UserObject currentUser){
+//		Shop_manageShopDTO shopDTO = this.shopModel.getShopDTOByUser(productInfors,currentUser);
+//		return ShopLibrary.viewUser_ShopProfile(shopDTO);
+//	}
+//	
+//	public Map<String,String> viewSeller_ShopProfile(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, 
+//			UserObject currentUser){
+//		Shop_manageShopDTO shop_manageShopDTO = this.shopModel.getShopDTOByUser(productInfors,currentUser);
+//		return ShopLibrary.viewSeller_ShopProfile(shop_manageShopDTO);
+//	}
 
 }

@@ -73,8 +73,8 @@ updatePrice();
 
 
 for (var product of document.getElementsByClassName("add-cart")) {
-    product.addEventListener("click", () => {
-        fetch("/home/user/cart?id=" + product.id + "", {
+    product.addEventListener("click", async  () => {
+        await fetch("/home/user/cart?id="+ product.id, {
             method: "POST",
         });
         alert("Sản phẩm đã được thêm vào giỏ hàng!");

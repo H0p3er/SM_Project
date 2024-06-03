@@ -15,16 +15,20 @@ import connection.*;
 import constant.BILL_EDIT_TYPE;
 import constant.BILL_SORT_TYPE;
 import dto.bd.BD_DTO;
+import dto.bd.BD_manageShopDTO;
 import dto.bd.BD_viewBillDTO;
 import dto.bill.Bill_DTO;
+import dto.bill.Bill_manageShopDTO;
 import dto.bill.Bill_viewBillDTO;
 import dto.product.Product_manageShopDTO;
 import dto.product.Product_viewBillDTO;
 import dto.shop.Shop_manageShopDTO;
+import dto.user.User_viewCustomerDTO;
 import entity.BDObject;
 import entity.BillObject;
 import entity.ShopObject;
 import entity.UserObject;
+import entity.total.shop;
 import repository.Bill;
 import repository.BillImpl;
 import utility.Utilities;
@@ -99,7 +103,10 @@ public class BillModel {
 		return item;
 	}
 
-	public Triplet<Map<String, Double>, Double, Double> getIncomeStatisticByShop(ShopObject shopObject) {
+	public Triplet<Map<String, Double>, Double, Double> getIncomeStatisticByShop(Shop_manageShopDTO shop_manageShopDTO) {
+		
+		ShopObject shopObject = new ShopObject();
+		shop_manageShopDTO.applyToEntity(shopObject);
 		ArrayList<ResultSet> res = this.bill.getIncomeStatisticByShop(shopObject,
 				java.time.LocalDateTime.now().getMonth().getValue());
 		ResultSet rs = res.get(0);
@@ -144,7 +151,10 @@ public class BillModel {
 		return new Triplet<>(income_current_month, sum_income_current_month, sum_income_last_month);
 	}
 
-	public Triplet<Map<String, Integer>, Integer, Integer> getOrderStatisticByShop(ShopObject shopObject) {
+	public Triplet<Map<String, Integer>, Integer, Integer> getOrderStatisticByShop(Shop_manageShopDTO shop_manageShopDTO) {
+		ShopObject shopObject = new ShopObject();
+		shop_manageShopDTO.applyToEntity(shopObject);
+		
 		ArrayList<ResultSet> res = this.bill.getOrderStatisticByShop(shopObject,
 				java.time.LocalDateTime.now().getMonth().getValue());
 		ResultSet rs = res.get(0);
@@ -212,7 +222,8 @@ public class BillModel {
 	                            billDTO = new Bill_viewBillDTO();
 	                            billDTO.setId(billId);
 	                            billDTO.setCreated_date(rs.getString("bill_created_date"));
-	                            billDTO.setCreator_id(rs.getInt("bill_creator_id"));
+	                            billDTO.setCustommer(new User_viewCustomerDTO(rs.getInt("bill_creator_id")));
+	                            
 	                            billDTO.setDelivery_id(rs.getInt("bill_delivery_id"));
 	                            billDTO.setStatus(rs.getByte("bill_status"));
 
@@ -254,6 +265,71 @@ public class BillModel {
 
 	    return billList;
 	}
+	
+	public Pair<List<Bill_manageShopDTO>,Integer> getBillDTOByShop(Shop_manageShopDTO shop_manageShopDTO) {
+		ShopObject shopObject = new ShopObject();
+		shop_manageShopDTO.applyToEntity(shopObject);
+	    List<Bill_manageShopDTO> billList = new ArrayList<>();
+	    ArrayList<ResultSet> res = this.bill.getBillByShop(0, (byte) 20, "", "", "", shopObject);
+
+	    try {
+	        if (res != null) {
+	        	Bill_manageShopDTO billDTO = null;
+	        	ResultSet rs = res.get(0);
+	        	if (rs != null) {  
+                    int currentBillId = -1; // Giá trị ban đầu của bill_id
+                    while (rs.next()) {
+                        int billId = rs.getInt("bill_id");
+
+                        // Kiểm tra xem billDTO đã được khởi tạo chưa
+                        if (billDTO == null || currentBillId != billId) {
+                            // Tạo mới một đối tượng Bill_viewBillDTO cho mỗi bill_id mới
+                            billDTO = new Bill_manageShopDTO();
+                            billDTO.setId(billId);
+                            billDTO.setCreated_date(rs.getString("bill_created_date"));
+                            billDTO.setCustommer(new User_viewCustomerDTO(rs.getInt("bill_creator_id"), rs.getString("user_name")));
+                            
+                            billDTO.setDelivery_id(rs.getInt("bill_delivery_id"));
+                            billDTO.setStatus(rs.getByte("bill_status"));
+
+                            // Tạo mới một danh sách sản phẩm cho mỗi hóa đơn
+                            billDTO.setBd(new ArrayList<BD_manageShopDTO>());
+
+                            // Cập nhật bill_id hiện tại
+                            currentBillId = billId;
+
+                            // Thêm hóa đơn vào danh sách
+                            billList.add(billDTO);
+                        }
+
+                        // Tạo mới một đối tượng BD_viewBillDTO cho mỗi sản phẩm
+                        BD_manageShopDTO bdDTO = new BD_manageShopDTO();
+                        bdDTO.setId(rs.getInt("bd_id"));
+                        bdDTO.setProduct_quantity(rs.getInt("bd_product_quantity"));
+
+                        Product_manageShopDTO product = new Product_manageShopDTO();
+                        product.setId(rs.getInt("product_id"));
+                        product.setName(rs.getString("product_name"));
+                        product.setPrice(rs.getDouble("product_price"));
+
+                        bdDTO.setProduct(product);
+
+                        // Thêm sản phẩm vào danh sách sản phẩm của hóa đơn
+                        billDTO.getBd().add(bdDTO);
+                    }
+                } else {
+                    System.out.println("ResultSet is null");
+                }
+
+	        } else {
+	            System.out.println("Bill result set is null");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return new Pair<>(billList, 0);
+	}
 
 
 
@@ -270,7 +346,6 @@ public class BillModel {
 			for (Bill_viewBillDTO billDTO : billDTOs) {
 				System.out.println("Bill ID: " + billDTO.getId());
 				System.out.println("Created Date: " + billDTO.getCreated_date());
-				System.out.println("Creator ID: " + billDTO.getCreator_id());
 				System.out.println("Delivery ID: " + billDTO.getDelivery_id());
 				System.out.println("Status: " + billDTO.getStatus());
 				System.out.println("Products:");

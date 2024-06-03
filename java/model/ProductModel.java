@@ -26,6 +26,7 @@ import dto.productAttribute.Product_AttributeDTO;
 import dto.shop.Shop_DTO;
 import dto.shop.Shop_manageShopDTO;
 import dto.shop.Shop_viewProductDTO;
+import dto.shop.Shop_viewShopDTO;
 import repository.*;
 import entity.ProductObject;
 import entity.ShopObject;
@@ -34,22 +35,22 @@ import utility.Utilities;
 
 public class ProductModel {
 	private Product product;
-	private PCModel pc;
+//	private PCModel pc;
 	
 	public ProductModel(ConnectionPool cp) {
 		this.product = new ProductImpl(cp);
-		this.pc = new PCModel(cp);
+//		this.pc = new PCModel(cp);
 	}
 	protected void finalize() throws Throwable {
 		this.product = null;
-		this.pc = null;
+//		this.pc = null;
 	}
 	public ConnectionPool getCP() {
 		return this.product.getCP();
 	}
 	public void releaseCP() {
 		this.product.releaseCP();
-		this.pc.releaseCP();
+//		this.pc.releaseCP();
 	}
 	public boolean addProduct(Product_DTO<Product_AttributeDTO> item) {
 		ProductObject productObject = new ProductObject();
@@ -145,7 +146,10 @@ public class ProductModel {
 		return new Pair<>(items1, items2);
 	}	
 
-	public Triplet<List<Product_manageShopDTO>,Integer, List<Pair<Product_manageShopDTO,Double>>> getProduct_manageShopDTO(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, ShopObject shopObject) {
+	public Triplet<List<Product_manageShopDTO>,Integer, List<Pair<Product_manageShopDTO,Double>>> getProduct_manageShopDTO(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, Shop_manageShopDTO shop_manageShopDTO) {
+		ShopObject shopObject = new ShopObject();
+		shop_manageShopDTO.applyToEntity(shopObject);
+		
 		Short pagePos = productInfors.getValue0();
 		byte pageLength = productInfors.getValue1();	
 		Map<String,String> multiField = productInfors.getValue2();
@@ -167,8 +171,7 @@ public class ProductModel {
 					product_ShopManagerDTO.setNotes(rs.getString("product_notes"));
 					product_ShopManagerDTO.setPc(new PC_manageShopDTO(rs.getInt("product_pc_id"), rs.getString("pc_name")));
 					product_manageShopDTOs.add(product_ShopManagerDTO);
-				}
-				
+				}		
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -176,7 +179,6 @@ public class ProductModel {
 		}
 		rs = resultSets.get(1);
 		int count_product = getProductSize(rs);
-		
 		rs = resultSets.get(2);
 		List<Pair<Product_manageShopDTO,Double>> most_sold_product_current_month = getMostSoldProductCurrentMonth(rs);
 		return new Triplet<>(product_manageShopDTOs,count_product,most_sold_product_current_month);
@@ -198,7 +200,9 @@ public class ProductModel {
 		return item;
 	}
 	
-	public Pair<ArrayList<Product_viewShopDTO>,Integer> getProduct_viewShopDTO(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, ShopObject shopObject) {
+	public Pair<ArrayList<Product_viewShopDTO>,Integer> getProduct_viewShopDTO(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, Shop_viewShopDTO shop_viewShopDTO) {
+		ShopObject shopObject = new ShopObject();
+		shop_viewShopDTO.applyToEntity(shopObject);
 		
 		short pagePos = productInfors.getValue0();
 		byte pageLength = productInfors.getValue1();	
@@ -325,58 +329,7 @@ public class ProductModel {
 				((Product_viewBillDTO) product_DTO).setNotes(rs.getString("product_notes"));
 				((Product_viewBillDTO) product_DTO).setLast_modified(rs.getString("product_last_modified"));
 				((Product_viewBillDTO) product_DTO).setQuantity(rs.getInt("product_quantity"));
-			}
-			
-			switch (rs.getInt("product_pc_id")) {
-			case 1:
-				this.pc.getMonitorDTO(product_DTO);	
-				break;						
-			case 2:
-				this.pc.getKeyboardDTO(product_DTO);	
-				break;
-			case 3:
-				this.pc.getMiceDTO(product_DTO);	
-				break;					
-			case 4:
-				this.pc.getHeadphoneSpeakerDTO(product_DTO);	
-				break;						
-			case 5:
-				this.pc.getLaptopDTO(product_DTO);
-				break;						
-			case 6:
-				this.pc.getDesktopDTO(product_DTO);		
-				break;						
-			case 7:	
-				this.pc.getCPUDTO(product_DTO);
-				break;						
-			case 8:
-				this.pc.getMotherboardDTO(product_DTO);
-				break;						
-			case 9:	
-				this.pc.getRamDTO(product_DTO);					
-				break;		
-			case 10:
-				this.pc.getStorageDTO(product_DTO);	
-				break;				
-			case 11:
-				this.pc.getGraphicsCardDTO(product_DTO);
-				break;						
-			case 12:
-				this.pc.getPowerSuppyDTO(product_DTO);		
-				break;						
-			case 13:
-				this.pc.getCaseDTO(product_DTO);	
-				break;				
-			case 14:
-				this.pc.getCoolingDTO(product_DTO);				
-				break;
-			case 15:
-				this.pc.getUsbDTO(product_DTO);				
-				break;
-			case 16:
-				this.pc.getUsbDTO(product_DTO);				
-				break;
-			}
+			}	
 	
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

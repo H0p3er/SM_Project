@@ -6,11 +6,11 @@ import dto.shop.Shop_viewProductDTO;
 import entity.ProductObject;
 
 public class Product_viewProductDTO implements Product_DTO<Product_AttributeDTO>, Comparable<Product_viewProductDTO>{
-    /**
+
+	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 5700954887225147387L;
-	
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private String name;
     private byte status;
@@ -107,7 +107,7 @@ public class Product_viewProductDTO implements Product_DTO<Product_AttributeDTO>
 	public boolean equals(Object obj) {
 		try {
 			Product_viewProductDTO dto = (Product_viewProductDTO) obj;
-			if (this.id == dto.id) {
+			if (this.getId() == dto.getId()) {
 				return true;
 			}
 		} catch (Exception e) {

@@ -28,6 +28,7 @@ import dto.shop.Shop_manageShopDTO;
 import dto.user.User_DTO;
 import dto.user.User_manageShopDTO;
 import entity.UserObject;
+import library.ShopLibrary;
 import entity.ShopObject;
 
 /**
@@ -77,7 +78,8 @@ public class ShopEdit extends HttpServlet {
 				utility.Utilities.getMapParam(request, null),
 				utility.Utilities.getMapParam(request, null));
 
-		Map<String,String> data = shopControl.viewSeller_ShopProfile(productInfors,user);
+		Shop_manageShopDTO shop_manageShopDTO = shopControl.getShopDTOByUser(productInfors,user);
+		Map<String,String> data = ShopLibrary.viewSeller_ShopProfile(shop_manageShopDTO);
 		
 		shopControl.releaseCP();
 		

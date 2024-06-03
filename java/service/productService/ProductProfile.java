@@ -18,9 +18,13 @@ import org.javatuples.Quintet;
 import com.google.gson.Gson;
 
 import connection.*;
+import controller.PCControl;
 import controller.ProductControl;
 import dto.product.Product_DTO;
+import dto.product.Product_viewProductDTO;
+import dto.productAttribute.Product_AttributeDTO;
 import entity.UserObject;
+import library.ProductLibrary;
 import utility.Utilities;
 
 /**
@@ -60,18 +64,25 @@ public class ProductProfile extends HttpServlet {
 		// Tìm bộ quản lý kết nối
 		ConnectionPool cp = (ConnectionPool) getServletContext().getAttribute("CPool");
 		// Tạo đối tượng thực thi chức năng
-		ProductControl pc = new ProductControl(cp);
+		ProductControl productControl = new ProductControl(cp);
 		if (cp == null) {
-			getServletContext().setAttribute("CPool", pc.getCP());
+			getServletContext().setAttribute("CPool", productControl.getCP());
 		}
 		
 		// Lấy từ khóa tìm kiếm
 		int id = Utilities.getIntParam(request, "id");
-
-		Map<String,String> viewProduct= pc.viewProductProfile(id);
+		Product_viewProductDTO product_viewProductDTO = productControl.getProduct_DTOById(id);
+		productControl.releaseCP();
+		
+		PCControl pcControl = new PCControl(cp);
+		
+		pcControl.getProductAttribute(product_viewProductDTO);
+		
+		pcControl.releaseCP();
+		Map<String,String> viewProduct = ProductLibrary.viewProductProfile(product_viewProductDTO) ;
 
 		// Trả về kết nối
-		pc.releaseCP();
+		productControl.releaseCP();
 		// Tạo đối tượng thực hiện xuất nội dung
 		request.setAttribute("product-profile", viewProduct);
 	    

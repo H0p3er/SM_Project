@@ -1,7 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
   <jsp:include page="../component/seller_header.jsp" flush="true"></jsp:include>
   <jsp:include page="../component/seller_navigation-bar.jsp" flush="true"></jsp:include>
+<%@ page import="java.util.*" %>
 
+<% 
+Map<String, String> map = new HashMap<String,String>();
+if (request.getAttribute("shop-bill")!=null){
+	try {
+		map = (HashMap<String,String>) request.getAttribute("shop-bill"); 
+	} catch (ClassCastException e){
+		
+	}
+	
+}
+%>  
 
   <main id="main" class="main">
 
@@ -86,76 +98,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row"><a href="#">#2457</a></th>
-                <td>Brandon Jacob</td>
-                <td>
-                  <ul class="ps-0" style="list-style-type: none;">
-                    <li>2x <a href="">Logitech Wireless Headphones</a></li>
-                    <li>3x <a href="">Mechanical_2 USB Tenkeyless Keyboard RGB</a></li>
-                    <li><a href="">Asus 27 inch Gaming Monitor 2560x1440 TN 240Hz</a></li>
-                    <li><a href="">MSI B460 ATX Motherboard</a></li>
-                  </ul>
-                </td>
-                <td>$64</td>
-                <td><span class="badge bg-success">Đã xác nhận</span></td>
-              </tr>
-              <tr>
-                <th scope="row"><a href="#">#2147</a></th>
-                <td>Bridie Kessler</td>
-                <td>
-                  <ul class="ps-0" style="list-style-type: none;">
-                    <li>2x <a href="">Logitech Wireless Headphones</a></li>
-                    <li>3x <a href="">Mechanical_2 USB Tenkeyless Keyboard RGB</a></li>
-                    <li><a href="">Asus 27 inch Gaming Monitor 2560x1440 TN 240Hz</a></li>
-                    <li><a href="">MSI B460 ATX Motherboard</a></li>
-                  </ul>
-                </td>
-                <td>$47</td>
-                <td><span class="badge bg-warning">Chờ duyệt</span></td>
-              </tr>
-              <tr>
-                <th scope="row"><a href="#">#2049</a></th>
-                <td>Ashleigh Langosh</td>
-                <td>
-                  <ul class="ps-0" style="list-style-type: none;">
-                    <li>2x <a href="">Logitech Wireless Headphones</a></li>
-                    <li>3x <a href="">Mechanical_2 USB Tenkeyless Keyboard RGB</a></li>
-                    <li><a href="">Asus 27 inch Gaming Monitor 2560x1440 TN 240Hz</a></li>
-                    <li><a href="">MSI B460 ATX Motherboard</a></li>
-                  </ul>
-                </td>
-                <td>$147</td>
-                <td><span class="badge bg-success">Đã xác nhận</span></td>
-              </tr>
-              <tr>
-                <th scope="row"><a href="#">#2644</a></th>
-                <td>Angus Grady</td>
-                <td>
-                  <ul class="ps-0" style="list-style-type: none;">
-                    <li>2x <a href="">Logitech Wireless Headphones</a></li>
-                    <li>3x <a href="">Mechanical_2 USB Tenkeyless Keyboard RGB</a></li>
-                    <li><a href="">Asus 27 inch Gaming Monitor 2560x1440 TN 240Hz</a></li>
-                    <li><a href="">MSI B460 ATX Motherboard</a></li>
-                  </ul>
-                </td>
-                <td>$67</td>
-                <td><span class="badge bg-danger">Đã hủy</span></td>
-              </tr>
-              <tr>
-                <th scope="row"><a href="#">#2644</a></th>
-                <td>Raheem Lehner</td>
-                <td>
-                  <ul class="ps-0" style="list-style-type: none;">
-                    <li>2x <a href="">Logitech Wireless Headphones</a></li>
-                    <li>3x <a href="">Mechanical_2 USB Tenkeyless Keyboard RGB</a></li>
-                    <li><a href="">Asus 27 inch Gaming Monitor 2560x1440 TN 240Hz</a></li>
-                    <li><a href="">MSI B460 ATX Motherboard</a></li>
-                  </ul>
-                </td>
-                <td>$165</td>
-                <td><span class="badge bg-success">Đã xác nhận</span></td>
-              </tr>
+				<%= map.getOrDefault("shop-bill", "") %>
             </tbody>
           </table>
         </div>

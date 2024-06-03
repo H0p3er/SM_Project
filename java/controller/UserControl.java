@@ -3,9 +3,14 @@ package controller;
 import connection.*;
 import constant.USER_EDIT_TYPE;
 import constant.USER_SORT_TYPE;
+import dto.shop.Shop_manageShopDTO;
+import entity.ShopObject;
 import entity.UserObject;
 import library.UserLibrary;
 import model.UserModel;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 import org.javatuples.*;
 
@@ -59,6 +64,10 @@ public class UserControl {
 		boolean isExport = infors.getValue4();
 				
 		return this.um.getUserObjects(similar, page, total, ust, isExport);
+	}
+	
+	public Triplet<Map<String,Integer>,Integer,Integer> getCustomerStatisticByShop(Shop_manageShopDTO shop_manageShopDTO) {
+		return this.um.getCustomerStatisticByShop(shop_manageShopDTO);	
 	}
 	
 	

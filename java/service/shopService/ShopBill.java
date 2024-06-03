@@ -20,6 +20,7 @@ import org.javatuples.Quintet;
 import com.google.gson.Gson;
 
 import connection.ConnectionPool;
+import controller.BillControl;
 import controller.ProductControl;
 import controller.ShopControl;
 import entity.UserObject;
@@ -81,14 +82,18 @@ public class ShopBill extends HttpServlet {
 				utility.Utilities.getMapParam(request, null), 
 				utility.Utilities.getMapParam(request, null),
 				utility.Utilities.getMapParam(request, null));
-
-		Map<String,String> data = shopControl.viewSeller_ShopProduct(productInfors,user);
 		
 		shopControl.releaseCP();
+		
+		BillControl billControl = new BillControl(connectionPool);
+		
+		
+		bill
+		Map<String,String> data = shopControl.viewSeller_ShopBill(productInfors,user);
 		System.out.print(data);
-		request.setAttribute("shop-product", data);
+		request.setAttribute("shop-bill", data);
 	    
-	    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/main/seller/shop_products.jsp");
+	    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/main/seller/shop_bills.jsp");
 		// Tạo đối tượng thực hiện xuất nội dung
 	    requestDispatcher.forward(request, response);		
 	}

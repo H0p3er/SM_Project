@@ -245,12 +245,12 @@ public class BillImpl extends BasicImpl implements Bill {
 	    StringBuilder sql = new StringBuilder();
 	    sql.append("SELECT b.bill_id, GROUP_CONCAT(p.product_name SEPARATOR ', ') AS product_list, ");
 	    sql.append("GROUP_CONCAT(p.product_price SEPARATOR ', ') AS price_list, ");
-	    sql.append("u.username ");
+	    sql.append("u.user_name ");
 	    sql.append("FROM tblbill b ");
 	    sql.append("INNER JOIN tblbd bd ON b.bill_id = bd.bd_bill_id ");
 	    sql.append("INNER JOIN tblproduct p ON bd.bd_product_id = p.product_id ");
 	    sql.append("INNER JOIN tbluser u ON b.bill_creator_id = u.user_id ");
-	    sql.append("WHERE b.product_shop_id = ").append(shopObject.getShop_id()).append(" AND b.bill_status = 0 ");
+	    sql.append("WHERE p.product_shop_id = ").append(shopObject.getShop_id()).append(" AND b.bill_status = 0 ");
 	    sql.append(ORDERConditions(multiSort));
 	    sql.append(" LIMIT ").append(at).append(",").append(total).append("; ");
 	    return sql.toString();
@@ -261,7 +261,7 @@ public class BillImpl extends BasicImpl implements Bill {
 		sql.append("SELECT COUNT(bill_id) AS total FROM tblbill b");
 		sql.append("INNER JOIN tblbd bd ON b.bill_id=bd.bd_id ");
 		sql.append("INNER JOIN tblproduct p ON bd.bd_product_id=p.product_id ");
-		sql.append("WHERE b.product_shop_id="+shopObject.getShop_id()+" AND b.bill_status=0 ");
+		sql.append("WHERE p.product_shop_id="+shopObject.getShop_id()+" AND b.bill_status=0 ");
 		sql.append("; ");
 		return sql.toString();
 	}

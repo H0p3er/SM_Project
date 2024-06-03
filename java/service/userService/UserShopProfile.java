@@ -15,14 +15,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.javatuples.Pair;
 import org.javatuples.Quintet;
+import org.javatuples.Triplet;
 
 import com.google.gson.Gson;
 
 import connection.ConnectionPool;
+import controller.BillControl;
 import controller.ProductControl;
 import controller.ShopControl;
+import controller.UserControl;
+import dto.product.Product_manageShopDTO;
+import dto.shop.Shop_manageShopDTO;
+import dto.shop.Shop_statisticDTO;
 import entity.UserObject;
+import library.ShopLibrary;
 import entity.ShopObject;
 
 /**
@@ -80,10 +88,47 @@ public class UserShopProfile extends HttpServlet {
 				utility.Utilities.getMapParam(request, null), 
 				utility.Utilities.getMapParam(request, null),
 				utility.Utilities.getMapParam(request, null));
-
-		Map<String,String> data = shopControl.viewUser_ShopProfile(productInfors,user);
+		Shop_manageShopDTO shop_manageShopDTO = shopControl.getShopDTOByUser(productInfors,user);
 		
+		ProductControl productControl = new ProductControl(connectionPool);
+		Triplet<List<Product_manageShopDTO>,Integer, List<Pair<Product_manageShopDTO,Double>>> product_statistic = productControl.getProduct_manageShopDTO(productInfors, shop_manageShopDTO);
+		productControl.releaseCP();
+		
+		BillControl billControl = new BillControl(connectionPool);
+		shop_manageShopDTO.setBill(billControl.getBillDTOByShop(shop_manageShopDTO));
+		billControl.releaseConnection();
+		
+		Triplet<Map<String,Double>, Double, Double> income_statistic = billControl.getIncomeStatisticByShop(shop_manageShopDTO);
+		Triplet<Map<String,Integer>,Integer,Integer> order_statistic = billControl.getOrderStatisticByShop(shop_manageShopDTO);
+		
+		
+		UserControl userControl = new UserControl(connectionPool);
+		Triplet<Map<String,Integer>,Integer,Integer> customer_statistic = userControl.getCustomerStatisticByShop(shop_manageShopDTO);
+		
+		
+		Shop_statisticDTO shop_StatisticDTO = new Shop_statisticDTO();	
+		shop_StatisticDTO.setMost_sold_product_current_month(product_statistic.getValue2());
+		
+		
+		shop_StatisticDTO.setIncome_current_month(income_statistic.getValue0());
+		shop_StatisticDTO.setSum_income_current_month(income_statistic.getValue1());
+		shop_StatisticDTO.setSum_income_last_month(income_statistic.getValue2());
+		
+		
+		shop_StatisticDTO.setOrder_current_month(order_statistic.getValue0());
+		shop_StatisticDTO.setCount_order_current_month(order_statistic.getValue1());
+		shop_StatisticDTO.setCount_order_last_month(order_statistic.getValue2());
+		
+		
+		shop_StatisticDTO.setCustomer_current_month(customer_statistic.getValue0());
+		shop_StatisticDTO.setCount_customer_current_month(customer_statistic.getValue1());
+		shop_StatisticDTO.setCount_customer_last_month(customer_statistic.getValue2());
+		
+		shop_manageShopDTO.setStatistic(shop_StatisticDTO);
+		
+		Map<String,String> data = ShopLibrary.viewUser_ShopProfile(shop_manageShopDTO);
 		shopControl.releaseCP();
+
 		
 		request.setAttribute("shop-profile", data);
 

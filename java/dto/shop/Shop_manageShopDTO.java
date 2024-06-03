@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.javatuples.Pair;
 
+import dto.bill.Bill_manageShopDTO;
 import dto.product.Product_manageShopDTO;
 import dto.user.User_manageShopDTO;
 import entity.ShopObject;
@@ -27,6 +28,7 @@ public class Shop_manageShopDTO implements Shop_DTO{
 	private String phone;
     private String email;
 	private Pair<List<Product_manageShopDTO>,Integer> storage;
+	private Pair<List<Bill_manageShopDTO>,Integer> bill;
 	private Shop_statisticDTO statistic;	
 
 	public Shop_manageShopDTO(int id) {
@@ -163,6 +165,14 @@ public class Shop_manageShopDTO implements Shop_DTO{
 	@Override
 	public void applyToEntity(ShopObject shopObject, UserObject userObject) {
 		applyToEntity(shopObject);
+	}
+
+	public Pair<List<Bill_manageShopDTO>,Integer> getBill() {
+		return bill;
+	}
+
+	public void setBill(Pair<List<Bill_manageShopDTO>,Integer> bill) {
+		this.bill = bill;
 	}
 
 
