@@ -8,11 +8,17 @@
 <%@page import="java.util.Enumeration"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.HashMap"%>
+<%@ page import="connection.*, entity.*"%>
+<%@ page import="service.userService.UserBill" %>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
  <jsp:include page="../component/user_header.jsp" flush="true"></jsp:include>
  <jsp:include page="../component/user_navigation-bar.jsp" flush="true"></jsp:include>
  
         <%
+        UserBill userBill = new UserBill();
+        UserObject user = (UserObject) session.getAttribute("userLogined");
+
             //Begin process return from VNPAY
             Map fields = new HashMap();
             for (Enumeration params = request.getParameterNames(); params.hasMoreElements();) {
@@ -73,6 +79,7 @@
                         <%
                             if (signValue.equals(vnp_SecureHash)) {
                                 if ("00".equals(request.getParameter("vnp_TransactionStatus"))) {
+                                	/* addBill(request, response, user); */
                                     out.print("<span class=\"text-sucess fs-4\">Thành công</span>");
                                 } else {
                                     out.print("<span class=\"text-danger fs-4\">Không thành công</span>");

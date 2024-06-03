@@ -1,5 +1,6 @@
 package dto.bill;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import dto.bd.BD_manageBillDTO;
@@ -19,7 +20,9 @@ public class Bill_manageBillDTO implements Bill_DTO{
 	private byte status; 
 	private List<BD_manageBillDTO> bd;
 	
-
+	public Bill_manageBillDTO() {
+        this.bd = new ArrayList<>(); // Khởi tạo danh sách bd trong constructor
+    }
 	public int getId() {
 		return id;
 	}
@@ -83,20 +86,17 @@ public class Bill_manageBillDTO implements Bill_DTO{
 
 	@Override
 	public void ApplyToEntity(BillObject billObject, List<BDObject> bdObjects) {
-		billObject.setBill_id(id);
-		billObject.setBill_created_date(created_date);
-		billObject.setBill_status(status);
-		billObject.setBill_creator_id(custommer.getId());
-		billObject.setBill_delivery_id(delivery_id);
-		
-		this.bd.forEach(bd_DTO->{
-			BDObject bdObject = new BDObject();
-			bd_DTO.ApplyToEntity(bdObject);
-			bdObjects.add(bdObject);
-		});
-		
+	    billObject.setBill_id(id);
+	    billObject.setBill_created_date(created_date);
+	    billObject.setBill_status(status);
+	    billObject.setBill_creator_id(creator_id);
+	    billObject.setBill_delivery_id(delivery_id);
+
+	    // Loop through the list of BD_manageBillDTO and create BDObject instances
+	    for (BD_manageBillDTO bdDTO : bd) {
+	        BDObject bdObject = new BDObject();
+	        bdDTO.ApplyToEntity(bdObject);
+	        bdObjects.add(bdObject);
+	    }
 	}
-
-
-
 }

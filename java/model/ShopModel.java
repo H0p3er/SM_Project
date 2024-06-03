@@ -134,23 +134,53 @@ public class ShopModel {
 
 	
 	public static void main(String[] args) {
-		//Khoi tao bo quan li ket noi
-		ConnectionPool cp = new ConnectionPoolImpl();
-		
-		//Tao doi tuong thuc thi chuc nang muc Shop
-		ShopModel u=new ShopModel(cp);
-		
-		//Them mot nguoi su dung
-		ShopObject new_Shop = new ShopObject();
-		new_Shop.setShop_name("Kho hàng Nguyên");
-		new_Shop.setShop_user_id(19);
-		new_Shop.setShop_address("Lâm Đồng");
-		new_Shop.setShop_created_date("29/12/2003");
-		UserObject currentUser = new UserObject();
-		currentUser.setUser_name("Tran The Hưởng");
-		currentUser.setUser_id((byte)2);
+	    // Khởi tạo pool kết nối
+	    ConnectionPool cp = new ConnectionPoolImpl();
+	    
+	    // Tạo đối tượng ShopModel
+	    ShopModel shopModel = new ShopModel(cp);
+	    
+	    // Tạo một người dùng hiện tại
+	    UserObject currentUser = new UserObject();
+	    currentUser.setUser_id(2); // Thiết lập ID của người dùng hiện tại
+	    
+	    // Tạo thông tin sản phẩm
+	    Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors = Quintet.with(
+	        (short) 0, // Mã sản phẩm
+	        (byte) 0, // Loại sản phẩm
+	        new HashMap<String, String>(), // Thông tin tìm kiếm
+	        new HashMap<String, String>(), // Thông tin sắp xếp
+	        new HashMap<String, String>() // Thông tin lọc
+	    );
 
-
+	    // Gọi phương thức để lấy thông tin cửa hàng dựa trên người dùng
+	    Shop_manageShopDTO shopDTO = shopModel.getShopDTOByUser(productInfors, currentUser);
+	    
+	    // In thông tin cửa hàng
+	    System.out.println("Shop ID: " + shopDTO.getId());
+	    System.out.println("Shop Name: " + shopDTO.getName());
+	    System.out.println("Shop Address: " + shopDTO.getAddress());
+	    System.out.println("Shop Images: " + shopDTO.getImages());
+	    System.out.println("Shop Phone: " + shopDTO.getPhone());
+	    System.out.println("Shop Email: " + shopDTO.getEmail());
+	    System.out.println("Shop Notes: " + shopDTO.getNotes());
+	    
+	    // In thông tin sản phẩm trong kho hàng
+	    System.out.println("Products in Storage:");
+	    for (Product_manageShopDTO productDTO : shopDTO.getStorage().getValue0()) {
+	        System.out.println("Product ID: " + productDTO.getId());
+	        System.out.println("Product Name: " + productDTO.getName());
+	        System.out.println("Product Quantity: " + productDTO.getQuantity());
+	        System.out.println("Product Price: " + productDTO.getPrice());
+	        System.out.println("---------------------------------");
+	    }
+	    
+	    // In thông tin thống kê cửa hàng
+	    System.out.println("Shop Statistics:");
+	    Shop_statisticDTO statisticDTO = shopDTO.getStatistic();
+	    System.out.println("Income in Current Month: " + statisticDTO.getSum_income_current_month());
+	    System.out.println("Order Count in Current Month: " + statisticDTO.getCount_order_current_month());
+	    System.out.println("Customer Count in Current Month: " + statisticDTO.getCount_customer_current_month());
 	}
-		
+
 }
