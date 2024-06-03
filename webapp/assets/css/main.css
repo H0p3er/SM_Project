@@ -23,7 +23,9 @@
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
 }
-
+.item img {
+    aspect-ratio: 1;
+}
 .table>thead {
   vertical-align: top;
 }
