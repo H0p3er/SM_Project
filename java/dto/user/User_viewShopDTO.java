@@ -7,6 +7,16 @@ public class User_viewShopDTO implements User_DTO{
     private String fullname;
     private String images;
     
+
+
+	public User_viewShopDTO(int id) {
+		this.id = id;
+	}
+
+	public User_viewShopDTO() {
+		
+	}
+
 	public int getId() {
 		return id;
 	}

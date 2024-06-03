@@ -4,18 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dto.bd.BD_manageBillDTO;
+import dto.user.User_viewCustomerDTO;
 import entity.BDObject;
 import entity.BillObject;
 
 public class Bill_manageBillDTO implements Bill_DTO{
-
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -6180924257598877265L;
+	private static final long serialVersionUID = 1689855911518796180L;
 	private int id;
 	private String created_date;
-	private int creator_id;
+	private User_viewCustomerDTO custommer;
 	private int delivery_id;
 	private byte status; 
 	private List<BD_manageBillDTO> bd;
@@ -25,6 +25,16 @@ public class Bill_manageBillDTO implements Bill_DTO{
     }
 	public int getId() {
 		return id;
+	}
+
+
+	public User_viewCustomerDTO getCustommer() {
+		return custommer;
+	}
+
+
+	public void setCustommer(User_viewCustomerDTO custommer) {
+		this.custommer = custommer;
 	}
 
 
@@ -42,15 +52,6 @@ public class Bill_manageBillDTO implements Bill_DTO{
 		this.created_date = created_date;
 	}
 
-
-	public int getCreator_id() {
-		return creator_id;
-	}
-
-
-	public void setCreator_id(int creator_id) {
-		this.creator_id = creator_id;
-	}
 
 
 	public int getDelivery_id() {
@@ -85,16 +86,20 @@ public class Bill_manageBillDTO implements Bill_DTO{
 
 	@Override
 	public void ApplyToEntity(BillObject billObject, List<BDObject> bdObjects) {
-		billObject.setBill_id(id);
-		billObject.setBill_created_date(created_date);
-		billObject.setBill_status(status);
-		billObject.setBill_creator_id(creator_id);
-		billObject.setBill_delivery_id(delivery_id);
-		
-		this.bd.forEach(bd_DTO->{
-			BDObject bdObject = new BDObject();
-			bd_DTO.ApplyToEntity(bdObject);
-			bdObjects.add(bdObject);
-		});
+	    billObject.setBill_id(id);
+	    billObject.setBill_created_date(created_date);
+	    billObject.setBill_status(status);
+	    if (custommer!=null) {
+	    	billObject.setBill_creator_id(custommer.getId());
+	    }
+	    
+	    billObject.setBill_delivery_id(delivery_id);
+
+	    // Loop through the list of BD_manageBillDTO and create BDObject instances
+	    for (BD_manageBillDTO bdDTO : bd) {
+	        BDObject bdObject = new BDObject();
+	        bdDTO.ApplyToEntity(bdObject);
+	        bdObjects.add(bdObject);
+	    }
 	}
 }

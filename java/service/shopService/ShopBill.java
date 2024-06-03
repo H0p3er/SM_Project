@@ -35,7 +35,7 @@ public class ShopBill extends HttpServlet {
     }
 
     protected void viewShopBills(HttpServletRequest request, HttpServletResponse response, UserObject user) throws ServletException, IOException {
-        ConnectionPool cp = (ConnectionPool) getServletContext().getAttribute("CPool");
+    	ConnectionPool cp = (ConnectionPool) getServletContext().getAttribute("CPool");
 	    BillModel billModel = new BillModel(cp);
 	    ShopModel shopModel = new ShopModel(cp); 
 	    billModel.setShopModel(shopModel);
@@ -43,6 +43,8 @@ public class ShopBill extends HttpServlet {
         // Lấy danh sách các hóa đơn của cửa hàng đang đăng nhập
         List<Bill_manageBillDTO> billList = billModel.getBillDTOByShop(user);
         
+        billModel.releaseConnection();
+        shopModel.releaseCP();
         request.setAttribute("billList", billList);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/main/seller/shop_bills.jsp");
         requestDispatcher.forward(request, response);	

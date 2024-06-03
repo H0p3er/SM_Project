@@ -408,5 +408,86 @@ public class PCModel {
 		if (product_DTO instanceof Product_viewBillDTO) {
 			((Product_viewBillDTO) product_DTO).setAttribute(product_AttributeDTO);
 		}
+	
+	}
+	
+	public void getProductAttribute(Product_DTO<Product_AttributeDTO> product_DTO) throws SQLException {
+		int pc_id = 0;
+		if (product_DTO instanceof Product_viewProductDTO) {
+			pc_id = ((Product_viewProductDTO) product_DTO).getPc().getId();
+		}
+		
+		if (product_DTO instanceof Product_manageShopDTO) {
+			((Product_manageShopDTO) product_DTO).getPc().getId();
+		}
+		
+		if (product_DTO instanceof Product_manageProductDTO) {
+			pc_id = ((Product_manageProductDTO) product_DTO).getPc().getId();
+		}
+		
+		if (product_DTO instanceof Product_viewShopDTO) {
+			pc_id = ((Product_viewShopDTO) product_DTO).getPc().getId();
+		}
+		
+		if (product_DTO instanceof Product_manageBillDTO) {
+			pc_id = ((Product_manageBillDTO) product_DTO).getPc().getId();
+		}
+		
+		if (product_DTO instanceof Product_viewBillDTO) {
+			pc_id = ((Product_viewBillDTO) product_DTO).getPc().getId();
+		}
+		switch (pc_id) {
+		case 1:
+			this.getMonitorDTO(product_DTO);	
+			break;						
+		case 2:
+			this.getKeyboardDTO(product_DTO);	
+			break;
+		case 3:
+			this.getMiceDTO(product_DTO);	
+			break;					
+		case 4:
+			this.getHeadphoneSpeakerDTO(product_DTO);	
+			break;						
+		case 5:
+			this.getLaptopDTO(product_DTO);
+			break;						
+		case 6:
+			this.getDesktopDTO(product_DTO);		
+			break;						
+		case 7:	
+			this.getCPUDTO(product_DTO);
+			break;						
+		case 8:
+			this.getMotherboardDTO(product_DTO);
+			break;						
+		case 9:	
+			this.getRamDTO(product_DTO);					
+			break;		
+		case 10:
+			this.getStorageDTO(product_DTO);	
+			break;				
+		case 11:
+			this.getGraphicsCardDTO(product_DTO);
+			break;						
+		case 12:
+			this.getPowerSuppyDTO(product_DTO);		
+			break;						
+		case 13:
+			this.getCaseDTO(product_DTO);	
+			break;				
+		case 14:
+			this.getCoolingDTO(product_DTO);				
+			break;
+		case 15:
+			this.getUsbDTO(product_DTO);				
+			break;
+		case 16:
+			this.getUsbDTO(product_DTO);				
+			break;
+		default:
+			break;
+		}
+	
 	}
 }

@@ -1,6 +1,7 @@
 package service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -10,15 +11,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.javatuples.Pair;
 import org.javatuples.Quartet;
 import org.javatuples.Quintet;
 
 import com.google.gson.Gson;
 
 import connection.ConnectionPool;
+import controller.PCControl;
 import controller.ProductControl;
 import dto.product.Product_DTO;
+import dto.product.Product_viewProductDTO;
 import entity.UserObject;
+import library.ProductLibrary;
 import utility.Utilities;
 
 /**
@@ -57,9 +62,9 @@ public class Home extends HttpServlet {
 		// Tìm bộ quản lý kết nối
 		ConnectionPool cp = (ConnectionPool) getServletContext().getAttribute("CPool");
 		// Tạo đối tượng thực thi chức năng
-		ProductControl pc = new ProductControl(cp);
+		ProductControl productControl = new ProductControl(cp);
 		if (cp == null) {
-			getServletContext().setAttribute("CPool", pc.getCP());
+			getServletContext().setAttribute("CPool", productControl.getCP());
 		}
 		
 		// Lấy từ khóa tìm kiếm
@@ -74,12 +79,24 @@ public class Home extends HttpServlet {
 			page = 1;
 		}
 		// Lấy cấu trúc
+		Pair<ArrayList<Product_viewProductDTO>,ArrayList<Product_viewProductDTO>> viewProductsList = productControl.viewHomeProduct();
+		productControl.releaseCP();
 
-		Map<String,String> viewProductsList = pc.viewHomeProduct();
+		PCControl pcControl = new PCControl(cp);
+		viewProductsList.getValue0().forEach(product->{
+			pcControl.getProductAttribute(product);
+		});
+		viewProductsList.getValue1().forEach(product->{
+			pcControl.getProductAttribute(product);
+		});
+		
+		pcControl.releaseCP();
+		
+		Map<String,String> datas = ProductLibrary.viewHomeProduct(viewProductsList);
 		// Trả về kết nối
-		pc.releaseCP();
+		
 	    
-	    request.setAttribute("home-page", viewProductsList);
+	    request.setAttribute("home-page",datas);
 	    
 	    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/main/home.jsp");
 	    requestDispatcher.forward(request, response);

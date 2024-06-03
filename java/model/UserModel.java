@@ -3,6 +3,7 @@ package model;
 import connection.*;
 import constant.USER_EDIT_TYPE;
 import constant.USER_SORT_TYPE;
+import dto.shop.Shop_manageShopDTO;
 import dto.user.User_viewShopDTO;
 import entity.ShopObject;
 import entity.UserObject;
@@ -189,7 +190,9 @@ public class UserModel {
 		return new Pair<>(items,totalGlobal);
 	}
 	
-	public Triplet<Map<String,Integer>,Integer,Integer> getCustomerStatisticByShop(ShopObject shopObject) {
+	public Triplet<Map<String,Integer>,Integer,Integer> getCustomerStatisticByShop(Shop_manageShopDTO shop_manageShopDTO) {
+		ShopObject shopObject = new ShopObject();
+		shop_manageShopDTO.applyToEntity(shopObject);
 		ArrayList<ResultSet> res = this.user.getCustomerStatisticByShopAndMonth(shopObject, java.time.LocalDateTime.now().getMonth().getValue());	
 		ResultSet rs = res.get(0);
 		Map<String,Integer> customer_current_month = new TreeMap<String, Integer>();

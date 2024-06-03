@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.javatuples.Pair;
 import org.javatuples.Quartet;
 import org.javatuples.Quintet;
 
@@ -22,7 +23,9 @@ import connection.*;
 import controller.PCControl;
 import controller.ProductControl;
 import dto.product.Product_DTO;
+import dto.product.Product_viewProductDTO;
 import entity.UserObject;
+import library.ProductLibrary;
 import utility.Utilities;
 import utility.Utilities_text;
 
@@ -101,23 +104,26 @@ public class ProductSearch extends HttpServlet {
 				utility.Utilities.getMapParam(request, "orderby")
 				);
 
-		Map<String,String> viewSearchProduct = 
-				productControl.viewSearchProduct(infors, request.getRequestURI());
-
+		Pair<ArrayList<Product_viewProductDTO>,Integer> viewSearchProduct = productControl.viewSearchProduct(infors);
 		// Trả về kết nối
 		productControl.releaseCP();
 		
 		PCControl pcControl = new PCControl(cp);
-		
-		Map<String,String> viewSearchPC = pcControl.viewSearchPC(infors, request.getRequestURI());
-		
+		viewSearchProduct.getValue0().forEach(product->{
+			pcControl.getProductAttribute(product);
+		});
 		pcControl.releaseCP();
+		
+		Map<String,String> data1 = ProductLibrary.viewSearchProduct(viewSearchProduct, infors, request.getRequestURI());
+
+		Map<String,String> data2 = pcControl.viewSearchPC(infors, request.getRequestURI());
+		
+		
 		
 		HashMap<String,String> data = new HashMap<String,String>();
 		
-		
-		data.putAll(viewSearchProduct);
-		data.putAll(viewSearchPC);
+		data.putAll(data1);
+		data.putAll(data2);
 		
 		request.setAttribute("product-search", data);
 	    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/main/product/search.jsp");

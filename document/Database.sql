@@ -672,9 +672,6 @@ INSERT INTO `tblbd` (`bd_id`,`bd_bill_id`,`bd_product_id`,`bd_product_quantity`)
  (3,1,9,2),
  (4,1,10,1),
  (5,1,6,4),
- (6,2,6,3),
- (7,2,6,2),
- (8,2,6,4),
  (9,2,6,1),
  (10,2,6,3),
  (11,3,12,4),
@@ -707,9 +704,6 @@ INSERT INTO `tblbd` (`bd_id`,`bd_bill_id`,`bd_product_id`,`bd_product_quantity`)
  (38,8,15,1),
  (39,8,7,4),
  (40,8,9,2),
- (41,9,12,3),
- (42,9,14,4),
- (43,9,16,1),
  (44,9,18,2),
  (45,9,10,3),
  (46,10,12,5),
@@ -724,9 +718,6 @@ INSERT INTO `tblbd` (`bd_id`,`bd_bill_id`,`bd_product_id`,`bd_product_quantity`)
  (55,11,15,3),
  (56,12,6,2),
  (57,12,8,3),
- (58,12,10,1),
- (59,12,12,4),
- (60,12,14,2),
  (61,13,16,3),
  (62,13,18,4),
  (63,13,20,1),
@@ -774,9 +765,6 @@ INSERT INTO `tblbd` (`bd_id`,`bd_bill_id`,`bd_product_id`,`bd_product_quantity`)
  (105,21,25,3),
  (106,22,6,2),
  (107,22,8,3),
- (108,22,10,1),
- (109,22,12,4),
- (110,22,14,2),
  (111,23,16,3),
  (112,23,18,4),
  (113,23,20,1),
@@ -822,8 +810,6 @@ INSERT INTO `tblbd` (`bd_id`,`bd_bill_id`,`bd_product_id`,`bd_product_quantity`)
  (153,31,23,1),
  (154,31,24,4),
  (155,31,25,3),
- (156,32,6,2),
- (157,32,8,3),
  (158,32,10,1),
  (159,32,12,4),
  (160,32,14,2),
@@ -871,10 +857,6 @@ INSERT INTO `tblbd` (`bd_id`,`bd_bill_id`,`bd_product_id`,`bd_product_quantity`)
  (202,41,22,2),
  (203,41,23,1),
  (204,41,24,4),
- (205,41,25,3),
- (206,42,6,2),
- (207,42,8,3),
- (208,42,10,1),
  (209,42,12,4),
  (210,42,14,2),
  (211,43,16,3),
@@ -1389,11 +1371,11 @@ CREATE TABLE `tblshop` (
 
 /*!40000 ALTER TABLE `tblshop` DISABLE KEYS */;
 INSERT INTO `tblshop` (`shop_id`,`shop_name`,`shop_address`,`shop_status`,`shop_user_id`,`shop_website_link`,`shop_address_link`,`shop_created_date`,`shop_modified_date`,`shop_deleted`,`shop_images`,`shop_notes`,`shop_phone`,`shop_email`) VALUES 
- (1,'Kho Vingroup','Tầng 7, Tòa nhà Vincom Center, 72 Lê Thánh Tôn, Phường Bến Nghé, Quận 1, Thành phố Hồ Chí Minh.',1,1,NULL,NULL,'30/4/2023','04/01/2024',1,'/home/images/shop/storage01.jpg','',NULL,NULL),
- (2,'Kho Viettel','285 Cách Mạng Tháng Tám, Phường 12, Quận 10, Thành phố Hồ Chí Minh.',1,2,NULL,NULL,'1/5/2023','04/01/2024',0,'/home/images/shop/storage02.jpg','',NULL,NULL),
- (3,'Kho FPT','Số 17 Duy Tân, Dịch Vọng Hậu, Cầu Giấy, Hà Nội.',1,3,NULL,NULL,'28/6/2023','23/12/2023',1,'/home/images/shop/storage01.jpg','',NULL,NULL),
- (4,'Kho Sun Group','14, Hạ Long , Bãi Cháy, Thành phố Hạ Long, Quảng Ninh.',1,4,NULL,NULL,'14/2/2023','23/12/2023',0,'/home/images/shop/storage03.jpg','',NULL,NULL),
- (5,'Kho PV Gas','36 Hoàng Cầu, Đống Đa, Hà Nội.',1,5,NULL,NULL,'3/4/2023','23/12/2023',0,'/home/images/shop/storage02.jpg','',NULL,NULL);
+ (1,'Kho Vingroup','Tầng 7, Tòa nhà Vincom Center, 72 Lê Thánh Tôn, Phường Bến Nghé, Quận 1, Thành phố Hồ Chí Minh.',1,1,'','','30/4/2023','04/01/2024',1,'/home/images/shop/storage01.jpg','nothing here!','0123456789','example1@example.com'),
+ (2,'Kho Viettel','285 Cách Mạng Tháng Tám, Phường 12, Quận 10, Thành phố Hồ Chí Minh.',1,2,'','','1/5/2023','04/01/2024',0,'/home/images/shop/storage02.jpg','nothing here!','0987654321','example2@example.com'),
+ (3,'Kho FPT','Số 17 Duy Tân, Dịch Vọng Hậu, Cầu Giấy, Hà Nội.',1,3,'','','28/6/2023','23/12/2023',1,'/home/images/shop/storage01.jpg','nothing here!','0345678912','example3@example.com'),
+ (4,'Kho Sun Group','14, Hạ Long , Bãi Cháy, Thành phố Hạ Long, Quảng Ninh.',1,4,'','','14/2/2023','23/12/2023',0,'/home/images/shop/storage03.jpg','nothing here!','0456789123','example4@example.com'),
+ (5,'Kho PV Gas','36 Hoàng Cầu, Đống Đa, Hà Nội.',1,5,'','','3/4/2023','23/12/2023',0,'/home/images/shop/storage02.jpg','nothing here!','0567891234','example5@example.com');
 /*!40000 ALTER TABLE `tblshop` ENABLE KEYS */;
 
 

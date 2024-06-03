@@ -2,72 +2,75 @@ package dto.bill;
 
 import java.util.List;
 
-import dto.bd.BD_viewBillDTO;
-import dto.user.User_manageShopDTO;
+import dto.bd.BD_manageBillDTO;
+import dto.bd.BD_manageShopDTO;
 import dto.user.User_viewCustomerDTO;
 import entity.BDObject;
 import entity.BillObject;
 
-public class Bill_viewBillDTO implements Bill_DTO{
+public class Bill_manageShopDTO implements Bill_DTO{
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -3081522859541249386L;
+	private static final long serialVersionUID = 4822721147830920181L;
 	private int id;
 	private String created_date;
 	private User_viewCustomerDTO custommer;
 	private int delivery_id;
 	private byte status; 
-	private List<BD_viewBillDTO> bd;
+	private List<BD_manageShopDTO> bd;
+	
 
 	public int getId() {
 		return id;
 	}
 
+
 	public void setId(int id) {
 		this.id = id;
 	}
 
+
 	public String getCreated_date() {
 		return created_date;
 	}
-	
+
+
 	public void setCreated_date(String created_date) {
 		this.created_date = created_date;
 	}
 
-	public User_viewCustomerDTO getCustommer() {
-		return custommer;
-	}
 
-	public void setCustommer(User_viewCustomerDTO custommer) {
-		this.custommer = custommer;
-	}
 
 	public int getDelivery_id() {
 		return delivery_id;
 	}
 
+
 	public void setDelivery_id(int delivery_id) {
 		this.delivery_id = delivery_id;
 	}
+
 
 	public byte getStatus() {
 		return status;
 	}
 
+
 	public void setStatus(byte status) {
 		this.status = status;
 	}
 
-	public List<BD_viewBillDTO> getBd() {
+
+	public List<BD_manageShopDTO> getBd() {
 		return bd;
 	}
 
-	public void setBd(List<BD_viewBillDTO> bd) {
+
+	public void setBd(List<BD_manageShopDTO> bd) {
 		this.bd = bd;
 	}
-
 
 
 	@Override
@@ -83,8 +86,19 @@ public class Bill_viewBillDTO implements Bill_DTO{
 			bd_DTO.ApplyToEntity(bdObject);
 			bdObjects.add(bdObject);
 		});
+		
 	}
-	
-	
-	
+
+
+	public User_viewCustomerDTO getCustommer() {
+		return custommer;
+	}
+
+
+	public void setCustommer(User_viewCustomerDTO custommer) {
+		this.custommer = custommer;
+	}
+
+
+
 }

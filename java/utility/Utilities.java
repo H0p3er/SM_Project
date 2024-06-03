@@ -29,7 +29,7 @@ public class Utilities {
 	
 	public static int getIntParam(ServletRequest request, String name) {
 		int value = -1;	
-		String str_value = request.getParameter(name);
+		String str_value = request.getParameter(name).trim();
 		
 		if (str_value!=null && !str_value.equalsIgnoreCase("")) {
 			value = Integer.parseInt(str_value);

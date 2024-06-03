@@ -15,14 +15,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.javatuples.Pair;
 import org.javatuples.Quintet;
 
 import com.google.gson.Gson;
 
 import connection.ConnectionPool;
+import controller.PCControl;
 import controller.ProductControl;
 import controller.ShopControl;
+import dto.product.Product_viewShopDTO;
+import dto.shop.Shop_viewShopDTO;
 import entity.UserObject;
+import library.ShopLibrary;
 import entity.ShopObject;
 
 /**
@@ -79,9 +84,23 @@ public class ShopProfile extends HttpServlet {
 				utility.Utilities.getMapParam(request, null),
 				utility.Utilities.getMapParam(request, null));
 
-		Map<String,String> data = shopControl.viewShop_Profile(productInfors,utility.Utilities.getIntParam(request, "id"), user);
-		System.out.println(data);
+		Shop_viewShopDTO shop_viewShopDTO = shopControl.getShopDTOById(productInfors,utility.Utilities.getIntParam(request, "id"), user);
 		shopControl.releaseCP();
+		
+		ProductControl productControl = new ProductControl(connectionPool);
+		Pair<ArrayList<Product_viewShopDTO>, Integer> product_viewShopDTO = productControl.getProduct_viewShopDTO(productInfors, shop_viewShopDTO);
+		productControl.releaseCP();
+		
+		PCControl pcControl = new PCControl(connectionPool);
+		product_viewShopDTO.getValue0().forEach(product->{
+			pcControl.getProductAttribute(product);
+		});
+		pcControl.releaseCP();
+		
+		shop_viewShopDTO.setStorage(product_viewShopDTO);
+		
+		Map<String,String> data = ShopLibrary.viewShop_Profile(shop_viewShopDTO, user);
+		
 		request.setAttribute("shop-profile", data);
 	    
 	    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/main/shop/shop_profile.jsp");

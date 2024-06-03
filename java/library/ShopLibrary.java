@@ -1,10 +1,13 @@
 package library;
 
-import java.text.DateFormat;
+
 import java.util.*;
 
 import org.javatuples.*;
 
+import dto.product.Product_DTO;
+import dto.product.Product_manageShopDTO;
+import dto.productAttribute.Product_AttributeDTO;
 import dto.shop.Shop_manageShopDTO;
 import dto.shop.Shop_statisticDTO;
 import dto.shop.Shop_viewShopDTO;
@@ -297,14 +300,32 @@ public class ShopLibrary {
 		
 		view.put("shop-notes", shop_manageShopDTO.getNotes());
 		
-		
 		System.out.print(view);
 		return view;
 	}
 	
-	public static Map<String, String> viewSeller_ShopBill(Shop_manageShopDTO shopDTO) {
+	public static Map<String, String> viewSeller_ShopBill(Shop_manageShopDTO shop_manageShopDTO) {
         Map<String, String> data = new HashMap<>();
-        //null
+   
+        StringBuilder tmp = new StringBuilder();
+		shop_manageShopDTO.getBill().getValue0().forEach(bill->{
+			tmp.append("<th scope=\"row\"><a href=\"#\">"+bill.getId()+"</a></th>");
+			tmp.append("<td>"+bill.getCustommer().getFullname()+"</td>");
+			tmp.append("<td></td>");
+			tmp.append("<td>");
+			tmp.append("<ul class=\"ps-0\" style=\"list-style-type: none;\">");
+			bill.getBd().forEach(bd ->{
+				Product_manageShopDTO product = bd.getProduct();
+				tmp.append("<li><span>"+bd.getProduct_quantity()+"</span> <a href=\"\">"+product.getName()+"</a></li>");
+			});
+			tmp.append("</ul>");
+			tmp.append("</td>");
+			tmp.append("<td>$64</td>");
+			tmp.append("<td><a href=\"\" type=\"button\" class=\"btn btn-success\"><i class=\"ri-check-fill\"></i></a><a href=\"\" type=\"button\" class=\"btn btn-danger\"><i class=\"ri-close-fill\"></i></a></td>");
+			tmp.append("</tr>");
+		});
+		
+		data.put("shop-bill", tmp.toString());
         return data;
     }
 }
