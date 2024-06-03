@@ -1,7 +1,8 @@
 package service.shopService;
 
 import java.io.IOException;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 
@@ -11,18 +12,25 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.javatuples.Pair;
 import org.javatuples.Quintet;
 import com.google.gson.Gson;
 import connection.ConnectionPool;
 import constant.PRODUCT_EDIT_TYPE;
+import controller.PCControl;
 import controller.ProductControl;
 import controller.ShopControl;
 import dto.pc.PC_manageProductDTO;
 import dto.product.Product_DTO;
 import dto.product.Product_manageProductDTO;
+import dto.product.Product_manageShopDTO;
+import dto.product.Product_viewProductDTO;
 import dto.productAttribute.Product_AttributeDTO;
 import dto.shop.Shop_manageProductDTO;
+import dto.shop.Shop_manageShopDTO;
 import entity.UserObject;
+import library.ShopLibrary;
 import utility.Utilities;
 import utility.Utilities_data_type;
 import utility.Utilities_date;
@@ -73,8 +81,23 @@ public class ShopProduct extends HttpServlet {
 				utility.Utilities.getMapParam(request, null));
 		
 		
+		Shop_manageShopDTO shop_manageShopDTO =  shopControl.getShopDTOByUser(productInfors, user);
 		
-		Map<String,String> data = shopControl.viewSeller_ShopProduct(productInfors,user);	
+		
+		ProductControl productControl = new ProductControl(connectionPool);
+		Pair<List<Product_manageShopDTO>, Integer> storage = productControl.getProduct_manageShopDTO(productInfors, shop_manageShopDTO);
+		// Trả về kết nối
+		productControl.releaseCP();
+		
+		PCControl pcControl = new PCControl(connectionPool);
+		storage.getValue0().forEach(product->{
+			pcControl.getProductAttribute(product);
+		});
+		pcControl.releaseCP();
+		
+		shop_manageShopDTO.setStorage(storage);
+		
+		Map<String,String> data = ShopLibrary.viewSeller_ShopProduct(shop_manageShopDTO);	
 		shopControl.releaseCP();
 		System.out.print(data);
 		request.setAttribute("shop-product", data);	    

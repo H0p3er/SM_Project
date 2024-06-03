@@ -55,7 +55,7 @@
 								if (billDTO.getStatus() == 0) {
 							if (!processedBills.contains(billDTO.getId())) {
 								processedBills.add(billDTO.getId());
-								UserObject userObject = userModel.getUserObject(billDTO.getCreator_id());
+								UserObject userObject = userModel.getUserObject(billDTO.getCustommer().getId());
 						%>
 						<tr>
 							<th scope="row"><a href="#"><%=billDTO.getId()%></a></th>
@@ -150,7 +150,7 @@
 								if (billDTO.getStatus() != 0) {
 							if (!processedBills.contains(billDTO.getId())) {
 								processedBills.add(billDTO.getId());
-								UserObject userObject = userModel.getUserObject(billDTO.getCreator_id());
+								UserObject userObject = userModel.getUserObject(billDTO.getCustommer().getId());
 						%>
 						<tr>
 							<th scope="row"><a href="#"><%=billDTO.getId()%></a></th>

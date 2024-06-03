@@ -15,9 +15,11 @@ import constant.BILL_EDIT_TYPE;
 import constant.BILL_SORT_TYPE;
 import dto.bd.BD_DTO;
 import dto.bd.BD_manageBillDTO;
+import dto.bd.BD_manageShopDTO;
 import dto.bd.BD_viewBillDTO;
 import dto.bill.Bill_DTO;
 import dto.bill.Bill_manageBillDTO;
+import dto.bill.Bill_manageShopDTO;
 import dto.bill.Bill_viewBillDTO;
 import dto.product.Product_manageBillDTO;
 import dto.product.Product_manageShopDTO;
@@ -70,8 +72,7 @@ public class BillModel {
 	public boolean addBill(Bill_DTO bill_DTO) {
 		BillObject billObject = new BillObject();
 		ArrayList<BDObject> bdObjects = new ArrayList<BDObject>();
-		bill_DTO.ApplyToEntity(billObject, bdObjects);
-		;
+		bill_DTO.ApplyToEntity(billObject, bdObjects);;
 		return this.bill.addBill(billObject, bdObjects);
 	}
 
@@ -234,7 +235,7 @@ public class BillModel {
 								billDTO = new Bill_viewBillDTO();
 								billDTO.setId(billId);
 								billDTO.setCreated_date(rs.getString("bill_created_date"));
-								billDTO.setCreator_id(rs.getInt("bill_creator_id"));
+								billDTO.setCustommer(new User_viewCustomerDTO(rs.getInt("bill_creator_id")));
 								billDTO.setDelivery_id(rs.getInt("bill_delivery_id"));
 								billDTO.setStatus(rs.getByte("bill_status"));
 
@@ -300,7 +301,7 @@ public class BillModel {
 							billDTO = new Bill_manageBillDTO();
 							billDTO.setId(billId);
 							billDTO.setCreated_date(rs.getString("bill_created_date"));
-							billDTO.setCreator_id(rs.getInt("bill_creator_id"));
+							billDTO.setCustommer(new User_viewCustomerDTO(rs.getInt("bill_creator_id")));
 							billDTO.setDelivery_id(rs.getInt("bill_delivery_id"));
 							billDTO.setStatus(rs.getByte("bill_status"));
 
@@ -455,7 +456,7 @@ public class BillModel {
 	            System.out.println("Bill ID: " + billDTO.getId()); // In ra ID của hóa đơn
 
 	            // Lấy thông tin của người mua từ UserModel
-	            UserObject userObject = userModel.getUserObject(billDTO.getCreator_id());
+	            UserObject userObject = userModel.getUserObject(billDTO.getCustommer().getId());
 	            String userName = userObject.getUser_fullname();
 	            String userAddress = userObject.getUser_address();
 

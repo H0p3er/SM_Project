@@ -21,6 +21,7 @@ import dto.bill.Bill_DTO;
 import dto.bill.Bill_manageBillDTO;
 import dto.bill.Bill_viewBillDTO;
 import dto.product.Product_manageBillDTO;
+import dto.user.User_viewCustomerDTO;
 import entity.BDObject;
 import entity.BillObject;
 import entity.UserObject;
@@ -37,7 +38,12 @@ public class UserBill extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		UserObject user = (UserObject) request.getSession().getAttribute("userLogined");
-		view(request, response, user);
+		if (user!=null) {
+			view(request, response, user);
+		} else {
+			response.sendRedirect("/home/homepage");
+		}
+		
 	}
 
 	protected void view(HttpServletRequest request, HttpServletResponse response, UserObject user)
@@ -106,7 +112,7 @@ public class UserBill extends HttpServlet {
 	    BillControl billControl = new BillControl(cp);
 
 	    Bill_manageBillDTO billDTOToAdd = new Bill_manageBillDTO();
-	    billDTOToAdd.setCreator_id(user.getUser_id());
+	    billDTOToAdd.setCustommer(new User_viewCustomerDTO(user.getUser_id()));
 	    billDTOToAdd.setCreated_date(utility.Utilities_date.getCurrentDate());
 	    billDTOToAdd.setStatus((byte) 0);
 
@@ -162,7 +168,7 @@ public class UserBill extends HttpServlet {
 
 	    Bill_manageBillDTO billDTOToAdd = new Bill_manageBillDTO();
 	    billDTOToAdd.setCreated_date(createdDate);
-	    billDTOToAdd.setCreator_id(creatorId);
+	    billDTOToAdd.setCustommer(new User_viewCustomerDTO(user.getUser_id()));
 	    billDTOToAdd.setStatus(billStatus);
 
 	    // Lấy danh sách sản phẩm từ giỏ hàng và thêm vào bdDTOList
@@ -176,7 +182,8 @@ public class UserBill extends HttpServlet {
 	        if (paramName.startsWith("product_")) {
 	            int productId = Integer.parseInt(paramName.split("_")[1]);
 	            int quantity = Integer.parseInt(paramValues[0]); // Số lượng sản phẩm
-
+	            
+	            
 	            // Tạo đối tượng DTO cho sản phẩm và thêm vào danh sách
 	            BD_manageBillDTO bdDTO = new BD_manageBillDTO();
 	            bdDTO.getProduct().setId(productId);

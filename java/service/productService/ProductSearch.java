@@ -112,11 +112,13 @@ public class ProductSearch extends HttpServlet {
 		viewSearchProduct.getValue0().forEach(product->{
 			pcControl.getProductAttribute(product);
 		});
+		pcControl.releaseCP();
+		
 		Map<String,String> data1 = ProductLibrary.viewSearchProduct(viewSearchProduct, infors, request.getRequestURI());
 
 		Map<String,String> data2 = pcControl.viewSearchPC(infors, request.getRequestURI());
 		
-		pcControl.releaseCP();
+		
 		
 		HashMap<String,String> data = new HashMap<String,String>();
 		

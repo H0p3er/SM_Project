@@ -36,8 +36,7 @@ public class ProductControl {
 	private ProductModel pm;
 	
 	public ProductControl(ConnectionPool cp) {
-		this.pm = new ProductModel(cp);
-		
+		this.pm = new ProductModel(cp);	
 	}
 	
 	public ConnectionPool getCP() {
@@ -101,7 +100,11 @@ public class ProductControl {
 		return datas;
 	}
 	
-	public Triplet<List<Product_manageShopDTO>,Integer, List<Pair<Product_manageShopDTO,Double>>> getProduct_manageShopDTO(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, Shop_manageShopDTO shop_manageShopDTO) {
+	public Triplet<List<Product_manageShopDTO>,Integer, List<Pair<Product_manageShopDTO,Double>>> getProductStatistic(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, Shop_manageShopDTO shop_manageShopDTO) {
+		return this.pm.getProductStatistic(productInfors, shop_manageShopDTO);	
+	}	
+	
+	public Pair<List<Product_manageShopDTO>, Integer> getProduct_manageShopDTO(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, Shop_manageShopDTO shop_manageShopDTO) {
 		return this.pm.getProduct_manageShopDTO(productInfors, shop_manageShopDTO);	
 	}	
 	

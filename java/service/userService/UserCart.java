@@ -104,47 +104,46 @@ public class UserCart extends HttpServlet {
 		
 		// Lấy từ khóa tìm kiếm
 		int id = Utilities.getIntParam(request, "id");
-
-		Product_viewProductDTO product_DTO = productControl.getProduct_DTOById(id);
 		
-		// Trả về kết nối
-		productControl.releaseCP();
-		
-		HttpSession session = request.getSession();
-		try {
-			TreeMap<Product_viewProductDTO,Integer> product_DTOs = (TreeMap<Product_viewProductDTO,Integer>) session.getAttribute("product-cart");
-			Iterator<String> test =  session.getAttributeNames().asIterator();
-			while (test.hasNext()) {
-				System.out.println("rq.attribute:"+test.next());
-			}
-//			System.out.println("default:"+session.getAttribute("product-cart"));
-			if (product_DTOs==null) {
-				product_DTOs = new TreeMap<Product_viewProductDTO,Integer>();
-				product_DTOs.put(product_DTO,1);
-				System.out.println("post new from null:"+product_DTOs);
-			} else {
-				if (product_DTOs.containsKey(product_DTO)) {		
-					product_DTOs.replace(product_DTO,product_DTOs.get(product_DTO)+1);
-					System.out.println("post update:"+product_DTOs);
-				} else {
-					product_DTOs.put(product_DTO,1);
-					System.out.println("post new:"+product_DTOs);
-				}	
-			}	
-
+		if (id>0) {
+			Product_viewProductDTO product_DTO = productControl.getProduct_DTOById(id);
+			// Trả về kết nối
+			productControl.releaseCP();
 			
-			session.removeAttribute("product-cart");
-			session.setAttribute("product-cart",product_DTOs);
-//			System.out.println("default:"+session.getAttribute("product-cart"));
-		} catch (ClassCastException e) {
-			TreeMap<Product_viewProductDTO,Integer> product_DTOs = new TreeMap<Product_viewProductDTO,Integer>();
-			product_DTOs.put(product_DTO,1);
-			System.out.println("post error:"+product_DTOs);
-			session.removeAttribute("product-cart");
-			session.setAttribute("product-cart",product_DTOs);
-		}
-		
+			HttpSession session = request.getSession();
+			try {
+				TreeMap<Product_viewProductDTO,Integer> product_DTOs = (TreeMap<Product_viewProductDTO,Integer>) session.getAttribute("product-cart");
+				Iterator<String> test =  session.getAttributeNames().asIterator();
+				while (test.hasNext()) {
+					System.out.println("rq.attribute:"+test.next());
+				}
+//				System.out.println("default:"+session.getAttribute("product-cart"));
+				if (product_DTOs==null) {
+					product_DTOs = new TreeMap<Product_viewProductDTO,Integer>();
+					product_DTOs.put(product_DTO,1);
+					System.out.println("post new from null:"+product_DTOs);
+				} else {
+					if (product_DTOs.containsKey(product_DTO)) {		
+						product_DTOs.replace(product_DTO, product_DTOs.get(product_DTO)+1);
+						System.out.println("post update:"+product_DTOs);
+					} else {
+						product_DTOs.put(product_DTO,1);
+						System.out.println("post new:"+product_DTOs);
+					}	
+				}	
 
+				session.removeAttribute("product-cart");
+				session.setAttribute("product-cart",product_DTOs);
+//				System.out.println("default:"+session.getAttribute("product-cart"));
+			} catch (ClassCastException e) {
+				TreeMap<Product_viewProductDTO,Integer> product_DTOs = new TreeMap<Product_viewProductDTO,Integer>();
+				product_DTOs.put(product_DTO,1);
+				System.out.println("post error:"+product_DTOs);
+				session.removeAttribute("product-cart");
+				session.setAttribute("product-cart",product_DTOs);
+			}
+			
+		}
 	}
 	
 	
@@ -180,7 +179,6 @@ public class UserCart extends HttpServlet {
 		int id = Utilities.getIntParam(request, "id");
 		Product_viewProductDTO product_DTO = new Product_viewProductDTO();
 		product_DTO.setId(id);
-		
 		try {
 			TreeMap<Product_viewProductDTO,Integer> product_DTOs = (TreeMap<Product_viewProductDTO,Integer>) request.getSession().getAttribute("product-cart");
 			if (product_DTOs==null) {

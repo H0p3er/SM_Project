@@ -146,7 +146,7 @@ public class ProductModel {
 		return new Pair<>(items1, items2);
 	}	
 
-	public Triplet<List<Product_manageShopDTO>,Integer, List<Pair<Product_manageShopDTO,Double>>> getProduct_manageShopDTO(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, Shop_manageShopDTO shop_manageShopDTO) {
+	public Triplet<List<Product_manageShopDTO>, Integer, List<Pair<Product_manageShopDTO,Double>>> getProductStatistic(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, Shop_manageShopDTO shop_manageShopDTO) {
 		ShopObject shopObject = new ShopObject();
 		shop_manageShopDTO.applyToEntity(shopObject);
 		
@@ -183,6 +183,43 @@ public class ProductModel {
 		List<Pair<Product_manageShopDTO,Double>> most_sold_product_current_month = getMostSoldProductCurrentMonth(rs);
 		return new Triplet<>(product_manageShopDTOs,count_product,most_sold_product_current_month);
 	}	
+
+	
+	public Pair<List<Product_manageShopDTO>,Integer> getProduct_manageShopDTO(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, Shop_manageShopDTO shop_manageShopDTO) {
+		ShopObject shopObject = new ShopObject();
+		shop_manageShopDTO.applyToEntity(shopObject);
+		
+		short pagePos = productInfors.getValue0();
+		byte pageLength = productInfors.getValue1();	
+		Map<String,String> multiField = productInfors.getValue2();
+		Map<String,String> multiCondition = productInfors.getValue3();
+		Map<String,String> multiSort = productInfors.getValue4();
+		int recordPos = (pagePos-1)*pageLength;	
+		ArrayList<Product_manageShopDTO> product_manageShopDTOs = new ArrayList<Product_manageShopDTO>();	
+		ArrayList<ResultSet> resultSets = this.product.getProductsByShop(recordPos,pageLength,multiField,multiCondition,multiSort,shopObject);	
+		ResultSet rs = resultSets.get(0);
+		if (rs!=null) {
+			try {
+				while (rs.next()) {
+					Product_manageShopDTO product_manageShopDTO = new Product_manageShopDTO();
+					product_manageShopDTO.setId(rs.getInt("product_id"));
+					product_manageShopDTO.setName(rs.getString("product_name"));
+					product_manageShopDTO.setQuantity(rs.getInt("product_quantity"));
+					product_manageShopDTO.setPrice(rs.getDouble("product_price"));
+					setProductAttribute(product_manageShopDTO, rs);
+					product_manageShopDTOs.add(product_manageShopDTO);
+				}	
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		rs = resultSets.get(1);
+		int count_product = getProductSize(rs);
+		return new Pair<>(product_manageShopDTOs,count_product);
+	}	
+	
 	
 	public Product_manageShopDTO getProduct_manageShopDTO(int id) {
 		Product_manageShopDTO item = new Product_manageShopDTO();

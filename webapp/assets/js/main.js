@@ -73,18 +73,18 @@ updatePrice();
 
 
 for (var product of document.getElementsByClassName("add-cart")) {
-    product.addEventListener("click", async  () => {
-        await fetch("/home/user/cart?id="+ product.id, {
+    product.addEventListener("click", () => {
+        fetch("/home/user/cart?id="+product.id+"", {
             method: "POST",
         });
         alert("Sản phẩm đã được thêm vào giỏ hàng!");
     })
 }
 
-/*function addOnlineOrderToDatabase() {
+function addOnlineOrderToDatabase() {
     var postData = "action=addBill&paymentMethod=Online";
     var submitUrl = "/user/bills";
-    $.ajax({
+    fetch({
         type: "POST",
         url: submitUrl,
         data: postData,
@@ -97,7 +97,7 @@ for (var product of document.getElementsByClassName("add-cart")) {
         }
     });
 }
-*/
+
 $("#purchase").on("click", function () {
     if (updatePrice() == 0) { alert("Giỏ hàng trống! Vui lòng thêm sản phẩm") } else {
         if ($("#methodselection").find(":selected").val() == 0) {

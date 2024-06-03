@@ -92,7 +92,7 @@ public class ShopStatistic extends HttpServlet {
 		
 		Shop_manageShopDTO shop_manageShopDTO = shopControl.getShopDTOByUser(productInfors,user);
 		ProductControl productControl = new ProductControl(connectionPool);
-		Triplet<List<Product_manageShopDTO>,Integer, List<Pair<Product_manageShopDTO,Double>>> product_statistic = productControl.getProduct_manageShopDTO(productInfors, shop_manageShopDTO);
+		Triplet<List<Product_manageShopDTO>,Integer, List<Pair<Product_manageShopDTO,Double>>> product_statistic = productControl.getProductStatistic(productInfors, shop_manageShopDTO);
 		productControl.releaseCP();
 		
 		BillControl billControl = new BillControl(connectionPool);

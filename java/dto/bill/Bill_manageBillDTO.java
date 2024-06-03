@@ -89,7 +89,10 @@ public class Bill_manageBillDTO implements Bill_DTO{
 	    billObject.setBill_id(id);
 	    billObject.setBill_created_date(created_date);
 	    billObject.setBill_status(status);
-	    billObject.setBill_creator_id(creator_id);
+	    if (custommer!=null) {
+	    	billObject.setBill_creator_id(custommer.getId());
+	    }
+	    
 	    billObject.setBill_delivery_id(delivery_id);
 
 	    // Loop through the list of BD_manageBillDTO and create BDObject instances

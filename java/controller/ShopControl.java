@@ -68,11 +68,11 @@ public class ShopControl {
 //		return ShopLibrary.viewSeller_ShopStatistic(shopDTO);
 //	}
 //	
-	public Map<String,String> viewSeller_ShopProduct(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, 
-			UserObject currentUser){
-		Shop_manageShopDTO shopDTO = this.shopModel.getShopDTOByUser(productInfors,currentUser);
-		return ShopLibrary.viewSeller_ShopProduct(shopDTO);
-	}
+//	public Map<String,String> viewSeller_ShopProduct(Quintet<Short, Byte, Map<String,String>, Map<String,String>, Map<String,String>> productInfors, 
+//			UserObject currentUser){
+//		Shop_manageShopDTO shopDTO = this.shopModel.getShopDTOByUser(productInfors,currentUser);
+//		return ShopLibrary.viewSeller_ShopProduct(shopDTO);
+//	}
 //	
 
 //	

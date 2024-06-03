@@ -57,7 +57,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="main-button col-lg-3">
-                                                        <form action=" <%= request.getContextPath() %>/user/bills" method="post">
+                                                        <form action="<%= request.getContextPath() %>/user/bills" method="post">
                                                             <input type="hidden" name="action" value="addBill">
                                                             <button type="submit" class="btn float-end" id="purchase">Mua hàng</button>
                                                         </form>
